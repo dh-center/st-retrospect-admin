@@ -1,0 +1,20 @@
+.navigation {
+  border-bottom: 1px solid #000;
+  padding: 0;
+}
+
+.navigation__link {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #000000;
+}
+
+.navigation__link:hover {
+  color: #343434;
+}
+
+.navigation__link--active {
+  background: #aaaaaa;
+}
