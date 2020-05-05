@@ -23,5 +23,13 @@ module.exports = {
   },
   rules: {
     'spaced-comment': ['error', 'always', { 'markers': ['/'] }]
-  }
+  },
+  overrides: [
+    {
+      "files": ["**/*.tsx"],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
+  ]
 };
