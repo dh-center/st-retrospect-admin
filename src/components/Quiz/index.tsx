@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 /**
  * Functional component for quiz view
- *
- * @returns {JSX.Element}
  */
-export default function Quiz(): JSX.Element {
+export default function Quiz(): ReactNode {
   return (
     <h1>Quiz</h1>
-  )
+  );
 }

@@ -4158,10 +4158,10 @@ escodegen@^1.11.0, escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-codex@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/eslint-config-codex/-/eslint-config-codex-1.3.4.tgz#065ad2016befd721e412feb65f37385a7effea24"
-  integrity sha512-6imBw/hEIlFvsXOX+IHv0b6SYZA7u5i6b225KkZeQk/8b3nttMAh8Ci6wqNjkms+gBR4EXXv9/nVCyIIclXPBQ==
+eslint-config-codex@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/eslint-config-codex/-/eslint-config-codex-1.3.5.tgz#b36dcdf0d7af66f7173edb877c9bec2d13d8e18f"
+  integrity sha512-2vDhAkvQS67jpG7bo81900a2OU4NsQL/Mr4W+LuojFIoIwLoDpRhsPqNBll+TJZ3OckV3aYwYNGY+1CBdQnQKA==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^2.12.0"
     "@typescript-eslint/parser" "^2.12.0"

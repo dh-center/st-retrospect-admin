@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 /**
  * Functional component for quests view
- *
- * @returns {JSX.Element}
  */
-export default function Quests(): JSX.Element {
+export default function Quests(): ReactNode {
   return (
     <h1>Quests</h1>
-  )
+  );
 }

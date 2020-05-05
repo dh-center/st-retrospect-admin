@@ -10,12 +10,14 @@ import {
 const url = 'https://api.stage.st-retrospect.dh-center.ru/graphql';
 
 /**
- * @param operation
- * @param variables
+ * Function for make queries to GraphQL server
+ *
+ * @param operation - query to perform
+ * @param variables - query variables
  */
-function fetchQuery(operation: RequestParameters, variables: Variables
-) {
-  return window.fetch(url, {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function fetchQuery(operation: RequestParameters, variables: Variables): Promise<any> {
+  const response = await window.fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -24,9 +26,9 @@ function fetchQuery(operation: RequestParameters, variables: Variables
       query: operation.text,
       variables,
     }),
-  }).then(response => {
-    return response.json();
   });
+
+  return response.json();
 }
 
 const environment = new Environment({

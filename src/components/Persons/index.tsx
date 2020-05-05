@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { QueryRenderer } from 'react-relay';
 import { PersonsQuery, PersonsQueryResponse } from './__generated__/PersonsQuery.graphql';
 import environment from '../../relay-env';
@@ -6,10 +6,8 @@ import graphql from 'babel-plugin-relay/macro';
 
 /**
  * Functional component for persons view
- *
- * @returns {JSX.Element}
  */
-export default function Persons(): ReactElement {
+export default function Persons(): ReactNode {
   return (
     <QueryRenderer<PersonsQuery>
       environment={environment}
