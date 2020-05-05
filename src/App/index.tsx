@@ -22,9 +22,7 @@ function App(): ReactElement {
           query AppLocationsQuery {
             locations {
               id
-              instances {
               name
-              }
             }
           }
         `}
@@ -37,7 +35,7 @@ function App(): ReactElement {
             return <div>Loading...</div>;
           }
 
-          return <div>User ID: {props.locations[0].instances[0].name}</div>;
+          return <div>User ID: {props.locations[0].name}</div>;
         }}
       >
 

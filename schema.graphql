@@ -1,31 +1,38 @@
-# Directive for field renaming
+"""Directive for field renaming"""
 directive @renameField(name: String!) on FIELD_DEFINITION
-# Directive for picking only necessary language from multilingual fields
+
+"""Directive for picking only necessary language from multilingual fields"""
 directive @multilingual on FIELD_DEFINITION
-# Directive for data loaders
+
+"""Directive for data loaders"""
 directive @dataLoader(
-  # Name of needed DataLoader
+  """Name of needed DataLoader"""
   dataLoaderName: String!
-  # Name of field with data for DataLoader
+
+  """Name of field with data for DataLoader"""
   fieldName: String!
 ) on FIELD_DEFINITION
-directive @cacheControl(
-  maxAge: Int
-  scope: CacheControlScope
-) on FIELD_DEFINITION | OBJECT | INTERFACE
-# Location address representation
+
+directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+
+"""Location address representation"""
 type Address {
-  # Address's ID
+  """Address's ID"""
   id: ID!
-  # Street on which the location is located
+
+  """Street on which the location is located"""
   street: String
-  # Build name
+
+  """Build name"""
   build: String
-  # House number on the street
+
+  """House number on the street"""
   homeNumber: String
-  # Corps of home
+
+  """Corps of home"""
   housing: String
-  # Link for location info
+
+  """Link for location info"""
   link: String
 }
 
@@ -39,274 +46,252 @@ input Coordinates {
   latitude: Float!
 }
 
-input CreateQuestInput {
-  # Quest name
-  name: String!
-  # Quest description
-  description: String
-  # Quest photo
-  photo: String
-  # Quest type (quiz, route, etc.)
-  type: TaskTypes!
-}
-
-type CreateQuestPayload {
-  # Created quest id
-  questId: ID
-  # Created quest
-  quest: Quest
-}
-
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
 scalar JSON
 
-# Supported languages for data
+"""Supported languages for data"""
 enum Languages {
   EN
   RU
 }
 
-# Location for displaying on map and making relations with persons
+"""Location for displaying on map and making relations with persons"""
 type Location {
-  # Location's ID
+  """Location's ID"""
   id: ID!
-  # Location coordinate by X
-  coordinateX: Float
-  # Location coordinate by Y
-  coordinateY: Float
-  # Array of addresses ids
-  addresses: [Address]
-  # Possible location representations
-  instances: [LocationInstance!]!
-}
 
-# Location context. This can be a time period, a special description for a particular route, etc.
-type LocationInstance {
-  # Instance's ID
-  id: ID!
-  # Location's name
+  """Location's name"""
   name: String
-  # Location
-  location: Location!
-  # Location's description
+
+  """Location's description"""
   description: String
-  # Link for location info
-  wikiLink: String
-  # Array of location's types
-  locationTypes: [LocationType]
-  # Contains links with location's photos
-  photoLinks: [String]
-  # Link with main photo
-  mainPhotoLink: String
-  # Location's construction date
+
+  """Location's construction date"""
   constructionDate: String
-  # Location's demolition date
+
+  """Location's demolition date"""
   demolitionDate: String
-  # Start of period
-  startDate: String
-  # End of period
-  endDate: String
-  # Location relations
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Location coordinate by X"""
+  coordinateX: Float
+
+  """Location coordinate by Y"""
+  coordinateY: Float
+
+  """Contains links with location's photos"""
+  photoLinks: [String]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Array of location's types"""
+  locationTypes: [LocationType]
+
+  """Array of addresses ids"""
+  addresses: [Address]
+
+  """Location relations"""
   relations: [Relation!]!
-  # Array of architects
+
+  """Array of architects"""
   architects: [Person]
 }
 
-# Location type to add it to Location
+"""Location type to add it to Location"""
 type LocationType {
-  # LocationType's ID
+  """LocationType's ID"""
   id: ID!
-  # LocationTypes's name
+
+  """LocationTypes's name"""
   name: String
 }
 
-# API mutations
+"""API mutations"""
 type Mutation {
-  # Unused field to let extend this type
+  """Unused field to let extend this type"""
   _: Boolean
-  # Save route to user
+
+  """Save route to user"""
   saveRoute(routeId: String!): User!
-  # Unsave route from user
+
+  """Unsave route from user"""
   deleteRouteFromSaved(routeId: String!): User!
-  # Add route to user liked routes
+
+  """Add route to user liked routes"""
   likeRoute(routeId: String!): User!
-  # Dislike route
+
+  """Dislike route"""
   dislikeRoute(routeId: String!): User!
-  quest: QuestMutations
 }
 
 type Person {
-  # Person's id
+  """Person's id"""
   id: ID!
-  # Person's first name
+
+  """Person's first name"""
   firstName: String
-  # Person's last name
+
+  """Person's last name"""
   lastName: String
-  # Person's patronymic
+
+  """Person's patronymic"""
   patronymic: String
-  # Person's pseudonym
+
+  """Person's pseudonym"""
   pseudonym: String
-  # Person's profession
+
+  """Person's profession"""
   profession: String
-  # Person's description
+
+  """Person's description"""
   description: String
-  # Person's birth date
+
+  """Person's birth date"""
   birthDate: String
-  # Person's death date
+
+  """Person's death date"""
   deathDate: String
-  # Person relations
+
+  """Person relations"""
   relations: [Relation!]!
-  # Person's info link
-  wikiLink: String
-  # Person's main photo
+
+  """Person main photo"""
   mainPhotoLink: String
-  # Person's photos links
+
+  """Person's photos links"""
   photoLinks: [String]
 }
 
-# API queries
+"""API queries"""
 type Query {
-  # Healthcheck endpoint
+  """Healthcheck endpoint"""
   health: String!
-  # Get specific person
+
+  """Get specific person"""
   person(
-    # Project id
+    """Project id"""
     id: ID!
   ): Person
-  # Get all persons
+
+  """Get all persons"""
   persons: [Person!]!
-  # Get specific location
+
+  """Get specific location"""
   location(
-    # Location id
+    """Location id"""
     id: ID!
   ): Location
-  # Get all locations
+
+  """Get all locations"""
   locations: [Location!]!
-  # Get specific locationInstances
-  locationInstance(
-    # locationInstances id
-    id: ID!
-  ): LocationInstance
-  # Get all locationInstances
-  locationInstances: [LocationInstance!]!
-  # Get relations on user request
+
+  """Get relations on user request"""
   search(
-    # The string on the basis of which the request will be made
+    """The string on the basis of which the request will be made"""
     searchString: String!
   ): [Relation!]!
-  # Get all routes
+
+  """Get all routes"""
   routes(
-    # Search filter
+    """Search filter"""
     filter: RoutesFilter
   ): [Route!]!
-  # Get nearest routes
+
+  """Get nearest routes"""
   nearestRoutes(
-    # Center coordinates
+    """Center coordinates"""
     center: Coordinates!
-    # Search radius (in metres)
+
+    """Search radius (in metres)"""
     radius: Float = 4000
-    # Search filter
+
+    """Search filter"""
     filter: RoutesFilter
   ): [Route!]!
-  # Get specific route by id
+
+  """Get specific route by id"""
   route(
-    # Route id
+    """Route id"""
     id: ID!
   ): Route
-  # Get info about user
+
+  """Get info about user"""
   me: User!
-  # Get specific Quest
-  quest(
-    # Quest id
-    id: ID!
-  ): Quest
-  # Get all quests
-  quests: [Quest!]!
 }
 
-type Quest {
-  # Quest ID
-  id: ID!
-  # Quest name
-  name: String!
-  # Quest description
-  description: String
-  # Quest photo
-  photo: String
-  # Quest type (quiz, route, etc.)
-  type: TaskTypes!
-  # Quest task
-  task: JSON!
-  # Quest rewards
-  rewards: [JSON!]!
-}
-
-type QuestMutations {
-  # Create quest
-  create(input: CreateQuestInput): CreateQuestPayload!
-}
-
-# Represents relation between person and location
+"""Represents relation between person and location"""
 type Relation {
-  # Relation's id
+  """Relation's id"""
   id: ID!
-  # Person in relation
+
+  """Person in relation"""
   person: Person
-  # Location in relation
-  locationInstance: LocationInstance
-  # Relation type
+
+  """Location in relation"""
+  location: Location
+
+  """Relation type"""
   relationType: RelationType
-  # Relation's quote
+
+  """Relation's quote"""
   quote: String
 }
 
-# Represents one of the relations types
+"""Represents one of the relations types"""
 type RelationType {
-  # Relation type id
+  """Relation type id"""
   id: ID!
-  # Relation type name
+
+  """Relation type name"""
   name: String
-  # Relation type synonyms
+
+  """Relation type synonyms"""
   synonyms: [String]
 }
 
-# Route between locations
+"""Route between locations"""
 type Route {
-  # Route id
+  """Route id"""
   id: ID!
-  # Route name
+
+  """Route name"""
   name: String
-  # Route locations
-  locationsInstance: [LocationInstance]!
-  # Route description
+
+  """Route locations"""
+  locations: [Location]!
+
+  """Route description"""
   description: String
-  # Route photo
+
+  """Route photo"""
   photoLink: String
 }
 
-# Input to search routes
+"""Input to search routes"""
 input RoutesFilter {
-  # String for searching in all languages
+  """String for searching in all languages"""
   contains: String!
 }
 
-# Possible task types
-enum TaskTypes {
-  # Task type quiz
-  QUIZ
-  # Task type route
-  ROUTE
-}
-
+"""The `Upload` scalar type represents a file upload."""
 scalar Upload
 
 type User {
-  # User's ID
+  """User's ID"""
   id: ID!
-  # Username
+
+  """Username"""
   username: String!
-  # User saved routes
+
+  """User saved routes"""
   savedRoutes: [Route!]!
-  # User liked routes
+
+  """User liked routes"""
   likedRoutes: [Route!]!
 }
 
