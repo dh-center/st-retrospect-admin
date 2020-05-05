@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import './index.css';
 import Navigation from '../components/Navigation';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import routes from '../router/routes';
 
-function App() {
+/**
+ * Main component of the application
+ */
+function App(): ReactElement {
   return (
     <div className="App">
-      <Router>
-        <Navigation/>
-        <Switch>
-          {routes.map((route, key) => (
-            <Route
-              key={key}
-              path={route.path}
-              render={route.component}
-            />
-          ))}
-        </Switch>
-      </Router>
+
+      <Navigation/>
+      <Switch>
+        {routes.map((route, key) => (
+          <Route
+            key={key}
+            path={route.path}
+            render={route.component}
+          />
+        ))}
+      </Switch>
     </div>
   );
 }

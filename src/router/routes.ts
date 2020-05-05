@@ -1,20 +1,20 @@
 import Persons from '../components/Persons';
-import Quests from "../components/Quests";
-import Quiz from "../components/Quiz";
+import Quests from '../components/Quests';
+import Quiz from '../components/Quiz';
 
 const routes = [
   {
     path: '/persons',
-    component: Persons
+    component: Persons,
   },
   {
     path: '/quests',
-    component: Quests
+    component: Quests,
   },
   {
     path: '/quiz',
-    component: Quiz
-  }
+    component: Quiz,
+  },
 ];
 
 export default routes;
