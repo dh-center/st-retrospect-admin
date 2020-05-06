@@ -1,4 +1,4 @@
-import Persons from '../components/Persons';
+import Persons from '../components/Persons/PersonsPage';
 import Quests from '../components/Quests';
 import Quiz from '../components/Quiz';
 

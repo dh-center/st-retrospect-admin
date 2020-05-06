@@ -60,7 +60,7 @@ export default createPaginationContainer(PersonsList,
         ...PersonsList_persons @arguments(first: $first, after: $after)
       }
     `,
-    getVariables(props, paginationInfo, fragmentVariables) {
+    getVariables(props, paginationInfo) {
       return {
         first: paginationInfo.count,
         after: paginationInfo.cursor,
