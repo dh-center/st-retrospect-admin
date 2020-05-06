@@ -21,7 +21,7 @@ export default function Persons(): ReactElement {
           }
         `}
       variables={{
-        first: 10,
+        first: 100,
         after: null,
       }}
       render={({ error, props }): React.ReactNode => {
@@ -33,7 +33,7 @@ export default function Persons(): ReactElement {
         }
         // console.log(props);
 
-        return <PersonsList query={props}/>;
+        return <PersonsList persons={props}/>;
       }}
     >
 

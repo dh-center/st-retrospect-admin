@@ -3,22 +3,22 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PersonsQueryVariables = {
+export type PersonsListForwardQueryVariables = {
     first?: number | null;
     after?: unknown | null;
 };
-export type PersonsQueryResponse = {
+export type PersonsListForwardQueryResponse = {
     readonly " $fragmentRefs": FragmentRefs<"PersonsList_persons">;
 };
-export type PersonsQuery = {
-    readonly response: PersonsQueryResponse;
-    readonly variables: PersonsQueryVariables;
+export type PersonsListForwardQuery = {
+    readonly response: PersonsListForwardQueryResponse;
+    readonly variables: PersonsListForwardQueryVariables;
 };
 
 
 
 /*
-query PersonsQuery(
+query PersonsListForwardQuery(
   $first: Int
   $after: Cursor
 ) {
@@ -77,7 +77,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonsQuery",
+    "name": "PersonsListForwardQuery",
     "selections": [
       {
         "args": (v1/*: any*/),
@@ -91,7 +91,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonsQuery",
+    "name": "PersonsListForwardQuery",
     "selections": [
       {
         "alias": null,
@@ -207,11 +207,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "PersonsQuery",
+    "name": "PersonsListForwardQuery",
     "operationKind": "query",
-    "text": "query PersonsQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_persons_2HEEH6\n}\n\nfragment PersonsList_persons_2HEEH6 on Query {\n  persons(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PersonsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_persons_2HEEH6\n}\n\nfragment PersonsList_persons_2HEEH6 on Query {\n  persons(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '48befa613570c217869d478d4f88d1f4';
+(node as any).hash = 'aeca2a117bffcdc65c40c082639b822f';
 export default node;
