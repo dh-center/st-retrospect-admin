@@ -1,23 +1,23 @@
 import React, { ReactElement } from 'react';
 import { QueryRenderer } from 'react-relay';
-import { PersonsQuery } from './__generated__/PersonsQuery.graphql';
+import { PersonsPageQuery } from './__generated__/PersonsPageQuery.graphql';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import PersonsList from './PersonsList';
 
 /**
- * Functional component for persons view
+ * Page for displaying persons
  */
-export default function Persons(): ReactElement {
+export default function PersonsPage(): ReactElement {
   return (
-    <QueryRenderer<PersonsQuery>
+    <QueryRenderer<PersonsPageQuery>
       environment={environment}
       query={graphql`
-          query PersonsQuery(
+          query PersonsPageQuery(
             $first: Int,
             $after: Cursor
             ) {
-             ...PersonsList_persons @arguments(first: $first, after: $after)
+             ...PersonsList_personsConnection @arguments(first: $first, after: $after)
           }
         `}
       variables={{
@@ -31,12 +31,9 @@ export default function Persons(): ReactElement {
         if (!props) {
           return <div>Loading persons...</div>;
         }
-        // console.log(props);
 
-        return <PersonsList persons={props}/>;
+        return <PersonsList personsConnection={props}/>;
       }}
-    >
-
-    </QueryRenderer>
+    />
   );
 }

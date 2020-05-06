@@ -8,7 +8,7 @@ export type PersonsListForwardQueryVariables = {
     after?: unknown | null;
 };
 export type PersonsListForwardQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"PersonsList_persons">;
+    readonly " $fragmentRefs": FragmentRefs<"PersonsList_personsConnection">;
 };
 export type PersonsListForwardQuery = {
     readonly response: PersonsListForwardQueryResponse;
@@ -22,10 +22,10 @@ query PersonsListForwardQuery(
   $first: Int
   $after: Cursor
 ) {
-  ...PersonsList_persons_2HEEH6
+  ...PersonsList_personsConnection_2HEEH6
 }
 
-fragment PersonsList_persons_2HEEH6 on Query {
+fragment PersonsList_personsConnection_2HEEH6 on Query {
   persons(first: $first, after: $after) {
     edges {
       node {
@@ -82,7 +82,7 @@ return {
       {
         "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "PersonsList_persons"
+        "name": "PersonsList_personsConnection"
       }
     ],
     "type": "Query"
@@ -209,9 +209,9 @@ return {
     "metadata": {},
     "name": "PersonsListForwardQuery",
     "operationKind": "query",
-    "text": "query PersonsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_persons_2HEEH6\n}\n\nfragment PersonsList_persons_2HEEH6 on Query {\n  persons(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PersonsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_personsConnection_2HEEH6\n}\n\nfragment PersonsList_personsConnection_2HEEH6 on Query {\n  persons(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'aeca2a117bffcdc65c40c082639b822f';
+(node as any).hash = '3679d6cf555ae9a30bb8d7560a332eed';
 export default node;

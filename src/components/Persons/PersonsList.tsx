@@ -1,12 +1,23 @@
 import React, { ReactElement } from 'react';
 import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import { PersonsList_persons as Persons } from './__generated__/PersonsList_persons.graphql';
+import { PersonsList_personsConnection as PersonsConnection } from './__generated__/PersonsList_personsConnection.graphql';
 
+/**
+ * Props for PersonsList component
+ */
 interface Props {
-  persons: Persons;
+  /**
+   * Persons connection
+   */
+  personsConnection: PersonsConnection;
+
+  /**
+   * Prop for accessing relay functionality
+   */
   relay: RelayPaginationProp;
 }
+
 /**
  * Component for displaying persons list
  *
@@ -15,7 +26,7 @@ interface Props {
 function PersonsList(props: Props): ReactElement<Props> {
   return <table>
     <tbody>
-      {props.persons.persons.edges.map((person) => {
+      {props.personsConnection.persons.edges.map((person) => {
         return <tr key={person.node.id}>
           <td>{person.node.id}</td>
           <td>{person.node.firstName}</td>
@@ -29,8 +40,8 @@ function PersonsList(props: Props): ReactElement<Props> {
 
 export default createPaginationContainer(PersonsList,
   {
-    persons: graphql`
-      fragment PersonsList_persons on Query @argumentDefinitions (
+    personsConnection: graphql`
+      fragment PersonsList_personsConnection on Query @argumentDefinitions (
         first: {type: "Int", defaultValue: 10}
         after: {type: "Cursor"}
       ) {
@@ -57,7 +68,7 @@ export default createPaginationContainer(PersonsList,
         $first: Int,
         $after: Cursor,
       ) {
-        ...PersonsList_persons @arguments(first: $first, after: $after)
+        ...PersonsList_personsConnection @arguments(first: $first, after: $after)
       }
     `,
     getVariables(props, paginationInfo) {

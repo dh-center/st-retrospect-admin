@@ -3,29 +3,29 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PersonsQueryVariables = {
+export type PersonsPageQueryVariables = {
     first?: number | null;
     after?: unknown | null;
 };
-export type PersonsQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"PersonsList_persons">;
+export type PersonsPageQueryResponse = {
+    readonly " $fragmentRefs": FragmentRefs<"PersonsList_personsConnection">;
 };
-export type PersonsQuery = {
-    readonly response: PersonsQueryResponse;
-    readonly variables: PersonsQueryVariables;
+export type PersonsPageQuery = {
+    readonly response: PersonsPageQueryResponse;
+    readonly variables: PersonsPageQueryVariables;
 };
 
 
 
 /*
-query PersonsQuery(
+query PersonsPageQuery(
   $first: Int
   $after: Cursor
 ) {
-  ...PersonsList_persons_2HEEH6
+  ...PersonsList_personsConnection_2HEEH6
 }
 
-fragment PersonsList_persons_2HEEH6 on Query {
+fragment PersonsList_personsConnection_2HEEH6 on Query {
   persons(first: $first, after: $after) {
     edges {
       node {
@@ -77,12 +77,12 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonsQuery",
+    "name": "PersonsPageQuery",
     "selections": [
       {
         "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "PersonsList_persons"
+        "name": "PersonsList_personsConnection"
       }
     ],
     "type": "Query"
@@ -91,7 +91,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonsQuery",
+    "name": "PersonsPageQuery",
     "selections": [
       {
         "alias": null,
@@ -207,11 +207,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "PersonsQuery",
+    "name": "PersonsPageQuery",
     "operationKind": "query",
-    "text": "query PersonsQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_persons_2HEEH6\n}\n\nfragment PersonsList_persons_2HEEH6 on Query {\n  persons(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PersonsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_personsConnection_2HEEH6\n}\n\nfragment PersonsList_personsConnection_2HEEH6 on Query {\n  persons(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '48befa613570c217869d478d4f88d1f4';
+(node as any).hash = 'd40155d0a50b078c37fea2bdd0a538d2';
 export default node;

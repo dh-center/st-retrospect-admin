@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PersonsList_persons = {
+export type PersonsList_personsConnection = {
     readonly persons: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -14,12 +14,12 @@ export type PersonsList_persons = {
             };
         }>;
     };
-    readonly " $refType": "PersonsList_persons";
+    readonly " $refType": "PersonsList_personsConnection";
 };
-export type PersonsList_persons$data = PersonsList_persons;
-export type PersonsList_persons$key = {
-    readonly " $data"?: PersonsList_persons$data;
-    readonly " $fragmentRefs": FragmentRefs<"PersonsList_persons">;
+export type PersonsList_personsConnection$data = PersonsList_personsConnection;
+export type PersonsList_personsConnection$key = {
+    readonly " $data"?: PersonsList_personsConnection$data;
+    readonly " $fragmentRefs": FragmentRefs<"PersonsList_personsConnection">;
 };
 
 
@@ -52,7 +52,7 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "PersonsList_persons",
+  "name": "PersonsList_personsConnection",
   "selections": [
     {
       "alias": "persons",
@@ -157,5 +157,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = '0d40b1fd63c59e8b0edb70fb590d7b56';
+(node as any).hash = 'cafaab66842d83b013705a45d0fec0ed';
 export default node;
