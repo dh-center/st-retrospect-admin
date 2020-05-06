@@ -46,6 +46,30 @@ input Coordinates {
   latitude: Float!
 }
 
+input CreateQuestInput {
+  """Quest name"""
+  name: String!
+
+  """Quest description"""
+  description: String
+
+  """Quest photo"""
+  photo: String
+
+  """Quest type (quiz, route, etc.)"""
+  type: TaskTypes!
+}
+
+type CreateQuestPayload {
+  """Created quest id"""
+  questId: ID
+
+  """Created quest"""
+  quest: Quest
+}
+
+scalar Cursor
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -62,26 +86,40 @@ type Location {
   """Location's ID"""
   id: ID!
 
-  """Location's name"""
-  name: String
-
-  """Location's description"""
-  description: String
-
-  """Location's construction date"""
-  constructionDate: String
-
-  """Location's demolition date"""
-  demolitionDate: String
-
-  """Link for location info"""
-  wikiLink: String
-
   """Location coordinate by X"""
   coordinateX: Float
 
   """Location coordinate by Y"""
   coordinateY: Float
+
+  """Array of addresses ids"""
+  addresses: [Address]
+
+  """Possible location representations"""
+  instances: [LocationInstance!]!
+}
+
+"""
+Location context. This can be a time period, a special description for a particular route, etc.
+"""
+type LocationInstance {
+  """Instance's ID"""
+  id: ID!
+
+  """Location's name"""
+  name: String
+
+  """Location"""
+  location: Location!
+
+  """Location's description"""
+  description: String
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Array of location's types"""
+  locationTypes: [LocationType]
 
   """Contains links with location's photos"""
   photoLinks: [String]
@@ -89,11 +127,17 @@ type Location {
   """Link with main photo"""
   mainPhotoLink: String
 
-  """Array of location's types"""
-  locationTypes: [LocationType]
+  """Location's construction date"""
+  constructionDate: String
 
-  """Array of addresses ids"""
-  addresses: [Address]
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
 
   """Location relations"""
   relations: [Relation!]!
@@ -127,6 +171,21 @@ type Mutation {
 
   """Dislike route"""
   dislikeRoute(routeId: String!): User!
+  quest: QuestMutations
+}
+
+type PageInfo {
+  """Information about the existence of the next page"""
+  hasNextPage: Boolean!
+
+  """Information about the existence of the previous page"""
+  hasPreviousPage: Boolean!
+
+  """First cursor on this page"""
+  startCursor: Cursor!
+
+  """Last cursor on this page"""
+  endCursor: Cursor!
 }
 
 type Person {
@@ -160,11 +219,33 @@ type Person {
   """Person relations"""
   relations: [Relation!]!
 
-  """Person main photo"""
+  """Person's info link"""
+  wikiLink: String
+
+  """Person's main photo"""
   mainPhotoLink: String
 
   """Person's photos links"""
   photoLinks: [String]
+}
+
+type PersonConnection {
+  """List of persons edges"""
+  edges: [PersonEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+type PersonEdge {
+  """Cursor of this person"""
+  cursor: Cursor!
+
+  """Person info"""
+  node: Person!
 }
 
 """API queries"""
@@ -179,7 +260,7 @@ type Query {
   ): Person
 
   """Get all persons"""
-  persons: [Person!]!
+  persons(after: Cursor, before: Cursor, first: Int, last: Int): PersonConnection!
 
   """Get specific location"""
   location(
@@ -189,6 +270,15 @@ type Query {
 
   """Get all locations"""
   locations: [Location!]!
+
+  """Get specific locationInstances"""
+  locationInstance(
+    """locationInstances id"""
+    id: ID!
+  ): LocationInstance
+
+  """Get all locationInstances"""
+  locationInstances: [LocationInstance!]!
 
   """Get relations on user request"""
   search(
@@ -222,6 +312,43 @@ type Query {
 
   """Get info about user"""
   me: User!
+
+  """Get specific Quest"""
+  quest(
+    """Quest id"""
+    id: ID!
+  ): Quest
+
+  """Get all quests"""
+  quests: [Quest!]!
+}
+
+type Quest {
+  """Quest ID"""
+  id: ID!
+
+  """Quest name"""
+  name: String!
+
+  """Quest description"""
+  description: String
+
+  """Quest photo"""
+  photo: String
+
+  """Quest type (quiz, route, etc.)"""
+  type: TaskTypes!
+
+  """Quest task"""
+  task: JSON!
+
+  """Quest rewards"""
+  rewards: [JSON!]!
+}
+
+type QuestMutations {
+  """Create quest"""
+  create(input: CreateQuestInput): CreateQuestPayload!
 }
 
 """Represents relation between person and location"""
@@ -233,7 +360,7 @@ type Relation {
   person: Person
 
   """Location in relation"""
-  location: Location
+  locationInstance: LocationInstance
 
   """Relation type"""
   relationType: RelationType
@@ -263,7 +390,7 @@ type Route {
   name: String
 
   """Route locations"""
-  locations: [Location]!
+  locationsInstance: [LocationInstance]!
 
   """Route description"""
   description: String
@@ -276,6 +403,15 @@ type Route {
 input RoutesFilter {
   """String for searching in all languages"""
   contains: String!
+}
+
+"""Possible task types"""
+enum TaskTypes {
+  """Task type quiz"""
+  QUIZ
+
+  """Task type route"""
+  ROUTE
 }
 
 """The `Upload` scalar type represents a file upload."""

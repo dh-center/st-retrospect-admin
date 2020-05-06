@@ -1,11 +1,11 @@
-import Persons from '../components/Persons';
+import PersonsPage from '../components/Persons/PersonsPage';
 import Quests from '../components/Quests';
 import Quiz from '../components/Quiz';
 
 const routes = [
   {
     path: '/persons',
-    component: Persons,
+    component: PersonsPage,
   },
   {
     path: '/quests',
