@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { PersonsList_persons as Persons } from './__generated__/PersonsList_persons.graphql';
@@ -12,24 +12,19 @@ interface Props {
  *
  * @param props - react component props
  */
-class PersonsList extends React.Component<Props> {
-  /**
-   * freferf
-   */
-  public render(): ReactNode {
-    return <table>
-      <tbody>
-        {this.props.persons.persons.edges.map((person) => {
-          return <tr key={person.node.id}>
-            <td>{person.node.id}</td>
-            <td>{person.node.firstName}</td>
-            <td>{person.node.lastName}</td>
-            <td>{person.node.patronymic}</td>
-          </tr>;
-        })}
-      </tbody>
-    </table>;
-  }
+function PersonsList(props: Props): ReactElement<Props> {
+  return <table>
+    <tbody>
+      {props.persons.persons.edges.map((person) => {
+        return <tr key={person.node.id}>
+          <td>{person.node.id}</td>
+          <td>{person.node.firstName}</td>
+          <td>{person.node.lastName}</td>
+          <td>{person.node.patronymic}</td>
+        </tr>;
+      })}
+    </tbody>
+  </table>;
 }
 
 export default createPaginationContainer(PersonsList,
