@@ -4,6 +4,7 @@ import { PersonsPageQuery } from './__generated__/PersonsPageQuery.graphql';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import PersonsList from './PersonsList';
+import { ENTITIES_PER_PAGE } from '../../constants';
 
 /**
  * Page for displaying persons
@@ -13,15 +14,15 @@ export default function PersonsPage(): ReactElement {
     <QueryRenderer<PersonsPageQuery>
       environment={environment}
       query={graphql`
-          query PersonsPageQuery(
+          query PersonsPageQuery (
             $first: Int,
             $after: Cursor
-            ) {
+          ) {
              ...PersonsList_personsConnection @arguments(first: $first, after: $after)
           }
         `}
       variables={{
-        first: 100,
+        first: ENTITIES_PER_PAGE,
         after: null,
       }}
       render={({ error, props }): React.ReactNode => {

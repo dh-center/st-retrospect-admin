@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PersonsList_personsConnection = {
     readonly persons: {
+        readonly totalCount: number;
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
@@ -62,6 +63,13 @@ const node: ReaderFragment = {
       "name": "__PersonsList_persons_connection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -157,5 +165,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = 'cafaab66842d83b013705a45d0fec0ed';
+(node as any).hash = '6fd7885a63015681181a4a06bd4a7270';
 export default node;

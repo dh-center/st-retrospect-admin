@@ -1,0 +1,17 @@
+.persons-page__page-control {
+  position: sticky;
+  top: 0;
+  background: #fff;
+}
+
+.persons-page__table {
+  border: 1px solid #1C6EA4;
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+}
+
+.persons-page__table td, th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
