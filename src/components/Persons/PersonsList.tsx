@@ -6,6 +6,7 @@ import { ENTITIES_PER_PAGE } from '../../constants';
 import PaginationControl from 'rc-pagination';
 import './PersonsList.css';
 import 'rc-pagination/assets/index.css';
+import locale from 'rc-pagination/lib/locale/ru_RU';
 
 /**
  * Props for PersonsList component
@@ -49,6 +50,7 @@ function PersonsList(props: Props): ReactElement<Props> {
           pageSize={ENTITIES_PER_PAGE}
           total={props.personsConnection.persons.totalCount}
           onChange={goToPage}
+          locale={locale}
         />
       </div>
       <table className={'persons-page__table'}>
@@ -62,24 +64,22 @@ function PersonsList(props: Props): ReactElement<Props> {
           </tr>
         </thead>
         <tbody>
-          {props.personsConnection.persons.edges.map((person, index) => {
-            return (
-              <React.Fragment key={person.node.id}>
-                <tr key={person.node.id}>
-                  <td>{index + 1}</td>
-                  <td>{person.node.id}</td>
-                  <td>{person.node.firstName}</td>
-                  <td>{person.node.lastName}</td>
-                  <td>{person.node.patronymic}</td>
-                </tr>
-                {(index + 1) % 25 === 0 &&
+          {props.personsConnection.persons.edges.map((person, index) => (
+            <React.Fragment key={person.node.id}>
+              <tr key={person.node.id}>
+                <td>{index + 1}</td>
+                <td>{person.node.id}</td>
+                <td>{person.node.firstName}</td>
+                <td>{person.node.lastName}</td>
+                <td>{person.node.patronymic}</td>
+              </tr>
+              {(index + 1) % 25 === 0 &&
                   <tr key={(index + 1) / 25 + 1}>
                     <td colSpan={5}>Page number {(index + 1) / 25 + 1}</td>
                   </tr>
-                }
-              </React.Fragment>
-            );
-          })}
+              }
+            </React.Fragment>
+          ))}
         </tbody>
       </table>
     </div>
