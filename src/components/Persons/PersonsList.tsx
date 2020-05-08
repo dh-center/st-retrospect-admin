@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { PersonsList_personsConnection as PersonsConnection } from './__generated__/PersonsList_personsConnection.graphql';
@@ -34,12 +34,22 @@ function PersonsList(props: Props): ReactElement<Props> {
   };
 
   const goToPage = (current: number): void => {
-    console.log(current);
+    props.relay.loadMore(current * ENTITIES_PER_PAGE - props.personsConnection.persons.edges.length);
   };
 
-  const pageCount = Math.floor(props.personsConnection.persons.totalCount / ENTITIES_PER_PAGE) + 1;
+  const onScroll = (e: Event): void => {
+    console.log(document.documentElement.scrollTop);
+  };
 
-  console.log(pageCount);
+  useEffect(() => {
+    window.addEventListener('scroll', onScroll);
+
+    return function cleanup(): void {
+      window.removeEventListener('scroll', onScroll);
+    };
+  });
+
+  // const pageCount = Math.floor(props.personsConnection.persons.totalCount / ENTITIES_PER_PAGE) + 1;
 
   return (
     <div className={'persons-page'}>
