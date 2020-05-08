@@ -3,7 +3,9 @@ import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { PersonsList_personsConnection as PersonsConnection } from './__generated__/PersonsList_personsConnection.graphql';
 import { ENTITIES_PER_PAGE } from '../../constants';
+import PaginationControl from 'rc-pagination';
 import './PersonsList.css';
+import 'rc-pagination/assets/index.css';
 
 /**
  * Props for PersonsList component
@@ -30,12 +32,24 @@ function PersonsList(props: Props): ReactElement<Props> {
     props.relay.loadMore(ENTITIES_PER_PAGE);
   };
 
+  const goToPage = (current: number): void => {
+    console.log(current);
+  };
+
+  const pageCount = Math.floor(props.personsConnection.persons.totalCount / ENTITIES_PER_PAGE) + 1;
+
+  console.log(pageCount);
+
   return (
     <div className={'persons-page'}>
       <div className={'persons-page__page-control'}>
         {props.personsConnection.persons.totalCount}
         <button onClick={loadMore}>Load more</button>
-        <input type="text"/>
+        <PaginationControl
+          pageSize={ENTITIES_PER_PAGE}
+          total={props.personsConnection.persons.totalCount}
+          onChange={goToPage}
+        />
       </div>
       <table className={'persons-page__table'}>
         <thead>
@@ -50,7 +64,7 @@ function PersonsList(props: Props): ReactElement<Props> {
         <tbody>
           {props.personsConnection.persons.edges.map((person, index) => {
             return (
-              <>
+              <React.Fragment key={person.node.id}>
                 <tr key={person.node.id}>
                   <td>{index + 1}</td>
                   <td>{person.node.id}</td>
@@ -59,11 +73,11 @@ function PersonsList(props: Props): ReactElement<Props> {
                   <td>{person.node.patronymic}</td>
                 </tr>
                 {(index + 1) % 25 === 0 &&
-                  <tr>
-                    <td colSpan={4}>Page number {(index + 1) / 25 + 1}</td>
+                  <tr key={(index + 1) / 25 + 1}>
+                    <td colSpan={5}>Page number {(index + 1) / 25 + 1}</td>
                   </tr>
                 }
-              </>
+              </React.Fragment>
             );
           })}
         </tbody>
@@ -72,7 +86,8 @@ function PersonsList(props: Props): ReactElement<Props> {
   );
 }
 
-export default createPaginationContainer(PersonsList,
+export default createPaginationContainer(
+  PersonsList,
   {
     personsConnection: graphql`
       fragment PersonsList_personsConnection on Query @argumentDefinitions (
