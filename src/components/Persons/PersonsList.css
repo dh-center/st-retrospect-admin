@@ -1,6 +1,6 @@
 .persons-page__page-control {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  bottom: 0;
   background: #fff;
 }
 
@@ -14,4 +14,12 @@
 .persons-page__table td, th {
   border: 1px solid #AAAAAA;
   padding: 3px 2px;
+}
+
+.true {
+  color: green;
+}
+
+.false {
+  color: red;
 }

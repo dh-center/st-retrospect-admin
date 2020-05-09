@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { PersonsList_personsConnection as PersonsConnection } from './__generated__/PersonsList_personsConnection.graphql';
@@ -29,6 +29,9 @@ interface Props {
  * @param props - react component props
  */
 function PersonsList(props: Props): ReactElement<Props> {
+  const pagesCount = Math.floor(props.personsConnection.persons.totalCount / ENTITIES_PER_PAGE) + 1;
+  const [viewingPages, setViewingPages] = useState<boolean[]>(Array<boolean>(pagesCount).fill(false));
+
   const loadMore = (): void => {
     props.relay.loadMore(ENTITIES_PER_PAGE);
   };
@@ -37,19 +40,30 @@ function PersonsList(props: Props): ReactElement<Props> {
     props.relay.loadMore(current * ENTITIES_PER_PAGE - props.personsConnection.persons.edges.length);
   };
 
-  const onScroll = (e: Event): void => {
-    console.log(document.documentElement.scrollTop);
-  };
-
   useEffect(() => {
-    window.addEventListener('scroll', onScroll);
+    const observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+      const viewingPagesCopy = [ ...viewingPages ];
 
-    return function cleanup(): void {
-      window.removeEventListener('scroll', onScroll);
+      console.log('orig', viewingPages);
+      console.log('copy', viewingPagesCopy);
+      entries.forEach(entry => {
+        const page = entry.target.getAttribute('data-page');
+
+        if (page) {
+          console.log(page, entry.isIntersecting);
+          viewingPagesCopy[+page - 1] = entry.isIntersecting;
+        }
+      });
+
+      console.log('set', viewingPagesCopy);
+
+      setViewingPages(viewingPagesCopy);
     };
-  });
 
-  // const pageCount = Math.floor(props.personsConnection.persons.totalCount / ENTITIES_PER_PAGE) + 1;
+    const observer = new window.IntersectionObserver(observerCallback);
+
+    console.log('new observer');
+  });
 
   return (
     <div className={'persons-page'}>
@@ -62,6 +76,9 @@ function PersonsList(props: Props): ReactElement<Props> {
           onChange={goToPage}
           locale={locale}
         />
+        {viewingPages.map((page, index) =>
+          <span key={index} className={page ? 'true' : 'false'}>{index} — {page ? 'true' : 'false'} </span>
+        )}
       </div>
       <table className={'persons-page__table'}>
         <thead>
@@ -76,6 +93,13 @@ function PersonsList(props: Props): ReactElement<Props> {
         <tbody>
           {props.personsConnection.persons.edges.map((person, index) => (
             <React.Fragment key={person.node.id}>
+              {{(index) % 25 === 0 &&}
+               <PageSectionRow
+                 key={(index) / 25 + 1}
+                 pageNumber={(index) / 25 + 1}
+                 observer={observer}
+               />
+               }
               <tr key={person.node.id}>
                 <td>{index + 1}</td>
                 <td>{person.node.id}</td>
@@ -83,17 +107,47 @@ function PersonsList(props: Props): ReactElement<Props> {
                 <td>{person.node.lastName}</td>
                 <td>{person.node.patronymic}</td>
               </tr>
-              {(index + 1) % 25 === 0 &&
-                  <tr key={(index + 1) / 25 + 1}>
-                    <td colSpan={5}>Page number {(index + 1) / 25 + 1}</td>
-                  </tr>
-              }
             </React.Fragment>
           ))}
         </tbody>
       </table>
     </div>
   );
+}
+
+/**
+ * @param props
+ */
+class PageSectionRow extends React.Component<{
+  pageNumber: number;
+  observer: IntersectionObserver;
+}> {
+  private row = React.createRef<HTMLTableRowElement>();
+
+  /**
+   *
+   */
+  public componentDidMount(): void {
+    this.props.observer.observe(this.row.current!);
+  }
+
+  /**
+   *
+   */
+  public componentWillUnmount(): void {
+    this.props.observer.unobserve(this.row.current!);
+  }
+
+  /**
+   *
+   */
+  public render(): ReactElement {
+    return (
+      <tr ref={this.row} data-page={this.props.pageNumber}>
+        <td colSpan={5}>Page number {this.props.pageNumber}</td>
+      </tr>
+    );
+  }
 }
 
 export default createPaginationContainer(
