@@ -61,7 +61,7 @@ class PersonsList extends React.Component<Props, State> {
     };
 
     this.observer = new window.IntersectionObserver(this.observerCallback, {
-      rootMargin: '-1px',
+      rootMargin: '-50%',
     });
   }
 
@@ -130,14 +130,14 @@ class PersonsList extends React.Component<Props, State> {
         const element = document.getElementById('page-' + current);
 
         if (element) {
-          element.scrollIntoView();
+          element.scrollIntoView(true);
         }
       });
     } else {
       const element = document.getElementById('page-' + current);
 
       if (element) {
-        element.scrollIntoView();
+        element.scrollIntoView(true);
       }
     }
   };
