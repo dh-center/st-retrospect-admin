@@ -25,10 +25,15 @@ interface Props {
 
 interface State {
   viewingPages: boolean[];
+  currentPage: number;
 }
 
 /**
  * erferf
+ *
+ * @param entries
+ * @param observer
+ * @param current
  */
 class PersonsList extends React.Component<Props, State> {
   private readonly observer: IntersectionObserver;
@@ -42,6 +47,7 @@ class PersonsList extends React.Component<Props, State> {
 
     this.state = {
       viewingPages: Array(pagesCount).fill(false),
+      currentPage: 0,
     };
 
     this.observer = new window.IntersectionObserver(this.observerCallback);
@@ -61,7 +67,9 @@ class PersonsList extends React.Component<Props, State> {
             total={this.props.personsConnection.persons.totalCount}
             onChange={this.goToPage}
             locale={locale}
+            current={this.state.currentPage + 1}
           />
+          Current page: {this.state.currentPage + 1}
         </div>
         <table className={'persons-page__table'}>
           <thead>
@@ -109,19 +117,17 @@ class PersonsList extends React.Component<Props, State> {
   private observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
     const viewingPagesCopy = [ ...this.state.viewingPages ];
 
-    console.log('copy', viewingPagesCopy);
     entries.forEach(entry => {
       const page = entry.target.getAttribute('data-page');
 
       if (page) {
-        console.log(page, entry.isIntersecting);
         viewingPagesCopy[+page - 1] = entry.isIntersecting;
       }
     });
 
-    console.log('set', viewingPagesCopy);
     this.setState({
       viewingPages: viewingPagesCopy,
+      currentPage: viewingPagesCopy.findIndex(Boolean),
     });
   };
 }
@@ -139,14 +145,18 @@ class PageSectionRow extends React.Component<{
    *
    */
   public componentDidMount(): void {
-    this.props.observer.observe(this.row.current!);
+    if (this.row.current) {
+      this.props.observer.observe(this.row.current);
+    }
   }
 
   /**
    *
    */
   public componentWillUnmount(): void {
-    this.props.observer.unobserve(this.row.current!);
+    if (this.row.current) {
+      this.props.observer.unobserve(this.row.current);
+    }
   }
 
   /**
