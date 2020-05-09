@@ -50,7 +50,9 @@ class PersonsList extends React.Component<Props, State> {
       currentPage: 0,
     };
 
-    this.observer = new window.IntersectionObserver(this.observerCallback);
+    this.observer = new window.IntersectionObserver(this.observerCallback, {
+      rootMargin: '-1px',
+    });
   }
 
   /**
@@ -60,9 +62,9 @@ class PersonsList extends React.Component<Props, State> {
     const pagesCount = Math.ceil(this.props.personsConnection.persons.edges.length / ENTITIES_PER_PAGE);
     const sectionsList: ReactElement[] = [];
 
-    console.log(pagesCount, this.props.personsConnection.persons.edges.length);
     for (let i = 1; i <= pagesCount; i++) {
       sectionsList.push(<TableBody
+        key={i}
         pageNumber={i}
         observer={this.observer}
         personsConnection={this.props.personsConnection}/>);
@@ -103,7 +105,23 @@ class PersonsList extends React.Component<Props, State> {
   };
 
   private goToPage = (current: number): void => {
-    this.props.relay.loadMore(current * ENTITIES_PER_PAGE - this.props.personsConnection.persons.edges.length);
+    const personsCountToLoad = current * ENTITIES_PER_PAGE - this.props.personsConnection.persons.edges.length;
+
+    if (personsCountToLoad > 0) {
+      this.props.relay.loadMore(personsCountToLoad, () => {
+        const element = document.getElementById('page-' + current);
+
+        if (element) {
+          element.scrollIntoView();
+        }
+      });
+    } else {
+      const element = document.getElementById('page-' + current);
+
+      if (element) {
+        element.scrollIntoView();
+      }
+    }
   };
 
   private observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
@@ -159,7 +177,6 @@ class TableBody extends React.Component<{
     const personsList: ReactElement[] = [];
 
     for (let i = (this.props.pageNumber - 1) * ENTITIES_PER_PAGE; i < Math.min(this.props.pageNumber * ENTITIES_PER_PAGE, this.props.personsConnection.persons.edges.length); i++) {
-      console.log(this.props.pageNumber, i);
       const person = this.props.personsConnection.persons.edges[i].node;
       const row =
         <tr key={person.id}>
@@ -174,9 +191,9 @@ class TableBody extends React.Component<{
     }
 
     return (
-      <tbody ref={this.htmlElement} data-page={this.props.pageNumber}>
+      <tbody ref={this.htmlElement} data-page={this.props.pageNumber} >
         <tr>
-          <td colSpan={5}>Page number {this.props.pageNumber}</td>
+          <td colSpan={5} id={'page-' + this.props.pageNumber}>Page number {this.props.pageNumber}</td>
         </tr>
         {personsList}
       </tbody>
