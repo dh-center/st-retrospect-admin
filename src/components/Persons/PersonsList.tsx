@@ -57,6 +57,17 @@ class PersonsList extends React.Component<Props, State> {
    *
    */
   public render(): ReactElement {
+    const pagesCount = Math.ceil(this.props.personsConnection.persons.edges.length / ENTITIES_PER_PAGE);
+    const sectionsList: ReactElement[] = [];
+
+    console.log(pagesCount, this.props.personsConnection.persons.edges.length);
+    for (let i = 1; i <= pagesCount; i++) {
+      sectionsList.push(<TableBody
+        pageNumber={i}
+        observer={this.observer}
+        personsConnection={this.props.personsConnection}/>);
+    }
+
     return (
       <div className={'persons-page'}>
         <div className={'persons-page__page-control'}>
@@ -81,26 +92,7 @@ class PersonsList extends React.Component<Props, State> {
               <th>patronymic</th>
             </tr>
           </thead>
-          <tbody>
-            {this.props.personsConnection.persons.edges.map((person, index) => (
-              <React.Fragment key={person.node.id}>
-                {(index) % 25 === 0 &&
-                  <PageSectionRow
-                    key={(index) / 25 + 1}
-                    pageNumber={(index) / 25 + 1}
-                    observer={this.observer}
-                  />
-                }
-                <tr key={person.node.id}>
-                  <td>{index + 1}</td>
-                  <td>{person.node.id}</td>
-                  <td>{person.node.firstName}</td>
-                  <td>{person.node.lastName}</td>
-                  <td>{person.node.patronymic}</td>
-                </tr>
-              </React.Fragment>
-            ))}
-          </tbody>
+          {sectionsList}
         </table>
       </div>
     );
@@ -135,18 +127,19 @@ class PersonsList extends React.Component<Props, State> {
 /**
  * @param props
  */
-class PageSectionRow extends React.Component<{
+class TableBody extends React.Component<{
   pageNumber: number;
   observer: IntersectionObserver;
+  personsConnection: PersonsConnection;
 }> {
-  private row = React.createRef<HTMLTableRowElement>();
+  private htmlElement = React.createRef<HTMLTableSectionElement>();
 
   /**
    *
    */
   public componentDidMount(): void {
-    if (this.row.current) {
-      this.props.observer.observe(this.row.current);
+    if (this.htmlElement.current) {
+      this.props.observer.observe(this.htmlElement.current);
     }
   }
 
@@ -154,8 +147,8 @@ class PageSectionRow extends React.Component<{
    *
    */
   public componentWillUnmount(): void {
-    if (this.row.current) {
-      this.props.observer.unobserve(this.row.current);
+    if (this.htmlElement.current) {
+      this.props.observer.unobserve(this.htmlElement.current);
     }
   }
 
@@ -163,10 +156,30 @@ class PageSectionRow extends React.Component<{
    *
    */
   public render(): ReactElement {
+    const personsList: ReactElement[] = [];
+
+    for (let i = (this.props.pageNumber - 1) * ENTITIES_PER_PAGE; i < Math.min(this.props.pageNumber * ENTITIES_PER_PAGE, this.props.personsConnection.persons.edges.length); i++) {
+      console.log(this.props.pageNumber, i);
+      const person = this.props.personsConnection.persons.edges[i].node;
+      const row =
+        <tr key={person.id}>
+          <td>{i + 1}</td>
+          <td>{person.id}</td>
+          <td>{person.firstName}</td>
+          <td>{person.lastName}</td>
+          <td>{person.patronymic}</td>
+        </tr>;
+
+      personsList.push(row);
+    }
+
     return (
-      <tr ref={this.row} data-page={this.props.pageNumber}>
-        <td colSpan={5}>Page number {this.props.pageNumber}</td>
-      </tr>
+      <tbody ref={this.htmlElement} data-page={this.props.pageNumber}>
+        <tr>
+          <td colSpan={5}>Page number {this.props.pageNumber}</td>
+        </tr>
+        {personsList}
+      </tbody>
     );
   }
 }
