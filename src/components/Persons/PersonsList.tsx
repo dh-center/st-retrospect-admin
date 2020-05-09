@@ -146,9 +146,8 @@ class PersonsList extends React.Component<Props, State> {
    * Observer callback for tracking pages that user sees
    *
    * @param entries - entries to observe
-   * @param observer - intersection observer
    */
-  private observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+  private observerCallback = (entries: IntersectionObserverEntry[]): void => {
     const viewingPagesCopy = [ ...this.state.viewingPages ];
 
     entries.forEach(entry => {
