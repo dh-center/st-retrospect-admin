@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { PersonsList_personsConnection as PersonsConnection } from './__generated__/PersonsList_personsConnection.graphql';
@@ -23,96 +23,107 @@ interface Props {
   relay: RelayPaginationProp;
 }
 
+interface State {
+  viewingPages: boolean[];
+}
+
 /**
- * Component for displaying persons list
- *
- * @param props - react component props
+ * erferf
  */
-function PersonsList(props: Props): ReactElement<Props> {
-  const pagesCount = Math.floor(props.personsConnection.persons.totalCount / ENTITIES_PER_PAGE) + 1;
-  const [viewingPages, setViewingPages] = useState<boolean[]>(Array<boolean>(pagesCount).fill(false));
+class PersonsList extends React.Component<Props, State> {
+  private readonly observer: IntersectionObserver;
 
-  const loadMore = (): void => {
-    props.relay.loadMore(ENTITIES_PER_PAGE);
-  };
+  /**
+   * @param props - component's props
+   */
+  constructor(props: Props) {
+    super(props);
+    const pagesCount = Math.floor(props.personsConnection.persons.totalCount / ENTITIES_PER_PAGE) + 1;
 
-  const goToPage = (current: number): void => {
-    props.relay.loadMore(current * ENTITIES_PER_PAGE - props.personsConnection.persons.edges.length);
-  };
-
-  useEffect(() => {
-    const observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
-      const viewingPagesCopy = [ ...viewingPages ];
-
-      console.log('orig', viewingPages);
-      console.log('copy', viewingPagesCopy);
-      entries.forEach(entry => {
-        const page = entry.target.getAttribute('data-page');
-
-        if (page) {
-          console.log(page, entry.isIntersecting);
-          viewingPagesCopy[+page - 1] = entry.isIntersecting;
-        }
-      });
-
-      console.log('set', viewingPagesCopy);
-
-      setViewingPages(viewingPagesCopy);
+    this.state = {
+      viewingPages: Array(pagesCount).fill(false),
     };
 
-    const observer = new window.IntersectionObserver(observerCallback);
+    this.observer = new window.IntersectionObserver(this.observerCallback);
+  }
 
-    console.log('new observer');
-  });
-
-  return (
-    <div className={'persons-page'}>
-      <div className={'persons-page__page-control'}>
-        {props.personsConnection.persons.totalCount}
-        <button onClick={loadMore}>Load more</button>
-        <PaginationControl
-          pageSize={ENTITIES_PER_PAGE}
-          total={props.personsConnection.persons.totalCount}
-          onChange={goToPage}
-          locale={locale}
-        />
-        {viewingPages.map((page, index) =>
-          <span key={index} className={page ? 'true' : 'false'}>{index} — {page ? 'true' : 'false'} </span>
-        )}
+  /**
+   *
+   */
+  public render(): ReactElement {
+    return (
+      <div className={'persons-page'}>
+        <div className={'persons-page__page-control'}>
+          {this.props.personsConnection.persons.totalCount}
+          <button onClick={this.loadMore}>Load more</button>
+          <PaginationControl
+            pageSize={ENTITIES_PER_PAGE}
+            total={this.props.personsConnection.persons.totalCount}
+            onChange={this.goToPage}
+            locale={locale}
+          />
+        </div>
+        <table className={'persons-page__table'}>
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>id</th>
+              <th>first name</th>
+              <th>last name</th>
+              <th>patronymic</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.personsConnection.persons.edges.map((person, index) => (
+              <React.Fragment key={person.node.id}>
+                {(index) % 25 === 0 &&
+                  <PageSectionRow
+                    key={(index) / 25 + 1}
+                    pageNumber={(index) / 25 + 1}
+                    observer={this.observer}
+                  />
+                }
+                <tr key={person.node.id}>
+                  <td>{index + 1}</td>
+                  <td>{person.node.id}</td>
+                  <td>{person.node.firstName}</td>
+                  <td>{person.node.lastName}</td>
+                  <td>{person.node.patronymic}</td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <table className={'persons-page__table'}>
-        <thead>
-          <tr>
-            <th>№</th>
-            <th>id</th>
-            <th>first name</th>
-            <th>last name</th>
-            <th>patronymic</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.personsConnection.persons.edges.map((person, index) => (
-            <React.Fragment key={person.node.id}>
-              {{(index) % 25 === 0 &&}
-               <PageSectionRow
-                 key={(index) / 25 + 1}
-                 pageNumber={(index) / 25 + 1}
-                 observer={observer}
-               />
-               }
-              <tr key={person.node.id}>
-                <td>{index + 1}</td>
-                <td>{person.node.id}</td>
-                <td>{person.node.firstName}</td>
-                <td>{person.node.lastName}</td>
-                <td>{person.node.patronymic}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+    );
+  }
+
+  private loadMore = (): void => {
+    this.props.relay.loadMore(ENTITIES_PER_PAGE);
+  };
+
+  private goToPage = (current: number): void => {
+    this.props.relay.loadMore(current * ENTITIES_PER_PAGE - this.props.personsConnection.persons.edges.length);
+  };
+
+  private observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+    const viewingPagesCopy = [ ...this.state.viewingPages ];
+
+    console.log('copy', viewingPagesCopy);
+    entries.forEach(entry => {
+      const page = entry.target.getAttribute('data-page');
+
+      if (page) {
+        console.log(page, entry.isIntersecting);
+        viewingPagesCopy[+page - 1] = entry.isIntersecting;
+      }
+    });
+
+    console.log('set', viewingPagesCopy);
+    this.setState({
+      viewingPages: viewingPagesCopy,
+    });
+  };
 }
 
 /**
