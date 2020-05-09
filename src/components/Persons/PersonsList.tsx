@@ -7,6 +7,7 @@ import PaginationControl from 'rc-pagination';
 import './PersonsList.css';
 import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
+import TablePage from './TablePage';
 
 /**
  * Props for PersonsList component
@@ -23,19 +24,28 @@ interface Props {
   relay: RelayPaginationProp;
 }
 
+/**
+ * State of PersonsList component
+ */
 interface State {
+  /**
+   * Boolean array represents what pages user sees
+   */
   viewingPages: boolean[];
+
+  /**
+   * Page number that  user sees
+   */
   currentPage: number;
 }
 
 /**
- * erferf
- *
- * @param entries
- * @param observer
- * @param current
+ * List with persons
  */
 class PersonsList extends React.Component<Props, State> {
+  /**
+   * Observer for tracking pages that user sees
+   */
   private readonly observer: IntersectionObserver;
 
   /**
@@ -56,14 +66,14 @@ class PersonsList extends React.Component<Props, State> {
   }
 
   /**
-   *
+   * Rendering
    */
   public render(): ReactElement {
     const pagesCount = Math.ceil(this.props.personsConnection.persons.edges.length / ENTITIES_PER_PAGE);
     const sectionsList: ReactElement[] = [];
 
     for (let i = 1; i <= pagesCount; i++) {
-      sectionsList.push(<TableBody
+      sectionsList.push(<TablePage
         key={i}
         pageNumber={i}
         observer={this.observer}
@@ -100,10 +110,18 @@ class PersonsList extends React.Component<Props, State> {
     );
   }
 
+  /**
+   * Loading more persons
+   */
   private loadMore = (): void => {
     this.props.relay.loadMore(ENTITIES_PER_PAGE);
   };
 
+  /**
+   * Scrolling to page
+   *
+   * @param current - page number
+   */
   private goToPage = (current: number): void => {
     const personsCountToLoad = current * ENTITIES_PER_PAGE - this.props.personsConnection.persons.edges.length;
 
@@ -124,6 +142,12 @@ class PersonsList extends React.Component<Props, State> {
     }
   };
 
+  /**
+   * Observer callback for tracking pages that user sees
+   *
+   * @param entries - entries to observe
+   * @param observer - intersection observer
+   */
   private observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
     const viewingPagesCopy = [ ...this.state.viewingPages ];
 
@@ -140,65 +164,6 @@ class PersonsList extends React.Component<Props, State> {
       currentPage: viewingPagesCopy.findIndex(Boolean),
     });
   };
-}
-
-/**
- * @param props
- */
-class TableBody extends React.Component<{
-  pageNumber: number;
-  observer: IntersectionObserver;
-  personsConnection: PersonsConnection;
-}> {
-  private htmlElement = React.createRef<HTMLTableSectionElement>();
-
-  /**
-   *
-   */
-  public componentDidMount(): void {
-    if (this.htmlElement.current) {
-      this.props.observer.observe(this.htmlElement.current);
-    }
-  }
-
-  /**
-   *
-   */
-  public componentWillUnmount(): void {
-    if (this.htmlElement.current) {
-      this.props.observer.unobserve(this.htmlElement.current);
-    }
-  }
-
-  /**
-   *
-   */
-  public render(): ReactElement {
-    const personsList: ReactElement[] = [];
-
-    for (let i = (this.props.pageNumber - 1) * ENTITIES_PER_PAGE; i < Math.min(this.props.pageNumber * ENTITIES_PER_PAGE, this.props.personsConnection.persons.edges.length); i++) {
-      const person = this.props.personsConnection.persons.edges[i].node;
-      const row =
-        <tr key={person.id}>
-          <td>{i + 1}</td>
-          <td>{person.id}</td>
-          <td>{person.firstName}</td>
-          <td>{person.lastName}</td>
-          <td>{person.patronymic}</td>
-        </tr>;
-
-      personsList.push(row);
-    }
-
-    return (
-      <tbody ref={this.htmlElement} data-page={this.props.pageNumber} >
-        <tr>
-          <td colSpan={5} id={'page-' + this.props.pageNumber}>Page number {this.props.pageNumber}</td>
-        </tr>
-        {personsList}
-      </tbody>
-    );
-  }
 }
 
 export default createPaginationContainer(
