@@ -1,17 +1,68 @@
 .persons-page__page-control {
-  position: fixed;
-  bottom: 0;
+  padding: 10px;
+  width: 100%;
   background: #fff;
+  box-sizing: border-box;
+  text-align: center;
+  border-top: 4px solid #333333;
+  position: sticky;
+  bottom: 0;
+}
+
+.persons-page__page-control .rc-pagination {
+  display: inline-block;
+}
+
+.persons-page__load-more-btn {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 6px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border: 1px solid #d9d9d9;
+  background-color: #fff;
+}
+
+.persons-page__load-more-btn:hover {
+  border-color: #2db7f5;
+  color: #2db7f5;
 }
 
 .persons-page__table {
-  border: 1px solid #1C6EA4;
-  border-collapse: collapse;
+  border: 2px solid #FFFFFF;
   width: 100%;
-  text-align: left;
+  text-align: center;
+  border-collapse: collapse;
 }
 
-.persons-page__table td, th {
-  border: 1px solid #AAAAAA;
-  padding: 3px 2px;
+.persons-page__table td,
+.persons-page__table th {
+  border: 1px solid #FFFFFF;
+  padding: 3px 4px;
+}
+
+.persons-page__table tbody td {
+  font-size: 13px;
+}
+
+.persons-page__table td:nth-child(even) {
+  background: #EBEBEB;
+}
+
+.persons-page__table thead {
+  background: #FFFFFF;
+  border-bottom: 4px solid #333333;
+}
+
+.persons-page__table thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333333;
+  text-align: center;
+  border-left: 2px solid #333333;
+}
+
+.persons-page__table thead th:first-child {
+  border-left: none;
 }

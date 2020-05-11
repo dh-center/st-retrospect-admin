@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
-import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
+import React, {ReactElement} from 'react';
+import {createPaginationContainer, RelayPaginationProp} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import { PersonsList_personsConnection as PersonsConnection } from './__generated__/PersonsList_personsConnection.graphql';
-import { ENTITIES_PER_PAGE } from '../../constants';
+import {PersonsList_personsConnection as PersonsConnection} from './__generated__/PersonsList_personsConnection.graphql';
+import {ENTITIES_PER_PAGE} from '../../constants';
 import PaginationControl from 'rc-pagination';
 import './PersonsList.css';
 import 'rc-pagination/assets/index.css';
@@ -82,9 +82,22 @@ class PersonsList extends React.Component<Props, State> {
 
     return (
       <div className={'persons-page'}>
+        <div className={'person-page__table-wrapper'}>
+          <table className={'persons-page__table'}>
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>id</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th>patronymic</th>
+              </tr>
+            </thead>
+            {sectionsList}
+          </table>
+        </div>
         <div className={'persons-page__page-control'}>
-          {this.props.personsConnection.persons.totalCount}
-          <button onClick={this.loadMore}>Load more</button>
+          <button onClick={this.loadMore} className={'persons-page__load-more-btn'}>Load more</button>
           <PaginationControl
             pageSize={ENTITIES_PER_PAGE}
             total={this.props.personsConnection.persons.totalCount}
@@ -92,20 +105,7 @@ class PersonsList extends React.Component<Props, State> {
             locale={locale}
             current={this.state.currentPage + 1}
           />
-          Current page: {this.state.currentPage + 1}
         </div>
-        <table className={'persons-page__table'}>
-          <thead>
-            <tr>
-              <th>№</th>
-              <th>id</th>
-              <th>first name</th>
-              <th>last name</th>
-              <th>patronymic</th>
-            </tr>
-          </thead>
-          {sectionsList}
-        </table>
       </div>
     );
   }
@@ -148,7 +148,7 @@ class PersonsList extends React.Component<Props, State> {
    * @param entries - entries to observe
    */
   private observerCallback = (entries: IntersectionObserverEntry[]): void => {
-    const viewingPagesCopy = [ ...this.state.viewingPages ];
+    const viewingPagesCopy = [...this.state.viewingPages];
 
     entries.forEach(entry => {
       const page = entry.target.getAttribute('data-page');
