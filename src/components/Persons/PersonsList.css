@@ -5,6 +5,8 @@
   box-sizing: border-box;
   text-align: center;
   border-top: 4px solid #333333;
+  position: sticky;
+  bottom: 0;
 }
 
 .persons-page__page-control .rc-pagination {
