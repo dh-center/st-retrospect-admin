@@ -1,4 +1,4 @@
-.persons-page__page-control {
+.entities-page__page-control {
   padding: 10px;
   width: 100%;
   background: #fff;
@@ -9,11 +9,11 @@
   bottom: 0;
 }
 
-.persons-page__page-control .rc-pagination {
+.entities-page__page-control .rc-pagination {
   display: inline-block;
 }
 
-.persons-page__load-more-btn {
+.entities-page__load-more-btn {
   width: 100%;
   cursor: pointer;
   border-radius: 6px;
@@ -24,38 +24,38 @@
   background-color: #fff;
 }
 
-.persons-page__load-more-btn:hover {
+.entities-page__load-more-btn:hover {
   border-color: #2db7f5;
   color: #2db7f5;
 }
 
-.persons-page__table {
+.entities-page__table {
   border: 2px solid #FFFFFF;
   width: 100%;
   text-align: center;
   border-collapse: collapse;
 }
 
-.persons-page__table td,
-.persons-page__table th {
+.entities-page__table td,
+.entities-page__table th {
   border: 1px solid #FFFFFF;
   padding: 3px 4px;
 }
 
-.persons-page__table tbody td {
+.entities-page__table tbody td {
   font-size: 13px;
 }
 
-.persons-page__table td:nth-child(even) {
+.entities-page__table td:nth-child(even) {
   background: #EBEBEB;
 }
 
-.persons-page__table thead {
+.entities-page__table thead {
   background: #FFFFFF;
   border-bottom: 4px solid #333333;
 }
 
-.persons-page__table thead th {
+.entities-page__table thead th {
   font-size: 15px;
   font-weight: bold;
   color: #333333;
@@ -63,6 +63,6 @@
   border-left: 2px solid #333333;
 }
 
-.persons-page__table thead th:first-child {
+.entities-page__table thead th:first-child {
   border-left: none;
 }

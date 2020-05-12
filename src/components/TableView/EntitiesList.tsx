@@ -24,7 +24,7 @@ interface Props<ENTITY_CONNECTION_TYPE> {
 }
 
 /**
- * State of PersonsList component
+ * State of EntitiesList component
  */
 interface State {
   /**
@@ -39,7 +39,7 @@ interface State {
 }
 
 /**
- * List with persons
+ * List with entities
  */
 class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>, State> {
   /**
@@ -80,24 +80,22 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
     }
 
     return (
-      <div className={'persons-page'}>
-        <div className={'person-page__table-wrapper'}>
-          <table className={'persons-page__table'}>
-            <thead>
-            <tr>
-              <th>№</th>
-              {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
-                  if (key === '__typename') return;
-                  return <th key={key}>{key}</th>;
-                }
-              )}
-            </tr>
-            </thead>
-            {sectionsList}
-          </table>
-        </div>
-        <div className={'persons-page__page-control'}>
-          <button onClick={this.loadMore} className={'persons-page__load-more-btn'}>Load more</button>
+      <div className={'entities-page'}>
+        <table className={'entities-page__table'}>
+          <thead>
+          <tr>
+            <th>№</th>
+            {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
+                if (key === '__typename') return;
+                return <th key={key}>{key}</th>;
+              }
+            )}
+          </tr>
+          </thead>
+          {sectionsList}
+        </table>
+        <div className={'entities-page__page-control'}>
+          <button onClick={this.loadMore} className={'entities-page__load-more-btn'}>Load more</button>
           <PaginationControl
             pageSize={ENTITIES_PER_PAGE}
             total={this.props.entityConnection.entities.totalCount}
