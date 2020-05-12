@@ -10,14 +10,14 @@ const PersonsList = createPaginationContainer(
   EntitiesList,
   {
     entityConnection: graphql`
-      fragment PersonsList_personsConnection on Query @argumentDefinitions (
+      fragment PersonsPage_entityConnection on Query @argumentDefinitions (
         first: {type: "Int", defaultValue: 10}
         after: {type: "Cursor"}
       ) {
         entities: persons(
           first: $first
           after: $after
-        ) @connection(key: "PersonsList_entities") {
+        ) @connection(key: "PersonsPage_entities") {
           totalCount
           edges {
             node {
@@ -34,11 +34,11 @@ const PersonsList = createPaginationContainer(
   {
     direction: 'forward',
     query: graphql`
-      query PersonsListForwardQuery(
+      query PersonsPageForwardQuery(
         $first: Int,
         $after: Cursor,
       ) {
-        ...PersonsList_personsConnection @arguments(first: $first, after: $after)
+        ...PersonsPage_entityConnection @arguments(first: $first, after: $after)
       }
     `,
     getVariables(props, paginationInfo) {
@@ -62,7 +62,7 @@ export default function PersonsPage(): ReactElement {
             $first: Int,
             $after: Cursor
           ) {
-             ...PersonsList_personsConnection @arguments(first: $first, after: $after)
+             ...PersonsPage_entityConnection @arguments(first: $first, after: $after)
           }
         `}
       variables={{

@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PersonsList_personsConnection = {
+export type PersonsPage_entityConnection = {
     readonly entities: {
         readonly totalCount: number;
         readonly edges: ReadonlyArray<{
@@ -15,12 +15,12 @@ export type PersonsList_personsConnection = {
             };
         }>;
     };
-    readonly " $refType": "PersonsList_personsConnection";
+    readonly " $refType": "PersonsPage_entityConnection";
 };
-export type PersonsList_personsConnection$data = PersonsList_personsConnection;
-export type PersonsList_personsConnection$key = {
-    readonly " $data"?: PersonsList_personsConnection$data;
-    readonly " $fragmentRefs": FragmentRefs<"PersonsList_personsConnection">;
+export type PersonsPage_entityConnection$data = PersonsPage_entityConnection;
+export type PersonsPage_entityConnection$key = {
+    readonly " $data"?: PersonsPage_entityConnection$data;
+    readonly " $fragmentRefs": FragmentRefs<"PersonsPage_entityConnection">;
 };
 
 
@@ -48,19 +48,19 @@ const node: ReaderFragment = {
         "cursor": "after",
         "direction": "forward",
         "path": [
-          "persons"
+          "entities"
         ]
       }
     ]
   },
-  "name": "PersonsList_personsConnection",
+  "name": "PersonsPage_entityConnection",
   "selections": [
     {
-      "alias": "persons",
+      "alias": "entities",
       "args": null,
       "concreteType": "PersonConnection",
       "kind": "LinkedField",
-      "name": "__PersonsList_persons_connection",
+      "name": "__PersonsPage_entities_connection",
       "plural": false,
       "selections": [
         {
@@ -165,5 +165,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = '6fd7885a63015681181a4a06bd4a7270';
+(node as any).hash = '421a2fa5b8383fb8db60a16643234d62';
 export default node;
