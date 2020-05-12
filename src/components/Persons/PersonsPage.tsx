@@ -6,6 +6,50 @@ import graphql from 'babel-plugin-relay/macro';
 import {ENTITIES_PER_PAGE} from '../../constants';
 import EntitiesList from "../TableView/EntitiesList";
 
+const PersonsList = createPaginationContainer(
+  EntitiesList,
+  {
+    entityConnection: graphql`
+      fragment PersonsList_personsConnection on Query @argumentDefinitions (
+        first: {type: "Int", defaultValue: 10}
+        after: {type: "Cursor"}
+      ) {
+        entities: persons(
+          first: $first
+          after: $after
+        ) @connection(key: "PersonsList_entities") {
+          totalCount
+          edges {
+            node {
+              id
+              firstName
+              lastName
+              patronymic
+            }
+          }
+        }
+      }
+    `,
+  },
+  {
+    direction: 'forward',
+    query: graphql`
+      query PersonsListForwardQuery(
+        $first: Int,
+        $after: Cursor,
+      ) {
+        ...PersonsList_personsConnection @arguments(first: $first, after: $after)
+      }
+    `,
+    getVariables(props, paginationInfo) {
+      return {
+        first: paginationInfo.count,
+        after: paginationInfo.cursor,
+      };
+    },
+  }
+);
+
 /**
  * Page for displaying persons
  */
@@ -32,50 +76,8 @@ export default function PersonsPage(): ReactElement {
         if (!props) {
           return <div>Loading persons...</div>;
         }
-        return createPaginationContainer(
-          EntitiesList,
-          {
-            entityConnection: graphql`
-              fragment PersonsList_personsConnection on Query @argumentDefinitions (
-                first: {type: "Int", defaultValue: 10}
-                after: {type: "Cursor"}
-              ) {
-                entities: persons(
-                  first: $first
-                  after: $after
-                ) @connection(key: "PersonsList_persons") {
-                  totalCount
-                  edges {
-                    node {
-                      id
-                      firstName
-                      lastName
-                      patronymic
-                    }
-                  }
-                }
-              }
-              `,
-            },
-            {
-              direction: 'forward',
-              query: graphql`
-                query PersonsListForwardQuery(
-                  $first: Int,
-                  $after: Cursor,
-                ) {
-                  ...PersonsList_personsConnection @arguments(first: $first, after: $after)
-                }
-                `,
-                      getVariables(props, paginationInfo) {
-                        return {
-                          first: paginationInfo.count,
-                          after: paginationInfo.cursor,
-                        };
-                      },
-                    }
-                  );
-                }}
-              />
+        return <PersonsList entityConnection={props}/>;
+      }}
+    />
   );
 }
