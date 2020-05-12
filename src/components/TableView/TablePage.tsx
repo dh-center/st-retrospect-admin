@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
-import { PersonsList_personsConnection as PersonsConnection } from './__generated__/PersonsList_personsConnection.graphql';
 import { ENTITIES_PER_PAGE } from '../../constants';
+import { EntityConnection } from '../../types/entities';
 
 /**
- * Props for PersonsList component
+ * Props for List component
  */
-interface Props {
+interface Props<ENTITY_CONNECTION_TYPE> {
   /**
    * Number of page
    */
@@ -17,15 +17,15 @@ interface Props {
   observer: IntersectionObserver;
 
   /**
-   * List with persons
+   * List with entities
    */
-  personsConnection: PersonsConnection;
+  entityConnection: ENTITY_CONNECTION_TYPE;
 }
 
 /**
- * Page of persons table
+ * Page of entity table
  */
-export default class TablePage extends React.Component<Props> {
+export default class TablePage<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>> {
   /**
    * Ref to the components root HTML element
    */
@@ -55,28 +55,32 @@ export default class TablePage extends React.Component<Props> {
    * Rendering
    */
   public render(): ReactElement {
-    const personsList: ReactElement[] = [];
+    const entityList: ReactElement[] = [];
 
-    for (let i = (this.props.pageNumber - 1) * ENTITIES_PER_PAGE; i < Math.min(this.props.pageNumber * ENTITIES_PER_PAGE, this.props.personsConnection.persons.edges.length); i++) {
-      const person = this.props.personsConnection.persons.edges[i].node;
+    for (let i = (this.props.pageNumber - 1) * ENTITIES_PER_PAGE; i < Math.min(this.props.pageNumber * ENTITIES_PER_PAGE, this.props.entityConnection.entities.edges.length); i++) {
+      const entity = this.props.entityConnection.entities.edges[i].node;
       const row =
-        <tr key={person.id}>
+        <tr key={entity.id}>
           <td>{i + 1}</td>
-          <td>{person.id}</td>
-          <td>{person.firstName}</td>
-          <td>{person.lastName}</td>
-          <td>{person.patronymic}</td>
+          {Object.keys(entity).map((key) => {
+            if (key === '__typename') {
+              return undefined;
+            }
+
+            return <td key={key}>{entity[key]}</td>;
+          }
+          )}
         </tr>;
 
-      personsList.push(row);
+      entityList.push(row);
     }
 
     return (
       <tbody ref={this.htmlElement} data-page={this.props.pageNumber} >
         <tr>
-          <td colSpan={5} id={'page-' + this.props.pageNumber}>Page number {this.props.pageNumber}</td>
+          <td colSpan={100} id={'page-' + this.props.pageNumber}>Page number {this.props.pageNumber}</td>
         </tr>
-        {personsList}
+        {entityList}
       </tbody>
     );
   }
