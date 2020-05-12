@@ -1,10 +1,10 @@
-import React, {ReactElement} from 'react';
-import {createPaginationContainer, QueryRenderer} from 'react-relay';
-import {PersonsPageQuery} from './__generated__/PersonsPageQuery.graphql';
+import React, { ReactElement } from 'react';
+import { createPaginationContainer, QueryRenderer } from 'react-relay';
+import { PersonsPageQuery } from './__generated__/PersonsPageQuery.graphql';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
-import {ENTITIES_PER_PAGE} from '../../constants';
-import EntitiesList from "../TableView/EntitiesList";
+import { ENTITIES_PER_PAGE } from '../../constants';
+import EntitiesList from '../TableView/EntitiesList';
 
 const PersonsList = createPaginationContainer(
   EntitiesList,
@@ -69,13 +69,14 @@ export default function PersonsPage(): ReactElement {
         first: ENTITIES_PER_PAGE,
         after: null,
       }}
-      render={({error, props}): React.ReactNode => {
+      render={({ error, props }): React.ReactNode => {
         if (error) {
           return <div>Error!</div>;
         }
         if (!props) {
           return <div>Loading persons...</div>;
         }
+
         return <PersonsList entityConnection={props}/>;
       }}
     />
