@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 import { ENTITIES_PER_PAGE } from '../../constants';
-import { Entity } from "../../types/entities";
+import { EntityConnection } from "../../types/entities";
 
 /**
  * Props for List component
  */
-interface Props<ENTITY_TYPE> {
+interface Props<ENTITY_CONNECTION_TYPE> {
   /**
    * Number of page
    */
@@ -19,13 +19,13 @@ interface Props<ENTITY_TYPE> {
   /**
    * List with entities
    */
-  entities: Array<ENTITY_TYPE>;
+  entityConnection: ENTITY_CONNECTION_TYPE;
 }
 
 /**
  * Page of entity table
  */
-export default class TablePage<ENTITY_TYPE extends Entity> extends React.Component<Props<ENTITY_TYPE>> {
+export default class TablePage<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>> {
   /**
    * Ref to the components root HTML element
    */
@@ -57,8 +57,8 @@ export default class TablePage<ENTITY_TYPE extends Entity> extends React.Compone
   public render(): ReactElement {
     const entityList: ReactElement[] = [];
 
-    for (let i = (this.props.pageNumber - 1) * ENTITIES_PER_PAGE; i < Math.min(this.props.pageNumber * ENTITIES_PER_PAGE, this.props.entities.length); i++) {
-      const entity = this.props.entities[i];
+    for (let i = (this.props.pageNumber - 1) * ENTITIES_PER_PAGE; i < Math.min(this.props.pageNumber * ENTITIES_PER_PAGE, this.props.entityConnection.entities.edges.length); i++) {
+      const entity = this.props.entityConnection.entities.edges[i].node;
       const row =
         <tr key={entity.id}>
           <td>{i + 1}</td>
@@ -75,7 +75,7 @@ export default class TablePage<ENTITY_TYPE extends Entity> extends React.Compone
     return (
       <tbody ref={this.htmlElement} data-page={this.props.pageNumber} >
         <tr>
-          <td colSpan={5} id={'page-' + this.props.pageNumber}>Page number {this.props.pageNumber}</td>
+          <td colSpan={100} id={'page-' + this.props.pageNumber}>Page number {this.props.pageNumber}</td>
         </tr>
         {entityList}
       </tbody>

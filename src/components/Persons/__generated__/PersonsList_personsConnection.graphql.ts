@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PersonsList_personsConnection = {
-    readonly persons: {
+    readonly entities: {
         readonly totalCount: number;
         readonly edges: ReadonlyArray<{
             readonly node: {

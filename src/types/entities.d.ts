@@ -1,10 +1,12 @@
-export interface Entity {
-  id: string;
-  [key: string]: string | null;
-}
-
-export interface Person extends Entity {
-  firstName: string | null;
-  lastName: string | null;
-  patronymic: string | null;
+export interface EntityConnection {
+  readonly entities: {
+    readonly totalCount: number;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly [key: string]: string | null;
+      };
+    }>;
+  };
+  readonly " $refType": string;
 }

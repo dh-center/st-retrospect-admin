@@ -1,23 +1,21 @@
 import React, {ReactElement} from 'react';
-import {createPaginationContainer, RelayPaginationProp} from 'react-relay';
-import graphql from 'babel-plugin-relay/macro';
-import {PersonsList_personsConnection as PersonsConnection} from './__generated__/PersonsList_personsConnection.graphql';
+import {RelayPaginationProp} from 'react-relay';
 import {ENTITIES_PER_PAGE} from '../../constants';
 import PaginationControl from 'rc-pagination';
-import './PersonsList.css';
+import './EntitiesList.css';
 import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
-import TablePage from '../TableView/TablePage';
-import { Person } from '../../types/entities';
+import TablePage from './TablePage';
+import {EntityConnection} from '../../types/entities';
 
 /**
- * Props for PersonsList component
+ * Props for EntitiesList component
  */
-interface Props {
+interface Props<ENTITY_CONNECTION_TYPE> {
   /**
-   * Persons connection
+   * Entity connection
    */
-  personsConnection: PersonsConnection;
+  entityConnection: ENTITY_CONNECTION_TYPE;
 
   /**
    * Prop for accessing relay functionality
@@ -43,7 +41,7 @@ interface State {
 /**
  * List with persons
  */
-class PersonsList extends React.Component<Props, State> {
+class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>, State> {
   /**
    * Observer for tracking pages that user sees
    */
@@ -52,9 +50,9 @@ class PersonsList extends React.Component<Props, State> {
   /**
    * @param props - component's props
    */
-  constructor(props: Props) {
+  constructor(props: Props<ENTITY_CONNECTION_TYPE>) {
     super(props);
-    const pagesCount = Math.floor(props.personsConnection.persons.totalCount / ENTITIES_PER_PAGE) + 1;
+    const pagesCount = Math.floor(props.entityConnection.entities.totalCount / ENTITIES_PER_PAGE) + 1;
 
     this.state = {
       viewingPages: Array(pagesCount).fill(false),
@@ -70,15 +68,15 @@ class PersonsList extends React.Component<Props, State> {
    * Rendering
    */
   public render(): ReactElement {
-    const pagesCount = Math.ceil(this.props.personsConnection.persons.edges.length / ENTITIES_PER_PAGE);
+    const pagesCount = Math.ceil(this.props.entityConnection.entities.edges.length / ENTITIES_PER_PAGE);
     const sectionsList: ReactElement[] = [];
 
     for (let i = 1; i <= pagesCount; i++) {
-      sectionsList.push(<TablePage<Person>
+      sectionsList.push(<TablePage<ENTITY_CONNECTION_TYPE>
         key={i}
         pageNumber={i}
         observer={this.observer}
-        entities={this.props.personsConnection.persons.edges.map((entity) => entity.node)}/>);
+        entityConnection={this.props.entityConnection}/>);
     }
 
     return (
@@ -86,14 +84,14 @@ class PersonsList extends React.Component<Props, State> {
         <div className={'person-page__table-wrapper'}>
           <table className={'persons-page__table'}>
             <thead>
-              <tr>
-                <th>№</th>
-                {Object.keys(this.props.personsConnection.persons.edges[0].node).map((key) => {
-                    if (key === '__typename') return;
-                    return <th key={key}>{key}</th>;
-                  }
-                )}
-              </tr>
+            <tr>
+              <th>№</th>
+              {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
+                  if (key === '__typename') return;
+                  return <th key={key}>{key}</th>;
+                }
+              )}
+            </tr>
             </thead>
             {sectionsList}
           </table>
@@ -102,7 +100,7 @@ class PersonsList extends React.Component<Props, State> {
           <button onClick={this.loadMore} className={'persons-page__load-more-btn'}>Load more</button>
           <PaginationControl
             pageSize={ENTITIES_PER_PAGE}
-            total={this.props.personsConnection.persons.totalCount}
+            total={this.props.entityConnection.entities.totalCount}
             onChange={this.goToPage}
             locale={locale}
             current={this.state.currentPage + 1}
@@ -125,7 +123,7 @@ class PersonsList extends React.Component<Props, State> {
    * @param current - page number
    */
   private goToPage = (current: number): void => {
-    const personsCountToLoad = current * ENTITIES_PER_PAGE - this.props.personsConnection.persons.edges.length;
+    const personsCountToLoad = current * ENTITIES_PER_PAGE - this.props.entityConnection.entities.edges.length;
 
     if (personsCountToLoad > 0) {
       this.props.relay.loadMore(personsCountToLoad, () => {
@@ -167,46 +165,4 @@ class PersonsList extends React.Component<Props, State> {
   };
 }
 
-export default createPaginationContainer(
-  PersonsList,
-  {
-    personsConnection: graphql`
-      fragment PersonsList_personsConnection on Query @argumentDefinitions (
-        first: {type: "Int", defaultValue: 10}
-        after: {type: "Cursor"}
-      ) {
-        persons(
-          first: $first
-          after: $after
-        ) @connection(key: "PersonsList_persons") {
-          totalCount
-          edges {
-            node {
-              id
-              firstName
-              lastName
-              patronymic
-            }
-          }
-        }
-      }
-    `,
-  },
-  {
-    direction: 'forward',
-    query: graphql`
-      query PersonsListForwardQuery(
-        $first: Int,
-        $after: Cursor,
-      ) {
-        ...PersonsList_personsConnection @arguments(first: $first, after: $after)
-      }
-    `,
-    getVariables(props, paginationInfo) {
-      return {
-        first: paginationInfo.count,
-        after: paginationInfo.cursor,
-      };
-    },
-  }
-);
+export default EntitiesList;
