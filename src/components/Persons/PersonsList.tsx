@@ -7,7 +7,8 @@ import PaginationControl from 'rc-pagination';
 import './PersonsList.css';
 import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
-import TablePage from './TablePage';
+import TablePage from '../TableView/TablePage';
+import { Person } from '../../types/entities';
 
 /**
  * Props for PersonsList component
@@ -73,11 +74,11 @@ class PersonsList extends React.Component<Props, State> {
     const sectionsList: ReactElement[] = [];
 
     for (let i = 1; i <= pagesCount; i++) {
-      sectionsList.push(<TablePage
+      sectionsList.push(<TablePage<Person>
         key={i}
         pageNumber={i}
         observer={this.observer}
-        personsConnection={this.props.personsConnection}/>);
+        entities={this.props.personsConnection.persons.edges.map((entity) => entity.node)}/>);
     }
 
     return (
@@ -87,10 +88,11 @@ class PersonsList extends React.Component<Props, State> {
             <thead>
               <tr>
                 <th>№</th>
-                <th>id</th>
-                <th>first name</th>
-                <th>last name</th>
-                <th>patronymic</th>
+                {Object.keys(this.props.personsConnection.persons.edges[0].node).map((key) => {
+                    if (key === '__typename') return;
+                    return <th key={key}>{key}</th>;
+                  }
+                )}
               </tr>
             </thead>
             {sectionsList}
