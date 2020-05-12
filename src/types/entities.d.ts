@@ -8,5 +8,5 @@ export interface EntityConnection {
       };
     }>;
   };
-  readonly " $refType": string;
+  readonly ' $refType': string;
 }

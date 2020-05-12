@@ -1,12 +1,12 @@
-import React, {ReactElement} from 'react';
-import {RelayPaginationProp} from 'react-relay';
-import {ENTITIES_PER_PAGE} from '../../constants';
+import React, { ReactElement } from 'react';
+import { RelayPaginationProp } from 'react-relay';
+import { ENTITIES_PER_PAGE } from '../../constants';
 import PaginationControl from 'rc-pagination';
 import './EntitiesList.css';
 import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
 import TablePage from './TablePage';
-import {EntityConnection} from '../../types/entities';
+import { EntityConnection } from '../../types/entities';
 
 /**
  * Props for EntitiesList component
@@ -83,14 +83,17 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
       <div className={'entities-page'}>
         <table className={'entities-page__table'}>
           <thead>
-          <tr>
-            <th>№</th>
-            {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
-                if (key === '__typename') return;
+            <tr>
+              <th>№</th>
+              {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
+                if (key === '__typename') {
+                  return;
+                }
+
                 return <th key={key}>{key}</th>;
               }
-            )}
-          </tr>
+              )}
+            </tr>
           </thead>
           {sectionsList}
         </table>
@@ -146,7 +149,7 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
    * @param entries - entries to observe
    */
   private observerCallback = (entries: IntersectionObserverEntry[]): void => {
-    const viewingPagesCopy = [...this.state.viewingPages];
+    const viewingPagesCopy = [ ...this.state.viewingPages ];
 
     entries.forEach(entry => {
       const page = entry.target.getAttribute('data-page');

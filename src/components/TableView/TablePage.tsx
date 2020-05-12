@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { ENTITIES_PER_PAGE } from '../../constants';
-import { EntityConnection } from "../../types/entities";
+import { EntityConnection } from '../../types/entities';
 
 /**
  * Props for List component
@@ -63,9 +63,12 @@ export default class TablePage<ENTITY_CONNECTION_TYPE extends EntityConnection> 
         <tr key={entity.id}>
           <td>{i + 1}</td>
           {Object.keys(entity).map((key) => {
-              if (key === '__typename') return;
-              return <td key={key}>{entity[key]}</td>;
+            if (key === '__typename') {
+              return;
             }
+
+            return <td key={key}>{entity[key]}</td>;
+          }
           )}
         </tr>;
 
