@@ -4,9 +4,10 @@ import { PersonsPageQuery } from './__generated__/PersonsPageQuery.graphql';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import { ENTITIES_PER_PAGE } from '../../constants';
-import EntitiesList from '../TableView/EntitiesList';
+import EntitiesList, { EntitiesListProps } from '../TableView/EntitiesList';
+import { PersonsPage_entityConnection as PersonsPageEntityConnection } from './__generated__/PersonsPage_entityConnection.graphql';
 
-const PersonsList = createPaginationContainer(
+const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntityConnection>>(
   EntitiesList,
   {
     entityConnection: graphql`

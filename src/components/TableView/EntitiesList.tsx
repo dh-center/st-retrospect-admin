@@ -11,7 +11,7 @@ import { EntityConnection } from '../../types/entities';
 /**
  * Props for EntitiesList component
  */
-interface Props<ENTITY_CONNECTION_TYPE> {
+export interface EntitiesListProps<ENTITY_CONNECTION_TYPE> {
   /**
    * Entity connection
    */
@@ -41,7 +41,7 @@ interface State {
 /**
  * List with entities
  */
-class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>, State> {
+class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<EntitiesListProps<ENTITY_CONNECTION_TYPE>, State> {
   /**
    * Observer for tracking pages that user sees
    */
@@ -50,7 +50,7 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
   /**
    * @param props - component's props
    */
-  constructor(props: Props<ENTITY_CONNECTION_TYPE>) {
+  constructor(props: EntitiesListProps<ENTITY_CONNECTION_TYPE>) {
     super(props);
     const pagesCount = Math.floor(props.entityConnection.entities.totalCount / ENTITIES_PER_PAGE) + 1;
 

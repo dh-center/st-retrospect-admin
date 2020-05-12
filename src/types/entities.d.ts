@@ -1,3 +1,6 @@
+/**
+ * Interface represents Relay Connection model
+ */
 export interface EntityConnection {
   readonly entities: {
     readonly totalCount: number;
