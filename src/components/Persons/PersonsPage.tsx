@@ -1,16 +1,16 @@
-import React, {ReactElement} from 'react';
-import {createPaginationContainer, QueryRenderer} from 'react-relay';
-import {PersonsPageQuery} from './__generated__/PersonsPageQuery.graphql';
+import React, { ReactElement } from 'react';
+import { createPaginationContainer, QueryRenderer } from 'react-relay';
+import { PersonsPageQuery } from './__generated__/PersonsPageQuery.graphql';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
-import {ENTITIES_PER_PAGE} from '../../constants';
-import EntitiesList from "../TableView/EntitiesList";
+import { ENTITIES_PER_PAGE } from '../../constants';
+import EntitiesList from '../TableView/EntitiesList';
 
 const PersonsList = createPaginationContainer(
   EntitiesList,
   {
     entityConnection: graphql`
-      fragment PersonsList_personsConnection on Query @argumentDefinitions (
+      fragment PersonsPage_entityConnection on Query @argumentDefinitions (
         first: {type: "Int", defaultValue: 10}
         after: {type: "Cursor"}
       ) {
@@ -34,11 +34,11 @@ const PersonsList = createPaginationContainer(
   {
     direction: 'forward',
     query: graphql`
-      query PersonsListForwardQuery(
+      query PersonsPageForwardQuery(
         $first: Int,
         $after: Cursor,
       ) {
-        ...PersonsList_personsConnection @arguments(first: $first, after: $after)
+        ...PersonsPage_entityConnection @arguments(first: $first, after: $after)
       }
     `,
     getVariables(props, paginationInfo) {
@@ -62,20 +62,21 @@ export default function PersonsPage(): ReactElement {
             $first: Int,
             $after: Cursor
           ) {
-             ...PersonsList_personsConnection @arguments(first: $first, after: $after)
+             ...PersonsPage_entityConnection @arguments(first: $first, after: $after)
           }
         `}
       variables={{
         first: ENTITIES_PER_PAGE,
         after: null,
       }}
-      render={({error, props}): React.ReactNode => {
+      render={({ error, props }): React.ReactNode => {
         if (error) {
           return <div>Error!</div>;
         }
         if (!props) {
           return <div>Loading persons...</div>;
         }
+
         return <PersonsList entityConnection={props}/>;
       }}
     />

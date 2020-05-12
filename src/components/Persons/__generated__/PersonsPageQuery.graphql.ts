@@ -8,7 +8,7 @@ export type PersonsPageQueryVariables = {
     after?: unknown | null;
 };
 export type PersonsPageQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"PersonsList_personsConnection">;
+    readonly " $fragmentRefs": FragmentRefs<"PersonsPage_entityConnection">;
 };
 export type PersonsPageQuery = {
     readonly response: PersonsPageQueryResponse;
@@ -22,11 +22,11 @@ query PersonsPageQuery(
   $first: Int
   $after: Cursor
 ) {
-  ...PersonsList_personsConnection_2HEEH6
+  ...PersonsPage_entityConnection_2HEEH6
 }
 
-fragment PersonsList_personsConnection_2HEEH6 on Query {
-  persons(first: $first, after: $after) {
+fragment PersonsPage_entityConnection_2HEEH6 on Query {
+  entities: persons(first: $first, after: $after) {
     totalCount
     edges {
       node {
@@ -83,7 +83,7 @@ return {
       {
         "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "PersonsList_personsConnection"
+        "name": "PersonsPage_entityConnection"
       }
     ],
     "type": "Query"
@@ -95,7 +95,7 @@ return {
     "name": "PersonsPageQuery",
     "selections": [
       {
-        "alias": null,
+        "alias": "entities",
         "args": (v1/*: any*/),
         "concreteType": "PersonConnection",
         "kind": "LinkedField",
@@ -202,11 +202,11 @@ return {
         "storageKey": null
       },
       {
-        "alias": null,
+        "alias": "entities",
         "args": (v1/*: any*/),
         "filters": null,
         "handle": "connection",
-        "key": "PersonsList_persons",
+        "key": "PersonsList_entities",
         "kind": "LinkedHandle",
         "name": "persons"
       }
@@ -217,9 +217,9 @@ return {
     "metadata": {},
     "name": "PersonsPageQuery",
     "operationKind": "query",
-    "text": "query PersonsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_personsConnection_2HEEH6\n}\n\nfragment PersonsList_personsConnection_2HEEH6 on Query {\n  persons(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PersonsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsPage_entityConnection_2HEEH6\n}\n\nfragment PersonsPage_entityConnection_2HEEH6 on Query {\n  entities: persons(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd40155d0a50b078c37fea2bdd0a538d2';
+(node as any).hash = '25c55678c77b38a5245d947be425403d';
 export default node;

@@ -3,30 +3,30 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PersonsListForwardQueryVariables = {
+export type PersonsPageForwardQueryVariables = {
     first?: number | null;
     after?: unknown | null;
 };
-export type PersonsListForwardQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"PersonsList_personsConnection">;
+export type PersonsPageForwardQueryResponse = {
+    readonly " $fragmentRefs": FragmentRefs<"PersonsPage_entityConnection">;
 };
-export type PersonsListForwardQuery = {
-    readonly response: PersonsListForwardQueryResponse;
-    readonly variables: PersonsListForwardQueryVariables;
+export type PersonsPageForwardQuery = {
+    readonly response: PersonsPageForwardQueryResponse;
+    readonly variables: PersonsPageForwardQueryVariables;
 };
 
 
 
 /*
-query PersonsListForwardQuery(
+query PersonsPageForwardQuery(
   $first: Int
   $after: Cursor
 ) {
-  ...PersonsList_personsConnection_2HEEH6
+  ...PersonsPage_entityConnection_2HEEH6
 }
 
-fragment PersonsList_personsConnection_2HEEH6 on Query {
-  persons(first: $first, after: $after) {
+fragment PersonsPage_entityConnection_2HEEH6 on Query {
+  entities: persons(first: $first, after: $after) {
     totalCount
     edges {
       node {
@@ -78,12 +78,12 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonsListForwardQuery",
+    "name": "PersonsPageForwardQuery",
     "selections": [
       {
         "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "PersonsList_personsConnection"
+        "name": "PersonsPage_entityConnection"
       }
     ],
     "type": "Query"
@@ -92,10 +92,10 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonsListForwardQuery",
+    "name": "PersonsPageForwardQuery",
     "selections": [
       {
-        "alias": null,
+        "alias": "entities",
         "args": (v1/*: any*/),
         "concreteType": "PersonConnection",
         "kind": "LinkedField",
@@ -202,11 +202,11 @@ return {
         "storageKey": null
       },
       {
-        "alias": null,
+        "alias": "entities",
         "args": (v1/*: any*/),
         "filters": null,
         "handle": "connection",
-        "key": "PersonsList_persons",
+        "key": "PersonsList_entities",
         "kind": "LinkedHandle",
         "name": "persons"
       }
@@ -215,11 +215,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "PersonsListForwardQuery",
+    "name": "PersonsPageForwardQuery",
     "operationKind": "query",
-    "text": "query PersonsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_personsConnection_2HEEH6\n}\n\nfragment PersonsList_personsConnection_2HEEH6 on Query {\n  persons(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PersonsPageForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsPage_entityConnection_2HEEH6\n}\n\nfragment PersonsPage_entityConnection_2HEEH6 on Query {\n  entities: persons(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        patronymic\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3679d6cf555ae9a30bb8d7560a332eed';
+(node as any).hash = '7861813253edde4a2a8b43617786de29';
 export default node;
