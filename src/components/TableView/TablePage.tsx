@@ -64,7 +64,7 @@ export default class TablePage<ENTITY_CONNECTION_TYPE extends EntityConnection> 
           <td>{i + 1}</td>
           {Object.keys(entity).map((key) => {
             if (key === '__typename') {
-              return;
+              return undefined;
             }
 
             return <td key={key}>{entity[key]}</td>;

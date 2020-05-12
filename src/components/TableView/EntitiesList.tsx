@@ -86,8 +86,8 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
             <tr>
               <th>№</th>
               {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
-                if (key === '__typename') {
-                  return;
+                if (key !== '__typename') {
+                  return undefined;
                 }
 
                 return <th key={key}>{key}</th>;
