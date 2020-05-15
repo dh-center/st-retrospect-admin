@@ -20,7 +20,7 @@ jobs:
         run: .github/scripts/decrypt_secret.sh
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          ENV_FILENAME: ${{ env.BRANCH_NAME }}
+          ENV_FILENAME: ".env-" + ${{ env.BRANCH_NAME }} + ".gpg"
 
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
