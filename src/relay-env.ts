@@ -7,7 +7,7 @@ import {
   Variables
 } from 'relay-runtime';
 
-const url = 'https://api.stage.st-retrospect.dh-center.ru/graphql';
+const url = process.env.REACT_APP_API_ENDPOINT;
 
 /**
  * Function for make queries to GraphQL server
