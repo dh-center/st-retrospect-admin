@@ -13,6 +13,9 @@ directive @dataLoader(
   fieldName: String!
 ) on FIELD_DEFINITION
 
+"""Directive for pagination according to the Relay specification"""
+directive @pagination(collectionName: String!) on FIELD_DEFINITION
+
 directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
 
 """Location address representation"""
@@ -99,6 +102,27 @@ type Location {
   instances: [LocationInstance!]!
 }
 
+"""Model for representing list of locations"""
+type LocationConnection {
+  """List of locations edges"""
+  edges: [LocationEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific location in connection"""
+type LocationEdge {
+  """Cursor of this location"""
+  cursor: Cursor!
+
+  """Location info"""
+  node: Location!
+}
+
 """
 Location context. This can be a time period, a special description for a particular route, etc.
 """
@@ -174,6 +198,7 @@ type Mutation {
   quest: QuestMutations
 }
 
+"""Information about current page"""
 type PageInfo {
   """Information about the existence of the next page"""
   hasNextPage: Boolean!
@@ -182,10 +207,10 @@ type PageInfo {
   hasPreviousPage: Boolean!
 
   """First cursor on this page"""
-  startCursor: Cursor!
+  startCursor: Cursor
 
   """Last cursor on this page"""
-  endCursor: Cursor!
+  endCursor: Cursor
 }
 
 type Person {
@@ -229,6 +254,7 @@ type Person {
   photoLinks: [String]
 }
 
+"""Model for representing list of persons"""
 type PersonConnection {
   """List of persons edges"""
   edges: [PersonEdge!]!
@@ -240,6 +266,7 @@ type PersonConnection {
   totalCount: Int!
 }
 
+"""Information about specific person in connection"""
 type PersonEdge {
   """Cursor of this person"""
   cursor: Cursor!
@@ -260,7 +287,23 @@ type Query {
   ): Person
 
   """Get all persons"""
-  persons(after: Cursor, before: Cursor, first: Int, last: Int): PersonConnection!
+  persons(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): PersonConnection!
 
   """Get specific location"""
   location(
@@ -269,7 +312,23 @@ type Query {
   ): Location
 
   """Get all locations"""
-  locations: [Location!]!
+  locations(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): LocationConnection!
 
   """Get specific locationInstances"""
   locationInstance(
@@ -320,7 +379,23 @@ type Query {
   ): Quest
 
   """Get all quests"""
-  quests: [Quest!]!
+  quests(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): QuestConnection!
 }
 
 type Quest {
@@ -344,6 +419,27 @@ type Quest {
 
   """Quest rewards"""
   rewards: [JSON!]!
+}
+
+"""Model for representing list of quests"""
+type QuestConnection {
+  """List of quests edges"""
+  edges: [QuestEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific quest in connection"""
+type QuestEdge {
+  """Cursor of this quest"""
+  cursor: Cursor!
+
+  """Quest info"""
+  node: Quest!
 }
 
 type QuestMutations {
