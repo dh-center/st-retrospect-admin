@@ -16,17 +16,18 @@ jobs:
       - name: Set branch name to environment variable
         run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
 
+      - name: Set .env filename to descrypt
+        run: echo "::set-env name=ENV_FILENAME::$(echo ".env-${BRANCH_NAME}.gpg")"
+
+
       - name: Decrypt .env file
         run: .github/scripts/decrypt_secret.sh
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          ENV_FILENAME: ".env-" + ${{ env.BRANCH_NAME }} + ".gpg"
+          ENV_FILENAME: ${{ env.ENV_FILENAME }}
 
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
-
-      - name: Set branch name to environment variable
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
 
       - name: Set deploy command to env variable
         run: echo "::set-env name=DEPLOY_COMMAND::$(echo "cd ~/st-retrospect/${BRANCH_NAME}/admin && ./deploy.sh")"
