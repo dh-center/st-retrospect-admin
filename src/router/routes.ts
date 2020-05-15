@@ -1,5 +1,5 @@
 import PersonsPage from '../components/Persons/PersonsPage';
-import Quests from '../components/Quests';
+import QuestsPage from '../components/Quests/QuestsPage';
 import Quiz from '../components/Quiz';
 
 const routes = [
@@ -9,7 +9,7 @@ const routes = [
   },
   {
     path: '/quests',
-    component: Quests,
+    component: QuestsPage,
   },
   {
     path: '/quiz',
