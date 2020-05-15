@@ -1,5 +1,11 @@
+/**
+ * Represents response of the auth server in case of success
+ */
 interface AuthServerResponse {
   data: {
+    /**
+     * Access login to interact with API
+     */
     accessToken: string;
   };
 }
@@ -8,9 +14,15 @@ interface AuthServerResponse {
  * Controller for auth actions
  */
 class AuthController {
-  private static LC_ACCESS_TOKEN_KEY='access-token';
+  /**
+   * User access token
+   */
+  public accessToken: string | null = null;
 
-  private accessToken: string | null = null;
+  /**
+   * LocalStorage key for storing access token
+   */
+  private static LC_ACCESS_TOKEN_KEY='access-token';
 
   /**
    * Auth controller constructor

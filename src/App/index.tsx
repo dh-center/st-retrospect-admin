@@ -16,21 +16,27 @@ function App(): ReactElement {
     <div className="App">
       <Navigation/>
       <Switch>
+
         <Route path='/login'>
           <Login/>
         </Route>
+
         <PrivateRoute path='/persons'>
           <PersonsPage/>
         </PrivateRoute>
+
         <PrivateRoute path='/quests'>
           <QuestsPage/>
         </PrivateRoute>
+
         <PrivateRoute path='/quiz'>
           <Quiz/>
         </PrivateRoute>
+
         <PrivateRoute path='/'>
           <Redirect to='/persons'/>
         </PrivateRoute>
+
       </Switch>
     </div>
   );
