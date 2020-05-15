@@ -19,7 +19,6 @@ jobs:
       - name: Set .env filename to descrypt
         run: echo "::set-env name=ENV_FILENAME::$(echo ".env-${BRANCH_NAME}.gpg")"
 
-
       - name: Decrypt .env file
         if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
         run: .github/scripts/decrypt_secret.sh
