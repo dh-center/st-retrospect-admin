@@ -19,11 +19,9 @@ jobs:
         run: echo "::set-env name=ENV_FILENAME::$(echo ".env-${BRANCH_NAME}.gpg")"
 
       - name: Decrypt .env file
-        if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
         run: .github/scripts/decrypt_secret.sh
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          ENV_FILENAME: ${{ env.ENV_FILENAME }}
 
       - name: Build the Docker image
         run: docker build . -t $DOCKER_IMAGE_NAME
