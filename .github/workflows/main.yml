@@ -1,0 +1,51 @@
+name: Build and deploy
+
+on: [push]
+
+env:
+  DOCKER_IMAGE_NAME: dhcenter/st-retrospect-admin
+jobs:
+
+  build_and_deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Set branch name to environment variable
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
+
+      - name: Set .env filename to descrypt
+        run: echo "::set-env name=ENV_FILENAME::$(echo ".env-${BRANCH_NAME}.gpg")"
+
+      - name: Decrypt .env file
+        run: .github/scripts/decrypt_secret.sh
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Change API endpoint if prod
+        if: endsWith(github.ref, '/prod')
+        run: sed -i -E "s/api.stage.st-retrospect/api.st-retrospect/" .env
+
+      - name: Build the Docker image
+        run: docker build . -t $DOCKER_IMAGE_NAME
+
+      - name: Set deploy command to env variable
+        run: echo "::set-env name=DEPLOY_COMMAND::$(echo "cd ~/st-retrospect/${BRANCH_NAME}/admin && ./deploy.sh")"
+
+      - name: Push to Docker Hub
+        if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
+        run: |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker tag $DOCKER_IMAGE_NAME $DOCKER_IMAGE_NAME:$BRANCH_NAME
+          docker push $DOCKER_IMAGE_NAME:$BRANCH_NAME
+          docker logout
+
+      - name: Deploy
+        if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
+        uses: garygrossgarten/github-action-ssh@v0.3.0
+        with:
+          command: ${{ env.DEPLOY_COMMAND }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          privateKey: ${{ secrets.PRIVATE_KEY }}
