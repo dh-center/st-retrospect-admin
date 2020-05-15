@@ -21,6 +21,7 @@ jobs:
 
 
       - name: Decrypt .env file
+        if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
         run: .github/scripts/decrypt_secret.sh
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
