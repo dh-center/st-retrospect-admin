@@ -1,6 +1,7 @@
 import React, { FormEvent } from 'react';
 import authController from '../../authController';
 import { withRouter, RouteComponentProps } from 'react-router';
+import './index.css';
 
 /**
  * Component for authentication
@@ -16,21 +17,31 @@ class Login extends React.Component<RouteComponentProps> {
    */
   public render(): React.ReactElement {
     return (
-      <div>
-        <form onSubmit={(e): Promise<void> => this.handleLogin(e)}>
-          <input
-            type="text"
-            value={this.state.email}
-            placeholder='Your email'
-            onChange={(e): void => this.setState({ email: e.target.value })}
-          />
-          <input
-            type="password"
-            placeholder='Your password'
-            value={this.state.password}
-            onChange={(e): void => this.setState({ password: e.target.value })}
-          />
-          <input type="submit" value='Login'/>
+      <div className='login-page'>
+        <form className='login-page__form' onSubmit={(e): Promise<void> => this.handleLogin(e)}>
+          <h1 className='login-page__header'>Please, login</h1>
+          <div>
+            <input
+              className='login-page__input'
+              type="text"
+              value={this.state.email}
+              placeholder='Username'
+              onChange={(e): void => this.setState({ email: e.target.value })}
+            />
+          </div>
+          <div>
+            <input
+              className='login-page__input'
+              type="password"
+              placeholder='Password'
+              value={this.state.password}
+              onChange={(e): void => this.setState({ password: e.target.value })}
+            />
+
+          </div>
+          <button type="submit" className='login-page__submit-button'>
+            Enter
+          </button>
         </form>
 
       </div>

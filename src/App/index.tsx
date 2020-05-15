@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import './index.css';
 import Navigation from '../components/Navigation';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Login from '../components/Login';
 import PrivateRoute from '../components/PrivateRoute';
 import PersonsPage from '../components/Persons/PersonsPage';
@@ -13,7 +13,7 @@ import Quiz from '../components/Quiz';
  */
 function App(): ReactElement {
   return (
-    <div className="App">
+    <div className="app">
       <Switch>
 
         <Route path='/login'>
