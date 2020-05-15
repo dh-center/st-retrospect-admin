@@ -22,7 +22,7 @@ class AuthController {
   /**
    * LocalStorage key for storing access token
    */
-  private static LC_ACCESS_TOKEN_KEY='access-token';
+  private static LC_ACCESS_TOKEN_KEY = 'access-token';
 
   /**
    * Auth controller constructor
