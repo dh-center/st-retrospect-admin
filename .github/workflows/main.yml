@@ -29,7 +29,7 @@ jobs:
         run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
 
       - name: Set deploy command to env variable
-        run: echo "::set-env name=DEPLOY_COMMAND::$(echo "cd ~/gamification-prototype/${BRANCH_NAME}/frontend && ./deploy.sh")"
+        run: echo "::set-env name=DEPLOY_COMMAND::$(echo "cd ~/st-retrospect/${BRANCH_NAME}/admin && ./deploy.sh")"
 
       - name: Push to Docker Hub
         if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
