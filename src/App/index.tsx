@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import './index.css';
 import Navigation from '../components/Navigation';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../components/Login';
 import PrivateRoute from '../components/PrivateRoute';
 import PersonsPage from '../components/Persons/PersonsPage';
@@ -35,6 +35,10 @@ function App(): ReactElement {
 
             <PrivateRoute path='/quiz'>
               <Quiz/>
+            </PrivateRoute>
+
+            <PrivateRoute path='/'>
+              <Redirect to='/persons'/>
             </PrivateRoute>
           </Switch>
 

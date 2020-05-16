@@ -1,6 +1,6 @@
 import React, { FormEvent, ReactElement, useState } from 'react';
 import authController from '../../authController';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import './index.css';
 
 /**
@@ -25,6 +25,7 @@ function Login(props: RouteComponentProps): ReactElement {
 
   return (
     <div className='login-page'>
+      {authController.isAuthenticated() && <Redirect to='/'/>}
       <form
         className='login-page__form'
         onSubmit={handleLogin}>
