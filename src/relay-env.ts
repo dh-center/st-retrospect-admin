@@ -6,8 +6,12 @@ import {
   Store,
   Variables
 } from 'relay-runtime';
+import authController from './authController';
 
-const url = process.env.REACT_APP_API_ENDPOINT;
+/**
+ * GraphQL API endpoint
+ */
+const url = process.env.REACT_APP_API_ENDPOINT + 'graphql';
 
 /**
  * Function for make queries to GraphQL server
@@ -17,11 +21,17 @@ const url = process.env.REACT_APP_API_ENDPOINT;
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function fetchQuery(operation: RequestParameters, variables: Variables): Promise<any> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+
+  if (authController.accessToken) {
+    headers.Authorization = 'Bearer ' + authController.accessToken;
+  }
+
   const response = await window.fetch(url, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({
       query: operation.text,
       variables,
