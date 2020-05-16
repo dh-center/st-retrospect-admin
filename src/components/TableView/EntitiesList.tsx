@@ -81,32 +81,38 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
 
     return (
       <div className={'entities-page'}>
-        <table className={'entities-page__table'}>
-          <thead>
-            <tr>
-              <th>№</th>
-              {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
-                if (key === '__typename') {
-                  return undefined;
-                }
+        {this.props.entityConnection.entities.edges.length > 0 ? (
+          <>
+            <table className={'entities-page__table'}>
+              <thead>
+                <tr>
+                  <th>№</th>
+                  {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
+                    if (key === '__typename') {
+                      return undefined;
+                    }
 
-                return <th key={key}>{key}</th>;
-              }
-              )}
-            </tr>
-          </thead>
-          {sectionsList}
-        </table>
-        <div className={'entities-page__page-control'}>
-          <button onClick={this.loadMore} className={'entities-page__load-more-btn'}>Load more</button>
-          <PaginationControl
-            pageSize={ENTITIES_PER_PAGE}
-            total={this.props.entityConnection.entities.totalCount}
-            onChange={this.goToPage}
-            locale={locale}
-            current={this.state.currentPage + 1}
-          />
-        </div>
+                    return <th key={key}>{key}</th>;
+                  }
+                  )}
+                </tr>
+              </thead>
+              {sectionsList}
+            </table>
+            <div className={'entities-page__page-control'}>
+              <button onClick={this.loadMore} className={'entities-page__load-more-btn'}>Load more</button>
+              <PaginationControl
+                pageSize={ENTITIES_PER_PAGE}
+                total={this.props.entityConnection.entities.totalCount}
+                onChange={this.goToPage}
+                locale={locale}
+                current={this.state.currentPage + 1}
+              />
+            </div>
+          </>
+        ) : (<div>There is no entities in DataBase</div>)
+        }
+
       </div>
     );
   }
