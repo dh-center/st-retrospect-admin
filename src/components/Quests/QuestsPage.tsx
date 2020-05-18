@@ -6,6 +6,10 @@ import { QuestsPageQuery } from './__generated__/QuestsPageQuery.graphql';
 import { QuestsPage_entityConnection as QuestsPageEntityConnection } from './__generated__/QuestsPage_entityConnection.graphql';
 import environment from '../../relay-env';
 import { ENTITIES_PER_PAGE } from '../../constants';
+import { Switch } from 'react-router-dom';
+import PrivateRoute from '../PrivateRoute';
+import Create from '../Entities/Create';
+import { EntityTypes } from '../../types/entities';
 
 const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityConnection>>(
   EntitiesList,
@@ -55,30 +59,35 @@ const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityC
  */
 export default function QuestsPage(): ReactElement {
   return (
-    <QueryRenderer<QuestsPageQuery>
-      environment={environment}
-      query={graphql`
-            query QuestsPageQuery (
-              $first: Int,
-              $after: Cursor
-            ) {
-              ...QuestsPage_entityConnection @arguments(first: $first, after: $after)
-            }
-          `}
-      variables={{
-        first: ENTITIES_PER_PAGE,
-        after: null,
-      }}
-      render={({ error, props }): React.ReactNode => {
-        if (error) {
-          return <div>Error!</div>;
-        }
-        if (!props) {
-          return <div>Loading quests...</div>;
-        }
+    <Switch>
+      <PrivateRoute path={'/quests/create'}>
+        <Create entityType={EntityTypes.QUEST}/>
+      </PrivateRoute>
+      <QueryRenderer<QuestsPageQuery>
+        environment={environment}
+        query={graphql`
+              query QuestsPageQuery (
+                $first: Int,
+                $after: Cursor
+              ) {
+                ...QuestsPage_entityConnection @arguments(first: $first, after: $after)
+              }
+            `}
+        variables={{
+          first: ENTITIES_PER_PAGE,
+          after: null,
+        }}
+        render={({ error, props }): React.ReactNode => {
+          if (error) {
+            return <div>Error!</div>;
+          }
+          if (!props) {
+            return <div>Loading quests...</div>;
+          }
 
-        return <QuestsList entityConnection={props}/>;
-      }}
-    />
+          return <QuestsList entityConnection={props}/>;
+        }}
+      />
+    </Switch>
   );
 }
