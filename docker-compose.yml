@@ -1,0 +1,12 @@
+version: "3.2"
+services:
+  frontend-dev:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - 4590:3000
