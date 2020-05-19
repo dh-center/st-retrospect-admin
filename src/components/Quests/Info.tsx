@@ -1,14 +1,23 @@
-import React, {useState} from 'react';
+import React, { ChangeEvent } from 'react';
 
 /**
- *
+ * Props of component
  */
-export default function QuestInfo(): React.ReactElement {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [photo, setPhoto] = useState('');
-  const [questType, setQuestType] = useState('QUIZ');
+interface Props {
+  /**
+   * Handler for changing input fields
+   *
+   * @param e - change event
+   */
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}
 
+/**
+ * Component of quest fields
+ *
+ * @param props - props of component
+ */
+export default function QuestInfo(props: Props): React.ReactElement {
   return (
     <div className={'entity-info'}>
       <div className={'entity-info__section'}>
@@ -16,7 +25,10 @@ export default function QuestInfo(): React.ReactElement {
         <input
           type="text"
           id={'name'}
-          onChange={(e): void => {setName(e.target.value)}}
+          name={'name'}
+          onChange={(e): void => {
+            props.onChange(e);
+          }}
         />
       </div>
       <div className={'entity-info__section'}>
@@ -24,7 +36,10 @@ export default function QuestInfo(): React.ReactElement {
         <textarea
           id={'description'}
           className={'entity-info__description'}
-          onChange={(e): void => {setDescription(e.target.value)}}
+          name={'description'}
+          onChange={(e): void => {
+            props.onChange(e);
+          }}
         />
       </div>
       <div className={'entity-info__section'}>
@@ -32,7 +47,10 @@ export default function QuestInfo(): React.ReactElement {
         <input
           id={'photo'}
           type="text"
-          onChange={(e): void => {setPhoto(e.target.value)}}
+          name={'photo'}
+          onChange={(e): void => {
+            props.onChange(e);
+          }}
         />
       </div>
       <div className={'entity-info__section'}>
@@ -42,8 +60,9 @@ export default function QuestInfo(): React.ReactElement {
           name={'questType'}
           value={'QUIZ'}
           id={'quiz'}
-          checked
-          onChange={(e): void => {setQuestType(e.target.value)}}
+          onChange={(e): void => {
+            props.onChange(e);
+          }}
         />
         <label htmlFor={'quiz'} className={'entity-info__radio-label'}>Quiz</label>
         <input
@@ -51,7 +70,9 @@ export default function QuestInfo(): React.ReactElement {
           name={'questType'}
           value={'ROUTE'}
           id={'route'}
-          onChange={(e): void => {setQuestType(e.target.value)}}
+          onChange={(e): void => {
+            props.onChange(e);
+          }}
         />
         <label htmlFor={'route'} className={'entity-info__radio-label'}>Route</label>
       </div>
