@@ -29,6 +29,7 @@ export default function QuestInfo(props: Props): React.ReactElement {
           onChange={(e): void => {
             props.onChange(e);
           }}
+          required
         />
       </div>
       <div className={'entity-info__section'}>
@@ -40,6 +41,7 @@ export default function QuestInfo(props: Props): React.ReactElement {
           onChange={(e): void => {
             props.onChange(e);
           }}
+          required
         />
       </div>
       <div className={'entity-info__section'}>
@@ -51,6 +53,7 @@ export default function QuestInfo(props: Props): React.ReactElement {
           onChange={(e): void => {
             props.onChange(e);
           }}
+          required
         />
       </div>
       <div className={'entity-info__section'}>
@@ -63,6 +66,7 @@ export default function QuestInfo(props: Props): React.ReactElement {
           onChange={(e): void => {
             props.onChange(e);
           }}
+          required
         />
         <label htmlFor={'quiz'} className={'entity-info__radio-label'}>Quiz</label>
         <input
@@ -73,6 +77,7 @@ export default function QuestInfo(props: Props): React.ReactElement {
           onChange={(e): void => {
             props.onChange(e);
           }}
+          required
         />
         <label htmlFor={'route'} className={'entity-info__radio-label'}>Route</label>
       </div>
