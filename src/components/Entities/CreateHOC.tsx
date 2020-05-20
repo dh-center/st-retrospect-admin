@@ -16,11 +16,17 @@ interface InfoComponentProps {
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
+/**
+ * Return create component with Info fields
+ *
+ * @param InfoComponent - wrapped component
+ * @param mutation - creating mutation
+ */
 export function createComponent<P extends object>(
   InfoComponent: React.ComponentType<InfoComponentProps>,
   mutation: GraphQLTaggedNode
-): React.FC<P>{
-  return (props: P): React.ReactElement => {
+): React.FC<P> {
+  return (): React.ReactElement => {
     /**
      * Entity object in state
      */
@@ -81,9 +87,9 @@ export function createComponent<P extends object>(
       const value = e.target.value;
 
       setEntity(prevState => ({
-          ...prevState,
-          [name]: value,
-        })
+        ...prevState,
+        [name]: value,
+      })
       );
     };
 

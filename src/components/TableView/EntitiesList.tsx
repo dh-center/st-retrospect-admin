@@ -7,7 +7,6 @@ import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
 import TablePage from './TablePage';
 import { EntityConnection } from '../../types/entities';
-import { NavLink } from 'react-router-dom';
 
 /**
  * Props for EntitiesList component
@@ -82,7 +81,6 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
 
     return (
       <div className={'entities-page'}>
-        <NavLink className="navigation__link" activeClassName="navigation__link--active" to="/quests/create">Create</NavLink>
         {this.props.entityConnection.entities.edges.length > 0 ? (
           <>
             <table className={'entities-page__table'}>

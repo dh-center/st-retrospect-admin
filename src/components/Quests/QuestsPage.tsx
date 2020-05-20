@@ -6,7 +6,7 @@ import { QuestsPageQuery } from './__generated__/QuestsPageQuery.graphql';
 import { QuestsPage_entityConnection as QuestsPageEntityConnection } from './__generated__/QuestsPage_entityConnection.graphql';
 import environment from '../../relay-env';
 import { ENTITIES_PER_PAGE } from '../../constants';
-import { Switch } from 'react-router-dom';
+import { NavLink, Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import { createComponent } from '../Entities/CreateHOC';
 import QuestInfo from './Info';
@@ -75,9 +75,11 @@ export default function QuestsPage(): ReactElement {
       <PrivateRoute path={'/quests/create'}>
         <CreateComponent/>
       </PrivateRoute>
-      <QueryRenderer<QuestsPageQuery>
-        environment={environment}
-        query={graphql`
+      <PrivateRoute path={'/quests'}>
+        <NavLink className="navigation__link" activeClassName="navigation__link--active" to="/quests/create">Create</NavLink>
+        <QueryRenderer<QuestsPageQuery>
+          environment={environment}
+          query={graphql`
               query QuestsPageQuery (
                 $first: Int,
                 $after: Cursor
@@ -85,21 +87,22 @@ export default function QuestsPage(): ReactElement {
                 ...QuestsPage_entityConnection @arguments(first: $first, after: $after)
               }
             `}
-        variables={{
-          first: ENTITIES_PER_PAGE,
-          after: null,
-        }}
-        render={({ error, props }): React.ReactNode => {
-          if (error) {
-            return <div>Error!</div>;
-          }
-          if (!props) {
-            return <div>Loading quests...</div>;
-          }
+          variables={{
+            first: ENTITIES_PER_PAGE,
+            after: null,
+          }}
+          render={({ error, props }): React.ReactNode => {
+            if (error) {
+              return <div>Error!</div>;
+            }
+            if (!props) {
+              return <div>Loading quests...</div>;
+            }
 
-          return <QuestsList entityConnection={props}/>;
-        }}
-      />
+            return <QuestsList entityConnection={props}/>;
+          }}
+        />
+      </PrivateRoute>
     </Switch>
   );
 }
