@@ -8,8 +8,8 @@ import environment from '../../relay-env';
 import { ENTITIES_PER_PAGE } from '../../constants';
 import { Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
-import {createComponent} from "../Entities/CreateHOC";
-import QuestInfo from "./Info";
+import { createComponent } from '../Entities/CreateHOC';
+import QuestInfo from './Info';
 
 const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityConnection>>(
   EntitiesList,
@@ -56,7 +56,14 @@ const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityC
 
 const CreateComponent = createComponent(
   QuestInfo,
-  graphql``
+  graphql`
+    mutation QuestsPageCreateMutation($input: CreateQuestInput) {
+      quest {
+        create(input: $input) {
+          questId
+        }
+      }
+    }`
 );
 
 /**
