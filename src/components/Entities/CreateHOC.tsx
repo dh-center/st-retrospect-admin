@@ -43,7 +43,9 @@ export const createComponent = <P extends object>(
               style: 'success',
               time: 5000,
             });
-            props.history.push('../');
+            const entitiesListPath = props.location.pathname.replace('/create', '');
+
+            props.history.push(entitiesListPath);
           },
           onError: () => {
             notifier.show({
