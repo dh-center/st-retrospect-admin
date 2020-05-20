@@ -1,9 +1,8 @@
 import { commitMutation, GraphQLTaggedNode } from 'react-relay';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { Entity } from '../../types/entities';
 import environment from '../../relay-env';
 import notifier from 'codex-notifier';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 
 /**
  * Props of component
@@ -17,7 +16,7 @@ interface InfoComponentProps {
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export function createComponent<P extends RouteComponentProps>(
+export function createComponent<P extends object>(
   InfoComponent: React.ComponentType<InfoComponentProps>,
   mutation: GraphQLTaggedNode
 ): React.FC<P>{
@@ -26,6 +25,9 @@ export function createComponent<P extends RouteComponentProps>(
      * Entity object in state
      */
     const [entity, setEntity] = useState({});
+
+    const history = useHistory();
+    const location = useLocation();
 
     /**
      * Save entity to API
@@ -44,9 +46,9 @@ export function createComponent<P extends RouteComponentProps>(
               style: 'success',
               time: 5000,
             });
-            const entitiesListPath = props.location.pathname.replace('/create', '');
+            const entitiesListPath = location.pathname.replace('/create', '');
 
-            props.history.push(entitiesListPath);
+            history.push(entitiesListPath);
           },
           onError: () => {
             notifier.show({
