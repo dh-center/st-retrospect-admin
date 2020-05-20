@@ -2,6 +2,8 @@ import { commitMutation, GraphQLTaggedNode } from 'react-relay';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Entity } from '../../types/entities';
 import environment from '../../relay-env';
+import notifier from 'codex-notifier';
+import { withRouter, RouteComponentProps } from 'react-router';
 
 /**
  * Props of component
@@ -18,23 +20,37 @@ interface InfoComponentProps {
 export const createComponent = <P extends object>(
   InfoComponent: React.ComponentType<InfoComponentProps>,
   mutation: GraphQLTaggedNode
-): React.FC<P> => (props: P) => {
+): React.FC<P & RouteComponentProps> => (props: P & RouteComponentProps): React.ReactElement => {
   /**
    * Entity object in state
    */
     const [entity, setEntity] = useState({});
 
     /**
-     * @param mutation
-     * @param entity
+     * Save entity to API
      */
-    const saveEntityToApi = (mutation: GraphQLTaggedNode, entity: Entity): void => {
+    const saveEntityToApi = (): void => {
       commitMutation(
         environment,
         {
           mutation,
           variables: {
-            entity,
+            input: entity,
+          },
+          onCompleted: () => {
+            notifier.show({
+              message: 'Entity successfully saved',
+              style: 'success',
+              time: 5000,
+            });
+            props.history.push('../');
+          },
+          onError: () => {
+            notifier.show({
+              message: 'Something went wrong',
+              style: 'error',
+              time: 5000,
+            });
           },
         }
       );
@@ -47,7 +63,7 @@ export const createComponent = <P extends object>(
      */
     const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
       event.preventDefault();
-      saveEntityToApi(mutation, entity as Entity);
+      saveEntityToApi();
     };
 
     /**

@@ -57,7 +57,7 @@ export default function QuestInfo(props: Props): React.ReactElement {
         <label htmlFor="" className={'entity-info__label'}>Type:</label>
         <input
           type="radio"
-          name={'questType'}
+          name={'type'}
           value={'QUIZ'}
           id={'quiz'}
           onChange={(e): void => {
@@ -67,7 +67,7 @@ export default function QuestInfo(props: Props): React.ReactElement {
         <label htmlFor={'quiz'} className={'entity-info__radio-label'}>Quiz</label>
         <input
           type="radio"
-          name={'questType'}
+          name={'type'}
           value={'ROUTE'}
           id={'route'}
           onChange={(e): void => {

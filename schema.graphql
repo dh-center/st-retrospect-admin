@@ -2,7 +2,7 @@
 directive @renameField(name: String!) on FIELD_DEFINITION
 
 """Directive for picking only necessary language from multilingual fields"""
-directive @multilingual on FIELD_DEFINITION
+directive @multilingual on FIELD_DEFINITION | INPUT_FIELD_DEFINITION | ARGUMENT_DEFINITION
 
 """Directive for data loaders"""
 directive @dataLoader(
@@ -15,6 +15,12 @@ directive @dataLoader(
 
 """Directive for pagination according to the Relay specification"""
 directive @pagination(collectionName: String!) on FIELD_DEFINITION
+
+"""Directive for checking user authorization"""
+directive @authCheck on FIELD_DEFINITION
+
+"""Directive for checking admin permissions"""
+directive @adminCheck on FIELD_DEFINITION
 
 directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
 
@@ -49,6 +55,43 @@ input Coordinates {
   latitude: Float!
 }
 
+input CreatePersonInput {
+  """Person's first name"""
+  firstName: String
+
+  """Person's last name"""
+  lastName: String
+
+  """Person's patronymic"""
+  patronymic: String
+
+  """Person's pseudonym"""
+  pseudonym: String
+
+  """Person's profession"""
+  profession: String
+
+  """Person's description"""
+  description: String
+
+  """Person's birth date"""
+  birthDate: String
+
+  """Person's death date"""
+  deathDate: String
+
+  """Person's info link"""
+  wikiLink: String
+}
+
+type CreatePersonPayload {
+  """Created person id"""
+  recordId: ID
+
+  """Created person"""
+  record: Person
+}
+
 input CreateQuestInput {
   """Quest name"""
   name: String!
@@ -65,10 +108,10 @@ input CreateQuestInput {
 
 type CreateQuestPayload {
   """Created quest id"""
-  questId: ID
+  recordId: ID
 
   """Created quest"""
-  quest: Quest
+  record: Quest
 }
 
 scalar Cursor
@@ -183,6 +226,7 @@ type LocationType {
 type Mutation {
   """Unused field to let extend this type"""
   _: Boolean
+  person: PersonMutations
 
   """Save route to user"""
   saveRoute(routeId: String!): User!
@@ -273,6 +317,11 @@ type PersonEdge {
 
   """Person info"""
   node: Person!
+}
+
+type PersonMutations {
+  """Create person"""
+  create(input: CreatePersonInput): CreatePersonPayload!
 }
 
 """API queries"""

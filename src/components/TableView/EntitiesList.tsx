@@ -7,7 +7,7 @@ import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
 import TablePage from './TablePage';
 import { EntityConnection } from '../../types/entities';
-import {NavLink} from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
 /**
  * Props for EntitiesList component

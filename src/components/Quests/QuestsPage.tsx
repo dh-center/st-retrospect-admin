@@ -60,7 +60,7 @@ const CreateComponent = createComponent(
     mutation QuestsPageCreateMutation($input: CreateQuestInput) {
       quest {
         create(input: $input) {
-          questId
+          recordId
         }
       }
     }`

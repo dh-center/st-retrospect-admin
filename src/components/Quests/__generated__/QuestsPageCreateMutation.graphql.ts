@@ -15,7 +15,7 @@ export type QuestsPageCreateMutationVariables = {
 export type QuestsPageCreateMutationResponse = {
     readonly quest: {
         readonly create: {
-            readonly questId: string | null;
+            readonly recordId: string | null;
         };
     } | null;
 };
@@ -32,7 +32,7 @@ mutation QuestsPageCreateMutation(
 ) {
   quest {
     create(input: $input) {
-      questId
+      recordId
     }
   }
 }
@@ -74,7 +74,7 @@ v1 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "questId",
+            "name": "recordId",
             "storageKey": null
           }
         ],
@@ -105,9 +105,9 @@ return {
     "metadata": {},
     "name": "QuestsPageCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestsPageCreateMutation(\n  $input: CreateQuestInput\n) {\n  quest {\n    create(input: $input) {\n      questId\n    }\n  }\n}\n"
+    "text": "mutation QuestsPageCreateMutation(\n  $input: CreateQuestInput\n) {\n  quest {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c292de30248dbf3812d0dd6a7c3cf422';
+(node as any).hash = 'c4e60db27e755d8d2fec7d9cf6362569';
 export default node;
