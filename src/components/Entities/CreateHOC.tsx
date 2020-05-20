@@ -17,13 +17,14 @@ interface InfoComponentProps {
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export const createComponent = <P extends object>(
+export function createComponent<P extends RouteComponentProps>(
   InfoComponent: React.ComponentType<InfoComponentProps>,
   mutation: GraphQLTaggedNode
-): React.FC<P & RouteComponentProps> => (props: P & RouteComponentProps): React.ReactElement => {
-  /**
-   * Entity object in state
-   */
+): React.FC<P>{
+  return (props: P): React.ReactElement => {
+    /**
+     * Entity object in state
+     */
     const [entity, setEntity] = useState({});
 
     /**
@@ -78,9 +79,9 @@ export const createComponent = <P extends object>(
       const value = e.target.value;
 
       setEntity(prevState => ({
-        ...prevState,
-        [name]: value,
-      })
+          ...prevState,
+          [name]: value,
+        })
       );
     };
 
@@ -93,3 +94,4 @@ export const createComponent = <P extends object>(
       </div>
     );
   };
+}
