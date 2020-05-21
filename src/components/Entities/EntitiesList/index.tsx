@@ -5,7 +5,7 @@ import PaginationControl from 'rc-pagination';
 import './index.css';
 import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
-import TablePage from '../TablePage';
+import EntitiesListPage from '../EntitiesListPage';
 import { EntityConnection } from '../../../types/entities';
 import { Table, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -79,7 +79,7 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
     const sectionsList: ReactElement[] = [];
 
     for (let i = 1; i <= pagesCount; i++) {
-      sectionsList.push(<TablePage<ENTITY_CONNECTION_TYPE>
+      sectionsList.push(<EntitiesListPage<ENTITY_CONNECTION_TYPE>
         key={i}
         pageNumber={i}
         observer={this.observer}

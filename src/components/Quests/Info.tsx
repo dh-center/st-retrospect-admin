@@ -20,7 +20,7 @@ interface Props {
  */
 export default function QuestInfo(props: Props): React.ReactElement {
   return (
-    <Form>
+    <div>
       <Form.Group>
         <Form.Label htmlFor={'name'}>Name</Form.Label>
         <Form.Control
@@ -83,6 +83,6 @@ export default function QuestInfo(props: Props): React.ReactElement {
           />
         </div>
       </Form.Group>
-    </Form>
+    </div>
   );
 }

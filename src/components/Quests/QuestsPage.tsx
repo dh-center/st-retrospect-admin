@@ -98,7 +98,7 @@ export default function QuestsPage(): ReactElement {
               return <div>Loading quests...</div>;
             }
 
-            return <QuestsList entityName='quest' entityConnection={props} />;
+            return <QuestsList entityName='quests' entityConnection={props} />;
           }}
         />
       </PrivateRoute>

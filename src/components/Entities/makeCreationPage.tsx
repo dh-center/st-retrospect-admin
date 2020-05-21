@@ -3,7 +3,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 import environment from '../../relay-env';
 import notifier from 'codex-notifier';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 /**
  * Props of component
@@ -96,10 +96,10 @@ export default function createComponent<P extends object>(
 
     return (
       <div className='d-flex justify-content-center'>
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <InfoComponent onChange={handleUpdateEntity}/>
           <Button type={'submit'}>Save</Button>
-        </form>
+        </Form>
       </div>
     );
   };

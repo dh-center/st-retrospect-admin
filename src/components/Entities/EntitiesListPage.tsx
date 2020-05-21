@@ -25,7 +25,7 @@ interface Props<ENTITY_CONNECTION_TYPE> {
 /**
  * Page of entity table
  */
-export default class TablePage<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>> {
+export default class EntitiesListPage<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>> {
   /**
    * Ref to the components root HTML element
    */
