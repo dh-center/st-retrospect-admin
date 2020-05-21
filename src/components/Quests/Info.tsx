@@ -38,6 +38,7 @@ export default function QuestInfo(props: Props): React.ReactElement {
         <Form.Control
           id={'description'}
           as='textarea'
+          rows={15}
           name={'description'}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
             props.onChange(e);
