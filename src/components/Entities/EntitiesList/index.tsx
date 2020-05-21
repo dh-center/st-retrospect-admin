@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 import { RelayPaginationProp } from 'react-relay';
-import { ENTITIES_PER_PAGE } from '../../constants';
+import { ENTITIES_PER_PAGE } from '../../../constants';
 import PaginationControl from 'rc-pagination';
-import './EntitiesList.css';
+import './index.css';
 import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
-import TablePage from './TablePage';
-import { EntityConnection } from '../../types/entities';
+import TablePage from '../TablePage';
+import { EntityConnection } from '../../../types/entities';
 import { Table, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -43,7 +43,7 @@ interface State {
 /**
  * List with entities
  */
-class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<EntitiesListProps<ENTITY_CONNECTION_TYPE>, State> {
+export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<EntitiesListProps<ENTITY_CONNECTION_TYPE>, State> {
   /**
    * Observer for tracking pages that user sees
    */
@@ -85,7 +85,7 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
       <div className={'entities-page'}>
         {this.props.entityConnection.entities.edges.length > 0 ? (
           <>
-            <Table striped bordered hover size='sm'>
+            <Table striped bordered hover size='sm' className='m-0'>
               <thead>
                 <tr>
                   <th>№</th>
@@ -101,20 +101,22 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
               </thead>
               {sectionsList}
             </Table>
-            <div className={'entities-page__page-control'}>
+            <div className='entities-page__page-control p-0'>
               <div>
                 <LinkContainer to={`/quests/create`}>
                   <Button variant='outline-success' className='m-1'>Create</Button>
                 </LinkContainer>
                 <Button variant='outline-info' onClick={this.loadMore}>Load more</Button>
               </div>
-              <PaginationControl
-                pageSize={ENTITIES_PER_PAGE}
-                total={this.props.entityConnection.entities.totalCount}
-                onChange={this.goToPage}
-                locale={locale}
-                current={this.state.currentPage + 1}
-              />
+              <div className='d-flex justify-content-center'>
+                <PaginationControl
+                  pageSize={ENTITIES_PER_PAGE}
+                  total={this.props.entityConnection.entities.totalCount}
+                  onChange={this.goToPage}
+                  locale={locale}
+                  current={this.state.currentPage + 1}
+                />
+              </div>
             </div>
           </>
         ) : (<div>There is no entities in DataBase</div>)
@@ -178,5 +180,3 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
     });
   };
 }
-
-export default EntitiesList;

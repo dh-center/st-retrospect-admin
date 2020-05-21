@@ -1,18 +1,18 @@
 import React, { ReactElement } from 'react';
 import { createPaginationContainer, QueryRenderer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import EntitiesList, { EntitiesListProps } from '../TableView/EntitiesList';
+import Index, { EntitiesListProps } from '../Entities/EntitiesList/';
 import { QuestsPageQuery } from './__generated__/QuestsPageQuery.graphql';
 import { QuestsPage_entityConnection as QuestsPageEntityConnection } from './__generated__/QuestsPage_entityConnection.graphql';
 import environment from '../../relay-env';
 import { ENTITIES_PER_PAGE } from '../../constants';
 import { NavLink, Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
-import { createComponent } from '../Entities/CreateHOC';
+import makeCreationPage from '../Entities/makeCreationPage';
 import QuestInfo from './Info';
 
 const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityConnection>>(
-  EntitiesList,
+  Index,
   {
     entityConnection: graphql`
       fragment QuestsPage_entityConnection on Query @argumentDefinitions (
@@ -54,7 +54,7 @@ const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityC
   }
 );
 
-const CreateComponent = createComponent(
+const CreateComponent = makeCreationPage(
   QuestInfo,
   graphql`
     mutation QuestsPageCreateMutation($input: CreateQuestInput) {

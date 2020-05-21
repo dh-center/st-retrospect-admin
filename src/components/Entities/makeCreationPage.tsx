@@ -23,7 +23,7 @@ interface InfoComponentProps {
  * @param InfoComponent - wrapped component
  * @param mutation - creating mutation
  */
-export function createComponent<P extends object>(
+export default function createComponent<P extends object>(
   InfoComponent: React.ComponentType<InfoComponentProps>,
   mutation: GraphQLTaggedNode
 ): React.FC<P> {
