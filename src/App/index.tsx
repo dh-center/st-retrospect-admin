@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import './index.css';
 import Navigation from '../components/Navigation';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../components/Login';

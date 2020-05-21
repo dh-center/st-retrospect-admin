@@ -20,6 +20,11 @@ export interface EntitiesListProps<ENTITY_CONNECTION_TYPE> {
   entityConnection: ENTITY_CONNECTION_TYPE;
 
   /**
+   * Entity name for creating links
+   */
+  entityName: string;
+
+  /**
    * Prop for accessing relay functionality
    */
   relay: RelayPaginationProp;
@@ -103,7 +108,7 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
             </Table>
             <div className='entities-page__page-control p-0'>
               <div>
-                <LinkContainer to={`/quests/create`}>
+                <LinkContainer to={`/${this.props.entityName}/create`}>
                   <Button variant='outline-success' className='m-1'>Create</Button>
                 </LinkContainer>
                 <Button variant='outline-info' onClick={this.loadMore}>Load more</Button>
