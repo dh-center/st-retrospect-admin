@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { NavLink as Link } from 'react-router-dom';
-import './index.css';
 import authController from '../../authController';
 import { useHistory } from 'react-router';
 import { createFragmentContainer } from 'react-relay';
@@ -46,7 +45,7 @@ export function Navigation(props: NavigationProps): ReactElement {
         </Nav.Item>
       </Nav>
       <Navbar.Collapse className="justify-content-end">
-        <Navbar.Text>
+        <Navbar.Text className='m-2'>
           Signed in as: {props.user?.me.username}
         </Navbar.Text>
         <Button
