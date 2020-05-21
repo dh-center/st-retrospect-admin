@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from 'react';
+import { Form } from 'react-bootstrap';
 
 /**
  * Props of component
@@ -19,68 +20,65 @@ interface Props {
  */
 export default function QuestInfo(props: Props): React.ReactElement {
   return (
-    <div className={'entity-info'}>
-      <div className={'entity-info__section'}>
-        <label htmlFor={'name'} className={'entity-info__label'}>Name</label>
-        <input
+    <Form>
+      <Form.Group>
+        <Form.Label htmlFor={'name'}>Name</Form.Label>
+        <Form.Control
           type="text"
           id={'name'}
           name={'name'}
-          onChange={(e): void => {
+          onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             props.onChange(e);
           }}
           required
         />
-      </div>
-      <div className={'entity-info__section'}>
-        <label htmlFor={'description'} className={'entity-info__label'}>Description</label>
-        <textarea
+      </Form.Group>
+      <Form.Group>
+        <Form.Label htmlFor={'description'}>Description</Form.Label>
+        <Form.Control
           id={'description'}
-          className={'entity-info__description'}
+          as='textarea'
           name={'description'}
-          onChange={(e): void => {
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
             props.onChange(e);
           }}
           required
         />
-      </div>
-      <div className={'entity-info__section'}>
-        <label htmlFor={'photo'} className={'entity-info__label'}>Photo</label>
-        <input
+      </Form.Group>
+      <Form.Group>
+        <Form.Label htmlFor={'photo'}>Photo</Form.Label>
+        <Form.File
           id={'photo'}
           type="text"
           name={'photo'}
-          onChange={(e): void => {
-            props.onChange(e);
-          }}
-          required
+          disabled
         />
-      </div>
-      <div className={'entity-info__section'}>
-        <label htmlFor="" className={'entity-info__label'}>Type:</label>
-        <input
+      </Form.Group>
+      <Form.Group>
+        <Form.Label htmlFor="">Type:</Form.Label>
+        <Form.Check
           type="radio"
           name={'type'}
           value={'QUIZ'}
+          label='Quiz'
           id={'quiz'}
-          onChange={(e): void => {
+          onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             props.onChange(e);
           }}
           required
         />
-        <label htmlFor={'quiz'} className={'entity-info__radio-label'}>Quiz</label>
-        <input
+        <Form.Check
           type="radio"
           name={'type'}
           value={'ROUTE'}
+          label='Route'
           id={'route'}
-          onChange={(e): void => {
+          onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             props.onChange(e);
           }}
           required
         />
-        <label htmlFor={'route'} className={'entity-info__radio-label'}>Route</label>
-      </div>
-    </div>
+      </Form.Group>
+    </Form>
   );
 }
