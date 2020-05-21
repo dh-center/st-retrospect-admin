@@ -77,7 +77,7 @@ export default class TablePage<ENTITY_CONNECTION_TYPE extends EntityConnection> 
 
     return (
       <tbody ref={this.htmlElement} data-page={this.props.pageNumber} >
-        <tr>
+        <tr className='table-info'>
           <td colSpan={100} id={'page-' + this.props.pageNumber}>Page number {this.props.pageNumber}</td>
         </tr>
         {entityList}

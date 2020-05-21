@@ -6,16 +6,22 @@ import { useHistory } from 'react-router';
 import { createFragmentContainer } from 'react-relay';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import graphql from 'babel-plugin-relay/macro';
-import { Navigation_user } from './__generated__/Navigation_user.graphql';
+import { Navigation_user as NavigationUser } from './__generated__/Navigation_user.graphql';
 
+/**
+ * Props for Navigation component
+ */
 interface NavigationProps {
-  user?: Navigation_user;
+  /**
+   * Current user
+   */
+  user: NavigationUser | null;
 }
 
 /**
  * Functional component of navigation on page
  *
- * @param props
+ * @param props - props for component render
  */
 export function Navigation(props: NavigationProps): ReactElement {
   const history = useHistory();

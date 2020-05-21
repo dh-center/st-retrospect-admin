@@ -7,6 +7,7 @@ import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
 import TablePage from './TablePage';
 import { EntityConnection } from '../../types/entities';
+import { Table } from 'react-bootstrap';
 
 /**
  * Props for EntitiesList component
@@ -83,7 +84,7 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
       <div className={'entities-page'}>
         {this.props.entityConnection.entities.edges.length > 0 ? (
           <>
-            <table className={'entities-page__table'}>
+            <Table striped bordered hover size='sm'>
               <thead>
                 <tr>
                   <th>№</th>
@@ -98,7 +99,7 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
                 </tr>
               </thead>
               {sectionsList}
-            </table>
+            </Table>
             <div className={'entities-page__page-control'}>
               <button onClick={this.loadMore} className={'entities-page__load-more-btn'}>Load more</button>
               <PaginationControl

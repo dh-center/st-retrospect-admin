@@ -33,7 +33,7 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
         </Route>
 
         <PrivateRoute path='/'>
-          <Navigation user={props || undefined}/>
+          <Navigation user={props}/>
 
           <Switch>
 
