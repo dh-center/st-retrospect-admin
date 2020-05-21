@@ -54,7 +54,7 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
  */
 function App(): ReactElement {
   return (
-    <div className="h-100 overflow-hidden">
+    <div className="h-100">
       <Switch>
 
         <Route path='/login'>

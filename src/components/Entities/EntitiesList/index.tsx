@@ -87,7 +87,7 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
     }
 
     return (
-      <div className={'entities-page w-100'}>
+      <div className='entities-page'>
         {this.props.entityConnection.entities.edges.length > 0 ? (
           <>
             <Table striped bordered hover size='sm' className='m-0'>
