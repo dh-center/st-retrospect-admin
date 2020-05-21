@@ -7,7 +7,8 @@ import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
 import TablePage from './TablePage';
 import { EntityConnection } from '../../types/entities';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 /**
  * Props for EntitiesList component
@@ -101,7 +102,12 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
               {sectionsList}
             </Table>
             <div className={'entities-page__page-control'}>
-              <button onClick={this.loadMore} className={'entities-page__load-more-btn'}>Load more</button>
+              <div>
+                <LinkContainer to={`/quests/create`}>
+                  <Button variant='outline-success' className='m-1'>Create</Button>
+                </LinkContainer>
+                <Button variant='outline-info' onClick={this.loadMore}>Load more</Button>
+              </div>
               <PaginationControl
                 pageSize={ENTITIES_PER_PAGE}
                 total={this.props.entityConnection.entities.totalCount}
