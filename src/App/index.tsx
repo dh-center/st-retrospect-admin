@@ -7,11 +7,23 @@ import PrivateRoute from '../components/PrivateRoute';
 import PersonsPage from '../components/Persons/PersonsPage';
 import QuestsPage from '../components/Quests/QuestsPage';
 import Quiz from '../components/Quiz';
+import { QueryRenderer } from 'react-relay';
+import environment from '../relay-env';
+import graphql from 'babel-plugin-relay/macro';
+import { AppQuery, AppQueryResponse } from './__generated__/AppQuery.graphql';
 
-/**
- * Main component of the application
- */
-function App(): ReactElement {
+const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryResponse | null }): React.ReactNode => {
+  if (error) {
+    return (
+      <div>
+        <pre>
+          Error during loading page
+          {error.toString()}
+        </pre>
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <Switch>
@@ -21,7 +33,7 @@ function App(): ReactElement {
         </Route>
 
         <PrivateRoute path='/'>
-          <Navigation/>
+          <Navigation user={props || undefined}/>
 
           <Switch>
 
@@ -46,6 +58,23 @@ function App(): ReactElement {
 
       </Switch>
     </div>
+  );
+};
+
+/**
+ * Main component of the application
+ */
+function App(): ReactElement {
+  return (
+    <QueryRenderer<AppQuery>
+      environment={environment}
+      query={graphql`
+        query AppQuery {
+            ...Navigation_user
+        }
+      `}
+      variables={{}}
+      render={renderQuery}/>
   );
 }
 
