@@ -3,3 +3,9 @@
   position: sticky;
   bottom: 0;
 }
+
+.entities-page td {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

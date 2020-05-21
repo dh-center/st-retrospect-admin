@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { ENTITIES_PER_PAGE } from '../../constants';
-import { EntityConnection } from '../../types/entities';
+import { ENTITIES_PER_PAGE } from '../../../constants';
+import { EntityConnection } from '../../../types/entities';
 
 /**
  * Props for List component
@@ -25,7 +25,7 @@ interface Props<ENTITY_CONNECTION_TYPE> {
 /**
  * Page of entity table
  */
-export default class EntitiesListPage<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>> {
+export default class EntitiesListSection<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>> {
   /**
    * Ref to the components root HTML element
    */
