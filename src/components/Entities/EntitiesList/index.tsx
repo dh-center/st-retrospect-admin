@@ -1,12 +1,14 @@
 import React, { ReactElement } from 'react';
 import { RelayPaginationProp } from 'react-relay';
-import { ENTITIES_PER_PAGE } from '../../constants';
+import { ENTITIES_PER_PAGE } from '../../../constants';
 import PaginationControl from 'rc-pagination';
-import './EntitiesList.css';
+import './index.css';
 import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
-import TablePage from './TablePage';
-import { EntityConnection } from '../../types/entities';
+import EntitiesListSection from './EntitiesListSection';
+import { EntityConnection } from '../../../types/entities';
+import { Table, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 /**
  * Props for EntitiesList component
@@ -16,6 +18,11 @@ export interface EntitiesListProps<ENTITY_CONNECTION_TYPE> {
    * Entity connection
    */
   entityConnection: ENTITY_CONNECTION_TYPE;
+
+  /**
+   * Entity name for creating links
+   */
+  entityName: string;
 
   /**
    * Prop for accessing relay functionality
@@ -41,7 +48,7 @@ interface State {
 /**
  * List with entities
  */
-class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<EntitiesListProps<ENTITY_CONNECTION_TYPE>, State> {
+export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<EntitiesListProps<ENTITY_CONNECTION_TYPE>, State> {
   /**
    * Observer for tracking pages that user sees
    */
@@ -72,7 +79,7 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
     const sectionsList: ReactElement[] = [];
 
     for (let i = 1; i <= pagesCount; i++) {
-      sectionsList.push(<TablePage<ENTITY_CONNECTION_TYPE>
+      sectionsList.push(<EntitiesListSection<ENTITY_CONNECTION_TYPE>
         key={i}
         pageNumber={i}
         observer={this.observer}
@@ -80,10 +87,10 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
     }
 
     return (
-      <div className={'entities-page'}>
+      <div className='entities-page'>
         {this.props.entityConnection.entities.edges.length > 0 ? (
           <>
-            <table className={'entities-page__table'}>
+            <Table striped bordered hover size='sm' className='m-0' responsive>
               <thead>
                 <tr>
                   <th>№</th>
@@ -98,16 +105,23 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
                 </tr>
               </thead>
               {sectionsList}
-            </table>
-            <div className={'entities-page__page-control'}>
-              <button onClick={this.loadMore} className={'entities-page__load-more-btn'}>Load more</button>
-              <PaginationControl
-                pageSize={ENTITIES_PER_PAGE}
-                total={this.props.entityConnection.entities.totalCount}
-                onChange={this.goToPage}
-                locale={locale}
-                current={this.state.currentPage + 1}
-              />
+            </Table>
+            <div className='entities-page__page-control p-0'>
+              <div>
+                <LinkContainer to={`/${this.props.entityName}/create`}>
+                  <Button variant='outline-success' className='m-1'>Create</Button>
+                </LinkContainer>
+                <Button variant='outline-info' onClick={this.loadMore}>Load more</Button>
+              </div>
+              <div className='d-flex justify-content-center'>
+                <PaginationControl
+                  pageSize={ENTITIES_PER_PAGE}
+                  total={this.props.entityConnection.entities.totalCount}
+                  onChange={this.goToPage}
+                  locale={locale}
+                  current={this.state.currentPage + 1}
+                />
+              </div>
             </div>
           </>
         ) : (<div>There is no entities in DataBase</div>)
@@ -171,5 +185,3 @@ class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends Reac
     });
   };
 }
-
-export default EntitiesList;

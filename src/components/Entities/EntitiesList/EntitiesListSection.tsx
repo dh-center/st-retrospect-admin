@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { ENTITIES_PER_PAGE } from '../../constants';
-import { EntityConnection } from '../../types/entities';
+import { ENTITIES_PER_PAGE } from '../../../constants';
+import { EntityConnection } from '../../../types/entities';
 
 /**
  * Props for List component
@@ -25,7 +25,7 @@ interface Props<ENTITY_CONNECTION_TYPE> {
 /**
  * Page of entity table
  */
-export default class TablePage<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>> {
+export default class EntitiesListSection<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>> {
   /**
    * Ref to the components root HTML element
    */
@@ -77,7 +77,7 @@ export default class TablePage<ENTITY_CONNECTION_TYPE extends EntityConnection> 
 
     return (
       <tbody ref={this.htmlElement} data-page={this.props.pageNumber} >
-        <tr>
+        <tr className='table-info'>
           <td colSpan={100} id={'page-' + this.props.pageNumber}>Page number {this.props.pageNumber}</td>
         </tr>
         {entityList}

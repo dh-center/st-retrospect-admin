@@ -1,14 +1,14 @@
 import React, { ReactElement } from 'react';
 import { createPaginationContainer, QueryRenderer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import EntitiesList, { EntitiesListProps } from '../TableView/EntitiesList';
+import EntitiesList, { EntitiesListProps } from '../Entities/EntitiesList';
 import { QuestsPageQuery } from './__generated__/QuestsPageQuery.graphql';
 import { QuestsPage_entityConnection as QuestsPageEntityConnection } from './__generated__/QuestsPage_entityConnection.graphql';
 import environment from '../../relay-env';
 import { ENTITIES_PER_PAGE } from '../../constants';
-import { NavLink, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
-import { createComponent } from '../Entities/CreateHOC';
+import makeCreationPage from '../Entities/makeCreationPage';
 import QuestInfo from './Info';
 
 const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityConnection>>(
@@ -54,7 +54,7 @@ const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityC
   }
 );
 
-const CreateComponent = createComponent(
+const CreateComponent = makeCreationPage(
   QuestInfo,
   graphql`
     mutation QuestsPageCreateMutation($input: CreateQuestInput) {
@@ -76,7 +76,6 @@ export default function QuestsPage(): ReactElement {
         <CreateComponent/>
       </PrivateRoute>
       <PrivateRoute path={'/quests'}>
-        <NavLink className="navigation__link" activeClassName="navigation__link--active" to="/quests/create">Create</NavLink>
         <QueryRenderer<QuestsPageQuery>
           environment={environment}
           query={graphql`
@@ -99,7 +98,7 @@ export default function QuestsPage(): ReactElement {
               return <div>Loading quests...</div>;
             }
 
-            return <QuestsList entityConnection={props}/>;
+            return <QuestsList entityName='quests' entityConnection={props} />;
           }}
         />
       </PrivateRoute>

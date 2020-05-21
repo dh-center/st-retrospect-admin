@@ -3,6 +3,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 import environment from '../../relay-env';
 import notifier from 'codex-notifier';
 import { useHistory, useLocation } from 'react-router-dom';
+import { Button, Form } from 'react-bootstrap';
 
 /**
  * Props of component
@@ -22,7 +23,7 @@ interface InfoComponentProps {
  * @param InfoComponent - wrapped component
  * @param mutation - creating mutation
  */
-export function createComponent<P extends object>(
+export default function createComponent<P extends object>(
   InfoComponent: React.ComponentType<InfoComponentProps>,
   mutation: GraphQLTaggedNode
 ): React.FC<P> {
@@ -94,11 +95,11 @@ export function createComponent<P extends object>(
     };
 
     return (
-      <div className={'create-entity'}>
-        <form onSubmit={handleSubmit}>
+      <div className='d-flex justify-content-center'>
+        <Form onSubmit={handleSubmit} className='p-2'>
           <InfoComponent onChange={handleUpdateEntity}/>
-          <button type={'submit'}>Save</button>
-        </form>
+          <Button type={'submit'}>Save</Button>
+        </Form>
       </div>
     );
   };

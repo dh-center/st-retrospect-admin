@@ -1,0 +1,12 @@
+.entities-page__page-control {
+  background: #fff;
+  position: sticky;
+  bottom: 0;
+}
+
+.entities-page td {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
