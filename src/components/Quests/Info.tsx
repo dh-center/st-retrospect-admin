@@ -55,29 +55,33 @@ export default function QuestInfo(props: Props): React.ReactElement {
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor="">Type:</Form.Label>
-        <Form.Check
-          type="radio"
-          name={'type'}
-          value={'QUIZ'}
-          label='Quiz'
-          id={'quiz'}
-          onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
-          }}
-          required
-        />
-        <Form.Check
-          type="radio"
-          name={'type'}
-          value={'ROUTE'}
-          label='Route'
-          id={'route'}
-          onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
-          }}
-          required
-        />
+        <Form.Label htmlFor="">Type</Form.Label>
+        <div>
+          <Form.Check
+            inline
+            type="radio"
+            name={'type'}
+            value={'QUIZ'}
+            label='Quiz'
+            id={'quiz'}
+            onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+              props.onChange(e);
+            }}
+            required
+          />
+          <Form.Check
+            inline
+            type="radio"
+            name={'type'}
+            value={'ROUTE'}
+            label='Route'
+            id={'route'}
+            onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+              props.onChange(e);
+            }}
+            required
+          />
+        </div>
       </Form.Group>
     </Form>
   );
