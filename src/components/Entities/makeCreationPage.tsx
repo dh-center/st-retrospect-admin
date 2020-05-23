@@ -101,7 +101,7 @@ export default function createComponent<P extends object>(
           className='p-2'
           style={{
             maxWidth: '800px',
-            width: '100%'
+            width: '100%',
           }}
         >
           <InfoComponent onChange={handleUpdateEntity}/>
