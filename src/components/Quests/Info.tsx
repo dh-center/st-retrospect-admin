@@ -1,5 +1,12 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect, useRef } from 'react';
 import { Form } from 'react-bootstrap';
+import EditorJS from '@editorjs/editorjs';
+import Header from '@editorjs/header';
+import List from '@editorjs/list';
+import Image from '@editorjs/image';
+import Delimiter from '@editorjs/delimiter';
+import Marker from '@editorjs/marker';
+import Quote from '@editorjs/quote';
 
 /**
  * Props of component
@@ -19,6 +26,26 @@ interface Props {
  * @param props - props of component
  */
 export default function QuestInfo(props: Props): React.ReactElement {
+  const editorRef = useRef<EditorJS>();
+  const editorElementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (editorElementRef.current) {
+      editorRef.current = new EditorJS({
+        holder: editorElementRef.current,
+        placeholder: 'Click here to write an awesome route!',
+        tools: {
+          header: Header,
+          list: List,
+          image: Image,
+          delimiter: Delimiter,
+          quote: Quote,
+          marker: Marker,
+        },
+      });
+    }
+  }, []);
+
   return (
     <div>
       <Form.Group>
@@ -81,6 +108,17 @@ export default function QuestInfo(props: Props): React.ReactElement {
               props.onChange(e);
             }}
             required
+          />
+        </div>
+      </Form.Group>
+      <Form.Group>
+        <h2>Route content</h2>
+        <div style={{
+          borderRadius: '8px',
+          boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
+        }}>
+          <div
+            ref={editorElementRef}
           />
         </div>
       </Form.Group>

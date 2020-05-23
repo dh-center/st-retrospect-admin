@@ -96,7 +96,14 @@ export default function createComponent<P extends object>(
 
     return (
       <div className='d-flex justify-content-center'>
-        <Form onSubmit={handleSubmit} className='p-2'>
+        <Form
+          onSubmit={handleSubmit}
+          className='p-2'
+          style={{
+            maxWidth: '800px',
+            width: '100%',
+          }}
+        >
           <InfoComponent onChange={handleUpdateEntity}/>
           <Button type={'submit'}>Save</Button>
         </Form>
