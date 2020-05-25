@@ -7,7 +7,7 @@ import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
 import EntitiesListSection from './EntitiesListSection';
 import { EntityConnection } from '../../../types/entities';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Spinner } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 /**
@@ -43,6 +43,11 @@ interface State {
    * Page number that  user sees
    */
   currentPage: number;
+
+  /**
+   * Represents loading state of new entities
+   */
+  isLoading: boolean;
 }
 
 /**
@@ -64,6 +69,7 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
     this.state = {
       viewingPages: Array(pagesCount).fill(false),
       currentPage: 0,
+      isLoading: false,
     };
 
     this.observer = new window.IntersectionObserver(this.observerCallback, {
@@ -111,7 +117,19 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
                 <LinkContainer to={`/${this.props.entityName}/create`}>
                   <Button variant='outline-success' className='m-1'>Create</Button>
                 </LinkContainer>
-                <Button variant='outline-info' onClick={this.loadMore}>Load more</Button>
+                <Button variant='outline-info' onClick={this.loadMore} disabled={!this.props.relay.hasMore()}>
+                  {this.props.relay.isLoading() ? (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  ) : ('Load more')
+                  }
+
+                </Button>
               </div>
               <div className='d-flex justify-content-center'>
                 <PaginationControl
@@ -135,7 +153,14 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
    * Loading more persons
    */
   private loadMore = (): void => {
-    this.props.relay.loadMore(ENTITIES_PER_PAGE);
+    this.setState({
+      isLoading: true,
+    });
+    this.props.relay.loadMore(ENTITIES_PER_PAGE, () => {
+      this.setState({
+        isLoading: false,
+      });
+    });
   };
 
   /**
@@ -147,12 +172,19 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
     const personsCountToLoad = current * ENTITIES_PER_PAGE - this.props.entityConnection.entities.edges.length;
 
     if (personsCountToLoad > 0) {
+      this.setState({
+        isLoading: true,
+      });
+
       this.props.relay.loadMore(personsCountToLoad, () => {
         const element = document.getElementById('page-' + current);
 
         if (element) {
           element.scrollIntoView(true);
         }
+        this.setState({
+          isLoading: false,
+        });
       });
     } else {
       const element = document.getElementById('page-' + current);

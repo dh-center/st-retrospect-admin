@@ -37,7 +37,14 @@ export default function QuestInfo(props: Props): React.ReactElement {
         tools: {
           header: Header,
           list: List,
-          image: Image,
+          image: {
+            class: Image,
+            config: {
+              endpoints: {
+                byFile: process.env.REACT_APP_API_ENDPOINT + 'upload/route', // Your backend file uploader endpoint
+              },
+            },
+          },
           delimiter: Delimiter,
           quote: Quote,
           marker: Marker,
