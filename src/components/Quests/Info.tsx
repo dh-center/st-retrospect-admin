@@ -37,7 +37,15 @@ export default function QuestInfo(props: Props): React.ReactElement {
         tools: {
           header: Header,
           list: List,
-          image: Image,
+          image: {
+            class: Image,
+            config: {
+              endpoints: {
+                byFile: 'http://localhost:4000/upload/route', // Your backend file uploader endpoint
+                // byUrl: 'http://localhost:4000/fetchUrl', // Your endpoint that provides uploading by Url
+              },
+            },
+          },
           delimiter: Delimiter,
           quote: Quote,
           marker: Marker,
