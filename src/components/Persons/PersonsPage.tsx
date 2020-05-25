@@ -6,6 +6,10 @@ import graphql from 'babel-plugin-relay/macro';
 import { ENTITIES_PER_PAGE } from '../../constants';
 import EntitiesList, { EntitiesListProps } from '../Entities/EntitiesList';
 import { PersonsPage_entityConnection as PersonsPageEntityConnection } from './__generated__/PersonsPage_entityConnection.graphql';
+import PrivateRoute from '../PrivateRoute';
+import { Switch } from 'react-router-dom';
+import makeCreationPage from '../Entities/makeCreationPage';
+import PersonInfo from './Info';
 
 const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntityConnection>>(
   EntitiesList,
@@ -51,14 +55,31 @@ const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntit
   }
 );
 
+const CreateComponent = makeCreationPage(
+  PersonInfo,
+  graphql`
+    mutation PersonsPageCreateMutation($input: CreatePersonInput!) {
+      person {
+        create(input: $input) {
+          recordId
+        }
+      }
+    }`
+);
+
 /**
  * Page for displaying persons
  */
 export default function PersonsPage(): ReactElement {
   return (
-    <QueryRenderer<PersonsPageQuery>
-      environment={environment}
-      query={graphql`
+    <Switch>
+      <PrivateRoute path={'/persons/create'}>
+        <CreateComponent/>
+      </PrivateRoute>
+      <PrivateRoute path={'/persons'}>
+        <QueryRenderer<PersonsPageQuery>
+          environment={environment}
+          query={graphql`
           query PersonsPageQuery (
             $first: Int,
             $after: Cursor
@@ -66,20 +87,22 @@ export default function PersonsPage(): ReactElement {
              ...PersonsPage_entityConnection @arguments(first: $first, after: $after)
           }
         `}
-      variables={{
-        first: ENTITIES_PER_PAGE,
-        after: null,
-      }}
-      render={({ error, props }): React.ReactNode => {
-        if (error) {
-          return <div>Error!</div>;
-        }
-        if (!props) {
-          return <div>Loading persons...</div>;
-        }
+          variables={{
+            first: ENTITIES_PER_PAGE,
+            after: null,
+          }}
+          render={({ error, props }): React.ReactNode => {
+            if (error) {
+              return <div>Error!</div>;
+            }
+            if (!props) {
+              return <div>Loading persons...</div>;
+            }
 
-        return <PersonsList entityName='persons' entityConnection={props}/>;
-      }}
-    />
+            return <PersonsList entityName='persons' entityConnection={props}/>;
+          }}
+        />
+      </PrivateRoute>
+    </Switch>
   );
 }
