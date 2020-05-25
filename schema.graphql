@@ -1,10 +1,15 @@
-"""Directive for field renaming"""
-directive @renameField(name: String!) on FIELD_DEFINITION
+"""Extracts value from specified field in parent object"""
+directive @fromField(name: String!) on FIELD_DEFINITION
 
-"""Directive for picking only necessary language from multilingual fields"""
+"""
+Directive for multilingual fields support
+
+On input field maps provided value to multilingual object (e.g. 'hello' => {en: 'hello'})
+On type field maps multilingual object to value ({en: 'hello'} => 'hello')
+"""
 directive @multilingual on FIELD_DEFINITION | INPUT_FIELD_DEFINITION | ARGUMENT_DEFINITION
 
-"""Directive for data loaders"""
+"""Load data via specific dataLoader"""
 directive @dataLoader(
   """Name of needed DataLoader"""
   dataLoaderName: String!
@@ -21,8 +26,6 @@ directive @authCheck on FIELD_DEFINITION
 
 """Directive for checking admin permissions"""
 directive @adminCheck on FIELD_DEFINITION
-
-directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
 
 """Location address representation"""
 type Address {
@@ -43,11 +46,6 @@ type Address {
 
   """Link for location info"""
   link: String
-}
-
-enum CacheControlScope {
-  PUBLIC
-  PRIVATE
 }
 
 input Coordinates {
@@ -321,7 +319,7 @@ type PersonEdge {
 
 type PersonMutations {
   """Create person"""
-  create(input: CreatePersonInput): CreatePersonPayload!
+  create(input: CreatePersonInput!): CreatePersonPayload!
 }
 
 """API queries"""
@@ -558,9 +556,6 @@ enum TaskTypes {
   """Task type route"""
   ROUTE
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 type User {
   """User's ID"""
