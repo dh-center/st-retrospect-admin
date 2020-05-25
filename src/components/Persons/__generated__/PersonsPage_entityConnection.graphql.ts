@@ -9,9 +9,13 @@ export type PersonsPage_entityConnection = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly firstName: string | null;
                 readonly lastName: string | null;
+                readonly firstName: string | null;
                 readonly patronymic: string | null;
+                readonly pseudonym: string | null;
+                readonly birthDate: string | null;
+                readonly deathDate: string | null;
+                readonly profession: string | null;
             };
         }>;
     };
@@ -97,13 +101,6 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "firstName",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "lastName",
                   "storageKey": null
                 },
@@ -111,7 +108,42 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "firstName",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "patronymic",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "pseudonym",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "birthDate",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "deathDate",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "profession",
                   "storageKey": null
                 },
                 {
@@ -165,5 +197,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = '421a2fa5b8383fb8db60a16643234d62';
+(node as any).hash = '6d8009a4a818f80ab24543afc7fc1d88';
 export default node;
