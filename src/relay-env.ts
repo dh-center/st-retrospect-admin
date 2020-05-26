@@ -7,6 +7,7 @@ import {
   Variables
 } from 'relay-runtime';
 import authController from './authController';
+import languageController from './languageController';
 
 /**
  * GraphQL API endpoint
@@ -27,6 +28,10 @@ async function fetchQuery(operation: RequestParameters, variables: Variables): P
 
   if (authController.accessToken) {
     headers.Authorization = 'Bearer ' + authController.accessToken;
+  }
+
+  if (languageController.dataLanguage) {
+    headers['accept-language'] = languageController.dataLanguage;
   }
 
   const response = await window.fetch(url, {

@@ -6,6 +6,7 @@ import { createFragmentContainer } from 'react-relay';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import graphql from 'babel-plugin-relay/macro';
 import { Navigation_user as NavigationUser } from './__generated__/Navigation_user.graphql';
+import DataLanguageSwitcher from '../LanguageSwitchers/DataLanguageSwitcher';
 
 /**
  * Props for Navigation component
@@ -45,6 +46,7 @@ export function Navigation(props: NavigationProps): ReactElement {
         </Nav.Item>
       </Nav>
       <Navbar.Collapse className="justify-content-end">
+        <DataLanguageSwitcher/>
         <Navbar.Text className='m-2'>
           Signed in as: {props.user?.me.username}
         </Navbar.Text>
