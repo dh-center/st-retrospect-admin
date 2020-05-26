@@ -27,9 +27,13 @@ const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntit
           edges {
             node {
               id
-              firstName
               lastName
+              firstName
               patronymic
+              pseudonym
+              birthDate
+              deathDate
+              profession
             }
           }
         }
