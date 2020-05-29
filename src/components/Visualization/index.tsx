@@ -7,7 +7,7 @@ import { VisualizationPageQuery, VisualizationPageQueryResponse } from './__gene
 import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 
 /**
- *
+ * Page with plots for visualisation of Database content
  */
 export default function VisualizationPage(): React.ReactElement {
   return (
