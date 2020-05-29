@@ -49,9 +49,9 @@ export default function PersonsBirthDatesBarplot(props: {
 
     const yearPeriods = new YearPeriods(minBirthYear, maxBirthYear, YEARS_IN_PERIOD);
 
-    const groupedByPeriods: Record<string, number> = yearPeriods.fillPeriods();
+    const groupedByPeriods = yearPeriods.fillPeriods();
 
-    numberKeys.reduce<Record<string, number>>((acc, val) => {
+    numberKeys.reduce((acc, val) => {
       const period = yearPeriods.getPeriodFromYear(val);
 
       if (acc[period]) {
@@ -124,9 +124,7 @@ export default function PersonsBirthDatesBarplot(props: {
       .data(Object.keys(groupedByPeriods))
       .enter()
       .append('rect')
-      .attr('x', function (d) {
-        return x(d) || 0;
-      })
+      .attr('x', (d) => x(d) || 0)
       .attr('width', x.bandwidth())
       .attr('fill', '#69b3a2')
       .attr('height', (d) => height - y(groupedByPeriods[d]))
