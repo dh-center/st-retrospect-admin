@@ -24,8 +24,12 @@ export default function PersonsBirthDatesBarplot(props: {
 
     const groupedByDates = props.dates.reduce<Record<number, number>>((acc, curr) => {
       const birthYearString = curr.match(/\d{4}/)?.shift();
+
       const birthYear = birthYearString && +birthYearString;
 
+      if (birthYear && birthYear > 3000) {
+        console.log(birthYearString);
+      }
       if (birthYear) {
         if (acc[birthYear]) {
           acc[birthYear]++;
@@ -44,15 +48,20 @@ export default function PersonsBirthDatesBarplot(props: {
 
     const getPeriodNumber = (year: number): number => Math.floor((year - minBirthYear) / YEARS_IN_PERIOD);
     const getPeriodStartDate = (periodNumber: number): number => minBirthYear + YEARS_IN_PERIOD * periodNumber;
+    const getPeriodEndDate = (periodNumber: number): number => getPeriodStartDate(periodNumber) + YEARS_IN_PERIOD;
+    const getPeriod = (year: number): string => {
+      const periodNumber = getPeriodNumber(year);
 
-    const groupedByPeriods = numberKeys.reduce<Record<number, number>>((acc, val) => {
-      const periodNumber = getPeriodNumber(val);
-      const periodStartDate = getPeriodStartDate(periodNumber);
+      return `${getPeriodStartDate(periodNumber)}—${getPeriodEndDate(periodNumber)}`;
+    };
 
-      if (acc[periodStartDate]) {
-        acc[periodStartDate] += groupedByDates[val];
+    const groupedByPeriods = numberKeys.reduce<Record<string, number>>((acc, val) => {
+      const period = getPeriod(val);
+
+      if (acc[period]) {
+        acc[period] += groupedByDates[val];
       } else {
-        acc[periodStartDate] = groupedByDates[val];
+        acc[period] = groupedByDates[val];
       }
 
       return acc;
@@ -108,8 +117,8 @@ export default function PersonsBirthDatesBarplot(props: {
       })
       .attr('width', x.bandwidth())
       .attr('fill', '#69b3a2')
-      .attr('height', (d) => height - y(groupedByPeriods[+d]))
-      .attr('y', (d) => y(groupedByPeriods[+d]));
+      .attr('height', (d) => height - y(groupedByPeriods[d]))
+      .attr('y', (d) => y(groupedByPeriods[d]));
   }, [ props.dates ]);
 
   return <div id='my_dataviz'/>;
