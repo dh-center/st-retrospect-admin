@@ -7,7 +7,7 @@ import * as d3 from 'd3';
  * @param props - component props for rendering
  */
 export default function PersonsBirthDatesBarplot(props: {
-  readonly dates: string[];
+  readonly dates: (string|null)[];
 }): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +24,16 @@ export default function PersonsBirthDatesBarplot(props: {
     const width = 800 - margin.left - margin.right;
     const height = 450 - margin.top - margin.bottom;
 
-    const groupedByDates = props.dates.reduce<Record<number, number>>((acc, curr) => {
+    const groupedByDates = props.dates.reduce<Record<string, number>>((acc, curr) => {
+      if (!curr) {
+        if (acc.unknown) {
+          acc.unknown++;
+        } else {
+          acc.unknown = 1;
+        }
+
+        return acc;
+      }
       const birthYearString = curr.match(/\d{4}/)?.shift();
 
       const birthYear = birthYearString && +birthYearString;
@@ -43,7 +52,10 @@ export default function PersonsBirthDatesBarplot(props: {
       return acc;
     }, {});
 
-    const numberKeys = Object.keys(groupedByDates).map(key => +key);
+    const numberKeys = Object
+      .keys(groupedByDates)
+      .map(key => +key)
+      .filter(Boolean);
 
     const YEARS_IN_PERIOD = 20;
     const minBirthYear = Math.min(...numberKeys);
@@ -68,6 +80,10 @@ export default function PersonsBirthDatesBarplot(props: {
 
       return acc;
     }, {});
+
+    if (groupedByDates.unknown) {
+      groupedByPeriods.unknown = groupedByDates.unknown;
+    }
 
     const maxCount = Math.max(...Object.values(groupedByPeriods));
 
@@ -110,7 +126,7 @@ export default function PersonsBirthDatesBarplot(props: {
     /**
      * Bars
      */
-    svg.selectAll('mybar')
+    svg.selectAll()
       .data(Object.keys(groupedByPeriods))
       .enter()
       .append('rect')

@@ -10,8 +10,6 @@ import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
  *
  */
 export default function VisualizationPage(): React.ReactElement {
-  ;
-
   return (
     <div>
       <h1>Visualization</h1>
@@ -49,7 +47,7 @@ export default function VisualizationPage(): React.ReactElement {
 
           return (
             <PersonsBirthDatesBarplot
-              dates={props.persons.edges.map(edge => edge.node.birthDate).filter(Boolean) as string[]}
+              dates={props.persons.edges.map(edge => edge.node.birthDate)}
             />
           );
         }}
