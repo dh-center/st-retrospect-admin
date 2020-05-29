@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 /**
@@ -9,6 +9,8 @@ import * as d3 from 'd3';
 export default function PersonsBirthDatesBarplot(props: {
   readonly dates: string[];
 }): React.ReactElement {
+  const plotRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     /**
      * Set the dimensions and margins of the graph
@@ -72,7 +74,7 @@ export default function PersonsBirthDatesBarplot(props: {
     /**
      * Append the svg object to the body of the page
      */
-    const svg = d3.select('#my_dataviz')
+    const svg = d3.select(plotRef.current)
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
@@ -124,7 +126,7 @@ export default function PersonsBirthDatesBarplot(props: {
   return (
     <div>
       <h2>Count of persons by birth date</h2>
-      <div id='my_dataviz'/>
+      <div ref={plotRef}/>
     </div>
   );
 }
