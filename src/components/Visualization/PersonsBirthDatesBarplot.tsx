@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import YearPeriods from '../../utils/periods';
 
 /**
  * Displays barplot
@@ -12,19 +13,7 @@ export default function PersonsBirthDatesBarplot(props: {
   const plotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    /**
-     * Set the dimensions and margins of the graph
-     */
-    const margin = {
-      top: 10,
-      right: 30,
-      bottom: 90,
-      left: 40,
-    };
-    const width = 800 - margin.left - margin.right;
-    const height = 450 - margin.top - margin.bottom;
-
-    const groupedByDates = props.dates.reduce<Record<string, number>>((acc, curr) => {
+    const groupedByYears = props.dates.reduce<Record<string, number>>((acc, curr) => {
       if (!curr) {
         if (acc.unknown) {
           acc.unknown++;
@@ -38,9 +27,6 @@ export default function PersonsBirthDatesBarplot(props: {
 
       const birthYear = birthYearString && +birthYearString;
 
-      if (birthYear && birthYear > 3000) {
-        console.log(birthYearString);
-      }
       if (birthYear) {
         if (acc[birthYear]) {
           acc[birthYear]++;
@@ -53,55 +39,47 @@ export default function PersonsBirthDatesBarplot(props: {
     }, {});
 
     const numberKeys = Object
-      .keys(groupedByDates)
+      .keys(groupedByYears)
       .map(key => +key)
       .filter(Boolean);
 
     const YEARS_IN_PERIOD = 20;
     const minBirthYear = Math.min(...numberKeys);
     const maxBirthYear = Math.max(...numberKeys);
-    const startPeriod = Math.floor(minBirthYear / 10) * 10;
 
-    const getPeriodNumber = (year: number): number => Math.floor((year - startPeriod) / YEARS_IN_PERIOD);
-    const getPeriodStartDate = (periodNumber: number): number => startPeriod + YEARS_IN_PERIOD * periodNumber;
-    const getPeriodEndDate = (periodNumber: number): number => getPeriodStartDate(periodNumber) + YEARS_IN_PERIOD;
-    const getPeriod = (year: number): string => {
-      const periodNumber = getPeriodNumber(year);
+    const yearPeriods = new YearPeriods(minBirthYear, maxBirthYear, YEARS_IN_PERIOD);
 
-      return `${getPeriodStartDate(periodNumber)}—${getPeriodEndDate(periodNumber)}`;
-    };
-
-    const getPeriodsCount = (): number => Math.ceil((maxBirthYear - minBirthYear) / YEARS_IN_PERIOD);
-
-    const fillPeriods = (): Record<string, number> => {
-      const data: Record<string, number> = {};
-      const periodsCount = getPeriodsCount();
-
-      for (let i = 0; i < periodsCount; i++) {
-        data[getPeriod(startPeriod + YEARS_IN_PERIOD * i)] = 0;
-      }
-
-      return data;
-    };
-    const groupedByPeriods: Record<string, number> = fillPeriods();
+    const groupedByPeriods: Record<string, number> = yearPeriods.fillPeriods();
 
     numberKeys.reduce<Record<string, number>>((acc, val) => {
-      const period = getPeriod(val);
+      const period = yearPeriods.getPeriodFromYear(val);
 
       if (acc[period]) {
-        acc[period] += groupedByDates[val];
+        acc[period] += groupedByYears[val];
       } else {
-        acc[period] = groupedByDates[val];
+        acc[period] = groupedByYears[val];
       }
 
       return acc;
     }, groupedByPeriods);
 
-    if (groupedByDates.unknown) {
-      groupedByPeriods.unknown = groupedByDates.unknown;
+    if (groupedByYears.unknown) {
+      groupedByPeriods.unknown = groupedByYears.unknown;
     }
 
     const maxCount = Math.max(...Object.values(groupedByPeriods));
+
+    /**
+     * Set the dimensions and margins of the graph
+     */
+    const margin = {
+      top: 10,
+      right: 30,
+      bottom: 90,
+      left: 40,
+    };
+    const width = 800 - margin.left - margin.right;
+    const height = 450 - margin.top - margin.bottom;
 
     /**
      * Append the svg object to the body of the page
