@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import YearPeriods from '../../utils/periods';
 
 /**
- * Displays barplot
+ * Displays barplot with count of persons by birth date
  *
  * @param props - component props for rendering
  */
