@@ -59,9 +59,11 @@ export default function PersonsBirthDatesBarplot(props: {
 
     const YEARS_IN_PERIOD = 20;
     const minBirthYear = Math.min(...numberKeys);
+    const maxBirthYear = Math.max(...numberKeys);
+    const startPeriod = Math.floor(minBirthYear / 10) * 10;
 
-    const getPeriodNumber = (year: number): number => Math.floor((year - minBirthYear) / YEARS_IN_PERIOD);
-    const getPeriodStartDate = (periodNumber: number): number => minBirthYear + YEARS_IN_PERIOD * periodNumber;
+    const getPeriodNumber = (year: number): number => Math.floor((year - startPeriod) / YEARS_IN_PERIOD);
+    const getPeriodStartDate = (periodNumber: number): number => startPeriod + YEARS_IN_PERIOD * periodNumber;
     const getPeriodEndDate = (periodNumber: number): number => getPeriodStartDate(periodNumber) + YEARS_IN_PERIOD;
     const getPeriod = (year: number): string => {
       const periodNumber = getPeriodNumber(year);
@@ -69,7 +71,21 @@ export default function PersonsBirthDatesBarplot(props: {
       return `${getPeriodStartDate(periodNumber)}—${getPeriodEndDate(periodNumber)}`;
     };
 
-    const groupedByPeriods = numberKeys.reduce<Record<string, number>>((acc, val) => {
+    const getPeriodsCount = (): number => Math.ceil((maxBirthYear - minBirthYear) / YEARS_IN_PERIOD);
+
+    const fillPeriods = (): Record<string, number> => {
+      const data: Record<string, number> = {};
+      const periodsCount = getPeriodsCount();
+
+      for (let i = 0; i < periodsCount; i++) {
+        data[getPeriod(startPeriod + YEARS_IN_PERIOD * i)] = 0;
+      }
+
+      return data;
+    };
+    const groupedByPeriods: Record<string, number> = fillPeriods();
+
+    numberKeys.reduce<Record<string, number>>((acc, val) => {
       const period = getPeriod(val);
 
       if (acc[period]) {
@@ -79,7 +95,7 @@ export default function PersonsBirthDatesBarplot(props: {
       }
 
       return acc;
-    }, {});
+    }, groupedByPeriods);
 
     if (groupedByDates.unknown) {
       groupedByPeriods.unknown = groupedByDates.unknown;
