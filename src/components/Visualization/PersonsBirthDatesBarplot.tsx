@@ -121,5 +121,10 @@ export default function PersonsBirthDatesBarplot(props: {
       .attr('y', (d) => y(groupedByPeriods[d]));
   }, [ props.dates ]);
 
-  return <div id='my_dataviz'/>;
+  return (
+    <div>
+      <h2>Count of persons by birth date</h2>
+      <div id='my_dataviz'/>
+    </div>
+  );
 }
