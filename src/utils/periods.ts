@@ -91,8 +91,17 @@ export default class YearPeriods {
    * @param year - year to calculate its period
    */
   public getPeriodFromYear(year: number): string {
-    const periodNumber = Math.floor((year - this.minYearRounded) / this.yearsInPeriod);
+    const periodNumber = this.getPeriodNumberFromYear(year);
 
     return `${this.getPeriodStartDate(periodNumber)}—${this.getPeriodEndDate(periodNumber)}`;
+  }
+
+  /**
+   * Returns period number for provided year
+   *
+   * @param year - year to calculate
+   */
+  public getPeriodNumberFromYear(year: number): number {
+    return Math.floor((year - this.minYearRounded) / this.yearsInPeriod);
   }
 }

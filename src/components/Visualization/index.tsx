@@ -5,6 +5,7 @@ import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import { VisualizationPageQuery, VisualizationPageQueryResponse } from './__generated__/VisualizationPageQuery.graphql';
 import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
+import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 
 /**
  * Page with plots for visualisation of Database content
@@ -46,9 +47,14 @@ export default function VisualizationPage(): React.ReactElement {
           }
 
           return (
-            <PersonsBirthDatesBarplot
-              dates={props.persons.edges.map(edge => edge.node.birthDate)}
-            />
+            <div>
+              <PersonsBirthDatesBarplot
+                dates={props.persons.edges.map(edge => edge.node.birthDate)}
+              />
+              <PersonsLifeYearsDiagram
+                persons={props.persons.edges.map(edge => edge.node)}
+              />
+            </div>
           );
         }}
       />

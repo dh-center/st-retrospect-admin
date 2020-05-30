@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import YearPeriods from '../../utils/periods';
+import extractYear from '../../utils/extractYear';
 
 /**
  * Displays barplot with count of persons by birth date
@@ -23,9 +24,8 @@ export default function PersonsBirthDatesBarplot(props: {
 
         return acc;
       }
-      const birthYearString = curr.match(/\d{4}/)?.shift();
 
-      const birthYear = birthYearString && +birthYearString;
+      const birthYear = extractYear(curr);
 
       if (birthYear) {
         if (acc[birthYear]) {
