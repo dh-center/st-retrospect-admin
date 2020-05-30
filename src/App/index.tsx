@@ -10,6 +10,7 @@ import { QueryRenderer } from 'react-relay';
 import environment from '../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import { AppQuery, AppQueryResponse } from './__generated__/AppQuery.graphql';
+import VisualizationPage from '../components/Visualization';
 
 const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryResponse | null }): React.ReactNode => {
   if (error) {
@@ -59,6 +60,10 @@ function App(): ReactElement {
 
         <Route path='/login'>
           <Login/>
+        </Route>
+
+        <Route path={'/visualization'}>
+          <VisualizationPage/>
         </Route>
 
         <PrivateRoute path='/'>

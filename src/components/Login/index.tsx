@@ -2,6 +2,7 @@ import React, { FormEvent, ReactElement, useState } from 'react';
 import authController from '../../authController';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Form, Button } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
 /**
  * Component for authentication
@@ -24,10 +25,12 @@ function Login(props: RouteComponentProps): ReactElement {
   };
 
   return (
-    <div className='d-flex justify-content-center align-items-center h-100'>
+    <div className='d-flex justify-content-center flex-column align-items-center h-100'>
       {authController.isAuthenticated() && <Redirect to='/'/>}
       <Form
-        onSubmit={handleLogin}>
+        onSubmit={handleLogin}
+        className={'mb-2'}
+      >
         <h1 className='login-page__header'>Please, login</h1>
         <Form.Group>
           <Form.Control
@@ -52,6 +55,7 @@ function Login(props: RouteComponentProps): ReactElement {
           Enter
         </Button>
       </Form>
+      <NavLink className={''} to={'/visualization'}>Go to visualization</NavLink>
     </div>
   );
 }
