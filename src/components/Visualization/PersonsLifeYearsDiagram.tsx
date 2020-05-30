@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import extractYear from '../../utils/extractYear';
 import YearPeriods from '../../utils/periods';
 import * as d3 from 'd3';
+import './index.css';
 
 /**
  * Generates color based on provided string
@@ -249,9 +250,11 @@ export default function PersonLifeYearsDiagram(props: {
   });
 
   return (
-    <div>
-      <h2>Persons life years diagram</h2>
-      <div ref={plotRef}/>
+    <div className={'visualization-block'}>
+      <h2 className={'visualization-block__header'}>Persons life years diagram</h2>
+      <div className={'visualization-block__content'}>
+        <div ref={plotRef}/>
+      </div>
     </div>
   );
 }

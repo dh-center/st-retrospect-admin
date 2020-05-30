@@ -6,15 +6,16 @@ import graphql from 'babel-plugin-relay/macro';
 import { VisualizationPageQuery, VisualizationPageQueryResponse } from './__generated__/VisualizationPageQuery.graphql';
 import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
+import './index.css';
 
 /**
  * Page with plots for visualisation of Database content
  */
 export default function VisualizationPage(): React.ReactElement {
   return (
-    <div>
+    <div className={'visualization-page'}>
       <h1>Visualization</h1>
-      <NavLink to={'/'}>Back</NavLink>
+      <NavLink to={'/'} className={'visualization-page__link-back'}>Return back</NavLink>
       <QueryRenderer<VisualizationPageQuery>
         environment={environment}
         query={graphql`

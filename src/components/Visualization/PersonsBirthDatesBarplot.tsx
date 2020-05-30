@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import YearPeriods from '../../utils/periods';
 import extractYear from '../../utils/extractYear';
+import './index.css';
 
 /**
  * Displays barplot with count of persons by birth date
@@ -132,9 +133,11 @@ export default function PersonsBirthDatesBarplot(props: {
   }, [ props.dates ]);
 
   return (
-    <div>
-      <h2>Count of persons by birth date</h2>
-      <div ref={plotRef}/>
+    <div className={'visualization-block'}>
+      <h2 className={'visualization-block__header'}>Count of persons by birth date</h2>
+      <div className={'visualization-block__content'}>
+        <div ref={plotRef}/>
+      </div>
     </div>
   );
 }
