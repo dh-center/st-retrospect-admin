@@ -38,6 +38,22 @@ export default function PersonLifeYearsDiagram(props: {
 }): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
 
+  /**
+   * Returns an event handler for fading a given chord group
+   *
+   * @param svg
+   * @param opacity
+   */
+  const fade = (svg: d3.Selection<SVGGElement, unknown, null, undefined>, opacity: number): d3.ValueFn<d3.BaseType, unknown, void> => {
+    return function (_d: unknown, index: number): void {
+      (svg.selectAll('path.chord') as d3.Selection<SVGPathElement, d3.Chord, SVGElement, d3.Chords>)
+        .filter((d) => d.source.index !== index && d.target.index !== index)
+        .transition()
+        .style('stroke-opacity', opacity)
+        .style('fill-opacity', opacity);
+    };
+  };
+
   useEffect(() => {
     const birthDates = props.persons.map(person => person.birthDate && extractYear(person.birthDate)).filter(Boolean) as number[];
     const deathDates = props.persons.map(person => person.deathDate && extractYear(person.deathDate)).filter(Boolean) as number[];
@@ -54,13 +70,6 @@ export default function PersonLifeYearsDiagram(props: {
     periodNames.push('Unknown');
     const periodColors = periodNames.map(name => strToColor(name));
 
-    console.log(periodNames);
-    console.log(periodColors);
-
-    // const fill = d3.scaleOrdinal()
-    //   .domain(d3.range(periodNames.length))
-    //   .range(periodColors);
-
     const matrix: number[][] = new Array(periodsCount + 1)
       .fill(0)
       .map(() => new Array(periodsCount + 1).fill(0));
@@ -73,6 +82,7 @@ export default function PersonLifeYearsDiagram(props: {
       const deathYearPeriodIndex = deathYear ? periods.getPeriodNumberFromYear(deathYear) : periodsCount;
 
       matrix[birthYearPeriodIndex][deathYearPeriodIndex]++;
+      matrix[deathYearPeriodIndex][birthYearPeriodIndex]++;
     });
 
     const innerRadius = 350;
@@ -105,11 +115,10 @@ export default function PersonLifeYearsDiagram(props: {
       .selectAll('g.group')
       .data(res.groups)
       .enter()
-      .append('g');
+      .append('g')
+      .attr('class', 'group');
 
     g.append('path')
-      .style('fill', 'grey')
-      .style('stroke', 'black')
       .attr('d', (d) =>
         d3.arc()({
           innerRadius: innerRadius,
@@ -117,7 +126,9 @@ export default function PersonLifeYearsDiagram(props: {
           startAngle: d.startAngle,
           endAngle: d.endAngle,
         })
-      );
+      )
+      .style('stroke', (d) => periodColors[d.index])
+      .style('fill', (d) => periodColors[d.index]);
 
     /**
      * Add period names
@@ -137,7 +148,6 @@ export default function PersonLifeYearsDiagram(props: {
           'translate(' + (plotRadius + 10) + ')' +
           (angle > Math.PI ? 'rotate(180)' : '');
       })
-      // .attr('opacity', 0)
       .text(function (d, i) {
         return periodNames[i];
       });
@@ -155,8 +165,19 @@ export default function PersonLifeYearsDiagram(props: {
       .attr('d', d3.ribbon()
         .radius(innerRadius) as never
       )
-      .style('fill', '#69b3a2')
-      .style('stroke', 'black');
+      .style('stroke', (d) =>
+        d3.rgb(periodColors[d.source.index])
+          .darker()
+          .hex()
+      )
+      .style('fill', function (d) {
+        return periodColors[d.source.index];
+      })
+      .attr('class', 'chord');
+
+    d3.selectAll('.group')
+      .on('mouseover', fade(svg, 0.02))
+      .on('mouseout', fade(svg, 0.80));
   });
 
   return (
