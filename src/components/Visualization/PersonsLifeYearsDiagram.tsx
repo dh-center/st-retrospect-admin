@@ -90,6 +90,7 @@ export default function PersonLifeYearsDiagram(props: {
     const plotRadius = innerRadius + borderRadius;
     const margin = 100;
     const plotSize = (plotRadius + margin) * 2;
+    const baseOpacity = 0.80;
 
     /**
      * Create the svg area
@@ -173,11 +174,13 @@ export default function PersonLifeYearsDiagram(props: {
       .style('fill', function (d) {
         return periodColors[d.source.index];
       })
+      .style('stroke-opacity', baseOpacity)
+      .style('fill-opacity', baseOpacity)
       .attr('class', 'chord');
 
     d3.selectAll('.group')
       .on('mouseover', fade(svg, 0.02))
-      .on('mouseout', fade(svg, 0.80));
+      .on('mouseout', fade(svg, baseOpacity));
   });
 
   return (
