@@ -4,7 +4,9 @@ import YearPeriods from '../../utils/periods';
 import * as d3 from 'd3';
 
 /**
- * @param str
+ * Generates color based on provided string
+ *
+ * @param str - string to calculate color
  */
 function strToColor(str: string): string {
   let hash = 0;
@@ -41,8 +43,8 @@ export default function PersonLifeYearsDiagram(props: {
   /**
    * Returns an event handler for fading a given chord group
    *
-   * @param svg
-   * @param opacity
+   * @param svg - svg element with plot
+   * @param opacity - opacity to set
    */
   const fade = (svg: d3.Selection<SVGGElement, unknown, null, undefined>, opacity: number): d3.ValueFn<d3.BaseType, unknown, void> => {
     return function (_d: unknown, index: number): void {
