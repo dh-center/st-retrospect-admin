@@ -56,7 +56,15 @@ export default function PersonLifeYearsDiagram(props: {
     };
   };
 
-  const groupTicks = (d: d3.ChordGroup) => {
+  /**
+   * Generates ticks labels
+   *
+   * @param d - chord groups data
+   */
+  const groupTicks = (d: d3.ChordGroup): {
+    angle: number;
+    label: number | null;
+  }[] => {
     const k = (d.endAngle - d.startAngle) / d.value;
 
     return d3.range(0, d.value, 10).map((v, i) => ({
