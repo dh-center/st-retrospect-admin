@@ -56,6 +56,16 @@ export default function PersonLifeYearsDiagram(props: {
     };
   };
 
+  const groupTicks = (d: d3.ChordGroup) => {
+    const k = (d.endAngle - d.startAngle) / d.value;
+
+    return d3.range(0, d.value, 10).map((v, i) => ({
+      angle: v * k + d.startAngle,
+      label: i % 5 ? null : v,
+    })
+    );
+  };
+
   useEffect(() => {
     const birthDates = props.persons.map(person => person.birthDate && extractYear(person.birthDate)).filter(Boolean) as number[];
     const deathDates = props.persons.map(person => person.deathDate && extractYear(person.deathDate)).filter(Boolean) as number[];
@@ -90,7 +100,7 @@ export default function PersonLifeYearsDiagram(props: {
     const innerRadius = 350;
     const borderRadius = 10;
     const plotRadius = innerRadius + borderRadius;
-    const margin = 100;
+    const margin = 120;
     const plotSize = (plotRadius + margin) * 2;
     const baseOpacity = 0.80;
 
@@ -108,8 +118,7 @@ export default function PersonLifeYearsDiagram(props: {
      * Give this matrix to d3.chord(): it will calculates all the info we need to draw arc and ribbon
      */
     const res = d3.chord()
-      .padAngle(0.05) // padding between entities (black arc)
-      .sortSubgroups(d3.descending)(matrix);
+      .padAngle(0.05)(matrix);
 
     /**
      * Add the groups on the inner part of the circle
@@ -148,7 +157,7 @@ export default function PersonLifeYearsDiagram(props: {
         const angle = (d.startAngle + d.endAngle) / 2;
 
         return 'rotate(' + (angle * 180 / Math.PI - 90) + ')' +
-          'translate(' + (plotRadius + 10) + ')' +
+          'translate(' + (plotRadius + 25) + ')' +
           (angle > Math.PI ? 'rotate(180)' : '');
       })
       .text(function (d, i) {
@@ -183,6 +192,52 @@ export default function PersonLifeYearsDiagram(props: {
     d3.selectAll('.group')
       .on('mouseover', fade(svg, 0.02))
       .on('mouseout', fade(svg, baseOpacity));
+
+    /**
+     * Initiate tics
+     */
+    const ticks = g
+      .append('g')
+      .attr('class', function (d) {
+        return 'ticks ' + periodNames[d.index];
+      })
+      .selectAll('g')
+      .attr('class', 'ticks')
+      .data(groupTicks)
+      .enter()
+      .append('g')
+      .attr('transform', function (d) {
+        return `rotate(${d.angle * 180 / Math.PI - 90})translate(${plotRadius},0)`;
+      });
+
+    /**
+     *  Append the tick around the arcs
+     */
+    ticks.append('line')
+      .attr('x1', 1)
+      .attr('y1', 0)
+      .attr('x2', 5)
+      .attr('y2', 0)
+      .attr('class', 'ticks')
+      .style('stroke', '#000');
+
+    /**
+     * Add the labels for the %'s
+     */
+    ticks.append('text')
+      .attr('x', 8)
+      .attr('dy', '.35em')
+      .attr('class', 'tickLabels')
+      .attr('transform', function (d) {
+        return d.angle > Math.PI ? 'rotate(180)translate(-16)' : null;
+      })
+      .style('text-anchor', function (d) {
+        return d.angle > Math.PI ? 'end' : null;
+      })
+      .style('font-size', 8)
+      .text(function (d) {
+        return d.label;
+      });
   });
 
   return (
