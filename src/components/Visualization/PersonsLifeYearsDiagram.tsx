@@ -4,6 +4,30 @@ import YearPeriods from '../../utils/periods';
 import * as d3 from 'd3';
 
 /**
+ * @param str
+ */
+function strToColor(str: string): string {
+  let hash = 0;
+
+  if (str.length === 0) {
+    return hash.toString();
+  }
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    hash = hash & hash;
+  }
+  let color = '#';
+
+  for (let i = 0; i < 3; i++) {
+    const value = (hash >> (i * 8)) & 255;
+
+    color += ('00' + value.toString(16)).substr(-2);
+  }
+
+  return color;
+}
+
+/**
  * @param props - props for component rendering
  */
 export default function PersonLifeYearsDiagram(props: {
@@ -24,6 +48,18 @@ export default function PersonLifeYearsDiagram(props: {
     const periods = new YearPeriods(minYear, maxYear, YEARS_IN_PERIOD);
 
     const periodsCount = periods.periodsCount;
+    const periodNames = new Array(periodsCount).fill(0)
+      .map((el, index) => periods.getPeriodFromNumber(index));
+
+    periodNames.push('Unknown');
+    const periodColors = periodNames.map(name => strToColor(name));
+
+    console.log(periodNames);
+    console.log(periodColors);
+
+    // const fill = d3.scaleOrdinal()
+    //   .domain(d3.range(periodNames.length))
+    //   .range(periodColors);
 
     const matrix: number[][] = new Array(periodsCount + 1)
       .fill(0)
@@ -39,10 +75,10 @@ export default function PersonLifeYearsDiagram(props: {
       matrix[birthYearPeriodIndex][deathYearPeriodIndex]++;
     });
 
-    const innerRadius = 400;
+    const innerRadius = 350;
     const borderRadius = 10;
     const plotRadius = innerRadius + borderRadius;
-    const margin = 10;
+    const margin = 100;
     const plotSize = (plotRadius + margin) * 2;
 
     /**
@@ -65,16 +101,13 @@ export default function PersonLifeYearsDiagram(props: {
     /**
      * Add the groups on the inner part of the circle
      */
-    svg
-      .datum(res)
-      .append('g')
-      .selectAll('g')
-      .data(function (d) {
-        return d.groups;
-      })
+    const g = svg
+      .selectAll('g.group')
+      .data(res.groups)
       .enter()
-      .append('g')
-      .append('path')
+      .append('g');
+
+    g.append('path')
       .style('fill', 'grey')
       .style('stroke', 'black')
       .attr('d', (d) =>
@@ -85,6 +118,29 @@ export default function PersonLifeYearsDiagram(props: {
           endAngle: d.endAngle,
         })
       );
+
+    /**
+     * Add period names
+     */
+    g.append('text')
+      .attr('dy', '.35em')
+      .attr('class', 'titles')
+      .attr('text-anchor', function (d) {
+        const angle = (d.startAngle + d.endAngle) / 2;
+
+        return angle > Math.PI ? 'end' : null;
+      })
+      .attr('transform', function (d) {
+        const angle = (d.startAngle + d.endAngle) / 2;
+
+        return 'rotate(' + (angle * 180 / Math.PI - 90) + ')' +
+          'translate(' + (plotRadius + 10) + ')' +
+          (angle > Math.PI ? 'rotate(180)' : '');
+      })
+      // .attr('opacity', 0)
+      .text(function (d, i) {
+        return periodNames[i];
+      });
 
     /**
      * Add the links between groups

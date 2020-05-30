@@ -43,7 +43,7 @@ export default function PersonsBirthDatesBarplot(props: {
       .map(key => +key)
       .filter(Boolean);
 
-    const YEARS_IN_PERIOD = 20;
+    const YEARS_IN_PERIOD = 30;
     const minBirthYear = Math.min(...numberKeys);
     const maxBirthYear = Math.max(...numberKeys);
 
