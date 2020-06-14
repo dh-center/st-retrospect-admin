@@ -6,6 +6,7 @@ import graphql from 'babel-plugin-relay/macro';
 import { VisualizationPageQuery, VisualizationPageQueryResponse } from './__generated__/VisualizationPageQuery.graphql';
 import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
+import RelationsGraph from './RelationsGraph';
 import './index.css';
 
 /**
@@ -55,6 +56,7 @@ export default function VisualizationPage(): React.ReactElement {
               <PersonsLifeYearsDiagram
                 persons={props.persons.edges.map(edge => edge.node)}
               />
+              <RelationsGraph/>
             </div>
           );
         }}
