@@ -57,7 +57,7 @@ const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityC
 const CreateComponent = makeCreationPage(
   QuestInfo,
   graphql`
-    mutation QuestsPageCreateMutation($input: CreateQuestInput) {
+    mutation QuestsPageCreateMutation($input: CreateQuestInput!) {
       quest {
         create(input: $input) {
           recordId

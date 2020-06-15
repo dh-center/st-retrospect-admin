@@ -26,14 +26,10 @@ export default function VisualizationPage(): React.ReactElement {
                 node {
                   birthDate
                   deathDate
-                  relations {
-                    locationInstance {
-                      id
-                    }
-                  }
                 }
               }
             }
+            ...RelationsGraph_relations
           }
         `}
         variables={{}}
@@ -55,14 +51,14 @@ export default function VisualizationPage(): React.ReactElement {
 
           return (
             <div>
-              <PersonsBirthDatesBarplot
-                dates={props.persons.edges.map(edge => edge.node.birthDate)}
-              />
-              <PersonsLifeYearsDiagram
-                persons={props.persons.edges.map(edge => edge.node)}
-              />
+              {/* <PersonsBirthDatesBarplot*/}
+              {/*  dates={props.persons.edges.map(edge => edge.node.birthDate)}*/}
+              {/*/ >*/}
+              {/* <PersonsLifeYearsDiagram*/}
+              {/*  persons={props.persons.edges.map(edge => edge.node)}*/}
+              {/*/ >*/}
               <RelationsGraph
-                persons={props.persons.edges.map(edge => edge.node)}
+                relations={props}
               />
             </div>
           );

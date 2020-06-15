@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import './index.css';
+import { createFragmentContainer } from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
+import { RelationsGraph_relations as Relations } from './__generated__/RelationsGraph_relations.graphql';
 
 interface SimulationLink {
   source: {x: number; y: number};
@@ -14,16 +17,8 @@ interface SimulationNode {
 /**
  * @param props
  */
-export default function RelationsGraph(props: {
-  persons: {
-    birthDate: string | null;
-    deathDate: string | null;
-    readonly relations: ReadonlyArray<{
-      readonly locationInstance: {
-        readonly id: string;
-      } | null;
-    }>;
-  }[];
+function RelationsGraph(props: {
+  relations: Relations;
 }): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
 
@@ -65,8 +60,8 @@ export default function RelationsGraph(props: {
   };
 
   useEffect(() => {
-    const width = 640;
-    const height = 480;
+    const width = 1000;
+    const height = 600;
     const svg = d3.select(plotRef.current).append('svg')
       .attr('width', width)
       .attr('height', height);
@@ -79,27 +74,45 @@ export default function RelationsGraph(props: {
       .scaleExtent([0, 8])
       .on('zoom', () => g.attr('transform', d3.event.transform)));
 
-    const nodes = props.persons.map(person => ({
-      ...person,
-    }));
+    const links: d3.SimulationLinkDatum<SimulationNode>[] = [];
 
-    const links: d3.SimulationLinkDatum<SimulationNode>[] = [
-      // {
-      //   source: 0,
-      //   target: 1,
-      // },
-    ];
+    const persons: Record<string, { id: string }> = {};
+    const locations: Record<string, { id: string }> = {};
 
-    const linkForce = d3.forceLink(links).distance(100)
-      .strength(1000);
+    props.relations.relations.edges.forEach(relationEdge => {
+      const relation = relationEdge.node;
+
+      if (!relation.person || !relation.locationInstance) {
+        return;
+      }
+
+      if (!persons[relation.person.id]) {
+        persons[relation.person.id] = { ...relation.person };
+      }
+
+      if (!locations[relation.locationInstance.id]) {
+        locations[relation.locationInstance.id] = { ...relation.locationInstance };
+      }
+
+      links.push({
+        source: relation.person.id,
+        target: relation.locationInstance.id,
+      });
+    });
+
+    const nodes: {
+      id: string;
+    }[] = [...Object.values(persons), ...Object.values(locations)];
+
+    const linkForce = d3.forceLink(links)
+      .id((d: any) => d.id);
+    // .distance(100)
+    // .strength(10);
 
     const simulation = d3.forceSimulation(nodes as unknown as SimulationNode[])
       .force('link', linkForce)
-      .force('charge', d3.forceManyBody()
-        .strength(-100)
-        .distanceMax(150)
-      );
-    // .force('center', d3.forceCenter(width / 2, height / 2));
+      .force('charge', d3.forceManyBody())
+      .force('center', d3.forceCenter(width / 2, height / 2));
 
     const link = g.append('g')
       .style('stroke', '#aaa')
@@ -140,3 +153,23 @@ export default function RelationsGraph(props: {
     </div>
   );
 }
+
+export default createFragmentContainer(RelationsGraph, {
+  relations: graphql`
+    fragment RelationsGraph_relations on Query {
+      relations {
+        edges {
+          node {
+            id
+            person {
+              id
+            }
+            locationInstance {
+              id
+            }
+          }
+        }
+      }
+    }
+  `,
+});
