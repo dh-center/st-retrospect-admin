@@ -75,14 +75,14 @@ export default function RelationsGraph(): React.ReactElement {
       },
     ];
 
-    const links: d3.SimulationLinkDatum<d3.SimulationNodeDatum>[] = [
+    const links: d3.SimulationLinkDatum<SimulationNode>[] = [
       {
         source: 0,
         target: 1,
       },
     ];
 
-    const linkForce = d3.forceLink().distance(100)
+    const linkForce = d3.forceLink(links).distance(100)
       .strength(10)
       .strength(1);
 
@@ -94,55 +94,35 @@ export default function RelationsGraph(): React.ReactElement {
       );
     // .force('center', d3.forceCenter(width / 2, height / 2));
 
-    /**
-     * @param graph
-     */
-    function run(graph: {
-      nodes: SimulationNode[];
-      links: typeof links;
-    }): void {
-      const link = svg.append('g')
-        .style('stroke', '#aaa')
-        .selectAll('line')
-        .data(graph.links)
-        .enter()
-        .append('line');
+    const link = svg.append('g')
+      .style('stroke', '#aaa')
+      .selectAll('line')
+      .data(linkForce.links() as SimulationLink[])
+      .enter()
+      .append('line');
 
-      const node = svg.append('g')
-        .attr('class', 'nodes')
-        .selectAll('circle')
-        .data(graph.nodes)
-        .enter()
-        .append('circle')
-        .attr('r', 16)
-        .style('fill', '#efefef')
-        .style('stroke', '#424242')
-        .style('stroke-width', '1px')
-        .call(drag(simulation));
+    const node = svg.append('g')
+      .attr('class', 'nodes')
+      .selectAll('circle')
+      .data(simulation.nodes())
+      .enter()
+      .append('circle')
+      .attr('r', 16)
+      .style('fill', '#efefef')
+      .style('stroke', '#424242')
+      .style('stroke-width', '1px')
+      .call(drag(simulation));
 
-      simulation.on('tick', ticked);
+    simulation.on('tick', () => {
+      (link)
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
 
-      linkForce.links(graph.links);
-
-      /**
-       *
-       */
-      function ticked(): void {
-        (link as d3.Selection<SVGLineElement, SimulationLink, SVGElement, unknown>)
-          .attr('x1', d => d.source.x)
-          .attr('y1', d => d.source.y)
-          .attr('x2', d => d.target.x)
-          .attr('y2', d => d.target.y);
-
-        node
-          .attr('cx', d => d.x)
-          .attr('cy', d => d.y);
-      }
-    }
-
-    run({
-      nodes,
-      links,
+      node
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y);
     });
   });
 
