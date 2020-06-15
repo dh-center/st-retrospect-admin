@@ -71,33 +71,21 @@ export default function RelationsGraph(props: {
       .attr('width', width)
       .attr('height', height);
 
-    const nodes = [
-      {
-        x: width / 3 - 50,
-        y: height / 2 - 50,
-      },
-      {
-        x: width / 3,
-        y: height / 2,
-      },
-      {
-        x: 2 * width / 3,
-        y: height / 2,
-      },
-    ];
+    const nodes = props.persons.map(person => ({
+      ...person,
+    }));
 
     const links: d3.SimulationLinkDatum<SimulationNode>[] = [
-      {
-        source: 0,
-        target: 1,
-      },
+      // {
+      //   source: 0,
+      //   target: 1,
+      // },
     ];
 
     const linkForce = d3.forceLink(links).distance(100)
-      .strength(10)
-      .strength(1);
+      .strength(1000);
 
-    const simulation = d3.forceSimulation(nodes)
+    const simulation = d3.forceSimulation(nodes as unknown as SimulationNode[])
       .force('link', linkForce)
       .force('charge', d3.forceManyBody()
         .strength(-100)
