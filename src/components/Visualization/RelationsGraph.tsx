@@ -5,13 +5,18 @@ import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { RelationsGraph_relations as Relations } from './__generated__/RelationsGraph_relations.graphql';
 
+type NodeTypes = 'location' | 'person';
+
 interface SimulationLink {
   source: {x: number; y: number};
   target: {x: number; y: number};
 }
 
 interface SimulationNode {
-  x: number; y: number;
+  x: number;
+  y: number;
+  id: string;
+  type: NodeTypes;
 }
 
 /**
@@ -76,8 +81,8 @@ function RelationsGraph(props: {
 
     const links: d3.SimulationLinkDatum<SimulationNode>[] = [];
 
-    const persons: Record<string, { id: string }> = {};
-    const locations: Record<string, { id: string }> = {};
+    const persons: Record<string, { id: string; type: NodeTypes }> = {};
+    const locations: Record<string, { id: string; type: NodeTypes }> = {};
 
     props.relations.relations.edges.forEach(relationEdge => {
       const relation = relationEdge.node;
@@ -87,11 +92,17 @@ function RelationsGraph(props: {
       }
 
       if (!persons[relation.person.id]) {
-        persons[relation.person.id] = { ...relation.person };
+        persons[relation.person.id] = {
+          ...relation.person,
+          type: 'person',
+        };
       }
 
       if (!locations[relation.locationInstance.id]) {
-        locations[relation.locationInstance.id] = { ...relation.locationInstance };
+        locations[relation.locationInstance.id] = {
+          ...relation.locationInstance,
+          type: 'location',
+        };
       }
 
       links.push({
@@ -100,15 +111,11 @@ function RelationsGraph(props: {
       });
     });
 
-    const nodes: {
-      id: string;
-    }[] = [...Object.values(persons), ...Object.values(locations)];
+    const nodes = [...Object.values(persons), ...Object.values(locations)];
 
-    const linkForce = d3.forceLink(links)
-      .id((d: any) => d.id);
-    // .distance(100)
-    // .strength(10);
-
+    const linkForce = d3.forceLink<SimulationNode, d3.SimulationLinkDatum<SimulationNode>>(links)
+      .id((d) => d.id)
+      .distance(100);
     const simulation = d3.forceSimulation(nodes as unknown as SimulationNode[])
       .force('link', linkForce)
       .force('charge', d3.forceManyBody())
@@ -128,7 +135,7 @@ function RelationsGraph(props: {
       .enter()
       .append('circle')
       .attr('r', 16)
-      .style('fill', '#efefef')
+      .style('fill', (d) => d.type === 'location' ? '#ffd248' : '#90a2fc')
       .style('stroke', '#424242')
       .style('stroke-width', '1px')
       .call(drag(simulation));
