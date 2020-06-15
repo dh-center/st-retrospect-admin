@@ -16,7 +16,7 @@ interface SimulationNode {
 export default function RelationsGraph(): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
 
-  const drag = (simulation: d3.Simulation<d3.SimulationNodeDatum, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {
+  const drag = (simulation: d3.Simulation<SimulationNode, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {
     /**
      * @param d
      */
@@ -85,7 +85,8 @@ export default function RelationsGraph(): React.ReactElement {
     const linkForce = d3.forceLink().distance(100)
       .strength(10)
       .strength(1);
-    const simulation = d3.forceSimulation()
+
+    const simulation = d3.forceSimulation(nodes)
       .force('link', linkForce)
       .force('charge', d3.forceManyBody()
         .strength(-100)
@@ -119,9 +120,7 @@ export default function RelationsGraph(): React.ReactElement {
         .style('stroke-width', '1px')
         .call(drag(simulation));
 
-      simulation
-        .nodes(graph.nodes)
-        .on('tick', ticked);
+      simulation.on('tick', ticked);
 
       linkForce.links(graph.links);
 
