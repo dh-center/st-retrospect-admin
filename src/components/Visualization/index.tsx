@@ -51,12 +51,12 @@ export default function VisualizationPage(): React.ReactElement {
 
           return (
             <div>
-              {/* <PersonsBirthDatesBarplot*/}
-              {/*  dates={props.persons.edges.map(edge => edge.node.birthDate)}*/}
-              {/*/ >*/}
-              {/* <PersonsLifeYearsDiagram*/}
-              {/*  persons={props.persons.edges.map(edge => edge.node)}*/}
-              {/*/ >*/}
+              <PersonsBirthDatesBarplot
+                dates={props.persons.edges.map(edge => edge.node.birthDate)}
+              />
+              <PersonsLifeYearsDiagram
+                persons={props.persons.edges.map(edge => edge.node)}
+              />
               <RelationsGraph
                 relations={props}
               />
