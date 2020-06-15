@@ -15,6 +15,7 @@ interface SimulationLink {
 type SimulationNode = (PersonNode | LocationNode) & {
   x: number;
   y: number;
+  weight: number;
 }
 type PersonNode = Relations['relations']['edges'][0]['node']['person'] & {type: 'person'}
 
@@ -82,8 +83,8 @@ function RelationsGraph(props: {
 
     const links: d3.SimulationLinkDatum<SimulationNode>[] = [];
 
-    const persons: Record<string, { id: string; type: NodeTypes }> = {};
-    const locations: Record<string, { id: string; type: NodeTypes }> = {};
+    const persons: Record<string, { id: string; type: NodeTypes; weight: number }> = {};
+    const locations: Record<string, { id: string; type: NodeTypes; weight: number }> = {};
 
     props.relations.relations.edges.forEach(relationEdge => {
       const relation = relationEdge.node;
@@ -96,14 +97,20 @@ function RelationsGraph(props: {
         persons[relation.person.id] = {
           ...relation.person,
           type: 'person',
+          weight: 1,
         };
+      } else {
+        persons[relation.person.id].weight++;
       }
 
       if (!locations[relation.locationInstance.id]) {
         locations[relation.locationInstance.id] = {
           ...relation.locationInstance,
           type: 'location',
+          weight: 1,
         };
+      } else {
+        locations[relation.locationInstance.id].weight++;
       }
 
       links.push({
@@ -120,6 +127,9 @@ function RelationsGraph(props: {
     const simulation = d3.forceSimulation(nodes as unknown as SimulationNode[])
       .force('link', linkForce)
       .force('charge', d3.forceManyBody())
+      .force('collide', d3.forceCollide<SimulationNode>()
+        .radius((d) => 10 + d.weight * 0.6)
+        .iterations(2))
       .force('center', d3.forceCenter(width / 2, height / 2));
 
     const tooltip = d3.select('body')
@@ -142,7 +152,7 @@ function RelationsGraph(props: {
       .data(simulation.nodes())
       .enter()
       .append('circle')
-      .attr('r', 16)
+      .attr('r', (d) => 10 + d.weight * 0.6)
       .style('fill', (d) => d.type === 'location' ? '#ffd248' : '#90a2fc')
       .style('stroke', '#424242')
       .style('stroke-width', '1px')
@@ -166,7 +176,7 @@ function RelationsGraph(props: {
       .on('click', function (d) {
         const currentDatum = d.id;
 
-        link.style('stroke', _d => (_d.source.id == currentDatum || _d.target.id == currentDatum) ? '#ff0000' : '#aaa');
+        link.style('stroke', _d => (_d.source.id === currentDatum || _d.target.id === currentDatum) ? '#ff0000' : '#aaa');
       })
       .call(drag(simulation));
 
