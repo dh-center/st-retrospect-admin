@@ -85,12 +85,25 @@ function RelationsGraph(props: {
 
     const persons: Record<string, { id: string; type: NodeTypes; weight: number }> = {};
     const locations: Record<string, { id: string; type: NodeTypes; weight: number }> = {};
+    const relations: Record<string, string[]> = {};
 
     props.relations.relations.edges.forEach(relationEdge => {
       const relation = relationEdge.node;
 
       if (!relation.person || !relation.locationInstance) {
         return;
+      }
+
+      if (relations[relation.person.id]) {
+        relations[relation.person.id].push(relation.locationInstance.id);
+      } else {
+        relations[relation.person.id] = [ relation.locationInstance.id ];
+      }
+
+      if (relations[relation.locationInstance.id]) {
+        relations[relation.locationInstance.id].push(relation.person.id);
+      } else {
+        relations[relation.locationInstance.id] = [ relation.person.id ];
       }
 
       if (!persons[relation.person.id]) {
@@ -157,26 +170,31 @@ function RelationsGraph(props: {
       .style('stroke', '#424242')
       .style('stroke-width', '1px')
       .style('cursor', 'pointer')
-      .on('mouseover', function (d) {
+      .on('mouseover', d => {
         tooltip
           .style('visibility', 'visible')
           .text(d.type === 'location' ? d.name || '' : `${d.lastName} ${d.firstName} ${d.patronymic}`)
-          .style('left', (d3.event.pageX) + 'px')
+          .style('left', (d3.event.pageX + 10) + 'px')
           .style('top', (d3.event.pageY - 28) + 'px');
       })
-      .on('mousemove', () =>
+      .on('mousemove', () => {
         tooltip
-          .style('left', (d3.event.pageX) + 'px')
-          .style('top', (d3.event.pageY - 28) + 'px')
-      )
-      .on('mouseout', function (d) {
+          .style('left', (d3.event.pageX + 10) + 'px')
+          .style('top', (d3.event.pageY - 28) + 'px');
+      })
+      .on('mouseout', () => {
         tooltip
           .style('visibility', 'hidden');
       })
       .on('click', function (d) {
         const currentDatum = d.id;
 
-        link.style('stroke', _d => (_d.source.id === currentDatum || _d.target.id === currentDatum) ? '#ff0000' : '#aaa');
+        link.style('stroke', (_d) =>
+          (_d.source.id === currentDatum || _d.target.id === currentDatum) ? '#ff0000' : '#aaa');
+        node.style('stroke', (_d) =>
+          relations[currentDatum].findIndex(rel => rel === _d.id) >= 0 ? '#ff0000' : '#424242');
+        d3.select(this)
+          .style('stroke', '#ff0000');
       })
       .call(drag(simulation));
 
