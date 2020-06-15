@@ -70,6 +70,14 @@ export default function RelationsGraph(props: {
     const svg = d3.select(plotRef.current).append('svg')
       .attr('width', width)
       .attr('height', height);
+    // .attr('viewBox', `0, 0, ${width}, ${height}`);
+
+    const g = svg.append('g');
+
+    svg.call(d3.zoom<SVGSVGElement, unknown>()
+      .extent([ [0, 0], [width, height] ])
+      .scaleExtent([0, 8])
+      .on('zoom', () => g.attr('transform', d3.event.transform)));
 
     const nodes = props.persons.map(person => ({
       ...person,
@@ -93,14 +101,14 @@ export default function RelationsGraph(props: {
       );
     // .force('center', d3.forceCenter(width / 2, height / 2));
 
-    const link = svg.append('g')
+    const link = g.append('g')
       .style('stroke', '#aaa')
       .selectAll('line')
       .data(linkForce.links() as SimulationLink[])
       .enter()
       .append('line');
 
-    const node = svg.append('g')
+    const node = g.append('g')
       .attr('class', 'nodes')
       .selectAll('circle')
       .data(simulation.nodes())
