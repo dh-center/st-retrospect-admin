@@ -12,8 +12,19 @@ interface SimulationNode {
 }
 
 /**
+ * @param props
  */
-export default function RelationsGraph(): React.ReactElement {
+export default function RelationsGraph(props: {
+  persons: {
+    birthDate: string | null;
+    deathDate: string | null;
+    readonly relations: ReadonlyArray<{
+      readonly locationInstance: {
+        readonly id: string;
+      } | null;
+    }>;
+  }[];
+}): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
 
   const drag = (simulation: d3.Simulation<SimulationNode, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {

@@ -9,6 +9,11 @@ export type VisualizationPageQueryResponse = {
             readonly node: {
                 readonly birthDate: string | null;
                 readonly deathDate: string | null;
+                readonly relations: ReadonlyArray<{
+                    readonly locationInstance: {
+                        readonly id: string;
+                    } | null;
+                }>;
             };
         }>;
     };
@@ -27,6 +32,12 @@ query VisualizationPageQuery {
       node {
         birthDate
         deathDate
+        relations {
+          locationInstance {
+            id
+          }
+          id
+        }
         id
       }
     }
@@ -47,6 +58,25 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "deathDate",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "LocationInstance",
+  "kind": "LinkedField",
+  "name": "locationInstance",
+  "plural": false,
+  "selections": [
+    (v2/*: any*/)
+  ],
   "storageKey": null
 };
 return {
@@ -81,7 +111,19 @@ return {
                 "plural": false,
                 "selections": [
                   (v0/*: any*/),
-                  (v1/*: any*/)
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Relation",
+                    "kind": "LinkedField",
+                    "name": "relations",
+                    "plural": true,
+                    "selections": [
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
               }
@@ -129,10 +171,17 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
+                    "concreteType": "Relation",
+                    "kind": "LinkedField",
+                    "name": "relations",
+                    "plural": true,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v2/*: any*/)
+                    ],
                     "storageKey": null
-                  }
+                  },
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -149,9 +198,9 @@ return {
     "metadata": {},
     "name": "VisualizationPageQuery",
     "operationKind": "query",
-    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        relations {\n          locationInstance {\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '000adad9cc5bc29e01f8434554e552ca';
+(node as any).hash = '1d60da898e9611616f9cded9384863bf';
 export default node;

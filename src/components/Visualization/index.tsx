@@ -26,6 +26,11 @@ export default function VisualizationPage(): React.ReactElement {
                 node {
                   birthDate
                   deathDate
+                  relations {
+                    locationInstance {
+                      id
+                    }
+                  }
                 }
               }
             }
@@ -56,7 +61,9 @@ export default function VisualizationPage(): React.ReactElement {
               <PersonsLifeYearsDiagram
                 persons={props.persons.edges.map(edge => edge.node)}
               />
-              <RelationsGraph/>
+              <RelationsGraph
+                persons={props.persons.edges.map(edge => edge.node)}
+              />
             </div>
           );
         }}
