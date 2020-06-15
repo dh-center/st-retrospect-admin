@@ -12,12 +12,13 @@ interface SimulationLink {
   target: {x: number; y: number};
 }
 
-interface SimulationNode {
+type SimulationNode = (PersonNode | LocationNode) & {
   x: number;
   y: number;
-  id: string;
-  type: NodeTypes;
 }
+type PersonNode = Relations['relations']['edges'][0]['node']['person'] & {type: 'person'}
+
+type LocationNode = Relations['relations']['edges'][0]['node']['locationInstance'] & {type: 'location'}
 
 /**
  * @param props
@@ -121,6 +122,10 @@ function RelationsGraph(props: {
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
+    const tooltip = d3.select('body').append('div')
+      .attr('class', 'tooltip')
+      .style('opacity', 0);
+
     const link = g.append('g')
       .style('stroke', '#aaa')
       .selectAll('line')
@@ -138,6 +143,19 @@ function RelationsGraph(props: {
       .style('fill', (d) => d.type === 'location' ? '#ffd248' : '#90a2fc')
       .style('stroke', '#424242')
       .style('stroke-width', '1px')
+      .on('mouseover', function (d) {
+        tooltip.transition()
+          .duration(200)
+          .style('opacity', 1);
+        tooltip.html(d.type === 'location' ? d.name || '' : `${d.lastName} ${d.firstName} ${d.patronymic}`)
+          .style('left', (d3.event.pageX) + 'px')
+          .style('top', (d3.event.pageY - 28) + 'px');
+      })
+      .on('mouseout', function (d) {
+        tooltip.transition()
+          .duration(500)
+          .style('opacity', 0);
+      })
       .call(drag(simulation));
 
     simulation.on('tick', () => {
@@ -170,9 +188,13 @@ export default createFragmentContainer(RelationsGraph, {
             id
             person {
               id
+              lastName
+              firstName
+              patronymic
             }
             locationInstance {
               id
+              name
             }
           }
         }

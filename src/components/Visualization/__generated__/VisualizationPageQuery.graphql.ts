@@ -43,9 +43,13 @@ fragment RelationsGraph_relations on Query {
         id
         person {
           id
+          lastName
+          firstName
+          patronymic
         }
         locationInstance {
           id
+          name
         }
       }
     }
@@ -74,10 +78,7 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v3 = [
-  (v2/*: any*/)
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -202,7 +203,30 @@ return {
                     "kind": "LinkedField",
                     "name": "person",
                     "plural": false,
-                    "selections": (v3/*: any*/),
+                    "selections": [
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "lastName",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "firstName",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "patronymic",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   },
                   {
@@ -212,7 +236,16 @@ return {
                     "kind": "LinkedField",
                     "name": "locationInstance",
                     "plural": false,
-                    "selections": (v3/*: any*/),
+                    "selections": [
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   }
                 ],
@@ -231,7 +264,7 @@ return {
     "metadata": {},
     "name": "VisualizationPageQuery",
     "operationKind": "query",
-    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        id\n      }\n    }\n  }\n  ...RelationsGraph_relations\n}\n\nfragment RelationsGraph_relations on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n        }\n        locationInstance {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        id\n      }\n    }\n  }\n  ...RelationsGraph_relations\n}\n\nfragment RelationsGraph_relations on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

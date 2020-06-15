@@ -10,9 +10,13 @@ export type RelationsGraph_relations = {
                 readonly id: string;
                 readonly person: {
                     readonly id: string;
+                    readonly lastName: string | null;
+                    readonly firstName: string | null;
+                    readonly patronymic: string | null;
                 } | null;
                 readonly locationInstance: {
                     readonly id: string;
+                    readonly name: string | null;
                 } | null;
             };
         }>;
@@ -34,10 +38,7 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v1 = [
-  (v0/*: any*/)
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -76,7 +77,30 @@ return {
                   "kind": "LinkedField",
                   "name": "person",
                   "plural": false,
-                  "selections": (v1/*: any*/),
+                  "selections": [
+                    (v0/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lastName",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "firstName",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "patronymic",
+                      "storageKey": null
+                    }
+                  ],
                   "storageKey": null
                 },
                 {
@@ -86,7 +110,16 @@ return {
                   "kind": "LinkedField",
                   "name": "locationInstance",
                   "plural": false,
-                  "selections": (v1/*: any*/),
+                  "selections": [
+                    (v0/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "name",
+                      "storageKey": null
+                    }
+                  ],
                   "storageKey": null
                 }
               ],
@@ -102,5 +135,5 @@ return {
   "type": "Query"
 };
 })();
-(node as any).hash = '896bb7901198ab18f9d890938b6dd305';
+(node as any).hash = 'c4929e30114d66fdbcbc6a4e98ace6eb';
 export default node;
