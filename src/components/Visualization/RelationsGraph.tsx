@@ -16,6 +16,43 @@ interface SimulationNode {
 export default function RelationsGraph(): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
 
+  const drag = (simulation: d3.Simulation<d3.SimulationNodeDatum, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {
+    /**
+     * @param d
+     */
+    function dragstarted(d: d3.SimulationNodeDatum): void {
+      if (!d3.event.active) {
+        simulation.alphaTarget(0.3).restart();
+      }
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    /**
+     * @param d
+     */
+    function dragged(d: d3.SimulationNodeDatum): void {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
+
+    /**
+     * @param d
+     */
+    function dragended(d: d3.SimulationNodeDatum): void {
+      if (!d3.event.active) {
+        simulation.alphaTarget(0);
+      }
+      d.fx = null;
+      d.fy = null;
+    }
+
+    return d3.drag<SVGCircleElement, SimulationNode>()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+      .on('end', dragended);
+  };
+
   useEffect(() => {
     const width = 640;
     const height = 480;
@@ -76,23 +113,11 @@ export default function RelationsGraph(): React.ReactElement {
         .data(graph.nodes)
         .enter()
         .append('circle')
-        .attr('r', 2)
-        .call(d3.drag<SVGCircleElement, SimulationNode>()
-          .on('start', dragstarted)
-          .on('drag', dragged)
-          .on('end', dragended)
-        );
-
-      const label = svg.append('g')
-        .attr('class', 'labels')
-        .selectAll('text')
-        .data(graph.nodes)
-        .enter()
-        .append('text')
-        .attr('class', 'label');
-      // .text(function (d) {
-      //   return d.id;
-      // });
+        .attr('r', 16)
+        .style('fill', '#efefef')
+        .style('stroke', '#424242')
+        .style('stroke-width', '1px')
+        .call(drag(simulation));
 
       simulation
         .nodes(graph.nodes)
@@ -105,71 +130,15 @@ export default function RelationsGraph(): React.ReactElement {
        */
       function ticked(): void {
         (link as d3.Selection<SVGLineElement, SimulationLink, SVGElement, unknown>)
-          .attr('x1', function (d) {
-            return d.source.x;
-          })
-          .attr('y1', function (d) {
-            return d.source.y;
-          })
-          .attr('x2', function (d) {
-            return d.target.x;
-          })
-          .attr('y2', function (d) {
-            return d.target.y;
-          });
+          .attr('x1', d => d.source.x)
+          .attr('y1', d => d.source.y)
+          .attr('x2', d => d.target.x)
+          .attr('y2', d => d.target.y);
 
         node
-          .attr('r', 16)
-          .style('fill', '#efefef')
-          .style('stroke', '#424242')
-          .style('stroke-width', '1px')
-          .attr('cx', function (d) {
-            return d.x;// + 5;
-          })
-          .attr('cy', function (d) {
-            return d.y;// - 3;
-          });
-
-        label
-          .attr('x', function (d) {
-            return d.x;
-          })
-          .attr('y', function (d) {
-            return d.y;
-          })
-          .style('font-size', '10px')
-          .style('fill', '#333');
+          .attr('cx', d => d.x)
+          .attr('cy', d => d.y);
       }
-    }
-
-    /**
-     * @param d
-     */
-    function dragstarted(d: d3.SimulationNodeDatum): void {
-      if (!d3.event.active) {
-        simulation.alphaTarget(0.3).restart();
-      }
-      d3.event.subject.fx = d3.event.subject.x;
-      d3.event.subject.fy = d3.event.subject.y;
-    }
-
-    /**
-     * @param d
-     */
-    function dragged(d: d3.SimulationNodeDatum): void {
-      d3.event.subject.fx = d3.event.x;
-      d3.event.subject.fy = d3.event.y;
-    }
-
-    /**
-     * @param d
-     */
-    function dragended(d: d3.SimulationNodeDatum): void {
-      if (!d3.event.active) {
-        simulation.alphaTarget(0);
-      }
-      d3.event.subject.fx = null;
-      d3.event.subject.fy = null;
     }
 
     run({
