@@ -8,8 +8,8 @@ import { RelationsGraph_relations as Relations } from './__generated__/Relations
 type NodeTypes = 'location' | 'person';
 
 interface SimulationLink {
-  source: {x: number; y: number};
-  target: {x: number; y: number};
+  source: {id: string; x: number; y: number};
+  target: {id: string; x: number; y: number};
 }
 
 type SimulationNode = (PersonNode | LocationNode) & {
@@ -122,9 +122,12 @@ function RelationsGraph(props: {
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
-    const tooltip = d3.select('body').append('div')
-      .attr('class', 'tooltip')
-      .style('opacity', 0);
+    const tooltip = d3.select('body')
+      .append('div')
+      .style('position', 'absolute')
+      .style('z-index', '10')
+      .style('visibility', 'hidden')
+      .text('a simple tooltip');
 
     const link = g.append('g')
       .style('stroke', '#aaa')
@@ -143,23 +146,32 @@ function RelationsGraph(props: {
       .style('fill', (d) => d.type === 'location' ? '#ffd248' : '#90a2fc')
       .style('stroke', '#424242')
       .style('stroke-width', '1px')
+      .style('cursor', 'pointer')
       .on('mouseover', function (d) {
-        tooltip.transition()
-          .duration(200)
-          .style('opacity', 1);
-        tooltip.html(d.type === 'location' ? d.name || '' : `${d.lastName} ${d.firstName} ${d.patronymic}`)
+        tooltip
+          .style('visibility', 'visible')
+          .text(d.type === 'location' ? d.name || '' : `${d.lastName} ${d.firstName} ${d.patronymic}`)
           .style('left', (d3.event.pageX) + 'px')
           .style('top', (d3.event.pageY - 28) + 'px');
       })
+      .on('mousemove', () =>
+        tooltip
+          .style('left', (d3.event.pageX) + 'px')
+          .style('top', (d3.event.pageY - 28) + 'px')
+      )
       .on('mouseout', function (d) {
-        tooltip.transition()
-          .duration(500)
-          .style('opacity', 0);
+        tooltip
+          .style('visibility', 'hidden');
+      })
+      .on('click', function (d) {
+        const currentDatum = d.id;
+
+        link.style('stroke', _d => (_d.source.id == currentDatum || _d.target.id == currentDatum) ? '#ff0000' : '#aaa');
       })
       .call(drag(simulation));
 
     simulation.on('tick', () => {
-      (link)
+      link
         .attr('x1', d => d.source.x)
         .attr('y1', d => d.source.y)
         .attr('x2', d => d.target.x)
