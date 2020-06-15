@@ -71,8 +71,8 @@ function RelationsGraph(props: {
     const height = 600;
     const svg = d3.select(plotRef.current).append('svg')
       .attr('width', width)
-      .attr('height', height);
-    // .attr('viewBox', `0, 0, ${width}, ${height}`);
+      .attr('height', height)
+      .attr('viewBox', `0, 0, ${width * 3}, ${height * 3}`);
 
     const g = svg.append('g');
 
@@ -130,7 +130,7 @@ function RelationsGraph(props: {
       .force('collide', d3.forceCollide<SimulationNode>()
         .radius((d) => 10 + d.weight * 0.6)
         .iterations(2))
-      .force('center', d3.forceCenter(width / 2, height / 2));
+      .force('center', d3.forceCenter(width * 3 / 2, height * 3 / 2));
 
     const tooltip = d3.select('body')
       .append('div')
