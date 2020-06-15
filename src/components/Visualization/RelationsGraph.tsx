@@ -45,10 +45,11 @@ export default function RelationsGraph(): React.ReactElement {
       },
     ];
 
+    const linkForce = d3.forceLink().distance(100)
+      .strength(10)
+      .strength(1);
     const simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().distance(100)
-        .strength(10)
-        .strength(1))
+      .force('link', linkForce)
       .force('charge', d3.forceManyBody()
         .strength(-100)
         .distanceMax(150)
@@ -97,11 +98,7 @@ export default function RelationsGraph(): React.ReactElement {
         .nodes(graph.nodes)
         .on('tick', ticked);
 
-      const linkForce = simulation.force<d3.ForceLink<d3.SimulationNodeDatum, d3.SimulationLinkDatum<d3.SimulationNodeDatum>>>('link');
-
-      if (linkForce) {
-        linkForce.links(graph.links);
-      }
+      linkForce.links(graph.links);
 
       /**
        *
