@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import './index.css';
 import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import { RelationsGraph_relations as Relations } from './__generated__/RelationsGraph_relations.graphql';
+import { RelationsGraph_data as GraphData } from './__generated__/RelationsGraph_data.graphql';
 
 type NodeTypes = 'location' | 'person';
 
@@ -17,17 +17,35 @@ type SimulationNode = (PersonNode | LocationNode) & {
   y: number;
   weight: number;
 }
-type PersonNode = Relations['relations']['edges'][0]['node']['person'] & {type: 'person'}
+type PersonNode = GraphData['relations']['edges'][0]['node']['person'] & {type: 'person'}
 
-type LocationNode = Relations['relations']['edges'][0]['node']['locationInstance'] & {type: 'location'}
+type LocationNode = GraphData['relations']['edges'][0]['node']['locationInstance'] & {type: 'location'}
+
+interface LocationTypeToggleInfo {
+  enabled: boolean;
+  name: string;
+}
+
+interface LocationTypesTogglesState {
+  [key: string]: LocationTypeToggleInfo;
+}
 
 /**
  * @param props
  */
 function RelationsGraph(props: {
-  relations: Relations;
+  data: GraphData;
 }): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
+  const [locationTypesToggles, setLocationTypesToggles] = useState<LocationTypesTogglesState>(
+    props.data.locationTypes.reduce((acc, val) => ({
+      ...acc,
+      [val.id]: {
+        enabled: true,
+        name: val.name,
+      },
+    }), {})
+  );
 
   const drag = (simulation: d3.Simulation<SimulationNode, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {
     /**
@@ -87,7 +105,7 @@ function RelationsGraph(props: {
     const locations: Record<string, { id: string; type: NodeTypes; weight: number }> = {};
     const relations: Record<string, string[]> = {};
 
-    props.relations.relations.edges.forEach(relationEdge => {
+    props.data.relations.edges.forEach(relationEdge => {
       const relation = relationEdge.node;
 
       if (!relation.person || !relation.locationInstance) {
@@ -209,19 +227,38 @@ function RelationsGraph(props: {
         .attr('cx', d => d.x)
         .attr('cy', d => d.y);
     });
-  });
+  }, []);
+
+  useEffect(() => {
+    console.log('effect');
+  }, [ locationTypesToggles ]);
 
   return (
     <div className={'visualization-block'}>
       <h2 className={'visualization-block__header'}>Relations graph</h2>
       <div className={'visualization-block__content'} ref={plotRef}/>
+      <div>
+        <div>
+          {Object.entries(locationTypesToggles).map(([id, locType]) => (
+            <React.Fragment key={id}>
+              <input id={'graph-filter' + id} type={'checkbox'} checked={locType.enabled} onChange={(): void => setLocationTypesToggles({
+                ...locationTypesToggles,
+                [id]: {
+                  name: locType.name,
+                  enabled: !locType.enabled,
+                },
+              })}/> <label htmlFor={'graph-filter' + id}>{locType.name}</label> <br/>
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
 export default createFragmentContainer(RelationsGraph, {
-  relations: graphql`
-    fragment RelationsGraph_relations on Query {
+  data: graphql`
+    fragment RelationsGraph_data on Query {
       relations {
         edges {
           node {
@@ -235,9 +272,16 @@ export default createFragmentContainer(RelationsGraph, {
             locationInstance {
               id
               name
+              locationTypes {
+                id
+              }
             }
           }
         }
+      }
+      locationTypes {
+        id
+        name
       }
     }
   `,

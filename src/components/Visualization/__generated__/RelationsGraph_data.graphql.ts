@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type RelationsGraph_relations = {
+export type RelationsGraph_data = {
     readonly relations: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -17,16 +17,23 @@ export type RelationsGraph_relations = {
                 readonly locationInstance: {
                     readonly id: string;
                     readonly name: string | null;
+                    readonly locationTypes: ReadonlyArray<{
+                        readonly id: string;
+                    } | null> | null;
                 } | null;
             };
         }>;
     };
-    readonly " $refType": "RelationsGraph_relations";
+    readonly locationTypes: ReadonlyArray<{
+        readonly id: string;
+        readonly name: string | null;
+    }>;
+    readonly " $refType": "RelationsGraph_data";
 };
-export type RelationsGraph_relations$data = RelationsGraph_relations;
-export type RelationsGraph_relations$key = {
-    readonly " $data"?: RelationsGraph_relations$data;
-    readonly " $fragmentRefs": FragmentRefs<"RelationsGraph_relations">;
+export type RelationsGraph_data$data = RelationsGraph_data;
+export type RelationsGraph_data$key = {
+    readonly " $data"?: RelationsGraph_data$data;
+    readonly " $fragmentRefs": FragmentRefs<"RelationsGraph_data">;
 };
 
 
@@ -38,12 +45,19 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "RelationsGraph_relations",
+  "name": "RelationsGraph_data",
   "selections": [
     {
       "alias": null,
@@ -112,11 +126,17 @@ return {
                   "plural": false,
                   "selections": [
                     (v0/*: any*/),
+                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
+                      "concreteType": "LocationType",
+                      "kind": "LinkedField",
+                      "name": "locationTypes",
+                      "plural": true,
+                      "selections": [
+                        (v0/*: any*/)
+                      ],
                       "storageKey": null
                     }
                   ],
@@ -130,10 +150,23 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "LocationType",
+      "kind": "LinkedField",
+      "name": "locationTypes",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/),
+        (v1/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "Query"
 };
 })();
-(node as any).hash = 'c4929e30114d66fdbcbc6a4e98ace6eb';
+(node as any).hash = 'ba99a5a209bbce4d18ea2727a53a6f68';
 export default node;

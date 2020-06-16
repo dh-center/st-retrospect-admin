@@ -411,6 +411,9 @@ type Query {
     searchString: String!
   ): [Relation!]!
 
+  """Returns list of all location types"""
+  locationTypes: [LocationType!]!
+
   """Get specific relation"""
   relation(
     """Relation id"""

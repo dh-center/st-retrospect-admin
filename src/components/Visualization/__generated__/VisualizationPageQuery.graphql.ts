@@ -13,7 +13,7 @@ export type VisualizationPageQueryResponse = {
             };
         }>;
     };
-    readonly " $fragmentRefs": FragmentRefs<"RelationsGraph_relations">;
+    readonly " $fragmentRefs": FragmentRefs<"RelationsGraph_data">;
 };
 export type VisualizationPageQuery = {
     readonly response: VisualizationPageQueryResponse;
@@ -33,10 +33,10 @@ query VisualizationPageQuery {
       }
     }
   }
-  ...RelationsGraph_relations
+  ...RelationsGraph_data
 }
 
-fragment RelationsGraph_relations on Query {
+fragment RelationsGraph_data on Query {
   relations {
     edges {
       node {
@@ -50,9 +50,16 @@ fragment RelationsGraph_relations on Query {
         locationInstance {
           id
           name
+          locationTypes {
+            id
+          }
         }
       }
     }
+  }
+  locationTypes {
+    id
+    name
   }
 }
 */
@@ -77,6 +84,13 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
@@ -124,7 +138,7 @@ return {
       {
         "args": null,
         "kind": "FragmentSpread",
-        "name": "RelationsGraph_relations"
+        "name": "RelationsGraph_data"
       }
     ],
     "type": "Query"
@@ -238,11 +252,17 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
+                        "concreteType": "LocationType",
+                        "kind": "LinkedField",
+                        "name": "locationTypes",
+                        "plural": true,
+                        "selections": [
+                          (v2/*: any*/)
+                        ],
                         "storageKey": null
                       }
                     ],
@@ -256,6 +276,19 @@ return {
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "LocationType",
+        "kind": "LinkedField",
+        "name": "locationTypes",
+        "plural": true,
+        "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/)
+        ],
+        "storageKey": null
       }
     ]
   },
@@ -264,9 +297,9 @@ return {
     "metadata": {},
     "name": "VisualizationPageQuery",
     "operationKind": "query",
-    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        id\n      }\n    }\n  }\n  ...RelationsGraph_relations\n}\n\nfragment RelationsGraph_relations on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        id\n      }\n    }\n  }\n  ...RelationsGraph_data\n}\n\nfragment RelationsGraph_data on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n          locationTypes {\n            id\n          }\n        }\n      }\n    }\n  }\n  locationTypes {\n    id\n    name\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '33f9efcbcdcbf8c70710dac11d403b67';
+(node as any).hash = '777585bf03f213e6dfa87968e28b0422';
 export default node;
