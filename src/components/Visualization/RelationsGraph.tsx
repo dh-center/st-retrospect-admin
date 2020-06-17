@@ -194,7 +194,9 @@ function RelationsGraph(props: {
         return;
       }
 
-      const locationTypes = relation.locationInstance.locationTypes;
+      const person = relation.person;
+      const location = relation.locationInstance;
+      const locationTypes = location.locationTypes;
 
       if (locationTypes && locationTypes.length !== 0) {
         if (locationTypes.findIndex(locType => locType && locationTypesToggles[locType.id].enabled) === -1) {
@@ -202,42 +204,44 @@ function RelationsGraph(props: {
         }
       }
 
-      if (relations[relation.person.id]) {
-        relations[relation.person.id].push(relation.locationInstance.id);
+      if (relations[person.id]) {
+        relations[person.id].push(location.id);
       } else {
-        relations[relation.person.id] = [ relation.locationInstance.id ];
+        relations[person.id] = [ location.id ];
       }
 
-      if (relations[relation.locationInstance.id]) {
-        relations[relation.locationInstance.id].push(relation.person.id);
+      if (relations[location.id]) {
+        relations[location.id].push(person.id);
       } else {
-        relations[relation.locationInstance.id] = [ relation.person.id ];
+        relations[location.id] = [ person.id ];
       }
 
-      if (!persons[relation.person.id]) {
-        persons[relation.person.id] = {
-          ...relation.person,
+      if (!persons[person.id]) {
+        persons[person.id] = {
+          ...nodes.current.find(n => n.id === person.id),
+          ...person,
           type: 'person',
           weight: 1,
         };
       } else {
-        persons[relation.person.id].weight++;
+        persons[person.id].weight++;
       }
 
-      if (!locations[relation.locationInstance.id]) {
-        locations[relation.locationInstance.id] = {
-          ...relation.locationInstance,
-          locationTypes: (relation.locationInstance.locationTypes ? relation.locationInstance.locationTypes.filter(locType => locType && locType.id) : []) as LocationType[],
+      if (!locations[location.id]) {
+        locations[location.id] = {
+          ...location,
+          ...nodes.current.find(n => n.id === location.id),
+          locationTypes: (location.locationTypes ? location.locationTypes.filter(locType => locType && locType.id) : []) as LocationType[],
           type: 'location',
           weight: 1,
         };
       } else {
-        locations[relation.locationInstance.id].weight++;
+        locations[location.id].weight++;
       }
 
       links.current!.push({
-        source: relation.person.id,
-        target: relation.locationInstance.id,
+        source: person.id,
+        target: location.id,
       });
     });
 
