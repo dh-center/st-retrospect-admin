@@ -85,34 +85,34 @@ export default function VisualizationPage(): React.ReactElement {
               }}
             >
               <Carousel.Item>
+                <Carousel.Caption>
+                  <h5>Count of persons by birth date</h5>
+                </Carousel.Caption>
                 <div className="visualization-page__slide">
                   <PersonsBirthDatesBarplot
                     dates={props.persons.edges.map(edge => edge.node.birthDate)}
                   />
                 </div>
-                <Carousel.Caption>
-                  <h5>Count of persons by birth date</h5>
-                </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
+                <Carousel.Caption>
+                  <h5>Persons life years diagram</h5>
+                </Carousel.Caption>
                 <div className="visualization-page__slide">
                   <PersonsLifeYearsDiagram
                     persons={props.persons.edges.map(edge => edge.node)}
                   />
                 </div>
-                <Carousel.Caption>
-                  <h5>Persons life years diagram</h5>
-                </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
+                <Carousel.Caption>
+                  <h5>Relations graph</h5>
+                </Carousel.Caption>
                 <div className="visualization-page__slide">
                   <RelationsGraph
                     data={props}
                   />
                 </div>
-                <Carousel.Caption>
-                  <h5>Relations graph</h5>
-                </Carousel.Caption>
               </Carousel.Item>
             </Carousel>
           );
