@@ -1,5 +1,24 @@
 .visualization-page {
+  display: flex;
+  flex-flow: column;
   text-align: center;
+  min-height: 100%;
+  background: #222226;
+  color: #ffffff;
+}
+
+.visualization-page .carousel {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+.visualization-page .carousel-inner,
+.visualization-page .carousel-item {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .visualization-page__link-back {
@@ -8,20 +27,22 @@
   font-size: 20px;
 }
 
+.visualization-page__slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
 .visualization-block {
   display: inline-block;
   margin-bottom: 20px;
-}
-
-.visualization-block__header {
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 20px 0px;
 }
 
 .visualization-block__content {
   padding: 10px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 20px 0px;
+  background: #333336;
 }

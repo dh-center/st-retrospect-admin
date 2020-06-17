@@ -106,10 +106,10 @@ export default function PersonLifeYearsDiagram(props: {
       matrix[deathYearPeriodIndex][birthYearPeriodIndex]++;
     });
 
-    const innerRadius = 350;
-    const borderRadius = 10;
+    const innerRadius = 200;
+    const borderRadius = 8;
     const plotRadius = innerRadius + borderRadius;
-    const margin = 120;
+    const margin = 80;
     const plotSize = (plotRadius + margin) * 2;
     const baseOpacity = 0.80;
 
@@ -166,9 +166,11 @@ export default function PersonLifeYearsDiagram(props: {
         const angle = (d.startAngle + d.endAngle) / 2;
 
         return 'rotate(' + (angle * 180 / Math.PI - 90) + ')' +
-          'translate(' + (plotRadius + 25) + ')' +
+          'translate(' + (plotRadius + 20) + ')' +
           (angle > Math.PI ? 'rotate(180)' : '');
       })
+      .style('fill', '#ffffff')
+      .style('font-size', 10)
       .text(function (d, i) {
         return periodNames[i];
       });
@@ -225,24 +227,25 @@ export default function PersonLifeYearsDiagram(props: {
     ticks.append('line')
       .attr('x1', 1)
       .attr('y1', 0)
-      .attr('x2', 5)
+      .attr('x2', 3)
       .attr('y2', 0)
       .attr('class', 'ticks')
-      .style('stroke', '#000');
+      .style('stroke', '#ffffff');
 
     /**
      * Add the labels for the %'s
      */
     ticks.append('text')
-      .attr('x', 8)
+      .attr('x', 5)
       .attr('dy', '.35em')
       .attr('class', 'tickLabels')
       .attr('transform', function (d) {
-        return d.angle > Math.PI ? 'rotate(180)translate(-16)' : null;
+        return d.angle > Math.PI ? 'rotate(180)translate(-10)' : null;
       })
       .style('text-anchor', function (d) {
         return d.angle > Math.PI ? 'end' : null;
       })
+      .style('fill', '#ffffff')
       .style('font-size', 8)
       .text(function (d) {
         return d.label;
@@ -251,7 +254,6 @@ export default function PersonLifeYearsDiagram(props: {
 
   return (
     <div className={'visualization-block'}>
-      <h2 className={'visualization-block__header'}>Persons life years diagram</h2>
       <div className={'visualization-block__content'} ref={plotRef}/>
     </div>
   );

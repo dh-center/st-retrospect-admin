@@ -7,6 +7,7 @@ import { VisualizationPageQuery, VisualizationPageQueryResponse } from './__gene
 import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 import './index.css';
+import { Carousel } from 'react-bootstrap';
 
 /**
  * Page with plots for visualisation of Database content
@@ -48,14 +49,28 @@ export default function VisualizationPage(): React.ReactElement {
           }
 
           return (
-            <div>
-              <PersonsBirthDatesBarplot
-                dates={props.persons.edges.map(edge => edge.node.birthDate)}
-              />
-              <PersonsLifeYearsDiagram
-                persons={props.persons.edges.map(edge => edge.node)}
-              />
-            </div>
+            <Carousel>
+              <Carousel.Item>
+                <div className="visualization-page__slide">
+                  <PersonsBirthDatesBarplot
+                    dates={props.persons.edges.map(edge => edge.node.birthDate)}
+                  />
+                </div>
+                <Carousel.Caption>
+                  <h5>Count of persons by birth date</h5>
+                </Carousel.Caption>
+              </Carousel.Item>
+              <Carousel.Item>
+                <div className="visualization-page__slide">
+                  <PersonsLifeYearsDiagram
+                    persons={props.persons.edges.map(edge => edge.node)}
+                  />
+                </div>
+                <Carousel.Caption>
+                  <h5>Persons life years diagram</h5>
+                </Carousel.Caption>
+              </Carousel.Item>
+            </Carousel>
           );
         }}
       />
