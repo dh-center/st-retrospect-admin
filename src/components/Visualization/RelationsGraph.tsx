@@ -8,18 +8,31 @@ import { RelationsGraph_data as GraphData } from './__generated__/RelationsGraph
 type NodeTypes = 'location' | 'person';
 
 interface SimulationLink {
-  source: {id: string; x: number; y: number};
-  target: {id: string; x: number; y: number};
+  source: SimulationNode;
+  target: SimulationNode;
 }
 
-type SimulationNode = (PersonNode | LocationNode) & {
+interface AbstractSimulationNode {
+  id: string;
   x: number;
   y: number;
   weight: number;
+  type: NodeTypes;
 }
-type PersonNode = GraphData['relations']['edges'][0]['node']['person'] & {type: 'person'}
 
-type LocationNode = GraphData['relations']['edges'][0]['node']['locationInstance'] & {type: 'location'}
+interface PersonNode extends AbstractSimulationNode {
+  type: 'person';
+  firstName: string;
+  lastName: string;
+  patronymic: string;
+}
+
+interface LocationNode extends AbstractSimulationNode{
+  name: string;
+  type: 'location';
+}
+
+type SimulationNode = PersonNode | LocationNode;
 
 interface LocationTypeToggleInfo {
   enabled: boolean;
@@ -230,18 +243,17 @@ function RelationsGraph(props: {
   }, []);
 
   useEffect(() => {
-    console.log('effect');
   }, [ locationTypesToggles ]);
 
   return (
-    <div className={'visualization-block'}>
-      <h2 className={'visualization-block__header'}>Relations graph</h2>
-      <div className={'visualization-block__content'} ref={plotRef}/>
+    <div className='visualization-block'>
+      <h2 className='visualization-block__header'>Relations graph</h2>
+      <div className='visualization-block__content' ref={plotRef}/>
       <div>
         <div>
           {Object.entries(locationTypesToggles).map(([id, locType]) => (
             <React.Fragment key={id}>
-              <input id={'graph-filter' + id} type={'checkbox'} checked={locType.enabled} onChange={(): void => setLocationTypesToggles({
+              <input id={'graph-filter' + id} type='checkbox' checked={locType.enabled} onChange={(): void => setLocationTypesToggles({
                 ...locationTypesToggles,
                 [id]: {
                   name: locType.name,
