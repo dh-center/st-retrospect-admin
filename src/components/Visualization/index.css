@@ -62,14 +62,9 @@
   min-height: 100vh;
 }
 
-.visualization-block {
-  display: inline-block;
-  margin: 20px;
-}
-
 .visualization-block__content {
   padding: 10px;
   border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 20px 0px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 0 20px 0;
   background: #333336;
 }

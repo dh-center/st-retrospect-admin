@@ -153,6 +153,8 @@ function RelationsGraph(props: {
     tooltip.current = d3.select('body')
       .append('div')
       .style('position', 'absolute')
+      .style('top', '0')
+      .style('color', 'white')
       .style('z-index', '10')
       .style('visibility', 'hidden')
       .text('a simple tooltip');
