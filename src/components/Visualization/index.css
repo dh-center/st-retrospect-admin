@@ -22,9 +22,12 @@
 }
 
 .visualization-page__link-back {
-  margin-bottom: 10px;
   display: inline-block;
+  position: absolute;
+  top: 5px;
+  left: 10px;
   font-size: 20px;
+  z-index: 9999;
 }
 
 .visualization-page__slide {
