@@ -62,15 +62,18 @@ function RelationsGraph(props: {
     props.data.locationTypes.reduce((acc, val) => ({
       ...acc,
       [val.id]: {
-        enabled: true,
+        enabled: false,
         name: val.name,
       },
     }), {})
   );
-  const [nodes, setNodes] = useState<SimulationNode[]>([]);
-  const currentNodes = useRef<SimulationNode[]>([]);
+  const nodes = useRef<SimulationNode[]>([]);
   const linkForce = useRef<d3.ForceLink<SimulationNode, SimulationLink> | null>(null);
   const simulation = useRef<d3.Simulation<SimulationNode, SimulationLink> | null>(null);
+  const node = useRef<d3.Selection<d3.BaseType, SimulationNode, SVGGElement, unknown>>();
+  const tooltip = useRef<d3.Selection<HTMLDivElement, unknown, HTMLElement, any>>();
+  const link = useRef<d3.Selection<SVGLineElement, SimulationLink, SVGGElement, unknown>>();
+  const links = useRef<SimulationLink[]>([]);
 
   /**
    * Handler for node's drag events
@@ -129,17 +132,74 @@ function RelationsGraph(props: {
       .scaleExtent([0, 8])
       .on('zoom', () => g.attr('transform', d3.event.transform)));
 
-    const links: SimulationLink[] = [];
+    linkForce.current = d3.forceLink<SimulationNode, SimulationLink>()
+      .id((d) => d.id)
+      .distance(100);
 
+    simulation.current = d3.forceSimulation(nodes.current)
+      .force('link', linkForce.current)
+      .force('charge', d3.forceManyBody())
+      .force('collide', d3.forceCollide<SimulationNode>()
+        .radius((d) => 10 + d.weight * 0.6)
+        .iterations(2))
+      .force('center', d3.forceCenter(width * 3 / 2, height * 3 / 2));
+
+    tooltip.current = d3.select('body')
+      .append('div')
+      .style('position', 'absolute')
+      .style('z-index', '10')
+      .style('visibility', 'hidden')
+      .text('a simple tooltip');
+
+    link.current = g.append('g')
+      .style('stroke', '#aaa')
+      .selectAll('line');
+    // .data(linkForce.current.links())
+    // .enter()
+    // .append('line');
+
+    node.current = g.append('g')
+      .attr('class', 'nodes')
+      .selectAll('circle');
+    // .data(simulation.current.nodes())
+    // .enter()
+    // .append('circle');
+
+    simulation.current.on('tick', () => {
+      link.current!
+        .attr('x1', d => (d.source as SimulationNode).x!)
+        .attr('y1', d => (d.source as SimulationNode).y!)
+        .attr('x2', d => (d.target as SimulationNode).x!)
+        .attr('y2', d => (d.target as SimulationNode).y!);
+
+      node.current!
+        .attr('cx', d => d.x!)
+        .attr('cy', d => d.y!);
+    });
+  }, []);
+
+  useEffect(() => {
+    links.current = [];
     const persons: Record<string, PersonNode> = {};
     const locations: Record<string, LocationNode> = {};
     const relations: Record<string, string[]> = {};
 
+    /**
+     * Filter unnecessary nodes and links (e.g. by location types)
+     */
     props.data.relations.edges.forEach(relationEdge => {
       const relation = relationEdge.node;
 
       if (!relation.person || !relation.locationInstance) {
         return;
+      }
+
+      const locationTypes = relation.locationInstance.locationTypes;
+
+      if (locationTypes && locationTypes.length !== 0) {
+        if (locationTypes.findIndex(locType => locType && locationTypesToggles[locType.id].enabled) === -1) {
+          return;
+        }
       }
 
       if (relations[relation.person.id]) {
@@ -175,100 +235,63 @@ function RelationsGraph(props: {
         locations[relation.locationInstance.id].weight++;
       }
 
-      links.push({
+      links.current!.push({
         source: relation.person.id,
         target: relation.locationInstance.id,
       });
     });
 
-    setNodes([...Object.values(persons), ...Object.values(locations)]);
-    currentNodes.current = [...Object.values(persons), ...Object.values(locations)];
+    nodes.current = ([...Object.values(persons), ...Object.values(locations)]);
 
-    linkForce.current = d3.forceLink<SimulationNode, SimulationLink>(links)
-      .id((d) => d.id)
-      .distance(100);
-    simulation.current = d3.forceSimulation(currentNodes.current)
-      .force('link', linkForce.current)
-      .force('charge', d3.forceManyBody())
-      .force('collide', d3.forceCollide<SimulationNode>()
-        .radius((d) => 10 + d.weight * 0.6)
-        .iterations(2))
-      .force('center', d3.forceCenter(width * 3 / 2, height * 3 / 2));
+    node.current = node.current!
+      .data(nodes.current)
+      .join(
+        enter => enter.append('circle')
+          .attr('r', (d) => 10 + d.weight * 0.6)
+          .style('fill', (d) => d.type === 'location' ? '#ffd248' : '#90a2fc')
+          .style('stroke', '#424242')
+          .style('stroke-width', '1px')
+          .style('cursor', 'pointer')
+          .on('mouseover', d => {
+            tooltip.current!
+              .style('visibility', 'visible')
+              .text(d.type === 'location' ? d.name || '' : `${d.lastName} ${d.firstName} ${d.patronymic}`)
+              .style('left', (d3.event.pageX + 10) + 'px')
+              .style('top', (d3.event.pageY - 28) + 'px');
+          })
+          .on('mousemove', () => {
+            tooltip.current!
+              .style('left', (d3.event.pageX + 10) + 'px')
+              .style('top', (d3.event.pageY - 28) + 'px');
+          })
+          .on('mouseout', () => {
+            tooltip.current!
+              .style('visibility', 'hidden');
+          })
+          // .on('click', function (d) {
+          //   const currentDatum = d.id;
+          //
+          //   link.current!.style('stroke', (_d) =>
+          //     ((_d.source as SimulationNode).id === currentDatum || (_d.target as SimulationNode).id === currentDatum) ? '#ff0000' : '#aaa');
+          //   node.current!.style('stroke', (_d) =>
+          //     relations[currentDatum].findIndex(rel => rel === _d.id) >= 0 ? '#ff0000' : '#424242');
+          //   d3.select(this)
+          //     .style('stroke', '#ff0000');
+          // })
+          .call(drag(simulation.current!)),
+        update => update,
+        exit => exit.remove()
+      );
 
-    const tooltip = d3.select('body')
-      .append('div')
-      .style('position', 'absolute')
-      .style('z-index', '10')
-      .style('visibility', 'hidden')
-      .text('a simple tooltip');
-
-    const link = g.append('g')
-      .style('stroke', '#aaa')
-      .selectAll('line')
-      .data(linkForce.current.links())
-      .enter()
-      .append('line');
-
-    const node = g.append('g')
-      .attr('class', 'nodes')
-      .selectAll('circle')
-      .data(simulation.current.nodes())
-      .enter()
-      .append('circle')
-      .attr('r', (d) => 10 + d.weight * 0.6)
-      .style('fill', (d) => d.type === 'location' ? '#ffd248' : '#90a2fc')
-      .style('stroke', '#424242')
-      .style('stroke-width', '1px')
-      .style('cursor', 'pointer')
-      .on('mouseover', d => {
-        tooltip
-          .style('visibility', 'visible')
-          .text(d.type === 'location' ? d.name || '' : `${d.lastName} ${d.firstName} ${d.patronymic}`)
-          .style('left', (d3.event.pageX + 10) + 'px')
-          .style('top', (d3.event.pageY - 28) + 'px');
-      })
-      .on('mousemove', () => {
-        tooltip
-          .style('left', (d3.event.pageX + 10) + 'px')
-          .style('top', (d3.event.pageY - 28) + 'px');
-      })
-      .on('mouseout', () => {
-        tooltip
-          .style('visibility', 'hidden');
-      })
-      .on('click', function (d) {
-        const currentDatum = d.id;
-
-        link.style('stroke', (_d) =>
-          ((_d.source as SimulationNode).id === currentDatum || (_d.target as SimulationNode).id === currentDatum) ? '#ff0000' : '#aaa');
-        node.style('stroke', (_d) =>
-          relations[currentDatum].findIndex(rel => rel === _d.id) >= 0 ? '#ff0000' : '#424242');
-        d3.select(this)
-          .style('stroke', '#ff0000');
-      })
-      .call(drag(simulation.current));
-
-    simulation.current.on('tick', () => {
-      link
-        .attr('x1', d => (d.source as SimulationNode).x!)
-        .attr('y1', d => (d.source as SimulationNode).y!)
-        .attr('x2', d => (d.target as SimulationNode).x!)
-        .attr('y2', d => (d.target as SimulationNode).y!);
-
-      node
-        .attr('cx', d => d.x!)
-        .attr('cy', d => d.y!);
-    });
-  }, []);
-
-  useEffect(() => {
-    currentNodes.current = nodes.filter(node => {
-      if (node.type === 'person' || node.locationTypes.length === 0) {
-        return true;
-      }
-
-      return node.locationTypes.findIndex(locType => locationTypesToggles[locType.id].enabled) !== -1;
-    });
+    link.current = link.current!
+      .data(links.current)
+      .join(enter => enter.append('line'),
+        update => update,
+        exit => exit.remove()
+      );
+    simulation.current!.nodes(nodes.current);
+    linkForce.current!.links(links.current!);
+    simulation.current!.alpha(1).restart();
   }, [locationTypesToggles, nodes]);
 
   return (
