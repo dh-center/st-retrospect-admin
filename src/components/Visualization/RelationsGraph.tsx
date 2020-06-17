@@ -244,7 +244,7 @@ function RelationsGraph(props: {
     nodes.current = ([...Object.values(persons), ...Object.values(locations)]);
 
     node.current = node.current!
-      .data(nodes.current)
+      .data(nodes.current, (d) => d.id)
       .join(
         enter => enter.append('circle')
           .attr('r', (d) => 10 + d.weight * 0.6)
@@ -268,16 +268,16 @@ function RelationsGraph(props: {
             tooltip.current!
               .style('visibility', 'hidden');
           })
-          // .on('click', function (d) {
-          //   const currentDatum = d.id;
-          //
-          //   link.current!.style('stroke', (_d) =>
-          //     ((_d.source as SimulationNode).id === currentDatum || (_d.target as SimulationNode).id === currentDatum) ? '#ff0000' : '#aaa');
-          //   node.current!.style('stroke', (_d) =>
-          //     relations[currentDatum].findIndex(rel => rel === _d.id) >= 0 ? '#ff0000' : '#424242');
-          //   d3.select(this)
-          //     .style('stroke', '#ff0000');
-          // })
+          .on('click', function (d) {
+            const currentDatum = d.id;
+
+            link.current!.style('stroke', (_d) =>
+              ((_d.source as SimulationNode).id === currentDatum || (_d.target as SimulationNode).id === currentDatum) ? '#ff0000' : '#aaa');
+            node.current!.style('stroke', (_d) =>
+              relations[currentDatum].findIndex(rel => rel === _d.id) >= 0 ? '#ff0000' : '#424242');
+            d3.select(this)
+              .style('stroke', '#ff0000');
+          })
           .call(drag(simulation.current!)),
         update => update,
         exit => exit.remove()
