@@ -70,19 +70,20 @@ function RelationsGraph(props: {
   const [nodes, setNodes] = useState<SimulationNode[]>([]);
   const currentNodes = useRef<SimulationNode[]>([]);
   const linkForce = useRef<d3.ForceLink<SimulationNode, SimulationLink> | null>(null);
+  const simulation = useRef<d3.Simulation<SimulationNode, SimulationLink> | null>(null);
 
   /**
    * Handler for node's drag events
    *
-   * @param simulation - force simulation that calculates nodes position
+   * @param sim - force simulation that calculates nodes position
    */
-  const drag = (simulation: d3.Simulation<SimulationNode, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {
+  const drag = (sim: d3.Simulation<SimulationNode, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {
     /**
      * @param d
      */
     function dragstarted(d: d3.SimulationNodeDatum): void {
       if (!d3.event.active) {
-        simulation.alphaTarget(0.3).restart();
+        sim.alphaTarget(0.3).restart();
       }
       d.fx = d.x;
       d.fy = d.y;
@@ -101,7 +102,7 @@ function RelationsGraph(props: {
      */
     function dragended(d: d3.SimulationNodeDatum): void {
       if (!d3.event.active) {
-        simulation.alphaTarget(0);
+        sim.alphaTarget(0);
       }
       d.fx = null;
       d.fy = null;
@@ -186,7 +187,7 @@ function RelationsGraph(props: {
     linkForce.current = d3.forceLink<SimulationNode, SimulationLink>(links)
       .id((d) => d.id)
       .distance(100);
-    const simulation = d3.forceSimulation(currentNodes.current)
+    simulation.current = d3.forceSimulation(currentNodes.current)
       .force('link', linkForce.current)
       .force('charge', d3.forceManyBody())
       .force('collide', d3.forceCollide<SimulationNode>()
@@ -211,7 +212,7 @@ function RelationsGraph(props: {
     const node = g.append('g')
       .attr('class', 'nodes')
       .selectAll('circle')
-      .data(simulation.nodes())
+      .data(simulation.current.nodes())
       .enter()
       .append('circle')
       .attr('r', (d) => 10 + d.weight * 0.6)
@@ -245,9 +246,9 @@ function RelationsGraph(props: {
         d3.select(this)
           .style('stroke', '#ff0000');
       })
-      .call(drag(simulation));
+      .call(drag(simulation.current));
 
-    simulation.on('tick', () => {
+    simulation.current.on('tick', () => {
       link
         .attr('x1', d => (d.source as SimulationNode).x!)
         .attr('y1', d => (d.source as SimulationNode).y!)
