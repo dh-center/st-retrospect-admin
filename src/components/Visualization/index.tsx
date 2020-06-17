@@ -9,12 +9,17 @@ import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 import RelationsGraph from './RelationsGraph';
 import './index.css';
 import { Carousel } from 'react-bootstrap';
+import { useParams, useHistory } from 'react-router';
 
 /**
  * Page with plots for visualisation of Database content
  */
 export default function VisualizationPage(): React.ReactElement {
   const [isPageInFullScreen, changeFullscreenMode] = useState(document.fullscreenElement != null);
+  const { index } = useParams();
+  const [currentIndex, setCurrentIndex] = useState<number>(+index || 0);
+
+  const history = useHistory();
 
   const onFullscreenButtonClick = async (event: MouseEvent): Promise<void> => {
     const documentElement = document.documentElement;
@@ -71,7 +76,14 @@ export default function VisualizationPage(): React.ReactElement {
           }
 
           return (
-            <Carousel interval={null}>
+            <Carousel
+              interval={null}
+              activeIndex={currentIndex}
+              onSelect={(i: number): void => {
+                history.replace('/visualization/' + i);
+                setCurrentIndex(i);
+              }}
+            >
               <Carousel.Item>
                 <div className="visualization-page__slide">
                   <PersonsBirthDatesBarplot
