@@ -6,6 +6,7 @@ import graphql from 'babel-plugin-relay/macro';
 import { VisualizationPageQuery, VisualizationPageQueryResponse } from './__generated__/VisualizationPageQuery.graphql';
 import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
+import RelationsGraph from './RelationsGraph';
 import './index.css';
 import { Carousel } from 'react-bootstrap';
 
@@ -49,6 +50,7 @@ export default function VisualizationPage(): React.ReactElement {
                 }
               }
             }
+            ...RelationsGraph_data
           }
         `}
         variables={{}}
@@ -88,6 +90,16 @@ export default function VisualizationPage(): React.ReactElement {
                 </div>
                 <Carousel.Caption>
                   <h5>Persons life years diagram</h5>
+                </Carousel.Caption>
+              </Carousel.Item>
+              <Carousel.Item>
+                <div className="visualization-page__slide">
+                  <RelationsGraph
+                    data={props}
+                  />
+                </div>
+                <Carousel.Caption>
+                  <h5>Relations graph</h5>
                 </Carousel.Caption>
               </Carousel.Item>
             </Carousel>
