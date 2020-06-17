@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import './index.css';
@@ -14,21 +15,26 @@ interface SimulationLink {
 
 interface AbstractSimulationNode {
   id: string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
   weight: number;
   type: NodeTypes;
 }
 
 interface PersonNode extends AbstractSimulationNode {
   type: 'person';
-  firstName: string;
-  lastName: string;
-  patronymic: string;
+  firstName: string | null;
+  lastName: string | null;
+  patronymic: string | null;
+}
+
+interface LocationType {
+  readonly id: string;
 }
 
 interface LocationNode extends AbstractSimulationNode{
-  name: string;
+  name: string | null;
+  readonly locationTypes: readonly (LocationType | null)[] | null;
   type: 'location';
 }
 
@@ -44,7 +50,9 @@ interface LocationTypesTogglesState {
 }
 
 /**
- * @param props
+ * Graph for visualization relations between persons and locations
+ *
+ * @param props - props for component rendering
  */
 function RelationsGraph(props: {
   data: GraphData;
@@ -59,7 +67,14 @@ function RelationsGraph(props: {
       },
     }), {})
   );
+  const [nodes, setNodes] = useState<SimulationNode[]>([]);
+  const currentNodes = useRef<SimulationNode[]>([]);
 
+  /**
+   * Handler for node's drag events
+   *
+   * @param simulation - force simulation that calculates nodes position
+   */
   const drag = (simulation: d3.Simulation<SimulationNode, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {
     /**
      * @param d
@@ -114,8 +129,8 @@ function RelationsGraph(props: {
 
     const links: d3.SimulationLinkDatum<SimulationNode>[] = [];
 
-    const persons: Record<string, { id: string; type: NodeTypes; weight: number }> = {};
-    const locations: Record<string, { id: string; type: NodeTypes; weight: number }> = {};
+    const persons: Record<string, PersonNode> = {};
+    const locations: Record<string, LocationNode> = {};
     const relations: Record<string, string[]> = {};
 
     props.data.relations.edges.forEach(relationEdge => {
@@ -163,12 +178,13 @@ function RelationsGraph(props: {
       });
     });
 
-    const nodes = [...Object.values(persons), ...Object.values(locations)];
+    setNodes([...Object.values(persons), ...Object.values(locations)]);
+    currentNodes.current = [...Object.values(persons), ...Object.values(locations)];
 
     const linkForce = d3.forceLink<SimulationNode, d3.SimulationLinkDatum<SimulationNode>>(links)
       .id((d) => d.id)
       .distance(100);
-    const simulation = d3.forceSimulation(nodes as unknown as SimulationNode[])
+    const simulation = d3.forceSimulation(currentNodes.current)
       .force('link', linkForce)
       .force('charge', d3.forceManyBody())
       .force('collide', d3.forceCollide<SimulationNode>()
@@ -231,18 +247,19 @@ function RelationsGraph(props: {
 
     simulation.on('tick', () => {
       link
-        .attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y);
+        .attr('x1', d => d.source.x!)
+        .attr('y1', d => d.source.y!)
+        .attr('x2', d => d.target.x!)
+        .attr('y2', d => d.target.y!);
 
       node
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y);
+        .attr('cx', d => d.x!)
+        .attr('cy', d => d.y!);
     });
   }, []);
 
   useEffect(() => {
+    console.log('effect');
   }, [ locationTypesToggles ]);
 
   return (
