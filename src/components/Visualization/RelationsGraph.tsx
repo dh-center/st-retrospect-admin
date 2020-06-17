@@ -302,22 +302,19 @@ function RelationsGraph(props: {
 
   return (
     <div className='visualization-block'>
-      <h2 className='visualization-block__header'>Relations graph</h2>
-      <div className='visualization-block__content' ref={plotRef}/>
-      <div>
-        <div>
-          {Object.entries(locationTypesToggles).map(([id, locType]) => (
-            <React.Fragment key={id}>
-              <input id={'graph-filter' + id} type='checkbox' checked={locType.enabled} onChange={(): void => setLocationTypesToggles({
-                ...locationTypesToggles,
-                [id]: {
-                  name: locType.name,
-                  enabled: !locType.enabled,
-                },
-              })}/> <label htmlFor={'graph-filter' + id}>{locType.name}</label> <br/>
-            </React.Fragment>
-          ))}
-        </div>
+      <div className="visualization-block__content">
+        <div ref={plotRef}/>
+        {Object.entries(locationTypesToggles).map(([id, locType]) => (
+          <React.Fragment key={id}>
+            <input id={'graph-filter' + id} type='checkbox' checked={locType.enabled} onChange={(): void => setLocationTypesToggles({
+              ...locationTypesToggles,
+              [id]: {
+                name: locType.name,
+                enabled: !locType.enabled,
+              },
+            })}/> <label htmlFor={'graph-filter' + id}>{locType.name}</label> <br/>
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );
