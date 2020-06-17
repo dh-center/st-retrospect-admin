@@ -170,7 +170,7 @@ export default function PersonLifeYearsDiagram(props: {
           (angle > Math.PI ? 'rotate(180)' : '');
       })
       .style('fill', '#ffffff')
-      .style('font-size', 10)
+      .style('font-size', '.7em')
       .text(function (d, i) {
         return periodNames[i];
       });
@@ -246,7 +246,7 @@ export default function PersonLifeYearsDiagram(props: {
         return d.angle > Math.PI ? 'end' : null;
       })
       .style('fill', '#ffffff')
-      .style('font-size', 8)
+      .style('font-size', '.5em')
       .text(function (d) {
         return d.label;
       });
