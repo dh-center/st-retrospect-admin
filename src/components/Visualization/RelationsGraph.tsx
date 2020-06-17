@@ -62,7 +62,7 @@ function RelationsGraph(props: {
     props.data.locationTypes.reduce((acc, val) => ({
       ...acc,
       [val.id]: {
-        enabled: false,
+        enabled: true,
         name: val.name,
       },
     }), {})
@@ -71,7 +71,7 @@ function RelationsGraph(props: {
   const linkForce = useRef<d3.ForceLink<SimulationNode, SimulationLink> | null>(null);
   const simulation = useRef<d3.Simulation<SimulationNode, SimulationLink> | null>(null);
   const node = useRef<d3.Selection<d3.BaseType, SimulationNode, SVGGElement, unknown>>();
-  const tooltip = useRef<d3.Selection<HTMLDivElement, unknown, HTMLElement, any>>();
+  const tooltip = useRef<d3.Selection<HTMLDivElement, unknown, HTMLElement, unknown>>();
   const link = useRef<d3.Selection<SVGLineElement, SimulationLink, SVGGElement, unknown>>();
   const links = useRef<SimulationLink[]>([]);
 
@@ -82,7 +82,9 @@ function RelationsGraph(props: {
    */
   const drag = (sim: d3.Simulation<SimulationNode, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {
     /**
-     * @param d
+     * Handler for started drag event
+     *
+     * @param d - node data
      */
     function dragstarted(d: d3.SimulationNodeDatum): void {
       if (!d3.event.active) {
@@ -93,7 +95,9 @@ function RelationsGraph(props: {
     }
 
     /**
-     * @param d
+     * Handler for started dragging
+     *
+     * @param d - node data
      */
     function dragged(d: d3.SimulationNodeDatum): void {
       d.fx = d3.event.x;
@@ -101,7 +105,9 @@ function RelationsGraph(props: {
     }
 
     /**
-     * @param d
+     * Handler for ending drag event
+     *
+     * @param d - node data
      */
     function dragended(d: d3.SimulationNodeDatum): void {
       if (!d3.event.active) {
@@ -154,16 +160,10 @@ function RelationsGraph(props: {
     link.current = g.append('g')
       .style('stroke', '#aaa')
       .selectAll('line');
-    // .data(linkForce.current.links())
-    // .enter()
-    // .append('line');
 
     node.current = g.append('g')
       .attr('class', 'nodes')
       .selectAll('circle');
-    // .data(simulation.current.nodes())
-    // .enter()
-    // .append('circle');
 
     simulation.current.on('tick', () => {
       link.current!
@@ -283,14 +283,16 @@ function RelationsGraph(props: {
               .style('stroke', '#ff0000');
           })
           .call(drag(simulation.current!)),
-        update => update,
+        update => update
+          .attr('r', (d) => 10 + d.weight * 0.6)
+          .style('stroke', '#424242'),
         exit => exit.remove()
       );
 
     link.current = link.current!
-      .data(links.current)
+      .data(links.current, (d) => (d.source as SimulationNode).id + (d.target as SimulationNode).id)
       .join(enter => enter.append('line'),
-        update => update,
+        update => update.style('stroke', '#aaa'),
         exit => exit.remove()
       );
     simulation.current!.nodes(nodes.current);
