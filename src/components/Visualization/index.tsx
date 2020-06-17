@@ -56,7 +56,7 @@ export default function VisualizationPage(): React.ReactElement {
           }
 
           return (
-            <Carousel>
+            <Carousel interval={null}>
               <Carousel.Item>
                 <div className="visualization-page__slide">
                   <PersonsBirthDatesBarplot
