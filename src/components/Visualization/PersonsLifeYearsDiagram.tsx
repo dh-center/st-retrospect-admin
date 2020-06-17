@@ -249,7 +249,7 @@ export default function PersonLifeYearsDiagram(props: {
       .text(function (d) {
         return d.label;
       });
-  });
+  }, []);
 
   return (
     <div className={'visualization-block'}>
