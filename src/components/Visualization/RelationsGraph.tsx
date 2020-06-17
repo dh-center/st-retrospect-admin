@@ -8,12 +8,12 @@ import { RelationsGraph_data as GraphData } from './__generated__/RelationsGraph
 
 type NodeTypes = 'location' | 'person';
 
-interface SimulationLink {
-  source: SimulationNode;
-  target: SimulationNode;
+interface SimulationLink extends d3.SimulationLinkDatum<SimulationNode>{
+  source: SimulationNode | string;
+  target: SimulationNode | string;
 }
 
-interface AbstractSimulationNode {
+interface AbstractSimulationNode extends d3.SimulationNodeDatum{
   id: string;
   x?: number;
   y?: number;
@@ -69,6 +69,7 @@ function RelationsGraph(props: {
   );
   const [nodes, setNodes] = useState<SimulationNode[]>([]);
   const currentNodes = useRef<SimulationNode[]>([]);
+  const linkForce = useRef<d3.ForceLink<SimulationNode, SimulationLink> | null>(null);
 
   /**
    * Handler for node's drag events
@@ -127,7 +128,7 @@ function RelationsGraph(props: {
       .scaleExtent([0, 8])
       .on('zoom', () => g.attr('transform', d3.event.transform)));
 
-    const links: d3.SimulationLinkDatum<SimulationNode>[] = [];
+    const links: SimulationLink[] = [];
 
     const persons: Record<string, PersonNode> = {};
     const locations: Record<string, LocationNode> = {};
@@ -182,11 +183,11 @@ function RelationsGraph(props: {
     setNodes([...Object.values(persons), ...Object.values(locations)]);
     currentNodes.current = [...Object.values(persons), ...Object.values(locations)];
 
-    const linkForce = d3.forceLink<SimulationNode, d3.SimulationLinkDatum<SimulationNode>>(links)
+    linkForce.current = d3.forceLink<SimulationNode, SimulationLink>(links)
       .id((d) => d.id)
       .distance(100);
     const simulation = d3.forceSimulation(currentNodes.current)
-      .force('link', linkForce)
+      .force('link', linkForce.current)
       .force('charge', d3.forceManyBody())
       .force('collide', d3.forceCollide<SimulationNode>()
         .radius((d) => 10 + d.weight * 0.6)
@@ -203,7 +204,7 @@ function RelationsGraph(props: {
     const link = g.append('g')
       .style('stroke', '#aaa')
       .selectAll('line')
-      .data(linkForce.links() as SimulationLink[])
+      .data(linkForce.current.links())
       .enter()
       .append('line');
 
@@ -238,7 +239,7 @@ function RelationsGraph(props: {
         const currentDatum = d.id;
 
         link.style('stroke', (_d) =>
-          (_d.source.id === currentDatum || _d.target.id === currentDatum) ? '#ff0000' : '#aaa');
+          ((_d.source as SimulationNode).id === currentDatum || (_d.target as SimulationNode).id === currentDatum) ? '#ff0000' : '#aaa');
         node.style('stroke', (_d) =>
           relations[currentDatum].findIndex(rel => rel === _d.id) >= 0 ? '#ff0000' : '#424242');
         d3.select(this)
@@ -248,10 +249,10 @@ function RelationsGraph(props: {
 
     simulation.on('tick', () => {
       link
-        .attr('x1', d => d.source.x!)
-        .attr('y1', d => d.source.y!)
-        .attr('x2', d => d.target.x!)
-        .attr('y2', d => d.target.y!);
+        .attr('x1', d => (d.source as SimulationNode).x!)
+        .attr('y1', d => (d.source as SimulationNode).y!)
+        .attr('x2', d => (d.target as SimulationNode).x!)
+        .attr('y2', d => (d.target as SimulationNode).y!);
 
       node
         .attr('cx', d => d.x!)
