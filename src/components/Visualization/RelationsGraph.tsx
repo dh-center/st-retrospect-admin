@@ -34,7 +34,7 @@ interface LocationType {
 
 interface LocationNode extends AbstractSimulationNode{
   name: string | null;
-  readonly locationTypes: readonly (LocationType | null)[] | null;
+  readonly locationTypes: readonly (LocationType)[];
   type: 'location';
 }
 
@@ -165,6 +165,7 @@ function RelationsGraph(props: {
       if (!locations[relation.locationInstance.id]) {
         locations[relation.locationInstance.id] = {
           ...relation.locationInstance,
+          locationTypes: (relation.locationInstance.locationTypes ? relation.locationInstance.locationTypes.filter(locType => locType && locType.id) : []) as LocationType[],
           type: 'location',
           weight: 1,
         };
@@ -259,8 +260,14 @@ function RelationsGraph(props: {
   }, []);
 
   useEffect(() => {
-    console.log('effect');
-  }, [ locationTypesToggles ]);
+    currentNodes.current = nodes.filter(node => {
+      if (node.type === 'person' || node.locationTypes.length === 0) {
+        return true;
+      }
+
+      return node.locationTypes.findIndex(locType => locationTypesToggles[locType.id].enabled) !== -1;
+    });
+  }, [locationTypesToggles, nodes]);
 
   return (
     <div className='visualization-block'>
