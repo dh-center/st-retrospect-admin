@@ -304,6 +304,7 @@ function RelationsGraph(props: {
 
   return (
     <div className='visualization-block'>
+      <h2 className={'visualization-block__header'}>Relations graph</h2>
       <div className="visualization-block__content">
         <div ref={plotRef}/>
         {Object.entries(locationTypesToggles).map(([id, locType]) => (
