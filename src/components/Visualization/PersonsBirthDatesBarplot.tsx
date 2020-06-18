@@ -130,11 +130,14 @@ export default function PersonsBirthDatesBarplot(props: {
       .attr('fill', '#69b3a2')
       .attr('height', (d) => height - y(groupedByPeriods[d]))
       .attr('y', (d) => y(groupedByPeriods[d]));
-  }, []);
+  }, [ props.dates ]);
 
   return (
     <div className={'visualization-block'}>
-      <div className={'visualization-block__content'} ref={plotRef}/>
+      <h2 className={'visualization-block__header'}>Count of persons by birth date</h2>
+      <div className={'visualization-block__content'}>
+        <div ref={plotRef}/>
+      </div>
     </div>
   );
 }
