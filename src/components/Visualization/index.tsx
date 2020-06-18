@@ -1,5 +1,5 @@
 import React, { MouseEvent, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Switch, Route } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
@@ -8,7 +8,6 @@ import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 import RelationsGraph from './RelationsGraph';
 import './index.css';
-import { Carousel } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router';
 
 /**
@@ -76,45 +75,23 @@ export default function VisualizationPage(): React.ReactElement {
           }
 
           return (
-            <Carousel
-              interval={null}
-              activeIndex={currentIndex}
-              onSelect={(i: number): void => {
-                history.replace('/visualization/' + i);
-                setCurrentIndex(i);
-              }}
-            >
-              <Carousel.Item>
-                <Carousel.Caption>
-                  <h5>Count of persons by birth date</h5>
-                </Carousel.Caption>
-                <div className="visualization-page__slide">
-                  <PersonsBirthDatesBarplot
-                    dates={props.persons.edges.map(edge => edge.node.birthDate)}
-                  />
-                </div>
-              </Carousel.Item>
-              <Carousel.Item>
-                <Carousel.Caption>
-                  <h5>Persons life years diagram</h5>
-                </Carousel.Caption>
-                <div className="visualization-page__slide">
-                  <PersonsLifeYearsDiagram
-                    persons={props.persons.edges.map(edge => edge.node)}
-                  />
-                </div>
-              </Carousel.Item>
-              <Carousel.Item>
-                <Carousel.Caption>
-                  <h5>Relations graph</h5>
-                </Carousel.Caption>
-                <div className="visualization-page__slide">
-                  <RelationsGraph
-                    data={props}
-                  />
-                </div>
-              </Carousel.Item>
-            </Carousel>
+            <Switch>
+              <Route path={'/visualization/1'}>
+                <PersonsBirthDatesBarplot
+                  dates={props.persons.edges.map(edge => edge.node.birthDate)}
+                />
+              </Route>
+              <Route path={'/visualization/2'}>
+                <PersonsLifeYearsDiagram
+                  persons={props.persons.edges.map(edge => edge.node)}
+                />
+              </Route>
+              <Route path={'/visualization/3'}>
+                <RelationsGraph
+                  data={props}
+                />
+              </Route>
+            </Switch>
           );
         }}
       />
