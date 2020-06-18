@@ -24,6 +24,7 @@
 
 .visualization-page__prev-link,
 .visualization-page__next-link{
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,11 +36,11 @@
 }
 
 .visualization-page__prev-link {
-  left: 10px;
+  left: 40px;
 }
 
 .visualization-page__next-link {
-  right: 10px;
+  right: 50px;
 }
 
 .visualization-page__fullscreen {
