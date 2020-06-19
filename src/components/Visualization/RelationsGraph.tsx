@@ -5,6 +5,7 @@ import './index.css';
 import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { RelationsGraph_data as GraphData } from './__generated__/RelationsGraph_data.graphql';
+import { Accordion, Button, Card } from 'react-bootstrap';
 
 type NodeTypes = 'location' | 'person';
 
@@ -307,17 +308,30 @@ function RelationsGraph(props: {
       <h2 className={'visualization-block__header'}>Relations graph</h2>
       <div className="visualization-block__content">
         <div ref={plotRef}/>
-        {Object.entries(locationTypesToggles).map(([id, locType]) => (
-          <React.Fragment key={id}>
-            <input id={'graph-filter' + id} type='checkbox' checked={locType.enabled} onChange={(): void => setLocationTypesToggles({
-              ...locationTypesToggles,
-              [id]: {
-                name: locType.name,
-                enabled: !locType.enabled,
-              },
-            })}/> <label htmlFor={'graph-filter' + id}>{locType.name}</label> <br/>
-          </React.Fragment>
-        ))}
+        <Accordion>
+          <Card>
+            <Card.Header>
+              <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                Filter by location types
+              </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey="0">
+              <Card.Body>
+                {Object.entries(locationTypesToggles).map(([id, locType]) => (
+                  <React.Fragment key={id}>
+                    <input id={'graph-filter' + id} type='checkbox' checked={locType.enabled} onChange={(): void => setLocationTypesToggles({
+                      ...locationTypesToggles,
+                      [id]: {
+                        name: locType.name,
+                        enabled: !locType.enabled,
+                      },
+                    })}/> <label htmlFor={'graph-filter' + id}>{locType.name}</label> <br/>
+                  </React.Fragment>
+                ))}
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
       </div>
     </div>
   );

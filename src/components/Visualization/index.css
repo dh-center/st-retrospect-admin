@@ -3,7 +3,6 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  text-align: center;
   min-height: 100%;
   background: #222226;
   color: #ffffff;
@@ -20,6 +19,13 @@
 .visualization-page__link-back {
   top: 5px;
   left: 10px;
+}
+
+.visualization-page .accordion {
+}
+
+.visualization-page .card {
+  background-color: #333336;;
 }
 
 .visualization-page__prev-link,
@@ -69,6 +75,7 @@
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 10px;
+  text-align: center;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 20px 0px;
   background: #333336;
 }
