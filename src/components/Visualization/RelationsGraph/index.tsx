@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import '../index.css';
+import './index.css';
 import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { RelationsGraph_data as GraphData } from './__generated__/RelationsGraph_data.graphql';
 import { Accordion, Button, Card } from 'react-bootstrap';
-import './index.css';
 type NodeTypes = 'location' | 'person';
 
 interface SimulationLink extends d3.SimulationLinkDatum<SimulationNode>{
@@ -307,7 +306,7 @@ function Index(props: {
     <div className='visualization-block'>
       <h2 className={'visualization-block__header'}>Relations graph</h2>
       <div className="visualization-block__content">
-        <div ref={plotRef}/>
+        <div className='visualization-block__plot' ref={plotRef}/>
         <Accordion>
           <Card>
             <Card.Header>
