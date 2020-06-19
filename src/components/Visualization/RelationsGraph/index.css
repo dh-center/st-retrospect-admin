@@ -1,0 +1,8 @@
+.relations-graph__location-types-filter {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.relations-graph__location-types-filter :first-letter {
+  text-transform: uppercase;
+}

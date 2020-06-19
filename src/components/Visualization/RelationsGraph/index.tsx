@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import './index.css';
+import '../index.css';
 import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { RelationsGraph_data as GraphData } from './__generated__/RelationsGraph_data.graphql';
 import { Accordion, Button, Card } from 'react-bootstrap';
-
+import './index.css';
 type NodeTypes = 'location' | 'person';
 
 interface SimulationLink extends d3.SimulationLinkDatum<SimulationNode>{
@@ -55,7 +55,7 @@ interface LocationTypesTogglesState {
  *
  * @param props - props for component rendering
  */
-function RelationsGraph(props: {
+function Index(props: {
   data: GraphData;
 }): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
@@ -316,9 +316,9 @@ function RelationsGraph(props: {
               </Accordion.Toggle>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
-              <Card.Body>
+              <Card.Body className='relations-graph__location-types-filter'>
                 {Object.entries(locationTypesToggles).map(([id, locType]) => (
-                  <React.Fragment key={id}>
+                  <div key={id}>
                     <input id={'graph-filter' + id} type='checkbox' checked={locType.enabled} onChange={(): void => setLocationTypesToggles({
                       ...locationTypesToggles,
                       [id]: {
@@ -326,7 +326,7 @@ function RelationsGraph(props: {
                         enabled: !locType.enabled,
                       },
                     })}/> <label htmlFor={'graph-filter' + id}>{locType.name}</label> <br/>
-                  </React.Fragment>
+                  </div>
                 ))}
               </Card.Body>
             </Accordion.Collapse>
@@ -337,7 +337,7 @@ function RelationsGraph(props: {
   );
 }
 
-export default createFragmentContainer(RelationsGraph, {
+export default createFragmentContainer(Index, {
   data: graphql`
     fragment RelationsGraph_data on Query {
       relations {
