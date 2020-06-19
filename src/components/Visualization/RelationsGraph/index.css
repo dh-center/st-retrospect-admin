@@ -10,6 +10,10 @@
 }
 
 
+.relations-graph .btn-link:hover {
+  color: #007bff !important;
+}
+
 .visualization-block__plot::before {
   content: '';
   position: absolute;
