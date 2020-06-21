@@ -169,6 +169,7 @@ export default function PersonLifeYearsDiagram(props: {
           'translate(' + (plotRadius + 25) + ')' +
           (angle > Math.PI ? 'rotate(180)' : '');
       })
+      .style('fill', '#ffffff')
       .text(function (d, i) {
         return periodNames[i];
       });
@@ -228,7 +229,7 @@ export default function PersonLifeYearsDiagram(props: {
       .attr('x2', 5)
       .attr('y2', 0)
       .attr('class', 'ticks')
-      .style('stroke', '#000');
+      .style('stroke', '#ffffff');
 
     /**
      * Add the labels for the %'s
@@ -244,10 +245,11 @@ export default function PersonLifeYearsDiagram(props: {
         return d.angle > Math.PI ? 'end' : null;
       })
       .style('font-size', 8)
+      .style('fill', '#ffffff')
       .text(function (d) {
         return d.label;
       });
-  });
+  }, []);
 
   return (
     <div className={'visualization-block'}>

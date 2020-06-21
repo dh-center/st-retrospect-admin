@@ -10,7 +10,7 @@ export type CreateQuestInput = {
     type: TaskTypes;
 };
 export type QuestsPageCreateMutationVariables = {
-    input?: CreateQuestInput | null;
+    input: CreateQuestInput;
 };
 export type QuestsPageCreateMutationResponse = {
     readonly quest: {
@@ -28,7 +28,7 @@ export type QuestsPageCreateMutation = {
 
 /*
 mutation QuestsPageCreateMutation(
-  $input: CreateQuestInput
+  $input: CreateQuestInput!
 ) {
   quest {
     create(input: $input) {
@@ -44,7 +44,7 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CreateQuestInput"
+    "type": "CreateQuestInput!"
   }
 ],
 v1 = [
@@ -105,9 +105,9 @@ return {
     "metadata": {},
     "name": "QuestsPageCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestsPageCreateMutation(\n  $input: CreateQuestInput\n) {\n  quest {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation QuestsPageCreateMutation(\n  $input: CreateQuestInput!\n) {\n  quest {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c4e60db27e755d8d2fec7d9cf6362569';
+(node as any).hash = '12bf24205105f7438c8051bd29da0f13';
 export default node;

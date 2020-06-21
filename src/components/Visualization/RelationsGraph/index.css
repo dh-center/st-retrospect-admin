@@ -1,0 +1,37 @@
+@import "../index.css";
+
+.relations-graph__location-types-filter {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.visualization-block__plot {
+  position: relative;
+}
+
+
+.relations-graph .btn-link:hover {
+  color: #007bff !important;
+}
+
+.visualization-block__plot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(180deg, rgba(51,51,54,1) 10px, rgba(51,51,54,0.99) 15px, rgba(51,51,54,0) 25px),
+    linear-gradient(0deg, rgba(51,51,54,1) 10px, rgba(51,51,54,0.99) 15px, rgba(51,51,54,0) 25px),
+    linear-gradient(90deg, rgba(51,51,54,1) 10px, rgba(51,51,54,0.99) 15px, rgba(51,51,54,0) 25px),
+    linear-gradient(270deg, rgba(51,51,54,1) 10px, rgba(51,51,54,0.99) 15px, rgba(51,51,54,0) 25px);
+
+  pointer-events: none;
+}
+
+
+
+.relations-graph__location-types-filter :first-letter {
+  text-transform: uppercase;
+}

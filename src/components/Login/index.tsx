@@ -55,7 +55,7 @@ function Login(props: RouteComponentProps): ReactElement {
           Enter
         </Button>
       </Form>
-      <NavLink className={''} to={'/visualization'}>Go to visualization</NavLink>
+      <NavLink className={''} to={'/visualization/1'}>Go to visualization</NavLink>
     </div>
   );
 }

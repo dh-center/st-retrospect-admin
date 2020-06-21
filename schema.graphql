@@ -7,7 +7,7 @@ Directive for multilingual fields support
 On input field maps provided value to multilingual object (e.g. 'hello' => {en: 'hello'})
 On type field maps multilingual object to value ({en: 'hello'} => 'hello')
 """
-directive @multilingual on FIELD_DEFINITION | INPUT_FIELD_DEFINITION | ARGUMENT_DEFINITION
+directive @multilingual on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
 
 """Load data via specific dataLoader"""
 directive @dataLoader(
@@ -15,7 +15,10 @@ directive @dataLoader(
   dataLoaderName: String!
 
   """Name of field with data for DataLoader"""
-  fieldName: String!
+  fieldName: String
+
+  """Arg name to extract id from"""
+  argName: String
 ) on FIELD_DEFINITION
 
 """Directive for pagination according to the Relay specification"""
@@ -101,7 +104,7 @@ input CreateQuestInput {
   photo: String
 
   """Quest type (quiz, route, etc.)"""
-  type: TaskTypes!
+  type: TaskTypes! = ROUTE
 }
 
 type CreateQuestPayload {
@@ -113,6 +116,16 @@ type CreateQuestPayload {
 }
 
 scalar Cursor
+
+type DeletePersonPayload {
+  """Deleted person id"""
+  recordId: ID
+}
+
+type DeleteQuestPayload {
+  """Deleted quest id"""
+  recordId: ID
+}
 
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
@@ -320,6 +333,12 @@ type PersonEdge {
 type PersonMutations {
   """Create person"""
   create(input: CreatePersonInput!): CreatePersonPayload!
+
+  """Update person"""
+  update(input: UpdatePersonInput!): UpdatePersonPayload!
+
+  """Delete person"""
+  delete(id: ID!): DeletePersonPayload!
 }
 
 """API queries"""
@@ -329,7 +348,7 @@ type Query {
 
   """Get specific person"""
   person(
-    """Project id"""
+    """Person id"""
     id: ID!
   ): Person
 
@@ -391,6 +410,34 @@ type Query {
     """The string on the basis of which the request will be made"""
     searchString: String!
   ): [Relation!]!
+
+  """Returns list of all location types"""
+  locationTypes: [LocationType!]!
+
+  """Get specific relation"""
+  relation(
+    """Relation id"""
+    id: ID!
+  ): Relation
+
+  """Get all relations"""
+  relations(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): RelationConnection!
 
   """Get all routes"""
   routes(
@@ -464,6 +511,9 @@ type Quest {
   """Quest task"""
   task: JSON!
 
+  """Quest data"""
+  data: JSON
+
   """Quest rewards"""
   rewards: [JSON!]!
 }
@@ -491,7 +541,13 @@ type QuestEdge {
 
 type QuestMutations {
   """Create quest"""
-  create(input: CreateQuestInput): CreateQuestPayload!
+  create(input: CreateQuestInput!): CreateQuestPayload!
+
+  """Update quest"""
+  update(input: UpdateQuestInput!): UpdateQuestPayload!
+
+  """Delete quest"""
+  delete(id: ID!): DeleteQuestPayload!
 }
 
 """Represents relation between person and location"""
@@ -510,6 +566,27 @@ type Relation {
 
   """Relation's quote"""
   quote: String
+}
+
+"""Model for representing list of relations"""
+type RelationConnection {
+  """List of persons edges"""
+  edges: [RelationEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific relation in connection"""
+type RelationEdge {
+  """Cursor of this person"""
+  cursor: Cursor!
+
+  """Person info"""
+  node: Relation!
 }
 
 """Represents one of the relations types"""
@@ -555,6 +632,74 @@ enum TaskTypes {
 
   """Task type route"""
   ROUTE
+}
+
+input UpdatePersonInput {
+  """ID of person for updating"""
+  id: ID!
+
+  """Person's first name"""
+  firstName: String
+
+  """Person's last name"""
+  lastName: String
+
+  """Person's patronymic"""
+  patronymic: String
+
+  """Person's pseudonym"""
+  pseudonym: String
+
+  """Person's profession"""
+  profession: String
+
+  """Person's description"""
+  description: String
+
+  """Person's birth date"""
+  birthDate: String
+
+  """Person's death date"""
+  deathDate: String
+
+  """Person's info link"""
+  wikiLink: String
+}
+
+type UpdatePersonPayload {
+  """Updated person id"""
+  recordId: ID
+
+  """Updated person"""
+  record: Person
+}
+
+input UpdateQuestInput {
+  """Quest ID"""
+  id: ID!
+
+  """Quest name"""
+  name: String
+
+  """Quest description"""
+  description: String
+
+  """Quest photo"""
+  photo: String
+
+  """Quest type (quiz, route, etc.)"""
+  type: TaskTypes
+
+  """Quest data"""
+  data: JSON
+}
+
+type UpdateQuestPayload {
+  """Created quest id"""
+  recordId: ID
+
+  """Created quest"""
+  record: Quest
 }
 
 type User {
