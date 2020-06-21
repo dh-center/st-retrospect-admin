@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
@@ -8,19 +8,17 @@ import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 import RelationsGraph from './RelationsGraph';
 import './index.css';
-import { useParams, useHistory } from 'react-router';
 
 /**
  * Page with plots for visualisation of Database content
  */
 export default function VisualizationPage(): React.ReactElement {
-  const [isPageInFullScreen, changeFullscreenMode] = useState(document.fullscreenElement != null);
-  const { index } = useParams();
-  const [currentIndex, setCurrentIndex] = useState<number>(+index || 0);
+  const [isPageInFullScreen, changeFullscreenModeStatus] = useState(document.fullscreenElement !== null);
 
-  const history = useHistory();
-
-  const onFullscreenButtonClick = async (event: MouseEvent): Promise<void> => {
+  /**
+   * Manual fullscreen mode change
+   */
+  const changeFullscreenMode = async (): Promise<void> => {
     const documentElement = document.documentElement;
 
     if (!isPageInFullScreen) {
@@ -28,8 +26,42 @@ export default function VisualizationPage(): React.ReactElement {
     } else {
       await document.exitFullscreen();
     }
-    changeFullscreenMode(!isPageInFullScreen);
   };
+
+  /**
+   * Handler for click on fullscreen mode button
+   */
+  const onFullscreenButtonClick = async (): Promise<void> => {
+    await changeFullscreenMode();
+  };
+
+  useEffect(() => {
+    /**
+     * Handler for changing fullscreen mode
+     */
+    document.onfullscreenchange = (): void => {
+      changeFullscreenModeStatus(document.fullscreenElement != null);
+    };
+
+    /**
+     * Handler for F11 button
+     * Manual fullscreen mode change
+     *
+     * @param event - keyboard event
+     */
+    document.onkeydown = async (event: KeyboardEvent): Promise<void> => {
+      event.preventDefault();
+
+      if (event.code === 'F11') {
+        await changeFullscreenMode();
+      }
+    };
+
+    return (): void => {
+      document.onfullscreenchange = null;
+      document.onkeydown = null;
+    };
+  });
 
   return (
     <div className={'visualization-page'}>
