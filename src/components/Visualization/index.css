@@ -107,3 +107,8 @@ html:fullscreen .visualization-block{
 .accordion {
   width: 100%;
 }
+
+.visualization-block__caption {
+  text-align: center;
+  color: #55555a;
+}

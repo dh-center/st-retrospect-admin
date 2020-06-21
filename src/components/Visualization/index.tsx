@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, Switch, Route } from 'react-router-dom';
+import { NavLink, Switch, Route, Redirect } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
@@ -7,7 +7,9 @@ import { VisualizationPageQuery, VisualizationPageQueryResponse } from './__gene
 import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 import RelationsGraph from './RelationsGraph';
+import { Slide } from './Slide';
 import './index.css';
+import GenderDistribution from './GenderDistribution';
 
 /**
  * Page with plots for visualisation of Database content
@@ -106,71 +108,46 @@ export default function VisualizationPage(): React.ReactElement {
             return <div>Loading...</div>;
           }
 
+          const charts = {
+            'birth-dates-barplot': (
+              <PersonsBirthDatesBarplot
+                dates={props.persons.edges.map(edge => edge.node.birthDate)}
+              />
+            ),
+            'life-years-diagram': (
+              <PersonsLifeYearsDiagram
+                key='life-years-diagram'
+                persons={props.persons.edges.map(edge => edge.node)}
+              />
+            ),
+            'relations-graph': (
+              <RelationsGraph
+                key='relations-graph'
+                data={props}
+              />
+            ),
+            'genders-distribution': (
+              <GenderDistribution persons={props.persons.edges.map(edge => edge.node)}/>
+            ),
+          };
+
           return (
             <Switch>
-              <Route path={'/visualization/1'}>
-                <NavLink className="visualization-page__prev-link" to={'/visualization/3'}>
-                  <svg className="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd"
-                      d="M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
-                    <path fillRule="evenodd" d="M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                  </svg>
-                </NavLink>
-                <PersonsBirthDatesBarplot
-                  dates={props.persons.edges.map(edge => edge.node.birthDate)}
-                />
-                <NavLink className="visualization-page__next-link" to={'/visualization/2'}>
-                  <svg className="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd"
-                      d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
-                    <path fillRule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
-                  </svg>
-                </NavLink>
-              </Route>
-              <Route path={'/visualization/2'}>
-                <NavLink className="visualization-page__prev-link" to={'/visualization/1'}>
-                  <svg className="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd"
-                      d="M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
-                    <path fillRule="evenodd" d="M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                  </svg>
-                </NavLink>
-                <PersonsLifeYearsDiagram
-                  persons={props.persons.edges.map(edge => edge.node)}
-                />
-                <NavLink className="visualization-page__next-link" to={'/visualization/3'}>
-                  <svg className="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd"
-                      d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
-                    <path fillRule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
-                  </svg>
-                </NavLink>
-              </Route>
-              <Route path={'/visualization/3'}>
-                <NavLink className="visualization-page__prev-link" to={'/visualization/2'}>
-                  <svg className="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd"
-                      d="M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
-                    <path fillRule="evenodd" d="M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                  </svg>
-                </NavLink>
-                <RelationsGraph
-                  data={props}
-                />
-                <NavLink className="visualization-page__next-link" to={'/visualization/1'}>
-                  <svg className="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd"
-                      d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
-                    <path fillRule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
-                  </svg>
-                </NavLink>
-              </Route>
+              {
+                Object.entries(charts).map(([chartName, component], index, array) => {
+                  return (
+                    <Route key={chartName} path={'/visualization/' + chartName}>
+                      <Slide
+                        nextSlide={index + 1 === array.length ? array[0][0] : array[index + 1][0]}
+                        prevSlide={index - 1 < 0 ? array[array.length - 1][0] : array[index - 1][0]}
+                      >
+                        {component}
+                      </Slide>
+                    </Route>
+                  );
+                })
+              }
+              <Redirect to='/visualization/birth-dates-barplot' />
             </Switch>
           );
         }}

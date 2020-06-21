@@ -8,6 +8,9 @@ export type VisualizationPageQueryResponse = {
     readonly persons: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly firstName: string | null;
+                readonly lastName: string | null;
+                readonly patronymic: string | null;
                 readonly birthDate: string | null;
                 readonly deathDate: string | null;
             };
@@ -27,6 +30,9 @@ query VisualizationPageQuery {
   persons {
     edges {
       node {
+        firstName
+        lastName
+        patronymic
         birthDate
         deathDate
         id
@@ -69,24 +75,45 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "birthDate",
+  "name": "firstName",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "deathDate",
+  "name": "lastName",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "patronymic",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "birthDate",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "deathDate",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -125,7 +152,10 @@ return {
                 "plural": false,
                 "selections": [
                   (v0/*: any*/),
-                  (v1/*: any*/)
+                  (v1/*: any*/),
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -175,7 +205,10 @@ return {
                 "selections": [
                   (v0/*: any*/),
                   (v1/*: any*/),
-                  (v2/*: any*/)
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -209,7 +242,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -218,28 +251,10 @@ return {
                     "name": "person",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "lastName",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "firstName",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "patronymic",
-                        "storageKey": null
-                      }
+                      (v5/*: any*/),
+                      (v1/*: any*/),
+                      (v0/*: any*/),
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -251,8 +266,8 @@ return {
                     "name": "locationInstance",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v3/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -261,7 +276,7 @@ return {
                         "name": "locationTypes",
                         "plural": true,
                         "selections": [
-                          (v2/*: any*/)
+                          (v5/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -285,8 +300,8 @@ return {
         "name": "locationTypes",
         "plural": true,
         "selections": [
-          (v2/*: any*/),
-          (v3/*: any*/)
+          (v5/*: any*/),
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -297,9 +312,9 @@ return {
     "metadata": {},
     "name": "VisualizationPageQuery",
     "operationKind": "query",
-    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        id\n      }\n    }\n  }\n  ...RelationsGraph_data\n}\n\nfragment RelationsGraph_data on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n          locationTypes {\n            id\n          }\n        }\n      }\n    }\n  }\n  locationTypes {\n    id\n    name\n  }\n}\n"
+    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        firstName\n        lastName\n        patronymic\n        birthDate\n        deathDate\n        id\n      }\n    }\n  }\n  ...RelationsGraph_data\n}\n\nfragment RelationsGraph_data on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n          locationTypes {\n            id\n          }\n        }\n      }\n    }\n  }\n  locationTypes {\n    id\n    name\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '777585bf03f213e6dfa87968e28b0422';
+(node as any).hash = '944430d0d00c1a49429054ccb3c7f355';
 export default node;

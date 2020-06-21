@@ -45,7 +45,7 @@ export function Navigation(props: NavigationProps): ReactElement {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link as={Link} to="/visualization/1">
+          <Nav.Link as={Link} to="/visualization">
             Visualization
           </Nav.Link>
         </Nav.Item>
