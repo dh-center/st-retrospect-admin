@@ -13,7 +13,7 @@ import './index.css';
  * Page with plots for visualisation of Database content
  */
 export default function VisualizationPage(): React.ReactElement {
-  const [isPageInFullScreen, changeFullscreenModeStatus] = useState(document.fullscreenElement != null);
+  const [isPageInFullScreen, changeFullscreenModeStatus] = useState(document.fullscreenElement !== null);
 
   /**
    * Manual fullscreen mode change
