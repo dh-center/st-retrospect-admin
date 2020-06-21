@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, Switch, Route } from 'react-router-dom';
+import { NavLink, Switch, Route, Redirect } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
@@ -7,8 +7,9 @@ import { VisualizationPageQuery, VisualizationPageQueryResponse } from './__gene
 import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 import RelationsGraph from './RelationsGraph';
-import './index.css';
 import { Slide } from './Slide';
+import './index.css';
+import GenderDistribution from './GenderDistribution';
 
 /**
  * Page with plots for visualisation of Database content
@@ -107,29 +108,46 @@ export default function VisualizationPage(): React.ReactElement {
             return <div>Loading...</div>;
           }
 
+          const charts = {
+            'birth-dates-barplot': (
+              <PersonsBirthDatesBarplot
+                dates={props.persons.edges.map(edge => edge.node.birthDate)}
+              />
+            ),
+            'life-years-diagram': (
+              <PersonsLifeYearsDiagram
+                key='life-years-diagram'
+                persons={props.persons.edges.map(edge => edge.node)}
+              />
+            ),
+            'relations-graph': (
+              <RelationsGraph
+                key='relations-graph'
+                data={props}
+              />
+            ),
+            'genders-distribution': (
+              <GenderDistribution persons={props.persons.edges.map(edge => edge.node)}/>
+            ),
+          };
+
           return (
             <Switch>
-              <Route path={'/visualization/1'}>
-                <Slide>
-                  <PersonsBirthDatesBarplot
-                    dates={props.persons.edges.map(edge => edge.node.birthDate)}
-                  />
-                </Slide>
-              </Route>
-              <Route path={'/visualization/2'}>
-                <Slide>
-                  <PersonsLifeYearsDiagram
-                    persons={props.persons.edges.map(edge => edge.node)}
-                  />
-                </Slide>
-              </Route>
-              <Route path={'/visualization/3'}>
-                <Slide>
-                  <RelationsGraph
-                    data={props}
-                  />
-                </Slide>
-              </Route>
+              {
+                Object.entries(charts).map(([chartName, component], index, array) => {
+                  return (
+                    <Route key={chartName} path={'/visualization/' + chartName}>
+                      <Slide
+                        nextSlide={index + 1 === array.length ? array[0][0] : array[index + 1][0]}
+                        prevSlide={index - 1 < 0 ? array[array.length - 1][0] : array[index - 1][0]}
+                      >
+                        {component}
+                      </Slide>
+                    </Route>
+                  );
+                })
+              }
+              <Redirect to='/visualization/birth-dates-barplot' />
             </Switch>
           );
         }}

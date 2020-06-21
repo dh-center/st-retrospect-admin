@@ -1,14 +1,30 @@
 import React from 'react';
-import { NavLink, Route } from 'react-router-dom';
-import RelationsGraph from './RelationsGraph';
+import { NavLink } from 'react-router-dom';
 
 /**
- * @param props
+ * Props for Slide component
  */
-export function Slide(props: React.PropsWithChildren<{}>): React.ReactElement {
+interface SlideProps {
+  /**
+   * Route name to next slide
+   */
+  nextSlide: string;
+
+  /**
+   * Route name to previous slide
+   */
+  prevSlide: string;
+}
+
+/**
+ * Component for displaying charts with controls
+ *
+ * @param props - props for component rendering
+ */
+export function Slide(props: React.PropsWithChildren<SlideProps>): React.ReactElement {
   return (
     <>
-      <NavLink className="visualization-page__prev-link" to={'/visualization/2'}>
+      <NavLink className="visualization-page__prev-link" to={props.prevSlide}>
         <svg className="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
           xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd"
@@ -17,7 +33,7 @@ export function Slide(props: React.PropsWithChildren<{}>): React.ReactElement {
         </svg>
       </NavLink>
       {props.children}
-      <NavLink className="visualization-page__next-link" to={'/visualization/1'}>
+      <NavLink className="visualization-page__next-link" to={props.nextSlide}>
         <svg className="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
           xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd"

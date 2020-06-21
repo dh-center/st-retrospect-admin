@@ -62,7 +62,7 @@ function App(): ReactElement {
           <Login/>
         </Route>
 
-        <Route path={'/visualization/:index?'}>
+        <Route path={'/visualization/:chartName?'}>
           <VisualizationPage/>
         </Route>
 
