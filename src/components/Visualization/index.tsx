@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
@@ -8,20 +8,17 @@ import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 import RelationsGraph from './RelationsGraph';
 import './index.css';
-import { useParams, useHistory } from 'react-router';
-import GenderDistribution from './GenderDistribution';
 
 /**
  * Page with plots for visualisation of Database content
  */
 export default function VisualizationPage(): React.ReactElement {
-  const [isPageInFullScreen, changeFullscreenMode] = useState(document.fullscreenElement != null);
-  const { index } = useParams();
-  const [currentIndex, setCurrentIndex] = useState<number>(+index || 0);
+  const [isPageInFullScreen, changeFullscreenModeStatus] = useState(document.fullscreenElement !== null);
 
-  const history = useHistory();
-
-  const onFullscreenButtonClick = async (event: MouseEvent): Promise<void> => {
+  /**
+   * Manual fullscreen mode change
+   */
+  const changeFullscreenMode = async (): Promise<void> => {
     const documentElement = document.documentElement;
 
     if (!isPageInFullScreen) {
@@ -29,8 +26,42 @@ export default function VisualizationPage(): React.ReactElement {
     } else {
       await document.exitFullscreen();
     }
-    changeFullscreenMode(!isPageInFullScreen);
   };
+
+  /**
+   * Handler for click on fullscreen mode button
+   */
+  const onFullscreenButtonClick = async (): Promise<void> => {
+    await changeFullscreenMode();
+  };
+
+  useEffect(() => {
+    /**
+     * Handler for changing fullscreen mode
+     */
+    document.onfullscreenchange = (): void => {
+      changeFullscreenModeStatus(document.fullscreenElement != null);
+    };
+
+    /**
+     * Handler for F11 button
+     * Manual fullscreen mode change
+     *
+     * @param event - keyboard event
+     */
+    document.onkeydown = async (event: KeyboardEvent): Promise<void> => {
+      event.preventDefault();
+
+      if (event.code === 'F11') {
+        await changeFullscreenMode();
+      }
+    };
+
+    return (): void => {
+      document.onfullscreenchange = null;
+      document.onkeydown = null;
+    };
+  });
 
   return (
     <div className={'visualization-page'}>
@@ -50,9 +81,6 @@ export default function VisualizationPage(): React.ReactElement {
             persons {
               edges {
                 node {
-                  firstName
-                  lastName
-                  patronymic
                   birthDate
                   deathDate
                 }
@@ -81,7 +109,7 @@ export default function VisualizationPage(): React.ReactElement {
           return (
             <Switch>
               <Route path={'/visualization/1'}>
-                <NavLink className="visualization-page__prev-link" to={'/visualization/4'}>
+                <NavLink className="visualization-page__prev-link" to={'/visualization/3'}>
                   <svg className="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd"
@@ -133,27 +161,6 @@ export default function VisualizationPage(): React.ReactElement {
                 </NavLink>
                 <RelationsGraph
                   data={props}
-                />
-                <NavLink className="visualization-page__next-link" to={'/visualization/4'}>
-                  <svg className="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd"
-                      d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
-                    <path fillRule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
-                  </svg>
-                </NavLink>
-              </Route>
-              <Route path={'/visualization/4'}>
-                <NavLink className="visualization-page__prev-link" to={'/visualization/3'}>
-                  <svg className="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd"
-                      d="M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
-                    <path fillRule="evenodd" d="M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                  </svg>
-                </NavLink>
-                <GenderDistribution
-                  persons={props.persons.edges.map(edge => edge.node)}
                 />
                 <NavLink className="visualization-page__next-link" to={'/visualization/1'}>
                   <svg className="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
