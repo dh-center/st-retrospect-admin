@@ -9,7 +9,7 @@ import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 import RelationsGraph from './RelationsGraph';
 import './index.css';
 import { useParams, useHistory } from 'react-router';
-import SexPieChart from './SexPieChart';
+import GenderDistribution from './GenderDistribution';
 
 /**
  * Page with plots for visualisation of Database content
@@ -50,6 +50,9 @@ export default function VisualizationPage(): React.ReactElement {
             persons {
               edges {
                 node {
+                  firstName
+                  lastName
+                  patronymic
                   birthDate
                   deathDate
                 }
@@ -149,8 +152,8 @@ export default function VisualizationPage(): React.ReactElement {
                     <path fillRule="evenodd" d="M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                   </svg>
                 </NavLink>
-                <SexPieChart
-                  dates={props.persons.edges.map(edge => edge.node.birthDate)}
+                <GenderDistribution
+                  persons={props.persons.edges.map(edge => edge.node)}
                 />
                 <NavLink className="visualization-page__next-link" to={'/visualization/1'}>
                   <svg className="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
