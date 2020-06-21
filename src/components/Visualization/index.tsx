@@ -13,12 +13,12 @@ import './index.css';
  * Page with plots for visualisation of Database content
  */
 export default function VisualizationPage(): React.ReactElement {
-  const [isPageInFullScreen, changeFullscreenMode] = useState(document.fullscreenElement != null);
+  const [isPageInFullScreen, changeFullscreenModeStatus] = useState(document.fullscreenElement != null);
 
   /**
-   * Handler for click on fullscreen mode button
+   * Manual fullscreen mode change
    */
-  const onFullscreenButtonClick = async (): Promise<void> => {
+  const changeFullscreenMode = async (): Promise<void> => {
     const documentElement = document.documentElement;
 
     if (!isPageInFullScreen) {
@@ -28,16 +28,38 @@ export default function VisualizationPage(): React.ReactElement {
     }
   };
 
+  /**
+   * Handler for click on fullscreen mode button
+   */
+  const onFullscreenButtonClick = async (): Promise<void> => {
+    await changeFullscreenMode();
+  };
+
   useEffect(() => {
     /**
      * Handler for changing fullscreen mode
      */
     document.onfullscreenchange = (): void => {
-      changeFullscreenMode(document.fullscreenElement != null);
+      changeFullscreenModeStatus(document.fullscreenElement != null);
+    };
+
+    /**
+     * Handler for F11 button
+     * Manual fullscreen mode change
+     *
+     * @param event - keyboard event
+     */
+    document.onkeydown = async (event: KeyboardEvent): Promise<void> => {
+      event.preventDefault();
+
+      if (event.code === 'F11') {
+        await changeFullscreenMode();
+      }
     };
 
     return (): void => {
       document.onfullscreenchange = null;
+      document.onkeydown = null;
     };
   });
 
