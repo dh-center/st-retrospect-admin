@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
@@ -28,12 +28,18 @@ export default function VisualizationPage(): React.ReactElement {
     }
   };
 
-  /**
-   * Handler for changing fullscreen mode
-   */
-  document.onfullscreenchange = (): void => {
-    changeFullscreenMode(document.fullscreenElement != null);
-  };
+  useEffect(() => {
+    /**
+     * Handler for changing fullscreen mode
+     */
+    document.onfullscreenchange = (): void => {
+      changeFullscreenMode(document.fullscreenElement != null);
+    };
+
+    return (): void => {
+      document.onfullscreenchange = null;
+    };
+  });
 
   return (
     <div className={'visualization-page'}>
