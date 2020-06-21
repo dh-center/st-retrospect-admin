@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
