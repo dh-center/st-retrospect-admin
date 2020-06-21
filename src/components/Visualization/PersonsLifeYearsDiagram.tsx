@@ -3,32 +3,7 @@ import extractYear from '../../utils/extractYear';
 import YearPeriods from '../../utils/periods';
 import * as d3 from 'd3';
 import './index.css';
-
-/**
- * Generates color based on provided string
- *
- * @param str - string to calculate color
- */
-function strToColor(str: string): string {
-  let hash = 0;
-
-  if (str.length === 0) {
-    return hash.toString();
-  }
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    hash = hash & hash;
-  }
-  let color = '#';
-
-  for (let i = 0; i < 3; i++) {
-    const value = (hash >> (i * 8)) & 255;
-
-    color += ('00' + value.toString(16)).substr(-2);
-  }
-
-  return color;
-}
+import colors from './colors';
 
 /**
  * @param props - props for component rendering
@@ -89,7 +64,7 @@ export default function PersonLifeYearsDiagram(props: {
       .map((el, index) => periods.getPeriodFromNumber(index));
 
     periodNames.push('Unknown');
-    const periodColors = periodNames.map(name => strToColor(name));
+    // const periodColors = periodNames.map(name => strToColor(name));
 
     const matrix: number[][] = new Array(periodsCount + 1)
       .fill(0)
@@ -105,6 +80,10 @@ export default function PersonLifeYearsDiagram(props: {
       matrix[birthYearPeriodIndex][deathYearPeriodIndex]++;
       matrix[deathYearPeriodIndex][birthYearPeriodIndex]++;
     });
+
+    const sectorColor = d3.scaleOrdinal<string, string>()
+      .domain(periodNames)
+      .range(colors);
 
     const innerRadius = 350;
     const borderRadius = 10;
@@ -148,8 +127,8 @@ export default function PersonLifeYearsDiagram(props: {
           endAngle: d.endAngle,
         })
       )
-      .style('stroke', (d) => periodColors[d.index])
-      .style('fill', (d) => periodColors[d.index]);
+      .style('stroke', (d) => sectorColor(periodNames[d.index]))
+      .style('fill', (d) => sectorColor(periodNames[d.index]));
 
     /**
      * Add period names
@@ -188,12 +167,12 @@ export default function PersonLifeYearsDiagram(props: {
         .radius(innerRadius) as never
       )
       .style('stroke', (d) =>
-        d3.rgb(periodColors[d.source.index])
+        d3.rgb(sectorColor(periodNames[d.source.index]))
           .darker()
           .hex()
       )
       .style('fill', function (d) {
-        return periodColors[d.source.index];
+        return sectorColor(periodNames[d.source.index]);
       })
       .style('stroke-opacity', baseOpacity)
       .style('fill-opacity', baseOpacity)
