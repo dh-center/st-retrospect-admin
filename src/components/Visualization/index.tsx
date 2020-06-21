@@ -8,19 +8,17 @@ import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
 import PersonsLifeYearsDiagram from './PersonsLifeYearsDiagram';
 import RelationsGraph from './RelationsGraph';
 import './index.css';
-import { useParams, useHistory } from 'react-router';
 
 /**
  * Page with plots for visualisation of Database content
  */
 export default function VisualizationPage(): React.ReactElement {
   const [isPageInFullScreen, changeFullscreenMode] = useState(document.fullscreenElement != null);
-  const { index } = useParams();
-  const [currentIndex, setCurrentIndex] = useState<number>(+index || 0);
 
-  const history = useHistory();
-
-  const onFullscreenButtonClick = async (event: MouseEvent): Promise<void> => {
+  /**
+   * Handler for click on fullscreen mode button
+   */
+  const onFullscreenButtonClick = async (): Promise<void> => {
     const documentElement = document.documentElement;
 
     if (!isPageInFullScreen) {
@@ -28,7 +26,13 @@ export default function VisualizationPage(): React.ReactElement {
     } else {
       await document.exitFullscreen();
     }
-    changeFullscreenMode(!isPageInFullScreen);
+  };
+
+  /**
+   * Handler for changing fullscreen mode
+   */
+  document.onfullscreenchange = (): void => {
+    changeFullscreenMode(document.fullscreenElement != null);
   };
 
   return (
