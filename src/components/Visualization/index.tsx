@@ -46,23 +46,8 @@ export default function VisualizationPage(): React.ReactElement {
       changeFullscreenModeStatus(document.fullscreenElement != null);
     };
 
-    /**
-     * Handler for F11 button
-     * Manual fullscreen mode change
-     *
-     * @param event - keyboard event
-     */
-    document.onkeydown = async (event: KeyboardEvent): Promise<void> => {
-      event.preventDefault();
-
-      if (event.code === 'F11') {
-        await changeFullscreenMode();
-      }
-    };
-
     return (): void => {
       document.onfullscreenchange = null;
-      document.onkeydown = null;
     };
   });
 
