@@ -40,9 +40,8 @@ export default function GenderDistribution(props: {
     const width = 450;
 
     const height = 450;
-    const margin = 40;
+    const margin = 10;
 
-    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     const radius = Math.min(width, height) / 2 - margin;
 
     const labelRadius = radius * 0.7;
@@ -55,8 +54,7 @@ export default function GenderDistribution(props: {
      */
     const svg = d3.select(plotRef.current)
       .append('svg')
-      .attr('width', width)
-      .attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`)
       .append('g')
       .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
@@ -114,7 +112,9 @@ export default function GenderDistribution(props: {
   return (
     <div className={'visualization-block'}>
       <h2 className={'visualization-block__header'}>Gender distribution</h2>
-      <div className={'visualization-block__content'} ref={plotRef}/>
+      <div className={'visualization-block__content'}>
+        <div className='visualization-block__plot' ref={plotRef}/>
+      </div>
       <div className={'visualization-block__caption'}>Genders were calculated via <a href="https://www.npmjs.com/package/lvovich">lvovich</a> based on persons names</div>
     </div>
   );

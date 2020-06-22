@@ -14,7 +14,7 @@
   color: #007bff !important;
 }
 
-.visualization-block__plot::before {
+.relations-graph .visualization-block__plot::before {
   content: '';
   position: absolute;
   top: 0;
