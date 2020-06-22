@@ -1,5 +1,5 @@
 /* eslint-disable quote-props */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import YearPeriods from '../../utils/periods';
 import extractYear from '../../utils/extractYear';
@@ -40,6 +40,7 @@ function PersonsTreeMap(props: {
  data: PersonsTreeMapData;
 }): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
+  const [legend, setLegend] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const width = 954;
@@ -154,6 +155,11 @@ function PersonsTreeMap(props: {
       children: val.children,
     }));
 
+    setLegend(Object.values(dataByProfession).reduce((acc, val) => ({
+      ...acc,
+      [val.name]: color(val.name),
+    }), {}));
+
     data.value = data.children.reduce((acc, val) => acc + val.value, 0);
 
     console.log(data);
@@ -212,6 +218,20 @@ function PersonsTreeMap(props: {
       <h2 className={'visualization-block__header'}>Persons tree map</h2>
       <div className={'visualization-block__content'}>
         <div className='visualization-block__plot' ref={plotRef}/>
+        <div className='visualization-block__legend'>
+          {Object.entries(legend).map(([prof, color]) => {
+            return (
+              <div key={prof}>
+                <div style={{
+                  backgroundColor: color,
+                  width: '10px',
+                  height: '10px',
+                }}/>
+                {prof}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

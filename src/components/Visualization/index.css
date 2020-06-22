@@ -113,3 +113,7 @@ html:fullscreen .visualization-block{
   text-align: center;
   color: #55555a;
 }
+
+.visualization-block__legend div{
+display: flex;
+}
