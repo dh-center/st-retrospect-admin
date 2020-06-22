@@ -156,8 +156,6 @@ function PersonsTreeMap(props: {
 
     data.value = data.children.reduce((acc, val) => acc + val.value, 0);
 
-    console.log(data);
-
     const hierarchy = d3.hierarchy(data);
 
     const root = d3.treemap<typeof data>()
@@ -192,6 +190,7 @@ function PersonsTreeMap(props: {
       })
       .append('title')
       .text(d => `${d.ancestors().reverse()
+        .filter(_d => _d.data.name !== 'root')
         .map(_d => _d.data.name)
         .join('/')}\n${(d.value)}`);
 
