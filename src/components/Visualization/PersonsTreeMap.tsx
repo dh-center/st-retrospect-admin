@@ -7,11 +7,20 @@ import './index.css';
 import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { PersonsTreeMap_data as PersonsTreeMapData } from './__generated__/PersonsTreeMap_data.graphql';
-import { reducer } from 'react-relay/lib/relay-experimental/useRefetchableFragmentNode';
 
 const professionsKeywords = {
-  'писатель': [ 'поэт' ],
-  'художник': [ 'художник' ],
+  'писатель': /поэт|писательница|писатель|прозаик|публицист|драмматург/,
+  'художник': /художник|живописец|художница/,
+  'архитектор': /архитектор/,
+  'композитор': /композитор|пианист|скрипач/,
+  'музыкант': /музыкант/,
+  'учёный': /лингвист|учёный|ученый|учёная|ученая|физик|химик|профессор|математик|историк|филолог|физиолог|геолог|палеонтолог|генетик|ботаник|онколог|биолог|литературовед|искусствовед/,
+  'актёр': /актёр|актер|актриса|артист|артистка/,
+  'политический деятель': /княгиня|граф|императрица|государственный деятель|политик|дипломат|политический деятель/,
+  'певец': /певец|певица/,
+  'военный': /полководец|лётчик|капитан|военачальник|генерал|лейтенант|флигель-адъютант|военно|флотоводец|адмирал|офицер/,
+  'священнослужитель': /епископ|архиепископ|священник|архимандрит|полковник/,
+  'скульптор': /скульптор/,
 };
 
 interface DataByYear {
@@ -53,107 +62,46 @@ function PersonsTreeMap(props: {
       value: 0,
     };
 
+    const dataByProfession = Object.keys(professionsKeywords).reduce<Record<string, number>>((acc, val) => {
+      acc[val] = 0;
+
+      return acc;
+    }, { 'другие': 0 });
+
     props.data.persons.edges.forEach((val) => {
       const person = val.node;
 
       if (!person.profession) {
+        dataByProfession['другие']++;
+
         return;
       }
 
-      data.children.push({
-        name: person.profession,
-        value: 1,
+      let finded = false;
+
+      Object.entries(professionsKeywords).forEach(([profession, regexp]) => {
+        if (!person.profession) {
+          return;
+        }
+        person.profession.split(',').forEach(prof => {
+          if (regexp.test(prof.toLowerCase())) {
+            finded = true;
+            dataByProfession[profession]++;
+          }
+        });
       });
+
+      if (!finded) {
+        dataByProfession['другие']++;
+        console.log(person.profession);
+      }
     });
 
-    // const data = {
-    //   'children': [
-    //     {
-    //       'name': 'boss1',
-    //       'children': [ {
-    //         'name': 'mister_a',
-    //         'group': 'A',
-    //         'value': 28,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_b',
-    //         'group': 'A',
-    //         'value': 19,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_c',
-    //         'group': 'C',
-    //         'value': 18,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_d',
-    //         'group': 'C',
-    //         'value': 19,
-    //         'colname': 'level3',
-    //       } ],
-    //       'colname': 'level2',
-    //     }, {
-    //       'name': 'boss2',
-    //       'children': [ {
-    //         'name': 'mister_e',
-    //         'group': 'C',
-    //         'value': 14,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_f',
-    //         'group': 'A',
-    //         'value': 11,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_g',
-    //         'group': 'B',
-    //         'value': 15,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_h',
-    //         'group': 'B',
-    //         'value': 16,
-    //         'colname': 'level3',
-    //       } ],
-    //       'colname': 'level2',
-    //     }, {
-    //       'name': 'boss3',
-    //       'children': [ {
-    //         'name': 'mister_i',
-    //         'group': 'B',
-    //         'value': 10,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_j',
-    //         'group': 'A',
-    //         'value': 13,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_k',
-    //         'group': 'A',
-    //         'value': 13,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_l',
-    //         'group': 'D',
-    //         'value': 25,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_m',
-    //         'group': 'D',
-    //         'value': 16,
-    //         'colname': 'level3',
-    //       }, {
-    //         'name': 'mister_n',
-    //         'group': 'D',
-    //         'value': 28,
-    //         'colname': 'level3',
-    //       } ],
-    //       'colname': 'level2',
-    //     } ],
-    //   'name': 'CEO',
-    //   value: 0,
-    // };
+    console.log(dataByProfession);
+    data.children = Object.entries(dataByProfession).map(entry => ({
+      name: entry[0],
+      value: entry[1],
+    }));
 
     const hierarchy = d3.hierarchy(data).sum(d => d.value);
 
