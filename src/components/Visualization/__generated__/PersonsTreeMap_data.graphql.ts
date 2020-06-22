@@ -8,6 +8,7 @@ export type PersonsTreeMap_data = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly profession: string | null;
+                readonly birthDate: string | null;
             };
         }>;
     };
@@ -57,6 +58,13 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "profession",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "birthDate",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -70,5 +78,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = '09d9d73e4580d789820b2c188daf92b5';
+(node as any).hash = '7bc9ca55b11247058317103420af51a0';
 export default node;

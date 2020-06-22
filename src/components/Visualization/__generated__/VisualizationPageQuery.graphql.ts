@@ -48,6 +48,7 @@ fragment PersonsTreeMap_data on Query {
     edges {
       node {
         profession
+        birthDate
         id
       }
     }
@@ -336,7 +337,7 @@ return {
     "metadata": {},
     "name": "VisualizationPageQuery",
     "operationKind": "query",
-    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        lastName\n        firstName\n        patronymic\n        id\n      }\n    }\n  }\n  ...RelationsGraph_data\n  ...PersonsTreeMap_data\n}\n\nfragment PersonsTreeMap_data on Query {\n  persons {\n    edges {\n      node {\n        profession\n        id\n      }\n    }\n  }\n}\n\nfragment RelationsGraph_data on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n          locationTypes {\n            id\n          }\n        }\n      }\n    }\n  }\n  locationTypes {\n    id\n    name\n  }\n}\n"
+    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        lastName\n        firstName\n        patronymic\n        id\n      }\n    }\n  }\n  ...RelationsGraph_data\n  ...PersonsTreeMap_data\n}\n\nfragment PersonsTreeMap_data on Query {\n  persons {\n    edges {\n      node {\n        profession\n        birthDate\n        id\n      }\n    }\n  }\n}\n\nfragment RelationsGraph_data on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n          locationTypes {\n            id\n          }\n        }\n      }\n    }\n  }\n  locationTypes {\n    id\n    name\n  }\n}\n"
   }
 };
 })();
