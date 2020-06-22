@@ -87,8 +87,7 @@ export default function PersonsBirthDatesBarplot(props: {
      */
     const svg = d3.select(plotRef.current)
       .append('svg')
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
+      .attr('viewBox', `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
       .append('g')
       .attr('transform',
         'translate(' + margin.left + ',' + margin.top + ')');
@@ -135,7 +134,9 @@ export default function PersonsBirthDatesBarplot(props: {
   return (
     <div className={'visualization-block'}>
       <h2 className={'visualization-block__header'}>Count of persons by birth date</h2>
-      <div className={'visualization-block__content'} ref={plotRef}/>
+      <div className={'visualization-block__content'}>
+        <div className='visualization-block__plot' ref={plotRef}/>
+      </div>
     </div>
   );
 }

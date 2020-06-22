@@ -8,15 +8,15 @@ export type VisualizationPageQueryResponse = {
     readonly persons: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly firstName: string | null;
-                readonly lastName: string | null;
-                readonly patronymic: string | null;
                 readonly birthDate: string | null;
                 readonly deathDate: string | null;
+                readonly lastName: string | null;
+                readonly firstName: string | null;
+                readonly patronymic: string | null;
             };
         }>;
     };
-    readonly " $fragmentRefs": FragmentRefs<"RelationsGraph_data">;
+    readonly " $fragmentRefs": FragmentRefs<"RelationsGraph_data" | "PersonsTreeMap_data">;
 };
 export type VisualizationPageQuery = {
     readonly response: VisualizationPageQueryResponse;
@@ -30,16 +30,29 @@ query VisualizationPageQuery {
   persons {
     edges {
       node {
-        firstName
-        lastName
-        patronymic
         birthDate
         deathDate
+        lastName
+        firstName
+        patronymic
         id
       }
     }
   }
   ...RelationsGraph_data
+  ...PersonsTreeMap_data
+}
+
+fragment PersonsTreeMap_data on Query {
+  persons {
+    edges {
+      node {
+        profession
+        birthDate
+        id
+      }
+    }
+  }
 }
 
 fragment RelationsGraph_data on Query {
@@ -75,35 +88,35 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "firstName",
+  "name": "birthDate",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "lastName",
+  "name": "deathDate",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "patronymic",
+  "name": "lastName",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "birthDate",
+  "name": "firstName",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "deathDate",
+  "name": "patronymic",
   "storageKey": null
 },
 v5 = {
@@ -169,6 +182,11 @@ return {
         "args": null,
         "kind": "FragmentSpread",
         "name": "RelationsGraph_data"
+      },
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "PersonsTreeMap_data"
       }
     ],
     "type": "Query"
@@ -208,7 +226,14 @@ return {
                   (v2/*: any*/),
                   (v3/*: any*/),
                   (v4/*: any*/),
-                  (v5/*: any*/)
+                  (v5/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "profession",
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
               }
@@ -252,9 +277,9 @@ return {
                     "plural": false,
                     "selections": [
                       (v5/*: any*/),
-                      (v1/*: any*/),
-                      (v0/*: any*/),
-                      (v2/*: any*/)
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -312,9 +337,9 @@ return {
     "metadata": {},
     "name": "VisualizationPageQuery",
     "operationKind": "query",
-    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        firstName\n        lastName\n        patronymic\n        birthDate\n        deathDate\n        id\n      }\n    }\n  }\n  ...RelationsGraph_data\n}\n\nfragment RelationsGraph_data on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n          locationTypes {\n            id\n          }\n        }\n      }\n    }\n  }\n  locationTypes {\n    id\n    name\n  }\n}\n"
+    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        lastName\n        firstName\n        patronymic\n        id\n      }\n    }\n  }\n  ...RelationsGraph_data\n  ...PersonsTreeMap_data\n}\n\nfragment PersonsTreeMap_data on Query {\n  persons {\n    edges {\n      node {\n        profession\n        birthDate\n        id\n      }\n    }\n  }\n}\n\nfragment RelationsGraph_data on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n          locationTypes {\n            id\n          }\n        }\n      }\n    }\n  }\n  locationTypes {\n    id\n    name\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '944430d0d00c1a49429054ccb3c7f355';
+(node as any).hash = '156c261933f23ad42cdcee0a97879fae';
 export default node;

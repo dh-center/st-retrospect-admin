@@ -64,7 +64,6 @@ export default function PersonLifeYearsDiagram(props: {
       .map((el, index) => periods.getPeriodFromNumber(index));
 
     periodNames.push('Unknown');
-    // const periodColors = periodNames.map(name => strToColor(name));
 
     const matrix: number[][] = new Array(periodsCount + 1)
       .fill(0)
@@ -97,8 +96,7 @@ export default function PersonLifeYearsDiagram(props: {
      */
     const svg = d3.select(plotRef.current)
       .append('svg')
-      .attr('width', plotSize)
-      .attr('height', plotSize)
+      .attr('viewBox', `0 0 ${plotSize} ${plotSize}`)
       .append('g')
       .attr('transform', `translate(${plotSize / 2} ${plotSize / 2})`);
 
@@ -233,7 +231,9 @@ export default function PersonLifeYearsDiagram(props: {
   return (
     <div className={'visualization-block'}>
       <h2 className={'visualization-block__header'}>Persons life years diagram</h2>
-      <div className={'visualization-block__content'} ref={plotRef}/>
+      <div className={'visualization-block__content'}>
+        <div className='visualization-block__plot' ref={plotRef}/>
+      </div>
     </div>
   );
 }

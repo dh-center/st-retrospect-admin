@@ -127,9 +127,7 @@ function Index(props: {
     const width = 1000;
     const height = 600;
     const svg = d3.select(plotRef.current).append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('viewBox', `0, 0, ${width * 3}, ${height * 3}`);
+      .attr('viewBox', `0 0 ${width * 3} ${height * 3}`);
 
     const g = svg.append('g');
 
@@ -303,7 +301,7 @@ function Index(props: {
   }, [locationTypesToggles, nodes]);
 
   return (
-    <div className='visualization-block'>
+    <div className='visualization-block relations-graph'>
       <h2 className={'visualization-block__header'}>Relations graph</h2>
       <div className="visualization-block__content">
         <div className='visualization-block__plot' ref={plotRef}/>
