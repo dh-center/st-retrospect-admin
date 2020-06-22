@@ -10,6 +10,7 @@ import RelationsGraph from './RelationsGraph';
 import { Slide } from './Slide';
 import './index.css';
 import GenderDistribution from './GenderDistribution';
+import PersonsTreeMap from './PersonsTreeMap';
 
 /**
  * Page with plots for visualisation of Database content
@@ -85,10 +86,14 @@ export default function VisualizationPage(): React.ReactElement {
                 node {
                   birthDate
                   deathDate
+                  lastName
+                  firstName
+                  patronymic
                 }
               }
             }
             ...RelationsGraph_data
+            ...PersonsTreeMap_data
           }
         `}
         variables={{}}
@@ -116,18 +121,19 @@ export default function VisualizationPage(): React.ReactElement {
             ),
             'life-years-diagram': (
               <PersonsLifeYearsDiagram
-                key='life-years-diagram'
                 persons={props.persons.edges.map(edge => edge.node)}
               />
             ),
             'relations-graph': (
               <RelationsGraph
-                key='relations-graph'
                 data={props}
               />
             ),
             'genders-distribution': (
               <GenderDistribution persons={props.persons.edges.map(edge => edge.node)}/>
+            ),
+            'persons-tree-map': (
+              <PersonsTreeMap data={props}/>
             ),
           };
 
