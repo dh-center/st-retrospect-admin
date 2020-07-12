@@ -12,7 +12,6 @@ import makeCreationPage from '../Entities/makeCreationPage';
 import PersonInfo from './Info';
 import { OmitId, Person } from '../../types/entities';
 import makeViewPage from '../Entities/makeViewPage';
-import QuestInfo from '../Quests/Info';
 
 const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntityConnection>>(
   EntitiesList,
@@ -93,7 +92,7 @@ const CreateComponent = makeCreationPage(
 );
 
 const ViewComponent = makeViewPage(
-  QuestInfo,
+  PersonInfo,
   graphql`
     query PersonsPagePersonQuery($id: ID!) {
       entity: person(id: $id) {

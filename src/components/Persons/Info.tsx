@@ -17,7 +17,9 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
         <Form.Control
           type="text"
           id={'lastName'}
+          disabled={props.viewOnly}
           name={'lastName'}
+          value={props.entity.lastName || ''}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
@@ -32,6 +34,8 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
         <Form.Control
           type="text"
           id={'firstName'}
+          disabled={props.viewOnly}
+          value={props.entity.firstName || ''}
           name={'firstName'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
@@ -47,6 +51,8 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
         <Form.Control
           type="text"
           id={'patronymic'}
+          disabled={props.viewOnly}
+          value={props.entity.patronymic || ''}
           name={'patronymic'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
@@ -61,6 +67,8 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
         <Form.Control
           type="text"
           id={'pseudonym'}
+          disabled={props.viewOnly}
+          value={props.entity.pseudonym || ''}
           name={'pseudonym'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
@@ -76,6 +84,8 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           type="text"
           id={'profession'}
           name={'profession'}
+          disabled={props.viewOnly}
+          value={props.entity.profession || ''}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
@@ -89,7 +99,9 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
         <Form.Control
           id={'description'}
           as='textarea'
+          disabled={props.viewOnly}
           rows={15}
+          value={props.entity.description || ''}
           name={'description'}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
             onChange({
@@ -104,6 +116,8 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
         <Form.Control
           type="text"
           id={'birthDate'}
+          value={props.entity.birthDate || ''}
+          disabled={props.viewOnly}
           name={'birthDate'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
@@ -118,6 +132,8 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
         <Form.Control
           type="text"
           id={'deathDate'}
+          disabled={props.viewOnly}
+          value={props.entity.deathDate || ''}
           name={'deathDate'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
@@ -132,6 +148,8 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
         <Form.Control
           type="text"
           id={'wikiLink'}
+          value={props.entity.wikiLink || ''}
+          disabled={props.viewOnly}
           name={'wikiLink'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
