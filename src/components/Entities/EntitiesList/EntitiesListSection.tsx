@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { ENTITIES_PER_PAGE } from '../../../constants';
 import { EntityConnection } from '../../../types/entities';
+import { withRouter } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 
 /**
  * Props for List component
@@ -20,12 +22,17 @@ interface Props<ENTITY_CONNECTION_TYPE> {
    * List with entities
    */
   entityConnection: ENTITY_CONNECTION_TYPE;
+
+  /**
+   * Entity name for creating links
+   */
+  entityName: string;
 }
 
 /**
  * Page of entity table
  */
-export default class EntitiesListSection<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<Props<ENTITY_CONNECTION_TYPE>> {
+export class EntitiesListSection<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<RouteComponentProps & Props<ENTITY_CONNECTION_TYPE>> {
   /**
    * Ref to the components root HTML element
    */
@@ -67,7 +74,16 @@ export default class EntitiesListSection<ENTITY_CONNECTION_TYPE extends EntityCo
               return undefined;
             }
 
-            return <td key={key}>{entity[key]}</td>;
+            return (
+              <td
+                key={key}
+                onClick={(): void => {
+                  this.props.history.push(`/${this.props.entityName}/${entity.id}`);
+                }}
+              >
+                {entity[key]}
+              </td>
+            );
           }
           )}
         </tr>;
@@ -85,3 +101,5 @@ export default class EntitiesListSection<ENTITY_CONNECTION_TYPE extends EntityCo
     );
   }
 }
+
+export default withRouter(EntitiesListSection);

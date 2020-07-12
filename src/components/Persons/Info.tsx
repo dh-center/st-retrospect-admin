@@ -1,24 +1,13 @@
 import React, { ChangeEvent } from 'react';
 import { Form } from 'react-bootstrap';
-
-/**
- * Props of component
- */
-interface Props {
-  /**
-   * Handler for changing input fields
-   *
-   * @param e - change event
-   */
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}
+import { EntityInfoComponentProps, Person } from '../../types/entities';
 
 /**
  * Component of quest fields
  *
  * @param props - props of component
  */
-export default function PersonInfo(props: Props): React.ReactElement {
+export default function PersonInfo(props: EntityInfoComponentProps<Person>): React.ReactElement {
   return (
     <div>
       <Form.Group>
@@ -28,7 +17,7 @@ export default function PersonInfo(props: Props): React.ReactElement {
           id={'lastName'}
           name={'lastName'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
           required
         />
@@ -40,7 +29,7 @@ export default function PersonInfo(props: Props): React.ReactElement {
           id={'firstName'}
           name={'firstName'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
           required
         />
@@ -52,7 +41,7 @@ export default function PersonInfo(props: Props): React.ReactElement {
           id={'patronymic'}
           name={'patronymic'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
         />
       </Form.Group>
@@ -63,7 +52,7 @@ export default function PersonInfo(props: Props): React.ReactElement {
           id={'pseudonym'}
           name={'pseudonym'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
         />
       </Form.Group>
@@ -74,7 +63,7 @@ export default function PersonInfo(props: Props): React.ReactElement {
           id={'profession'}
           name={'profession'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
         />
       </Form.Group>
@@ -86,7 +75,7 @@ export default function PersonInfo(props: Props): React.ReactElement {
           rows={15}
           name={'description'}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
         />
       </Form.Group>
@@ -97,7 +86,7 @@ export default function PersonInfo(props: Props): React.ReactElement {
           id={'birthDate'}
           name={'birthDate'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
         />
       </Form.Group>
@@ -108,7 +97,7 @@ export default function PersonInfo(props: Props): React.ReactElement {
           id={'deathDate'}
           name={'deathDate'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
         />
       </Form.Group>
@@ -119,7 +108,7 @@ export default function PersonInfo(props: Props): React.ReactElement {
           id={'wikiLink'}
           name={'wikiLink'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
         />
       </Form.Group>

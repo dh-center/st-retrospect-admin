@@ -85,10 +85,11 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
     const sectionsList: ReactElement[] = [];
 
     for (let i = 1; i <= pagesCount; i++) {
-      sectionsList.push(<EntitiesListSection<ENTITY_CONNECTION_TYPE>
+      sectionsList.push(<EntitiesListSection
         key={i}
         pageNumber={i}
         observer={this.observer}
+        entityName={this.props.entityName}
         entityConnection={this.props.entityConnection}/>);
     }
 

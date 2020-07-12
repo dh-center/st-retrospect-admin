@@ -4,18 +4,7 @@ import environment from '../../relay-env';
 import notifier from 'codex-notifier';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
-
-/**
- * Props of component
- */
-interface InfoComponentProps {
-  /**
-   * Handler for changing input fields
-   *
-   * @param e - change event
-   */
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}
+import { EntityInfoComponentProps } from '../../types/entities';
 
 /**
  * Return create component with Info fields
@@ -24,9 +13,9 @@ interface InfoComponentProps {
  * @param mutation - creating mutation
  */
 export default function createComponent<P extends object>(
-  InfoComponent: React.ComponentType<InfoComponentProps>,
+  InfoComponent: React.ComponentType<EntityInfoComponentProps<P>>,
   mutation: GraphQLTaggedNode
-): React.FC<P> {
+): React.FC {
   return (): React.ReactElement => {
     /**
      * Entity object in state

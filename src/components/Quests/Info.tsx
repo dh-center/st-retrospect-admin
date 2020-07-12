@@ -7,25 +7,14 @@ import Image from '@editorjs/image';
 import Delimiter from '@editorjs/delimiter';
 import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
-
-/**
- * Props of component
- */
-interface Props {
-  /**
-   * Handler for changing input fields
-   *
-   * @param e - change event
-   */
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}
+import { Quest, EntityInfoComponentProps } from '../../types/entities';
 
 /**
  * Component of quest fields
  *
  * @param props - props of component
  */
-export default function QuestInfo(props: Props): React.ReactElement {
+export default function QuestInfo(props: EntityInfoComponentProps<Quest>): React.ReactElement {
   const editorRef = useRef<EditorJS>();
   const editorElementRef = useRef<HTMLDivElement>(null);
 
@@ -62,20 +51,22 @@ export default function QuestInfo(props: Props): React.ReactElement {
           id={'name'}
           name={'name'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
           required
+          disabled={props.viewOnly}
         />
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor={'description'}>Description</Form.Label>
         <Form.Control
+          disabled={props.viewOnly}
           id={'description'}
           as='textarea'
           rows={15}
           name={'description'}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
-            props.onChange(e);
+            props.onChange && props.onChange(e);
           }}
           required
         />
@@ -100,9 +91,10 @@ export default function QuestInfo(props: Props): React.ReactElement {
             label='Quiz'
             id={'quiz'}
             onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-              props.onChange(e);
+              props.onChange && props.onChange(e);
             }}
             required
+            disabled={props.viewOnly}
           />
           <Form.Check
             inline
@@ -112,9 +104,10 @@ export default function QuestInfo(props: Props): React.ReactElement {
             label='Route'
             id={'route'}
             onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-              props.onChange(e);
+              props.onChange && props.onChange(e);
             }}
             required
+            disabled={props.viewOnly}
           />
         </div>
       </Form.Group>

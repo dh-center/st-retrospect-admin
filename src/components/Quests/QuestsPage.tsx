@@ -10,6 +10,7 @@ import { Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import makeCreationPage from '../Entities/makeCreationPage';
 import QuestInfo from './Info';
+import makeViewPage from '../Entities/makeViewPage';
 
 const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityConnection>>(
   EntitiesList,
@@ -66,6 +67,18 @@ const CreateComponent = makeCreationPage(
     }`
 );
 
+const ViewComponent = makeViewPage(
+  QuestInfo,
+  graphql`
+    query QuestsPageQuestQuery($id: ID!) {
+      quest(id: $id) {
+        id
+        name
+        description
+      }
+    }`
+);
+
 /**
  * Functional component for quests view
  */
@@ -74,6 +87,9 @@ export default function QuestsPage(): ReactElement {
     <Switch>
       <PrivateRoute path={'/quests/create'}>
         <CreateComponent/>
+      </PrivateRoute>
+      <PrivateRoute path={'/quests/:id'}>
+        <ViewComponent/>
       </PrivateRoute>
       <PrivateRoute path={'/quests'}>
         <QueryRenderer<QuestsPageQuery>
