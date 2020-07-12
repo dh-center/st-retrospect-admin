@@ -107,6 +107,8 @@ export default function GenderDistribution(props: {
         .attr('y', '0.7em')
         .attr('fill-opacity', 0.7)
         .text(d => d.data.value.toLocaleString()));
+
+    // eslint-disable-next-line
   }, []);
 
   return (

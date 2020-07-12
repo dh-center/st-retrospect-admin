@@ -129,6 +129,8 @@ export default function PersonsBirthDatesBarplot(props: {
       .attr('fill', '#69b3a2')
       .attr('height', (d) => height - y(groupedByPeriods[d]))
       .attr('y', (d) => y(groupedByPeriods[d]));
+
+    // eslint-disable-next-line
   }, []);
 
   return (
