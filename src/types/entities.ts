@@ -1,6 +1,7 @@
-import { QuestsPage_entityConnection as QuestConnection } from '../components/Quests/__generated__/QuestsPage_entityConnection.graphql';
-import { ChangeEvent } from 'react';
 import { PersonsPage_entityConnection as PersonsConnection } from '../components/Persons/__generated__/PersonsPage_entityConnection.graphql';
+
+import { QuestsPageQuestQuery } from '../components/Quests/__generated__/QuestsPageQuestQuery.graphql';
+import { PersonsPagePersonQuery } from '../components/Persons/__generated__/PersonsPagePersonQuery.graphql';
 
 /**
  * Interface represents Relay Connection model
@@ -18,9 +19,11 @@ export interface EntityConnection {
   readonly ' $refType': string;
 }
 
-export type Quest = QuestConnection['entities']['edges'][0]['node'];
-export type Person = PersonsConnection['entities']['edges'][0]['node'];
+export type Quest = NonNullable<QuestsPageQuestQuery['response']['entity']>;
+export type Person = NonNullable<PersonsPagePersonQuery['response']['entity']>;
 export type Entity = EntityConnection['entities']['edges'][0]['node'];
+
+export type OmitId<T> = Omit<T, 'id'>
 
 export enum EntityTypes {
   QUEST = 'QUEST'
@@ -32,9 +35,9 @@ export interface EntityInfoComponentProps<T> {
    *
    * @param e - change event
    */
-  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange?: (e: T) => void;
 
   viewOnly?: boolean;
 
-  readonly entity?: T;
+  readonly entity: T;
 }

@@ -7,14 +7,14 @@ import Image from '@editorjs/image';
 import Delimiter from '@editorjs/delimiter';
 import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
-import { Quest, EntityInfoComponentProps } from '../../types/entities';
+import { Quest, EntityInfoComponentProps, OmitId } from '../../types/entities';
 
 /**
  * Component of quest fields
  *
  * @param props - props of component
  */
-export default function QuestInfo(props: EntityInfoComponentProps<Quest>): React.ReactElement {
+export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>): React.ReactElement {
   const editorRef = useRef<EditorJS>();
   const editorElementRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +42,8 @@ export default function QuestInfo(props: EntityInfoComponentProps<Quest>): React
     }
   }, []);
 
+  const onChange = props.onChange || ((e: OmitId<Quest>): void => {});
+
   return (
     <div>
       <Form.Group>
@@ -50,8 +52,12 @@ export default function QuestInfo(props: EntityInfoComponentProps<Quest>): React
           type="text"
           id={'name'}
           name={'name'}
+          value={props.entity.name}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              name: e.target.value,
+            });
           }}
           required
           disabled={props.viewOnly}
@@ -64,9 +70,13 @@ export default function QuestInfo(props: EntityInfoComponentProps<Quest>): React
           id={'description'}
           as='textarea'
           rows={15}
+          value={props.entity.description || ''}
           name={'description'}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              description: e.target.value,
+            });
           }}
           required
         />
@@ -90,8 +100,12 @@ export default function QuestInfo(props: EntityInfoComponentProps<Quest>): React
             value={'QUIZ'}
             label='Quiz'
             id={'quiz'}
+            checked={props.entity.type === 'QUIZ'}
             onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-              props.onChange && props.onChange(e);
+              onChange({
+                ...props.entity,
+                type: 'QUIZ',
+              });
             }}
             required
             disabled={props.viewOnly}
@@ -102,9 +116,13 @@ export default function QuestInfo(props: EntityInfoComponentProps<Quest>): React
             name={'type'}
             value={'ROUTE'}
             label='Route'
+            checked={props.entity.type === 'ROUTE'}
             id={'route'}
             onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-              props.onChange && props.onChange(e);
+              onChange({
+                ...props.entity,
+                type: 'ROUTE',
+              });
             }}
             required
             disabled={props.viewOnly}

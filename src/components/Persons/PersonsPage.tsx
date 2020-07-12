@@ -10,6 +10,9 @@ import PrivateRoute from '../PrivateRoute';
 import { Switch } from 'react-router-dom';
 import makeCreationPage from '../Entities/makeCreationPage';
 import PersonInfo from './Info';
+import { OmitId, Person } from '../../types/entities';
+import makeViewPage from '../Entities/makeViewPage';
+import QuestInfo from '../Quests/Info';
 
 const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntityConnection>>(
   EntitiesList,
@@ -59,14 +62,51 @@ const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntit
   }
 );
 
+/**
+ *
+ */
+function generatePerson(): OmitId<Person> {
+  return {
+    description: '',
+    lastName: '',
+    patronymic: '',
+    firstName: '',
+    profession: '',
+    pseudonym: '',
+    birthDate: '',
+    deathDate: '',
+    wikiLink: '',
+  };
+}
+
 const CreateComponent = makeCreationPage(
   PersonInfo,
+  generatePerson,
   graphql`
     mutation PersonsPageCreateMutation($input: CreatePersonInput!) {
       person {
         create(input: $input) {
           recordId
         }
+      }
+    }`
+);
+
+const ViewComponent = makeViewPage(
+  QuestInfo,
+  graphql`
+    query PersonsPagePersonQuery($id: ID!) {
+      entity: person(id: $id) {
+        id
+        lastName
+        firstName
+        patronymic
+        pseudonym
+        birthDate
+        description
+        deathDate
+        profession
+        wikiLink
       }
     }`
 );
@@ -79,6 +119,9 @@ export default function PersonsPage(): ReactElement {
     <Switch>
       <PrivateRoute path={'/persons/create'}>
         <CreateComponent/>
+      </PrivateRoute>
+      <PrivateRoute path={'/persons/:id'}>
+        <ViewComponent/>
       </PrivateRoute>
       <PrivateRoute path={'/persons'}>
         <QueryRenderer<PersonsPageQuery>

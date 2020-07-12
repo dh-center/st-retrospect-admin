@@ -11,6 +11,7 @@ import PrivateRoute from '../PrivateRoute';
 import makeCreationPage from '../Entities/makeCreationPage';
 import QuestInfo from './Info';
 import makeViewPage from '../Entities/makeViewPage';
+import { OmitId, Quest } from '../../types/entities';
 
 const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityConnection>>(
   EntitiesList,
@@ -55,8 +56,20 @@ const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityC
   }
 );
 
+/**
+ *
+ */
+function generateQuest(): OmitId<Quest> {
+  return {
+    name: '',
+    description: '',
+    type: 'QUIZ',
+  };
+}
+
 const CreateComponent = makeCreationPage(
   QuestInfo,
+  generateQuest,
   graphql`
     mutation QuestsPageCreateMutation($input: CreateQuestInput!) {
       quest {
@@ -71,10 +84,11 @@ const ViewComponent = makeViewPage(
   QuestInfo,
   graphql`
     query QuestsPageQuestQuery($id: ID!) {
-      quest(id: $id) {
+      entity: quest(id: $id) {
         id
         name
         description
+        type
       }
     }`
 );

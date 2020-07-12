@@ -1,13 +1,15 @@
 import React, { ChangeEvent } from 'react';
 import { Form } from 'react-bootstrap';
-import { EntityInfoComponentProps, Person } from '../../types/entities';
+import { EntityInfoComponentProps, OmitId, Person } from '../../types/entities';
 
 /**
  * Component of quest fields
  *
  * @param props - props of component
  */
-export default function PersonInfo(props: EntityInfoComponentProps<Person>): React.ReactElement {
+export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person>>): React.ReactElement {
+  const onChange = props.onChange || ((e: OmitId<Person>): void => {});
+
   return (
     <div>
       <Form.Group>
@@ -17,7 +19,10 @@ export default function PersonInfo(props: EntityInfoComponentProps<Person>): Rea
           id={'lastName'}
           name={'lastName'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              lastName: e.target.value,
+            });
           }}
           required
         />
@@ -29,7 +34,10 @@ export default function PersonInfo(props: EntityInfoComponentProps<Person>): Rea
           id={'firstName'}
           name={'firstName'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              firstName: e.target.value,
+            });
           }}
           required
         />
@@ -41,7 +49,10 @@ export default function PersonInfo(props: EntityInfoComponentProps<Person>): Rea
           id={'patronymic'}
           name={'patronymic'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              patronymic: e.target.value,
+            });
           }}
         />
       </Form.Group>
@@ -52,7 +63,10 @@ export default function PersonInfo(props: EntityInfoComponentProps<Person>): Rea
           id={'pseudonym'}
           name={'pseudonym'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              pseudonym: e.target.value,
+            });
           }}
         />
       </Form.Group>
@@ -63,7 +77,10 @@ export default function PersonInfo(props: EntityInfoComponentProps<Person>): Rea
           id={'profession'}
           name={'profession'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              profession: e.target.value,
+            });
           }}
         />
       </Form.Group>
@@ -75,7 +92,10 @@ export default function PersonInfo(props: EntityInfoComponentProps<Person>): Rea
           rows={15}
           name={'description'}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              description: e.target.value,
+            });
           }}
         />
       </Form.Group>
@@ -86,7 +106,10 @@ export default function PersonInfo(props: EntityInfoComponentProps<Person>): Rea
           id={'birthDate'}
           name={'birthDate'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              birthDate: e.target.value,
+            });
           }}
         />
       </Form.Group>
@@ -97,7 +120,10 @@ export default function PersonInfo(props: EntityInfoComponentProps<Person>): Rea
           id={'deathDate'}
           name={'deathDate'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              deathDate: e.target.value,
+            });
           }}
         />
       </Form.Group>
@@ -108,7 +134,10 @@ export default function PersonInfo(props: EntityInfoComponentProps<Person>): Rea
           id={'wikiLink'}
           name={'wikiLink'}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            props.onChange && props.onChange(e);
+            onChange({
+              ...props.entity,
+              wikiLink: e.target.value,
+            });
           }}
         />
       </Form.Group>

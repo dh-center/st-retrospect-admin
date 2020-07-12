@@ -2,14 +2,16 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
+export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
 export type QuestsPageQuestQueryVariables = {
     id: string;
 };
 export type QuestsPageQuestQueryResponse = {
-    readonly quest: {
+    readonly entity: {
         readonly id: string;
         readonly name: string;
         readonly description: string | null;
+        readonly type: TaskTypes;
     } | null;
 };
 export type QuestsPageQuestQuery = {
@@ -23,10 +25,11 @@ export type QuestsPageQuestQuery = {
 query QuestsPageQuestQuery(
   $id: ID!
 ) {
-  quest(id: $id) {
+  entity: quest(id: $id) {
     id
     name
     description
+    type
   }
 }
 */
@@ -42,7 +45,7 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
+    "alias": "entity",
     "args": [
       {
         "kind": "Variable",
@@ -75,6 +78,13 @@ v1 = [
         "kind": "ScalarField",
         "name": "description",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "type",
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -101,9 +111,9 @@ return {
     "metadata": {},
     "name": "QuestsPageQuestQuery",
     "operationKind": "query",
-    "text": "query QuestsPageQuestQuery(\n  $id: ID!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n  }\n}\n"
+    "text": "query QuestsPageQuestQuery(\n  $id: ID!\n) {\n  entity: quest(id: $id) {\n    id\n    name\n    description\n    type\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b18e3a3c03a3c20fc0bfc983aa0a4e6d';
+(node as any).hash = '3358aa3fb1aba445be0b8145d260d7a8';
 export default node;
