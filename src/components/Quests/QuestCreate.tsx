@@ -6,13 +6,13 @@ const QuestCreateComponent = makeCreationPage(
   QuestInfo,
   generateQuest,
   graphql`
-        mutation QuestCreateMutation($input: CreateQuestInput!) {
-            quest {
-                create(input: $input) {
-                    recordId
-                }
-            }
-        }`
+    mutation QuestCreateMutation($input: CreateQuestInput!) {
+      quest {
+        create(input: $input) {
+          recordId
+        }
+      }
+    }`
 );
 
 export default QuestCreateComponent;

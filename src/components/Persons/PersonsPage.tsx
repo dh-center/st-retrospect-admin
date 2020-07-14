@@ -14,12 +14,12 @@ export default function PersonsPage(): ReactElement {
     <QueryRenderer<PersonsPageQuery>
       environment={environment}
       query={graphql`
-          query PersonsPageQuery (
-            $first: Int,
-            $after: Cursor
-          ) {
-             ...PersonsList_entityConnection @arguments(first: $first, after: $after)
-          }
+        query PersonsPageQuery (
+          $first: Int,
+          $after: Cursor
+        ) {
+          ...PersonsList_entityConnection @arguments(first: $first, after: $after)
+        }
         `}
       variables={{
         first: ENTITIES_PER_PAGE,

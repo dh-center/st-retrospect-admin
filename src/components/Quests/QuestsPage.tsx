@@ -14,12 +14,12 @@ export default function QuestsPage(): ReactElement {
     <QueryRenderer<QuestsPageQuery>
       environment={environment}
       query={graphql`
-              query QuestsPageQuery (
-                $first: Int,
-                $after: Cursor
-              ) {
-                ...QuestsList_entityConnection @arguments(first: $first, after: $after)
-              }
+        query QuestsPageQuery (
+          $first: Int,
+          $after: Cursor
+        ) {
+          ...QuestsList_entityConnection @arguments(first: $first, after: $after)
+        }
             `}
       variables={{
         first: ENTITIES_PER_PAGE,
