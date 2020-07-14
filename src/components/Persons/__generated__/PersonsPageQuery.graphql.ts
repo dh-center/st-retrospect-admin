@@ -8,7 +8,7 @@ export type PersonsPageQueryVariables = {
     after?: unknown | null;
 };
 export type PersonsPageQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"PersonsPage_entityConnection">;
+    readonly " $fragmentRefs": FragmentRefs<"PersonsList_entityConnection">;
 };
 export type PersonsPageQuery = {
     readonly response: PersonsPageQueryResponse;
@@ -22,10 +22,10 @@ query PersonsPageQuery(
   $first: Int
   $after: Cursor
 ) {
-  ...PersonsPage_entityConnection_2HEEH6
+  ...PersonsList_entityConnection_2HEEH6
 }
 
-fragment PersonsPage_entityConnection_2HEEH6 on Query {
+fragment PersonsList_entityConnection_2HEEH6 on Query {
   entities: persons(first: $first, after: $after) {
     totalCount
     edges {
@@ -87,7 +87,7 @@ return {
       {
         "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "PersonsPage_entityConnection"
+        "name": "PersonsList_entityConnection"
       }
     ],
     "type": "Query"
@@ -249,9 +249,9 @@ return {
     "metadata": {},
     "name": "PersonsPageQuery",
     "operationKind": "query",
-    "text": "query PersonsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsPage_entityConnection_2HEEH6\n}\n\nfragment PersonsPage_entityConnection_2HEEH6 on Query {\n  entities: persons(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        lastName\n        firstName\n        patronymic\n        pseudonym\n        birthDate\n        deathDate\n        profession\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PersonsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_entityConnection_2HEEH6\n}\n\nfragment PersonsList_entityConnection_2HEEH6 on Query {\n  entities: persons(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        lastName\n        firstName\n        patronymic\n        pseudonym\n        birthDate\n        deathDate\n        profession\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '25c55678c77b38a5245d947be425403d';
+(node as any).hash = 'cedd75e44eb4a9b04768eb3cdea6b29e';
 export default node;

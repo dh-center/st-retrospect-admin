@@ -1,37 +1,35 @@
 import { commitMutation, GraphQLTaggedNode } from 'react-relay';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import environment from '../../relay-env';
 import notifier from 'codex-notifier';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
-
-/**
- * Props of component
- */
-interface InfoComponentProps {
-  /**
-   * Handler for changing input fields
-   *
-   * @param e - change event
-   */
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}
+import { EntityInfoComponentProps, OmitId } from '../../types/entities';
 
 /**
  * Return create component with Info fields
  *
  * @param InfoComponent - wrapped component
+ * @param generateEntity - function for generating entities
  * @param mutation - creating mutation
+ * @param componentName - info component name for debugging messages
  */
-export default function createComponent<P extends object>(
-  InfoComponent: React.ComponentType<InfoComponentProps>,
-  mutation: GraphQLTaggedNode
-): React.FC<P> {
-  return (): React.ReactElement => {
+export default function makeCreationPage<P extends object>(
+  InfoComponent: React.ComponentType<EntityInfoComponentProps<OmitId<P>>>,
+  generateEntity: () => OmitId<P>,
+  mutation: GraphQLTaggedNode,
+  componentName?: string
+): React.FC {
+  componentName = InfoComponent.displayName ?? InfoComponent.name;
+
+  /**
+   * Wrapper for info-components for creating entities
+   */
+  function CreateComponent(): React.ReactElement {
     /**
      * Entity object in state
      */
-    const [entity, setEntity] = useState({});
+    const [entity, setEntity] = useState(generateEntity());
 
     const history = useHistory();
     const location = useLocation();
@@ -78,22 +76,6 @@ export default function createComponent<P extends object>(
       saveEntityToApi();
     };
 
-    /**
-     * Update entity in state
-     *
-     * @param e - change event in form
-     */
-    const handleUpdateEntity = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-      const name = e.target.getAttribute('name') as string;
-      const value = e.target.value;
-
-      setEntity(prevState => ({
-        ...prevState,
-        [name]: value,
-      })
-      );
-    };
-
     return (
       <div className='d-flex justify-content-center'>
         <Form
@@ -104,10 +86,16 @@ export default function createComponent<P extends object>(
             width: '100%',
           }}
         >
-          <InfoComponent onChange={handleUpdateEntity}/>
+          <InfoComponent
+            onChange={(e): void => setEntity(e)}
+            entity={entity}
+          />
           <Button type={'submit'}>Save</Button>
         </Form>
       </div>
     );
-  };
+  }
+  CreateComponent.displayName = `makeCreationPage(${componentName})`;
+
+  return CreateComponent;
 }

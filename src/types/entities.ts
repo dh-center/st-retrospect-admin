@@ -1,4 +1,5 @@
-import { QuestsPage_entityConnection as QuestConnection } from '../components/Quests/__generated__/QuestsPage_entityConnection.graphql';
+import { QuestViewQuery } from '../components/Quests/__generated__/QuestViewQuery.graphql';
+import { PersonViewQuery } from '../components/Persons/__generated__/PersonViewQuery.graphql';
 
 /**
  * Interface represents Relay Connection model
@@ -16,9 +17,45 @@ export interface EntityConnection {
   readonly ' $refType': string;
 }
 
-export type Quest = QuestConnection['entities']['edges'][0]['node'];
+/**
+ * Full quest info
+ */
+export type Quest = NonNullable<QuestViewQuery['response']['entity']>;
+
+/**
+ * Full person info
+ */
+export type Person = NonNullable<PersonViewQuery['response']['entity']>;
+
+/**
+ * Base entity info
+ */
 export type Entity = EntityConnection['entities']['edges'][0]['node'];
+
+/**
+ * Removes id field from type
+ */
+export type OmitId<T> = Omit<T, 'id'>
 
 export enum EntityTypes {
   QUEST = 'QUEST'
+}
+
+export interface EntityInfoComponentProps<T> {
+  /**
+   * Handler for changing entity field
+   *
+   * @param e - change event
+   */
+  onChange?: (e: T) => void;
+
+  /**
+   * If true, info-component will be rendered in view-only mode (without possibility to change values)
+   */
+  viewOnly?: boolean;
+
+  /**
+   * Entity for displaying
+   */
+  readonly entity: T;
 }

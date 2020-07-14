@@ -226,7 +226,9 @@ export default function PersonLifeYearsDiagram(props: {
       .text(function (d) {
         return d.label;
       });
-  }, []);
+
+    // eslint-disable-next-line
+    }, []);
 
   return (
     <div className={'visualization-block'}>

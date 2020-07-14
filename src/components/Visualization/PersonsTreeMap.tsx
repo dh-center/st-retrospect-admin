@@ -210,6 +210,8 @@ function PersonsTreeMap(props: {
       .text(d => d.data.name)
       .attr('font-size', '10px')
       .attr('fill', 'white');
+
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -3,23 +3,28 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type QuestsPage_entityConnection = {
+export type PersonsList_entityConnection = {
     readonly entities: {
         readonly totalCount: number;
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly name: string;
-                readonly description: string | null;
+                readonly lastName: string | null;
+                readonly firstName: string | null;
+                readonly patronymic: string | null;
+                readonly pseudonym: string | null;
+                readonly birthDate: string | null;
+                readonly deathDate: string | null;
+                readonly profession: string | null;
             };
         }>;
     };
-    readonly " $refType": "QuestsPage_entityConnection";
+    readonly " $refType": "PersonsList_entityConnection";
 };
-export type QuestsPage_entityConnection$data = QuestsPage_entityConnection;
-export type QuestsPage_entityConnection$key = {
-    readonly " $data"?: QuestsPage_entityConnection$data;
-    readonly " $fragmentRefs": FragmentRefs<"QuestsPage_entityConnection">;
+export type PersonsList_entityConnection$data = PersonsList_entityConnection;
+export type PersonsList_entityConnection$key = {
+    readonly " $data"?: PersonsList_entityConnection$data;
+    readonly " $fragmentRefs": FragmentRefs<"PersonsList_entityConnection">;
 };
 
 
@@ -52,14 +57,14 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "QuestsPage_entityConnection",
+  "name": "PersonsList_entityConnection",
   "selections": [
     {
       "alias": "entities",
       "args": null,
-      "concreteType": "QuestConnection",
+      "concreteType": "PersonConnection",
       "kind": "LinkedField",
-      "name": "__QuestsPage_entities_connection",
+      "name": "__PersonsPage_entities_connection",
       "plural": false,
       "selections": [
         {
@@ -72,7 +77,7 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "concreteType": "QuestEdge",
+          "concreteType": "PersonEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -80,7 +85,7 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "Quest",
+              "concreteType": "Person",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -96,14 +101,49 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "name",
+                  "name": "lastName",
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "description",
+                  "name": "firstName",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "patronymic",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "pseudonym",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "birthDate",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "deathDate",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "profession",
                   "storageKey": null
                 },
                 {
@@ -157,5 +197,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = '74236a74f50e63e0b9e24b7d9b5debe4';
+(node as any).hash = '519d344be3f259a0ed3cb2bee5b5e600';
 export default node;

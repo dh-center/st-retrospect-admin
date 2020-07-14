@@ -176,6 +176,8 @@ function Index(props: {
         .attr('cx', d => d.x!)
         .attr('cy', d => d.y!);
     });
+
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -298,7 +300,7 @@ function Index(props: {
     simulation.current!.nodes(nodes.current);
     linkForce.current!.links(links.current!);
     simulation.current!.alpha(1).restart();
-  }, [locationTypesToggles, nodes]);
+  }, [locationTypesToggles, nodes, props.data.relations.edges]);
 
   return (
     <div className='visualization-block relations-graph'>
