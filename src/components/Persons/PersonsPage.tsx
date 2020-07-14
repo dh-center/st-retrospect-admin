@@ -62,7 +62,7 @@ const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntit
 );
 
 /**
- *
+ * Generates empty person
  */
 function generatePerson(): OmitId<Person> {
   return {

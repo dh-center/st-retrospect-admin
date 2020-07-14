@@ -10,7 +10,7 @@ import Quote from '@editorjs/quote';
 import { EntityInfoComponentProps, OmitId, Quest } from '../../types/entities';
 
 /**
- *
+ * Generates empty quest
  */
 export function generateQuest(): OmitId<Quest> {
   return {
