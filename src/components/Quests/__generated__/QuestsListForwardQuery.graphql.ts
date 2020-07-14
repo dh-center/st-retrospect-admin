@@ -3,29 +3,29 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type QuestsPageForwardQueryVariables = {
+export type QuestsListForwardQueryVariables = {
     first?: number | null;
     after?: unknown | null;
 };
-export type QuestsPageForwardQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"QuestsPage_entityConnection">;
+export type QuestsListForwardQueryResponse = {
+    readonly " $fragmentRefs": FragmentRefs<"QuestsList_entityConnection">;
 };
-export type QuestsPageForwardQuery = {
-    readonly response: QuestsPageForwardQueryResponse;
-    readonly variables: QuestsPageForwardQueryVariables;
+export type QuestsListForwardQuery = {
+    readonly response: QuestsListForwardQueryResponse;
+    readonly variables: QuestsListForwardQueryVariables;
 };
 
 
 
 /*
-query QuestsPageForwardQuery(
+query QuestsListForwardQuery(
   $first: Int
   $after: Cursor
 ) {
-  ...QuestsPage_entityConnection_2HEEH6
+  ...QuestsList_entityConnection_2HEEH6
 }
 
-fragment QuestsPage_entityConnection_2HEEH6 on Query {
+fragment QuestsList_entityConnection_2HEEH6 on Query {
   entities: quests(first: $first, after: $after) {
     totalCount
     edges {
@@ -77,12 +77,12 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "QuestsPageForwardQuery",
+    "name": "QuestsListForwardQuery",
     "selections": [
       {
         "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "QuestsPage_entityConnection"
+        "name": "QuestsList_entityConnection"
       }
     ],
     "type": "Query"
@@ -91,7 +91,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "QuestsPageForwardQuery",
+    "name": "QuestsListForwardQuery",
     "selections": [
       {
         "alias": "entities",
@@ -207,11 +207,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "QuestsPageForwardQuery",
+    "name": "QuestsListForwardQuery",
     "operationKind": "query",
-    "text": "query QuestsPageForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...QuestsPage_entityConnection_2HEEH6\n}\n\nfragment QuestsPage_entityConnection_2HEEH6 on Query {\n  entities: quests(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        description\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query QuestsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...QuestsList_entityConnection_2HEEH6\n}\n\nfragment QuestsList_entityConnection_2HEEH6 on Query {\n  entities: quests(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        description\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '27d69b1215701d683cf23c00ef04d63f';
+(node as any).hash = '977b0985c5082a56dba80d8f050192f1';
 export default node;

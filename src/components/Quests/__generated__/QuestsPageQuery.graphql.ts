@@ -8,7 +8,7 @@ export type QuestsPageQueryVariables = {
     after?: unknown | null;
 };
 export type QuestsPageQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"QuestsPage_entityConnection">;
+    readonly " $fragmentRefs": FragmentRefs<"QuestsList_entityConnection">;
 };
 export type QuestsPageQuery = {
     readonly response: QuestsPageQueryResponse;
@@ -22,10 +22,10 @@ query QuestsPageQuery(
   $first: Int
   $after: Cursor
 ) {
-  ...QuestsPage_entityConnection_2HEEH6
+  ...QuestsList_entityConnection_2HEEH6
 }
 
-fragment QuestsPage_entityConnection_2HEEH6 on Query {
+fragment QuestsList_entityConnection_2HEEH6 on Query {
   entities: quests(first: $first, after: $after) {
     totalCount
     edges {
@@ -82,7 +82,7 @@ return {
       {
         "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "QuestsPage_entityConnection"
+        "name": "QuestsList_entityConnection"
       }
     ],
     "type": "Query"
@@ -209,9 +209,9 @@ return {
     "metadata": {},
     "name": "QuestsPageQuery",
     "operationKind": "query",
-    "text": "query QuestsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...QuestsPage_entityConnection_2HEEH6\n}\n\nfragment QuestsPage_entityConnection_2HEEH6 on Query {\n  entities: quests(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        description\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query QuestsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...QuestsList_entityConnection_2HEEH6\n}\n\nfragment QuestsList_entityConnection_2HEEH6 on Query {\n  entities: quests(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        description\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6dbbb030a735725fd3eb2b8556bc299f';
+(node as any).hash = 'ffe6cfe7361cf598381ed151a0462725';
 export default node;

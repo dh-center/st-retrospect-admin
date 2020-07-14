@@ -1,7 +1,5 @@
-import { PersonsPage_entityConnection as PersonsConnection } from '../components/Persons/__generated__/PersonsPage_entityConnection.graphql';
-
-import { QuestsPageQuestQuery } from '../components/Quests/__generated__/QuestsPageQuestQuery.graphql';
 import { PersonsPagePersonQuery } from '../components/Persons/__generated__/PersonsPagePersonQuery.graphql';
+import { QuestViewQuery } from '../components/Quests/__generated__/QuestViewQuery.graphql';
 
 /**
  * Interface represents Relay Connection model
@@ -19,7 +17,7 @@ export interface EntityConnection {
   readonly ' $refType': string;
 }
 
-export type Quest = NonNullable<QuestsPageQuestQuery['response']['entity']>;
+export type Quest = NonNullable<QuestViewQuery['response']['entity']>;
 export type Person = NonNullable<PersonsPagePersonQuery['response']['entity']>;
 export type Entity = EntityConnection['entities']['edges'][0]['node'];
 

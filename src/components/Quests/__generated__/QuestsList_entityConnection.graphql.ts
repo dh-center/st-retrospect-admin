@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type QuestsPage_entityConnection = {
+export type QuestsList_entityConnection = {
     readonly entities: {
         readonly totalCount: number;
         readonly edges: ReadonlyArray<{
@@ -14,12 +14,12 @@ export type QuestsPage_entityConnection = {
             };
         }>;
     };
-    readonly " $refType": "QuestsPage_entityConnection";
+    readonly " $refType": "QuestsList_entityConnection";
 };
-export type QuestsPage_entityConnection$data = QuestsPage_entityConnection;
-export type QuestsPage_entityConnection$key = {
-    readonly " $data"?: QuestsPage_entityConnection$data;
-    readonly " $fragmentRefs": FragmentRefs<"QuestsPage_entityConnection">;
+export type QuestsList_entityConnection$data = QuestsList_entityConnection;
+export type QuestsList_entityConnection$key = {
+    readonly " $data"?: QuestsList_entityConnection$data;
+    readonly " $fragmentRefs": FragmentRefs<"QuestsList_entityConnection">;
 };
 
 
@@ -52,7 +52,7 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "QuestsPage_entityConnection",
+  "name": "QuestsList_entityConnection",
   "selections": [
     {
       "alias": "entities",
@@ -157,5 +157,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = '74236a74f50e63e0b9e24b7d9b5debe4';
+(node as any).hash = 'ff8e5d93f7a0836c5bcb71d9f4f7142d';
 export default node;

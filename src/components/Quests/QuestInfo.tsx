@@ -7,7 +7,18 @@ import Image from '@editorjs/image';
 import Delimiter from '@editorjs/delimiter';
 import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
-import { Quest, EntityInfoComponentProps, OmitId } from '../../types/entities';
+import { EntityInfoComponentProps, OmitId, Quest } from '../../types/entities';
+
+/**
+ *
+ */
+export function generateQuest(): OmitId<Quest> {
+  return {
+    name: '',
+    description: '',
+    type: 'QUIZ',
+  };
+}
 
 /**
  * Component of quest fields

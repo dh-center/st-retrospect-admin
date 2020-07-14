@@ -9,25 +9,25 @@ export type CreateQuestInput = {
     photo?: string | null;
     type: TaskTypes;
 };
-export type QuestsPageCreateMutationVariables = {
+export type QuestCreateMutationVariables = {
     input: CreateQuestInput;
 };
-export type QuestsPageCreateMutationResponse = {
+export type QuestCreateMutationResponse = {
     readonly quest: {
         readonly create: {
             readonly recordId: string | null;
         };
     } | null;
 };
-export type QuestsPageCreateMutation = {
-    readonly response: QuestsPageCreateMutationResponse;
-    readonly variables: QuestsPageCreateMutationVariables;
+export type QuestCreateMutation = {
+    readonly response: QuestCreateMutationResponse;
+    readonly variables: QuestCreateMutationVariables;
 };
 
 
 
 /*
-mutation QuestsPageCreateMutation(
+mutation QuestCreateMutation(
   $input: CreateQuestInput!
 ) {
   quest {
@@ -89,7 +89,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "QuestsPageCreateMutation",
+    "name": "QuestCreateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation"
   },
@@ -97,17 +97,17 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "QuestsPageCreateMutation",
+    "name": "QuestCreateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "QuestsPageCreateMutation",
+    "name": "QuestCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestsPageCreateMutation(\n  $input: CreateQuestInput!\n) {\n  quest {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation QuestCreateMutation(\n  $input: CreateQuestInput!\n) {\n  quest {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '12bf24205105f7438c8051bd29da0f13';
+(node as any).hash = '90b4c532bb4e6bd01923a47c9da1ff20';
 export default node;

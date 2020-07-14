@@ -3,10 +3,10 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
-export type QuestsPageQuestQueryVariables = {
+export type QuestViewQueryVariables = {
     id: string;
 };
-export type QuestsPageQuestQueryResponse = {
+export type QuestViewQueryResponse = {
     readonly entity: {
         readonly id: string;
         readonly name: string;
@@ -14,15 +14,15 @@ export type QuestsPageQuestQueryResponse = {
         readonly type: TaskTypes;
     } | null;
 };
-export type QuestsPageQuestQuery = {
-    readonly response: QuestsPageQuestQueryResponse;
-    readonly variables: QuestsPageQuestQueryVariables;
+export type QuestViewQuery = {
+    readonly response: QuestViewQueryResponse;
+    readonly variables: QuestViewQueryVariables;
 };
 
 
 
 /*
-query QuestsPageQuestQuery(
+query QuestViewQuery(
   $id: ID!
 ) {
   entity: quest(id: $id) {
@@ -95,7 +95,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "QuestsPageQuestQuery",
+    "name": "QuestViewQuery",
     "selections": (v1/*: any*/),
     "type": "Query"
   },
@@ -103,17 +103,17 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "QuestsPageQuestQuery",
+    "name": "QuestViewQuery",
     "selections": (v1/*: any*/)
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "QuestsPageQuestQuery",
+    "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestsPageQuestQuery(\n  $id: ID!\n) {\n  entity: quest(id: $id) {\n    id\n    name\n    description\n    type\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: ID!\n) {\n  entity: quest(id: $id) {\n    id\n    name\n    description\n    type\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3358aa3fb1aba445be0b8145d260d7a8';
+(node as any).hash = 'cd960ea61ab77126e08b489cf089e5a1';
 export default node;
