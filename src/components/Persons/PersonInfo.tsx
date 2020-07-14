@@ -3,6 +3,23 @@ import { Form } from 'react-bootstrap';
 import { EntityInfoComponentProps, OmitId, Person } from '../../types/entities';
 
 /**
+ * Generates empty person
+ */
+export function generatePerson(): OmitId<Person> {
+  return {
+    description: '',
+    lastName: '',
+    patronymic: '',
+    firstName: '',
+    profession: '',
+    pseudonym: '',
+    birthDate: '',
+    deathDate: '',
+    wikiLink: '',
+  };
+}
+
+/**
  * Component of quest fields
  *
  * @param props - props of component

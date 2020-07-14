@@ -13,25 +13,25 @@ export type CreatePersonInput = {
     deathDate?: string | null;
     wikiLink?: string | null;
 };
-export type PersonsPageCreateMutationVariables = {
+export type PersonCreateMutationVariables = {
     input: CreatePersonInput;
 };
-export type PersonsPageCreateMutationResponse = {
+export type PersonCreateMutationResponse = {
     readonly person: {
         readonly create: {
             readonly recordId: string | null;
         };
     } | null;
 };
-export type PersonsPageCreateMutation = {
-    readonly response: PersonsPageCreateMutationResponse;
-    readonly variables: PersonsPageCreateMutationVariables;
+export type PersonCreateMutation = {
+    readonly response: PersonCreateMutationResponse;
+    readonly variables: PersonCreateMutationVariables;
 };
 
 
 
 /*
-mutation PersonsPageCreateMutation(
+mutation PersonCreateMutation(
   $input: CreatePersonInput!
 ) {
   person {
@@ -93,7 +93,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonsPageCreateMutation",
+    "name": "PersonCreateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation"
   },
@@ -101,17 +101,17 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonsPageCreateMutation",
+    "name": "PersonCreateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "PersonsPageCreateMutation",
+    "name": "PersonCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonsPageCreateMutation(\n  $input: CreatePersonInput!\n) {\n  person {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation PersonCreateMutation(\n  $input: CreatePersonInput!\n) {\n  person {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '56810baf56cc32275896bf4e457715b3';
+(node as any).hash = '3254e28612db9ff77ff6cd8c1f05f7b5';
 export default node;

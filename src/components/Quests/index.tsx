@@ -8,7 +8,7 @@ import QuestPage from './QuestsPage';
 /**
  * Functional component for quests view
  */
-export default function QuestsPage(): ReactElement {
+export default function QuestsRouter(): ReactElement {
   return (
     <Switch>
       <PrivateRoute path={'/quests/create'}>

@@ -1,5 +1,5 @@
-import { PersonsPagePersonQuery } from '../components/Persons/__generated__/PersonsPagePersonQuery.graphql';
 import { QuestViewQuery } from '../components/Quests/__generated__/QuestViewQuery.graphql';
+import { PersonViewQuery } from '../components/Persons/__generated__/PersonViewQuery.graphql';
 
 /**
  * Interface represents Relay Connection model
@@ -25,7 +25,7 @@ export type Quest = NonNullable<QuestViewQuery['response']['entity']>;
 /**
  * Full person info
  */
-export type Person = NonNullable<PersonsPagePersonQuery['response']['entity']>;
+export type Person = NonNullable<PersonViewQuery['response']['entity']>;
 
 /**
  * Base entity info

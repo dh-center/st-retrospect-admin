@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PersonsPage_entityConnection = {
+export type PersonsList_entityConnection = {
     readonly entities: {
         readonly totalCount: number;
         readonly edges: ReadonlyArray<{
@@ -19,12 +19,12 @@ export type PersonsPage_entityConnection = {
             };
         }>;
     };
-    readonly " $refType": "PersonsPage_entityConnection";
+    readonly " $refType": "PersonsList_entityConnection";
 };
-export type PersonsPage_entityConnection$data = PersonsPage_entityConnection;
-export type PersonsPage_entityConnection$key = {
-    readonly " $data"?: PersonsPage_entityConnection$data;
-    readonly " $fragmentRefs": FragmentRefs<"PersonsPage_entityConnection">;
+export type PersonsList_entityConnection$data = PersonsList_entityConnection;
+export type PersonsList_entityConnection$key = {
+    readonly " $data"?: PersonsList_entityConnection$data;
+    readonly " $fragmentRefs": FragmentRefs<"PersonsList_entityConnection">;
 };
 
 
@@ -57,7 +57,7 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "PersonsPage_entityConnection",
+  "name": "PersonsList_entityConnection",
   "selections": [
     {
       "alias": "entities",
@@ -197,5 +197,5 @@ const node: ReaderFragment = {
   ],
   "type": "Query"
 };
-(node as any).hash = '6d8009a4a818f80ab24543afc7fc1d88';
+(node as any).hash = '519d344be3f259a0ed3cb2bee5b5e600';
 export default node;

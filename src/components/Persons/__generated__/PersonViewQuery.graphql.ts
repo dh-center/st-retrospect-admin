@@ -2,10 +2,10 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type PersonsPagePersonQueryVariables = {
+export type PersonViewQueryVariables = {
     id: string;
 };
-export type PersonsPagePersonQueryResponse = {
+export type PersonViewQueryResponse = {
     readonly entity: {
         readonly id: string;
         readonly lastName: string | null;
@@ -19,15 +19,15 @@ export type PersonsPagePersonQueryResponse = {
         readonly wikiLink: string | null;
     } | null;
 };
-export type PersonsPagePersonQuery = {
-    readonly response: PersonsPagePersonQueryResponse;
-    readonly variables: PersonsPagePersonQueryVariables;
+export type PersonViewQuery = {
+    readonly response: PersonViewQueryResponse;
+    readonly variables: PersonViewQueryVariables;
 };
 
 
 
 /*
-query PersonsPagePersonQuery(
+query PersonViewQuery(
   $id: ID!
 ) {
   entity: person(id: $id) {
@@ -148,7 +148,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonsPagePersonQuery",
+    "name": "PersonViewQuery",
     "selections": (v1/*: any*/),
     "type": "Query"
   },
@@ -156,17 +156,17 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonsPagePersonQuery",
+    "name": "PersonViewQuery",
     "selections": (v1/*: any*/)
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "PersonsPagePersonQuery",
+    "name": "PersonViewQuery",
     "operationKind": "query",
-    "text": "query PersonsPagePersonQuery(\n  $id: ID!\n) {\n  entity: person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    birthDate\n    description\n    deathDate\n    profession\n    wikiLink\n  }\n}\n"
+    "text": "query PersonViewQuery(\n  $id: ID!\n) {\n  entity: person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    birthDate\n    description\n    deathDate\n    profession\n    wikiLink\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '88c32886f93b8dce84ed1e8d136db042';
+(node as any).hash = 'dbec2590ce9c23b8d77d86c20df8e4c3';
 export default node;

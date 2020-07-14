@@ -3,7 +3,7 @@ import Navigation from '../components/Navigation';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../components/Login';
 import PrivateRoute from '../components/PrivateRoute';
-import PersonsPage from '../components/Persons/PersonsPage';
+import PersonsPage from '../components/Persons';
 import QuestsPage from '../components/Quests';
 import Quiz from '../components/Quiz';
 import { QueryRenderer } from 'react-relay';
