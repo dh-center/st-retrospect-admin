@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../components/Login';
 import PrivateRoute from '../components/PrivateRoute';
 import PersonsPage from '../components/Persons/PersonsPage';
-import QuestsPage from '../components/Quests/QuestsPage';
+import QuestsPage from '../components/Quests';
 import Quiz from '../components/Quiz';
 import { QueryRenderer } from 'react-relay';
 import environment from '../relay-env';

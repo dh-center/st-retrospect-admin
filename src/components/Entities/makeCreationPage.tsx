@@ -10,15 +10,22 @@ import { EntityInfoComponentProps, OmitId } from '../../types/entities';
  * Return create component with Info fields
  *
  * @param InfoComponent - wrapped component
- * @param generateEntity
+ * @param generateEntity - function for generating entities
  * @param mutation - creating mutation
+ * @param componentName - info component name for debugging messages
  */
-export default function createComponent<P extends object>(
+export default function makeCreationPage<P extends object>(
   InfoComponent: React.ComponentType<EntityInfoComponentProps<OmitId<P>>>,
   generateEntity: () => OmitId<P>,
-  mutation: GraphQLTaggedNode
+  mutation: GraphQLTaggedNode,
+  componentName?: string
 ): React.FC {
-  return (): React.ReactElement => {
+  componentName = InfoComponent.displayName ?? InfoComponent.name;
+
+  /**
+   * Wrapper for info-components for creating entities
+   */
+  function CreateComponent(): React.ReactElement {
     /**
      * Entity object in state
      */
@@ -87,5 +94,8 @@ export default function createComponent<P extends object>(
         </Form>
       </div>
     );
-  };
+  }
+  CreateComponent.displayName = `makeCreationPage(${componentName})`;
+
+  return CreateComponent;
 }

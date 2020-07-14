@@ -8,7 +8,7 @@ import { EntityInfoComponentProps, OmitId, Person } from '../../types/entities';
  * @param props - props of component
  */
 export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person>>): React.ReactElement {
-  const onChange = props.onChange || ((e: OmitId<Person>): void => {});
+  const onChange = props.onChange || ((e: OmitId<Person>): void => { /* do nothing */ });
 
   return (
     <div>

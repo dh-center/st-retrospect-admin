@@ -5,12 +5,12 @@ import environment from '../../relay-env';
 import { useParams } from 'react-router';
 import { OperationType } from 'relay-runtime';
 
-interface Operation extends OperationType {
+interface Operation<T> extends OperationType {
   readonly variables: {
     id: string;
   };
   readonly response: {
-    entity: any;
+    entity: T;
   };
 }
 
@@ -19,16 +19,23 @@ interface Operation extends OperationType {
  *
  * @param InfoComponent - wrapped component
  * @param query - creating mutation
+ * @param componentName - info component name for debugging messages
  */
 export default function makeViewPage<P extends object>(
   InfoComponent: React.ComponentType<EntityInfoComponentProps<P>>,
-  query: GraphQLTaggedNode
+  query: GraphQLTaggedNode,
+  componentName?: string
 ): React.FC {
-  return (): React.ReactElement => {
+  componentName = InfoComponent.displayName ?? InfoComponent.name;
+
+  /**
+   * Wrapper for info-component for displaying entity info
+   */
+  function ViewPage(): React.ReactElement {
     const { id } = useParams();
 
     return (
-      <QueryRenderer<Operation>
+      <QueryRenderer<Operation<P>>
         environment={environment}
         query={query}
         variables={{ id }}
@@ -39,7 +46,6 @@ export default function makeViewPage<P extends object>(
           if (!props) {
             return <div>Loading...</div>;
           }
-          console.log(props);
 
           return (
             <div className='d-flex justify-content-center'>
@@ -49,5 +55,8 @@ export default function makeViewPage<P extends object>(
         }}
       />
     );
-  };
+  }
+  ViewPage.displayName = `makeCreationPage(${componentName})`;
+
+  return ViewPage;
 }

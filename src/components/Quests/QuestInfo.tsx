@@ -53,7 +53,7 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
     }
   }, []);
 
-  const onChange = props.onChange || ((e: OmitId<Quest>): void => {});
+  const onChange = props.onChange || ((e: OmitId<Quest>): void => { /* do nothing */ });
 
   return (
     <div>
