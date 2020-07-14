@@ -48,15 +48,22 @@ export default function makeViewPage<P extends object>(
           }
 
           return (
-            <div className='d-flex justify-content-center'>
-              <InfoComponent viewOnly entity={props.entity}/>
+            <div className='d-flex justify-content-center' >
+              <div
+                style={{
+                  maxWidth: '800px',
+                  width: '100%',
+                }}
+              >
+                <InfoComponent viewOnly entity={props.entity}/>
+              </div>
             </div>
           );
         }}
       />
     );
   }
-  ViewPage.displayName = `makeCreationPage(${componentName})`;
+  ViewPage.displayName = `makeViewPage(${componentName})`;
 
   return ViewPage;
 }
