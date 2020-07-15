@@ -7,6 +7,7 @@ import Image from '@editorjs/image';
 import Delimiter from '@editorjs/delimiter';
 import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
+import LocationSearch from '../../editorjs-plugins/locationSearch';
 import { EntityInfoComponentProps, OmitId, Quest } from '../../types/entities';
 
 /**
@@ -48,6 +49,7 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
           delimiter: Delimiter,
           quote: Quote,
           marker: Marker,
+          location: LocationSearch,
         },
       });
     }
