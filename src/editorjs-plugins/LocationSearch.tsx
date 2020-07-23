@@ -75,7 +75,11 @@ export default class LocationSearch {
           }
         });
 
-        return <CustomSelect options={locations} value={this.selectedLocationInstanceId}/>;
+        return <CustomSelect options={locations}
+          value={this.selectedLocationInstanceId}
+          onChange={(selected): void => {
+            this.selectedLocationInstanceId = selected;
+          }}/>;
       }}
     />, element);
 
@@ -89,7 +93,7 @@ export default class LocationSearch {
    */
   public save(blockContent: Element): object {
     return {
-      locationInstanceId: 'id',
+      locationInstanceId: this.selectedLocationInstanceId,
     };
   }
 }
