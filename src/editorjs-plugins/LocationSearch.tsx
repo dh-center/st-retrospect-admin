@@ -2,11 +2,20 @@ import EditorJS from '@editorjs/editorjs';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CustomSelect from '../components/CustomSelect';
+import { QueryRenderer } from 'react-relay';
+import environment from '../relay-env';
+import graphql from 'babel-plugin-relay/macro';
+import { LocationSearch_locationsQuery as LocationSearchLocationsQuery } from './__generated__/LocationSearch_locationsQuery.graphql';
 
 /**
  * Location search plugin for EditorJS
  */
-class LocationSearch {
+export default class LocationSearch {
+  /**
+   *
+   */
+  private selectedLocationInstanceId: string | undefined;
+
   /**
    * Getter for information about plugin in toolbox
    */
@@ -25,23 +34,50 @@ class LocationSearch {
    * Render function for plugin content
    */
   public render(): HTMLElement {
-    const options = [ {
-      name: '#1',
-      value: '1',
-    },
-    {
-      name: '#2',
-      value: '2',
-    },
-    {
-      name: '#3',
-      value: '3',
-    } ];
-
     const element = document.createElement('div');
 
     element.className = 'location-search-container';
-    ReactDOM.render(<CustomSelect options={options}/>, element);
+    ReactDOM.render(<QueryRenderer<LocationSearchLocationsQuery>
+      environment={environment}
+      query={graphql`
+        query LocationSearch_locationsQuery {
+          locations {
+            edges {
+              node {
+                instances {
+                  value: id
+                  name
+                }
+              }
+            }
+          }
+        }
+      `}
+      variables
+      render={({ error, props }): React.ReactNode => {
+        if (error) {
+          return <div>Error!</div>;
+        }
+        if (!props) {
+          return <div>Loading locations...</div>;
+        }
+
+        /**
+         * Get list of locations from response
+         */
+        const edges = props.locations.edges;
+        const instances = edges.map((edge) => edge.node.instances);
+        let locations = instances.flat(1);
+
+        locations = locations.filter((location) => {
+          if (location.name !== null) {
+            return location;
+          }
+        });
+
+        return <CustomSelect options={locations} value={this.selectedLocationInstanceId}/>;
+      }}
+    />, element);
 
     return element;
   }
@@ -53,9 +89,7 @@ class LocationSearch {
    */
   public save(blockContent: Element): object {
     return {
-      locationId: 'id',
+      locationInstanceId: 'id',
     };
   }
 }
-
-export default LocationSearch;

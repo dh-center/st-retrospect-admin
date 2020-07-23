@@ -7,7 +7,7 @@ import Image from '@editorjs/image';
 import Delimiter from '@editorjs/delimiter';
 import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
-import LocationSearch from '../../editorjs-plugins/locationSearch';
+import LocationSearch from '../../editorjs-plugins/LocationSearch';
 import { EntityInfoComponentProps, OmitId, Quest } from '../../types/entities';
 
 /**

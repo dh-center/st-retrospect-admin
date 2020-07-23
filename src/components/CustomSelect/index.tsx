@@ -4,6 +4,7 @@ import './index.css';
 
 interface ComponentProps {
   options: SelectSearchOption[];
+  value: string | undefined;
 }
 
 /**
@@ -17,8 +18,10 @@ export default function CustomSelect(props: ComponentProps): React.ReactElement 
   return (
     <SelectSearch
       options={props.options}
+      value={props.value}
       placeholder={'Select a location...'}
       onChange={(selected): void => setSelectedValue(selected)}
+      search={true}
     />
   );
 }
