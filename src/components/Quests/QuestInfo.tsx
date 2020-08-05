@@ -7,6 +7,7 @@ import Image from '@editorjs/image';
 import Delimiter from '@editorjs/delimiter';
 import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
+import LocationSearch from '../../editorjs-plugins/LocationSearch';
 import { EntityInfoComponentProps, OmitId, Quest } from '../../types/entities';
 
 /**
@@ -48,6 +49,7 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
           delimiter: Delimiter,
           quote: Quote,
           marker: Marker,
+          locationInstance: LocationSearch,
         },
       });
     }
@@ -150,6 +152,7 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
             ref={editorElementRef}
           />
         </div>
+        <button onClick={async (): Promise<void> => console.log(await editorRef.current?.save())}>Test save</button>
       </Form.Group>
     </div>
   );
