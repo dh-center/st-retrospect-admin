@@ -12,7 +12,7 @@ import { LocationSearch_locationsQuery as LocationSearchLocationsQuery } from '.
  */
 export default class LocationSearch {
   /**
-   *
+   * Selected location instance ID
    */
   private selectedLocationInstanceId: string | undefined;
 
