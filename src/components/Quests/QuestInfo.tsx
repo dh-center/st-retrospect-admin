@@ -49,7 +49,7 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
           delimiter: Delimiter,
           quote: Quote,
           marker: Marker,
-          location: LocationSearch,
+          locationInstance: LocationSearch,
         },
       });
     }
@@ -152,6 +152,7 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
             ref={editorElementRef}
           />
         </div>
+        <button onClick={async (): Promise<void> => console.log(await editorRef.current?.save())}>Test save</button>
       </Form.Group>
     </div>
   );
