@@ -67,15 +67,15 @@ export default class LocationSearch {
          */
         const edges = props.locations.edges;
         const instances = edges.map((edge) => edge.node.instances);
-        let locations = instances.flat(1);
+        const locations = instances.flat(1);
 
-        locations = locations.filter((location) => {
+        const locationsWithNames = locations.filter((location) => {
           if (location.name !== null) {
             return location;
           }
-        });
+        }) as {readonly value: string; readonly name: string}[];
 
-        return <CustomSelect options={locations}
+        return <CustomSelect options={locationsWithNames}
           value={this.selectedLocationInstanceId}
           onChange={(selected): void => {
             this.selectedLocationInstanceId = selected;

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
@@ -43,8 +44,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CreateQuestInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -91,7 +91,8 @@ return {
     "metadata": null,
     "name": "QuestCreateMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -101,6 +102,7 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
+    "cacheID": "a1497aff4bbf5369ac16b6abe1d047aa",
     "id": null,
     "metadata": {},
     "name": "QuestCreateMutation",

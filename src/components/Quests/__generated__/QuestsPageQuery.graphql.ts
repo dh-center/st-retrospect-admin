@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -46,21 +47,17 @@ fragment QuestsList_entityConnection_2HEEH6 on Query {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "first",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after",
-    "type": "Cursor"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "after"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
+},
+v2 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -74,28 +71,35 @@ v1 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "QuestsPageQuery",
     "selections": [
       {
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "kind": "FragmentSpread",
         "name": "QuestsList_entityConnection"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "QuestsPageQuery",
     "selections": [
       {
         "alias": "entities",
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "QuestConnection",
         "kind": "LinkedField",
         "name": "quests",
@@ -195,7 +199,7 @@ return {
       },
       {
         "alias": "entities",
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "filters": null,
         "handle": "connection",
         "key": "QuestsPage_entities",
@@ -205,6 +209,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "85670e20600d31c3bf2e80915cdc5e1f",
     "id": null,
     "metadata": {},
     "name": "QuestsPageQuery",
