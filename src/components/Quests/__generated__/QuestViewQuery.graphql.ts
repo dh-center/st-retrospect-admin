@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
@@ -39,8 +40,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id",
-    "type": "ID!"
+    "name": "id"
   }
 ],
 v1 = [
@@ -97,7 +97,8 @@ return {
     "metadata": null,
     "name": "QuestViewQuery",
     "selections": (v1/*: any*/),
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -107,6 +108,7 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
+    "cacheID": "4e831939b8754aae6930d6a827a88b9a",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",

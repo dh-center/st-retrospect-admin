@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -40,7 +41,8 @@ const node: ConcreteRequest = {
         "name": "Navigation_user"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -76,6 +78,7 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
+    "cacheID": "ea893be5a0f437352570af5747f93ebd",
     "id": null,
     "metadata": {},
     "name": "AppQuery",

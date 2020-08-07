@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -27,16 +28,14 @@ export type QuestsList_entityConnection$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 10,
-      "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
-    },
-    {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "Cursor"
+      "name": "after"
+    },
+    {
+      "defaultValue": 10,
+      "kind": "LocalArgument",
+      "name": "first"
     }
   ],
   "kind": "Fragment",
@@ -155,7 +154,8 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Query"
+  "type": "Query",
+  "abstractKey": null
 };
 (node as any).hash = 'ff8e5d93f7a0836c5bcb71d9f4f7142d';
 export default node;
