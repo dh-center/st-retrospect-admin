@@ -4,6 +4,8 @@ import { EntityInfoComponentProps } from '../../types/entities';
 import environment from '../../relay-env';
 import { useParams } from 'react-router';
 import { OperationType } from 'relay-runtime';
+import { Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 interface Operation<T> extends OperationType {
   readonly variables: {
@@ -56,6 +58,9 @@ export default function makeViewPage<P extends object>(
                 }}
               >
                 <InfoComponent viewOnly entity={props.entity}/>
+                <LinkContainer to={`${id}/edit`}>
+                  <Button variant={'outline-warning'} className='m-1'>Edit</Button>
+                </LinkContainer>
               </div>
             </div>
           );

@@ -15,7 +15,12 @@ export default function PersonsRouter(): ReactElement {
         <PersonCreateComponent/>
       </PrivateRoute>
       <PrivateRoute path={'/persons/:id'}>
-        <PersonViewComponent/>
+        <PrivateRoute path={'/persons/:id'}>
+          <PersonViewComponent/>
+        </PrivateRoute>
+        <PrivateRoute path={'/persons/:id/edit'}>
+          Edit page
+        </PrivateRoute>
       </PrivateRoute>
       <PrivateRoute path={'/persons'}>
         <PersonsPage/>
