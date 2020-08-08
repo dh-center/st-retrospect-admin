@@ -114,7 +114,7 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
           </Table>
         ) : (<div>There is no entities in DataBase</div>)
         }
-        <div className='entities-page__page-control p-0'>
+        <div className='entities-page__page-control p-0 pb-2'>
           <div>
             <LinkContainer to={`/${this.props.entityName}/create`}>
               <Button variant='outline-success' className='m-1'>Create</Button>
