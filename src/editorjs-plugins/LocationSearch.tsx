@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
 import EditorJS from '@editorjs/editorjs';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -53,7 +54,7 @@ export default class LocationSearch {
           }
         }
       `}
-      variables
+      variables={{}}
       render={({ error, props }): React.ReactNode => {
         if (error) {
           return <div>Error!</div>;
@@ -88,10 +89,8 @@ export default class LocationSearch {
 
   /**
    * Return information structure after save
-   *
-   * @param blockContent - content of plugin block
    */
-  public save(blockContent: Element): object {
+  public save(): object {
     return {
       locationInstanceId: this.selectedLocationInstanceId,
     };

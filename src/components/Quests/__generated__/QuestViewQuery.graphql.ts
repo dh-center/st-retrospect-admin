@@ -13,6 +13,11 @@ export type QuestViewQueryResponse = {
         readonly name: string;
         readonly description: string | null;
         readonly type: TaskTypes;
+        readonly data: {
+            readonly time: number | null;
+            readonly version: string | null;
+            readonly blocks: ReadonlyArray<unknown>;
+        } | null;
     } | null;
 };
 export type QuestViewQuery = {
@@ -31,6 +36,11 @@ query QuestViewQuery(
     name
     description
     type
+    data {
+      time
+      version
+      blocks
+    }
   }
 }
 */
@@ -85,6 +95,38 @@ v1 = [
         "kind": "ScalarField",
         "name": "type",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "EditorData",
+        "kind": "LinkedField",
+        "name": "data",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "time",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "version",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "blocks",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -108,14 +150,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "4e831939b8754aae6930d6a827a88b9a",
+    "cacheID": "4037283c8ef0447d7985bc4c84e269df",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestViewQuery(\n  $id: ID!\n) {\n  entity: quest(id: $id) {\n    id\n    name\n    description\n    type\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: ID!\n) {\n  entity: quest(id: $id) {\n    id\n    name\n    description\n    type\n    data {\n      time\n      version\n      blocks\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'cd960ea61ab77126e08b489cf089e5a1';
+(node as any).hash = '13988429ad5e6830db384060359d125d';
 export default node;

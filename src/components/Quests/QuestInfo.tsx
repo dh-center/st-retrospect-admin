@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useRef } from 'react';
 import { Form } from 'react-bootstrap';
-import EditorJS from '@editorjs/editorjs';
+import EditorJS, { OutputBlockData, OutputData } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Image from '@editorjs/image';
@@ -18,6 +18,11 @@ export function generateQuest(): OmitId<Quest> {
     name: '',
     description: '',
     type: 'QUIZ',
+    data: {
+      time: null,
+      version: null,
+      blocks: [],
+    },
   };
 }
 
@@ -29,12 +34,33 @@ export function generateQuest(): OmitId<Quest> {
 export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>): React.ReactElement {
   const editorRef = useRef<EditorJS>();
   const editorElementRef = useRef<HTMLDivElement>(null);
+  const onChange = props.onChange || ((e: OmitId<Quest>): void => { /* do nothing */ });
+
+  const onEditorChangeCallback = useRef<(data: OutputData) => Promise<void>>();
+
+  useEffect(() => {
+    onEditorChangeCallback.current = async (editorData: OutputData) => {
+      onChange({
+        ...props.entity,
+        data: {
+          time: null,
+          version: '',
+          ...editorData,
+        },
+      });
+    };
+  }, [ props.entity ]);
 
   useEffect(() => {
     if (editorElementRef.current) {
       editorRef.current = new EditorJS({
         holder: editorElementRef.current,
         placeholder: 'Click here to write an awesome route!',
+        data: {
+          blocks: (props.entity.data?.blocks || []) as OutputBlockData[],
+          time: props.entity.data?.time || undefined,
+          version: props.entity.data?.version || undefined,
+        },
         tools: {
           header: Header,
           list: List,
@@ -51,11 +77,12 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
           marker: Marker,
           locationInstance: LocationSearch,
         },
+        async onChange(api): Promise<void> {
+          onEditorChangeCallback.current && onEditorChangeCallback.current(await api.saver.save());
+        },
       });
     }
   }, []);
-
-  const onChange = props.onChange || ((e: OmitId<Quest>): void => { /* do nothing */ });
 
   return (
     <div>

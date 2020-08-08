@@ -9,6 +9,12 @@ export type CreateQuestInput = {
     description?: string | null;
     photo?: string | null;
     type: TaskTypes;
+    data: EditorDataInput;
+};
+export type EditorDataInput = {
+    time?: number | null;
+    blocks: Array<unknown>;
+    version?: string | null;
 };
 export type QuestCreateMutationVariables = {
     input: CreateQuestInput;
@@ -16,9 +22,9 @@ export type QuestCreateMutationVariables = {
 export type QuestCreateMutationResponse = {
     readonly quest: {
         readonly create: {
-            readonly recordId: string | null;
+            readonly recordId: string;
         };
-    } | null;
+    };
 };
 export type QuestCreateMutation = {
     readonly response: QuestCreateMutationResponse;

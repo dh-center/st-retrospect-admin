@@ -96,56 +96,53 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
     return (
       <div className='entities-page'>
         {this.props.entityConnection.entities.edges.length > 0 ? (
-          <>
-            <Table striped bordered hover size='sm' className='m-0' responsive>
-              <thead>
-                <tr>
-                  <th>№</th>
-                  {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
-                    if (key === '__typename') {
-                      return undefined;
-                    }
-
-                    return <th key={key}>{key}</th>;
-                  }
-                  )}
-                </tr>
-              </thead>
-              {sectionsList}
-            </Table>
-            <div className='entities-page__page-control p-0'>
-              <div>
-                <LinkContainer to={`/${this.props.entityName}/create`}>
-                  <Button variant='outline-success' className='m-1'>Create</Button>
-                </LinkContainer>
-                <Button variant='outline-info' onClick={this.loadMore} disabled={!this.props.relay.hasMore()}>
-                  {this.props.relay.isLoading() ? (
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                  ) : ('Load more')
+          <Table striped bordered hover size='sm' className='m-0' responsive>
+            <thead>
+              <tr>
+                <th>№</th>
+                {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
+                  if (key === '__typename') {
+                    return undefined;
                   }
 
-                </Button>
-              </div>
-              <div className='d-flex justify-content-center'>
-                <PaginationControl
-                  pageSize={ENTITIES_PER_PAGE}
-                  total={this.props.entityConnection.entities.totalCount}
-                  onChange={this.goToPage}
-                  locale={locale}
-                  current={this.state.currentPage + 1}
-                />
-              </div>
-            </div>
-          </>
+                  return <th key={key}>{key}</th>;
+                }
+                )}
+              </tr>
+            </thead>
+            {sectionsList}
+          </Table>
         ) : (<div>There is no entities in DataBase</div>)
         }
+        <div className='entities-page__page-control p-0'>
+          <div>
+            <LinkContainer to={`/${this.props.entityName}/create`}>
+              <Button variant='outline-success' className='m-1'>Create</Button>
+            </LinkContainer>
+            <Button variant='outline-info' onClick={this.loadMore} disabled={!this.props.relay.hasMore()}>
+              {this.props.relay.isLoading() ? (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              ) : ('Load more')
+              }
 
+            </Button>
+          </div>
+          <div className='d-flex justify-content-center'>
+            <PaginationControl
+              pageSize={ENTITIES_PER_PAGE}
+              total={this.props.entityConnection.entities.totalCount}
+              onChange={this.goToPage}
+              locale={locale}
+              current={this.state.currentPage + 1}
+            />
+          </div>
+        </div>
       </div>
     );
   }
