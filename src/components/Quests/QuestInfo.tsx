@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useRef } from 'react';
 import { Form } from 'react-bootstrap';
-import EditorJS, { OutputBlockData, OutputData } from '@editorjs/editorjs';
+import EditorJS, { BlockToolConstructable, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Image from '@editorjs/image';
@@ -75,7 +75,7 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
           delimiter: Delimiter,
           quote: Quote,
           marker: Marker,
-          locationInstance: LocationSearch,
+          locationInstance: LocationSearch as unknown as BlockToolConstructable,
         },
         async onChange(api): Promise<void> {
           onEditorChangeCallback.current && onEditorChangeCallback.current(await api.saver.save());
