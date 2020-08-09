@@ -105,14 +105,17 @@ input CreateQuestInput {
 
   """Quest type (quiz, route, etc.)"""
   type: TaskTypes! = ROUTE
+
+  """Quest data"""
+  data: EditorDataInput!
 }
 
 type CreateQuestPayload {
   """Created quest id"""
-  recordId: ID
+  recordId: ID!
 
   """Created quest"""
-  record: Quest
+  record: Quest!
 }
 
 scalar Cursor
@@ -124,7 +127,33 @@ type DeletePersonPayload {
 
 type DeleteQuestPayload {
   """Deleted quest id"""
-  recordId: ID
+  recordId: ID!
+}
+
+"""
+Data saved from Editor.js
+See https://editorjs.io/saving-data
+"""
+type EditorData {
+  """Saving timestamp"""
+  time: Int
+
+  """List of Blocks data"""
+  blocks: [JSON!]!
+
+  """Version of Editor.js"""
+  version: String
+}
+
+input EditorDataInput {
+  """Saving timestamp"""
+  time: Int
+
+  """List of Blocks data"""
+  blocks: [JSON!]!
+
+  """Version of Editor.js"""
+  version: String
 }
 
 """
@@ -250,7 +279,7 @@ type Mutation {
 
   """Dislike route"""
   dislikeRoute(routeId: String!): User!
-  quest: QuestMutations
+  quest: QuestMutations!
 }
 
 """Information about current page"""
@@ -512,7 +541,7 @@ type Quest {
   task: JSON!
 
   """Quest data"""
-  data: JSON
+  data: EditorData
 
   """Quest rewards"""
   rewards: [JSON!]!
@@ -691,15 +720,15 @@ input UpdateQuestInput {
   type: TaskTypes
 
   """Quest data"""
-  data: JSON
+  data: EditorDataInput
 }
 
 type UpdateQuestPayload {
   """Created quest id"""
-  recordId: ID
+  recordId: ID!
 
   """Created quest"""
-  record: Quest
+  record: Quest!
 }
 
 type User {
