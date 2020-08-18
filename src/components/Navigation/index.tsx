@@ -35,13 +35,13 @@ export function Navigation(props: NavigationProps): ReactElement {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link as={Link} to="/quests">
-            Quests
+          <Nav.Link as={Link} to="/locations">
+            Locations
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link as={Link} to="/quiz">
-            Quiz
+          <Nav.Link as={Link} to="/quests">
+            Quests
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>

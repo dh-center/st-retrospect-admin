@@ -11,6 +11,7 @@ import environment from '../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import { AppQuery, AppQueryResponse } from './__generated__/AppQuery.graphql';
 import VisualizationPage from '../components/Visualization';
+import LocationsPage from '../components/Locations';
 
 const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryResponse | null }): React.ReactNode => {
   if (error) {
@@ -32,6 +33,10 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
 
         <PrivateRoute path='/persons'>
           <PersonsPage/>
+        </PrivateRoute>
+
+        <PrivateRoute path='/locations'>
+          <LocationsPage/>
         </PrivateRoute>
 
         <PrivateRoute path='/quests'>
