@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
 import EditorJS from '@editorjs/editorjs';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -6,6 +7,17 @@ import { QueryRenderer } from 'react-relay';
 import environment from '../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import { LocationSearch_locationsQuery as LocationSearchLocationsQuery } from './__generated__/LocationSearch_locationsQuery.graphql';
+import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
+
+/**
+ * LocationSearch plugin data
+ */
+interface LocationSearchData {
+  /**
+   * Saved location instance id
+   */
+  locationInstanceId: string | undefined;
+}
 
 /**
  * Location search plugin for EditorJS
@@ -15,6 +27,15 @@ export default class LocationSearch {
    * Selected location instance ID
    */
   private selectedLocationInstanceId: string | undefined;
+
+  /**
+   * Plugin constructor
+   *
+   * @param data - previously saved data
+   */
+  constructor({ data }: BlockToolConstructorOptions<LocationSearchData>) {
+    this.selectedLocationInstanceId = data.locationInstanceId;
+  }
 
   /**
    * Getter for information about plugin in toolbox
@@ -53,7 +74,7 @@ export default class LocationSearch {
           }
         }
       `}
-      variables
+      variables={{}}
       render={({ error, props }): React.ReactNode => {
         if (error) {
           return <div>Error!</div>;
@@ -88,10 +109,8 @@ export default class LocationSearch {
 
   /**
    * Return information structure after save
-   *
-   * @param blockContent - content of plugin block
    */
-  public save(blockContent: Element): object {
+  public save(): LocationSearchData {
     return {
       locationInstanceId: this.selectedLocationInstanceId,
     };

@@ -12,7 +12,7 @@ interface Operation<T> extends OperationType {
     id: string;
   };
   readonly response: {
-    entity: T;
+    entity: T | null;
   };
 }
 
@@ -45,8 +45,13 @@ export default function makeViewPage<P extends object>(
           if (error) {
             return <div>Error!</div>;
           }
+
           if (!props) {
             return <div>Loading...</div>;
+          }
+
+          if (!props.entity) {
+            return <div>Unable to load data. Entity is null</div>;
           }
 
           return (

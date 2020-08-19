@@ -11,6 +11,11 @@ const QuestViewComponent = makeViewPage(
         name
         description
         type
+        data {
+          time
+          version
+          blocks
+        }
       }
     }`
 );
