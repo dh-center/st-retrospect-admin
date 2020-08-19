@@ -7,32 +7,48 @@ import { Button, Form } from 'react-bootstrap';
 import { EntityInfoComponentProps, OmitId } from '../../types/entities';
 
 /**
+ * Edit component props
+ */
+interface EditComponentProps<P> {
+  entity: OmitId<P>;
+}
+
+/**
  * Return edit component with Info fields
  *
  * @param InfoComponent - wrapped component
- * @param entity - entity for editing
  * @param mutation - updating mutation
  * @param componentName - info component name for debugging messages
  */
 export default function makeEditPage<P extends object>(
   InfoComponent: React.ComponentType<EntityInfoComponentProps<OmitId<P>>>,
-  entity: OmitId<P>,
   mutation: GraphQLTaggedNode,
   componentName?: string
-): React.FC {
+): React.FC<EditComponentProps<P>> {
   componentName = InfoComponent.displayName ?? InfoComponent.name;
 
   /**
    * Wrapper for info-components for editing entities
+   *
+   * @param props - Edit component props
    */
-  function EditComponent(): React.ReactElement {
+  function EditComponent(props: EditComponentProps<P>): React.ReactElement {
     /**
      * Editable entity object in state
      */
-    const [editableEntity, setEntity] = useState(entity);
+    const [editableEntity, setEntity] = useState(props.entity);
 
     const history = useHistory();
     const location = useLocation();
+
+    /**
+     * Push location back to entity view page
+     */
+    const pushLocationBack = (): void => {
+      const entityListPath = location.pathname.replace('/edit', '');
+
+      history.push(entityListPath);
+    };
 
     /**
      * Save entity to API
@@ -51,9 +67,7 @@ export default function makeEditPage<P extends object>(
               style: 'success',
               time: 5000,
             });
-            const entitiesListPath = location.pathname.replace('/create', '');
-
-            history.push(entitiesListPath);
+            pushLocationBack();
           },
           onError: () => {
             notifier.show({
@@ -90,8 +104,12 @@ export default function makeEditPage<P extends object>(
             onChange={(e): void => setEntity(e)}
             entity={editableEntity}
           />
-          <Button type={'submit'}>Save</Button>
-          <Button variant={'outline-danger'}>Cancel</Button> {/* Push back */}
+          <Button type={'submit'} className={'m-1'}>Save</Button>
+          <Button
+            variant={'outline-danger'}
+            className={'m-1'}
+            onClick={(event): void => pushLocationBack()}
+          >Cancel</Button>
         </Form>
       </div>
     );

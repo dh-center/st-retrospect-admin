@@ -7,6 +7,18 @@ import { QueryRenderer } from 'react-relay';
 import React from 'react';
 import { PersonEditQuery } from './__generated__/PersonEditQuery.graphql';
 
+const EditComponent = makeEditPage(
+  PersonInfo,
+  graphql`
+    mutation PersonEditMutation($input: UpdatePersonInput!) {
+      person {
+        update(input: $input) {
+          recordId
+        }
+      }
+    }`
+);
+
 const PersonEditComponent = (): React.ReactElement => {
   const { id } = useParams();
 
@@ -37,20 +49,7 @@ const PersonEditComponent = (): React.ReactElement => {
         return <div>Loading...</div>;
       }
 
-      return (
-        makeEditPage(
-          PersonInfo,
-          props.entity!,
-          graphql`
-            mutation PersonEditMutation($input: UpdatePersonInput!) {
-              person {
-                update(input: $input) {
-                  recordId
-                }
-              }
-          }`
-        )
-      );
+      return <EditComponent entity={props.entity!}/>;
     }}>
   </QueryRenderer>;
 };
