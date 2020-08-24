@@ -136,7 +136,7 @@ See https://editorjs.io/saving-data
 """
 type EditorData {
   """Saving timestamp"""
-  time: Int
+  time: Timestamp
 
   """List of Blocks data"""
   blocks: [JSON!]!
@@ -145,9 +145,13 @@ type EditorData {
   version: String
 }
 
+"""
+Data saved from Editor.js
+See https://editorjs.io/saving-data
+"""
 input EditorDataInput {
   """Saving timestamp"""
-  time: Int
+  time: Timestamp
 
   """List of Blocks data"""
   blocks: [JSON!]!
@@ -261,6 +265,11 @@ type LocationType {
   """LocationTypes's name"""
   name: String
 }
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar Long
 
 """API mutations"""
 type Mutation {
@@ -662,6 +671,11 @@ enum TaskTypes {
   """Task type route"""
   ROUTE
 }
+
+"""
+The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
 
 input UpdatePersonInput {
   """ID of person for updating"""

@@ -3,42 +3,41 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
-export type CreateQuestInput = {
-    name: string;
+export type UpdatePersonInput = {
+    id: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    patronymic?: string | null;
+    pseudonym?: string | null;
+    profession?: string | null;
     description?: string | null;
-    photo?: string | null;
-    type: TaskTypes;
-    data: EditorDataInput;
+    birthDate?: string | null;
+    deathDate?: string | null;
+    wikiLink?: string | null;
 };
-export type EditorDataInput = {
-    time?: unknown | null;
-    blocks: Array<unknown>;
-    version?: string | null;
+export type PersonEditMutationVariables = {
+    input: UpdatePersonInput;
 };
-export type QuestCreateMutationVariables = {
-    input: CreateQuestInput;
-};
-export type QuestCreateMutationResponse = {
-    readonly quest: {
-        readonly create: {
-            readonly recordId: string;
+export type PersonEditMutationResponse = {
+    readonly person: {
+        readonly update: {
+            readonly recordId: string | null;
         };
-    };
+    } | null;
 };
-export type QuestCreateMutation = {
-    readonly response: QuestCreateMutationResponse;
-    readonly variables: QuestCreateMutationVariables;
+export type PersonEditMutation = {
+    readonly response: PersonEditMutationResponse;
+    readonly variables: PersonEditMutationVariables;
 };
 
 
 
 /*
-mutation QuestCreateMutation(
-  $input: CreateQuestInput!
+mutation PersonEditMutation(
+  $input: UpdatePersonInput!
 ) {
-  quest {
-    create(input: $input) {
+  person {
+    update(input: $input) {
       recordId
     }
   }
@@ -57,9 +56,9 @@ v1 = [
   {
     "alias": null,
     "args": null,
-    "concreteType": "QuestMutations",
+    "concreteType": "PersonMutations",
     "kind": "LinkedField",
-    "name": "quest",
+    "name": "person",
     "plural": false,
     "selections": [
       {
@@ -71,9 +70,9 @@ v1 = [
             "variableName": "input"
           }
         ],
-        "concreteType": "CreateQuestPayload",
+        "concreteType": "UpdatePersonPayload",
         "kind": "LinkedField",
-        "name": "create",
+        "name": "update",
         "plural": false,
         "selections": [
           {
@@ -95,7 +94,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "QuestCreateMutation",
+    "name": "PersonEditMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -104,18 +103,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "QuestCreateMutation",
+    "name": "PersonEditMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "a1497aff4bbf5369ac16b6abe1d047aa",
+    "cacheID": "202bbd5b05c9f8fecd2af893695616dc",
     "id": null,
     "metadata": {},
-    "name": "QuestCreateMutation",
+    "name": "PersonEditMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestCreateMutation(\n  $input: CreateQuestInput!\n) {\n  quest {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation PersonEditMutation(\n  $input: UpdatePersonInput!\n) {\n  person {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '90b4c532bb4e6bd01923a47c9da1ff20';
+(node as any).hash = '93194a04a48653a429d71b0f283dba7c';
 export default node;
