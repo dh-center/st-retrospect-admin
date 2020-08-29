@@ -4,9 +4,23 @@ import { Entity, EntityConnection } from '../../../types/entities';
 import { withRouter, useHistory } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
+/**
+ * Props for entity row in table
+ */
 export interface EntityRowProps<T extends Entity> {
+  /**
+   * Entity name e.g. locations, persons, etc
+   */
   entityName: string;
+
+  /**
+   * Entity data
+   */
   entity: T;
+
+  /**
+   * Entity serial number
+   */
   index: number;
 }
 
