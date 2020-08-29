@@ -11,7 +11,9 @@ export interface EntityRowProps<T extends Entity> {
 }
 
 /**
- * @param props
+ * Default row representation with entity data
+ *
+ * @param props - props for rendering
  */
 export function DefaultEntityRow<T extends Entity>(props: EntityRowProps<T>): React.ReactElement {
   const history = useHistory();
@@ -105,18 +107,8 @@ export class EntitiesListSection<T extends EntityConnection> extends React.Compo
     for (let i = (this.props.pageNumber - 1) * ENTITIES_PER_PAGE; i < Math.min(this.props.pageNumber * ENTITIES_PER_PAGE, this.props.entityConnection.entities.edges.length); i++) {
       const entity = this.props.entityConnection.entities.edges[i].node;
       const RowElement = this.props.row || DefaultEntityRow;
-      // const row =
-      //   <tr
-      //     key={entity.id}
-      //   >
-      //     {this.props.row ? this.props.row({
-      //       entity: entity,
-      //       entityName: this.props.entityName,
-      //       index: i,
-      //     }) : <DefaultEntityRow index={i} entity={entity} entityName={this.props.entityName}/>}
-      //   </tr>;
 
-      entityList.push(<RowElement entity={entity} index={i} entityName={this.props.entityName}/>);
+      entityList.push(<RowElement key={entity.id} entity={entity} index={i} entityName={this.props.entityName}/>);
     }
 
     return (
