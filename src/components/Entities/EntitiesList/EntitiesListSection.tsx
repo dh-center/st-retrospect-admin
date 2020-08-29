@@ -40,7 +40,7 @@ export function DefaultEntityRow<T extends Entity>(props: EntityRowProps<T>): Re
       <td
         key={key}
       >
-        {props.entity[key].toString()}
+        {props.entity[key] && props.entity[key].toString()}
       </td>
     );
   });
