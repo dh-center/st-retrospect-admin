@@ -1,5 +1,6 @@
 import { QuestViewQuery } from '../components/Quests/__generated__/QuestViewQuery.graphql';
 import { PersonViewQuery } from '../components/Persons/__generated__/PersonViewQuery.graphql';
+import { LocationViewQuery } from '../components/Locations/__generated__/LocationViewQuery.graphql';
 
 /**
  * Interface represents Relay Connection model
@@ -10,7 +11,7 @@ export interface EntityConnection {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
-        readonly [key: string]: string | null;
+        readonly [key: string]: any;
       };
     }>;
   };
@@ -28,9 +29,14 @@ export type Quest = NonNullable<QuestViewQuery['response']['entity']>;
 export type Person = NonNullable<PersonViewQuery['response']['entity']>;
 
 /**
+ * Full location info
+ */
+export type Location = NonNullable<LocationViewQuery['response']['entity']>;
+
+/**
  * Base entity info
  */
-export type Entity = EntityConnection['entities']['edges'][0]['node'];
+export type Entity<T extends EntityConnection = EntityConnection> = T['entities']['edges'][0]['node'];
 
 /**
  * Removes id field from type

@@ -5,19 +5,19 @@ import PaginationControl from 'rc-pagination';
 import './index.css';
 import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
-import EntitiesListSection from './EntitiesListSection';
-import { EntityConnection } from '../../../types/entities';
+import EntitiesListSection, { EntityRowProps } from './EntitiesListSection';
+import { Entity, EntityConnection } from '../../../types/entities';
 import { Table, Button, Spinner } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 /**
  * Props for EntitiesList component
  */
-export interface EntitiesListProps<ENTITY_CONNECTION_TYPE> {
+export interface EntitiesListProps<T extends EntityConnection> {
   /**
    * Entity connection
    */
-  entityConnection: ENTITY_CONNECTION_TYPE;
+  entityConnection: T;
 
   /**
    * Entity name for creating links
@@ -28,6 +28,16 @@ export interface EntitiesListProps<ENTITY_CONNECTION_TYPE> {
    * Prop for accessing relay functionality
    */
   relay: RelayPaginationProp;
+
+  /**
+   * Custom list header
+   */
+  header?: React.ReactNode;
+
+  /**
+   * Custom entity table row
+   */
+  row?: (p: EntityRowProps<Entity<T>>) => React.ReactElement;
 }
 
 /**
@@ -53,7 +63,7 @@ interface State {
 /**
  * List with entities
  */
-export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<EntitiesListProps<ENTITY_CONNECTION_TYPE>, State> {
+export default class EntitiesList<T extends EntityConnection> extends React.Component<EntitiesListProps<T>, State> {
   /**
    * Observer for tracking pages that user sees
    */
@@ -62,7 +72,7 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
   /**
    * @param props - component's props
    */
-  constructor(props: EntitiesListProps<ENTITY_CONNECTION_TYPE>) {
+  constructor(props: EntitiesListProps<T>) {
     super(props);
     const pagesCount = Math.floor(props.entityConnection.entities.totalCount / ENTITIES_PER_PAGE) + 1;
 
@@ -90,7 +100,8 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
         pageNumber={i}
         observer={this.observer}
         entityName={this.props.entityName}
-        entityConnection={this.props.entityConnection}/>);
+        entityConnection={this.props.entityConnection}
+        row={this.props.row}/>);
     }
 
     return (
@@ -98,17 +109,20 @@ export default class EntitiesList<ENTITY_CONNECTION_TYPE extends EntityConnectio
         {this.props.entityConnection.entities.edges.length > 0 ? (
           <Table striped bordered hover size='sm' className='m-0' responsive>
             <thead>
-              <tr>
-                <th>№</th>
-                {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
-                  if (key === '__typename') {
-                    return undefined;
-                  }
+              {this.props.header || (
+                <tr>
+                  <th>№</th>
+                  {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
+                    if (key === '__typename') {
+                      return undefined;
+                    }
 
-                  return <th key={key}>{key}</th>;
-                }
-                )}
-              </tr>
+                    return <th key={key}>{key}</th>;
+                  }
+                  )}
+                </tr>
+
+              )}
             </thead>
             {sectionsList}
           </Table>

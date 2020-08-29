@@ -1,13 +1,62 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { ENTITIES_PER_PAGE } from '../../../constants';
-import { EntityConnection } from '../../../types/entities';
-import { withRouter } from 'react-router-dom';
+import { Entity, EntityConnection } from '../../../types/entities';
+import { withRouter, useHistory } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
+
+/**
+ * Props for entity row in table
+ */
+export interface EntityRowProps<T extends Entity> {
+  /**
+   * Entity name e.g. locations, persons, etc
+   */
+  entityName: string;
+
+  /**
+   * Entity data
+   */
+  entity: T;
+
+  /**
+   * Entity serial number
+   */
+  index: number;
+}
+
+/**
+ * Default row representation with entity data
+ *
+ * @param props - props for rendering
+ */
+export function DefaultEntityRow<T extends Entity>(props: EntityRowProps<T>): React.ReactElement {
+  const history = useHistory();
+  const cells = Object.keys(props.entity).map((key) => {
+    if (key === '__typename') {
+      return undefined;
+    }
+
+    return (
+      <td
+        key={key}
+      >
+        {props.entity[key] && props.entity[key].toString()}
+      </td>
+    );
+  });
+
+  return <tr onClick={(): void => {
+    history.push(`/${props.entityName}/${props.entity.id}`);
+  }}>
+    <td>{props.index + 1}</td>
+    {cells}
+  </tr>;
+}
 
 /**
  * Props for List component
  */
-interface Props<ENTITY_CONNECTION_TYPE> {
+interface Props<T extends EntityConnection> {
   /**
    * Number of page
    */
@@ -21,18 +70,23 @@ interface Props<ENTITY_CONNECTION_TYPE> {
   /**
    * List with entities
    */
-  entityConnection: ENTITY_CONNECTION_TYPE;
+  entityConnection: T;
 
   /**
    * Entity name for creating links
    */
   entityName: string;
+
+  /**
+   * Custom entity table row
+   */
+  row?: (p: EntityRowProps<Entity<T>>) => React.ReactElement;
 }
 
 /**
  * Page of entity table
  */
-export class EntitiesListSection<ENTITY_CONNECTION_TYPE extends EntityConnection> extends React.Component<RouteComponentProps & Props<ENTITY_CONNECTION_TYPE>> {
+export class EntitiesListSection<T extends EntityConnection> extends React.Component<RouteComponentProps & Props<T>> {
   /**
    * Ref to the components root HTML element
    */
@@ -61,34 +115,14 @@ export class EntitiesListSection<ENTITY_CONNECTION_TYPE extends EntityConnection
   /**
    * Rendering
    */
-  public render(): ReactElement {
-    const entityList: ReactElement[] = [];
+  public render(): React.ReactElement {
+    const entityList: React.ReactElement[] = [];
 
     for (let i = (this.props.pageNumber - 1) * ENTITIES_PER_PAGE; i < Math.min(this.props.pageNumber * ENTITIES_PER_PAGE, this.props.entityConnection.entities.edges.length); i++) {
       const entity = this.props.entityConnection.entities.edges[i].node;
-      const row =
-        <tr key={entity.id}>
-          <td>{i + 1}</td>
-          {Object.keys(entity).map((key) => {
-            if (key === '__typename') {
-              return undefined;
-            }
+      const RowElement = this.props.row || DefaultEntityRow;
 
-            return (
-              <td
-                key={key}
-                onClick={(): void => {
-                  this.props.history.push(`/${this.props.entityName}/${entity.id}`);
-                }}
-              >
-                {entity[key]}
-              </td>
-            );
-          }
-          )}
-        </tr>;
-
-      entityList.push(row);
+      entityList.push(<RowElement key={entity.id} entity={entity} index={i} entityName={this.props.entityName}/>);
     }
 
     return (
