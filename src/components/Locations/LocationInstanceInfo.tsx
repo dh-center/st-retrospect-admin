@@ -8,7 +8,9 @@ interface Props {
 }
 
 /**
- * @param props
+ * Information about location instance info
+ *
+ * @param props - props for component rendering
  */
 export default function LocationInstanceInfo(props: Props): React.ReactElement {
   const id = useUniqueId('location-instance-info');
@@ -20,6 +22,7 @@ export default function LocationInstanceInfo(props: Props): React.ReactElement {
         <Form.Control
           type="text"
           id={id`name`}
+          disabled={true}
           value={props.locationInstance.name || ''}
         />
       </Form.Group>
@@ -29,6 +32,7 @@ export default function LocationInstanceInfo(props: Props): React.ReactElement {
           as='textarea'
           rows={20}
           id={id`description`}
+          disabled={true}
           value={props.locationInstance.description || ''}
         />
       </Form.Group>
