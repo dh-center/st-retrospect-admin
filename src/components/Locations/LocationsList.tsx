@@ -1,10 +1,16 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
 import EntitiesList, { EntitiesListProps } from '../Entities/EntitiesList';
 import { LocationsList_entityConnection as LocationsPageEntityConnection } from './__generated__/LocationsList_entityConnection.graphql';
 import graphql from 'babel-plugin-relay/macro';
+import { EntityRowProps } from '../Entities/EntitiesList/EntitiesListSection';
+import { Entity } from '../../types/entities';
 
-interface Props {
+/**
+ * Props for UpdatedLocationsList component
+ */
+interface LocationsListProps {
   /**
    * Entity connection
    */
@@ -22,9 +28,42 @@ interface Props {
 }
 
 /**
- * @param props
+ * Table row with location info
+ *
+ * @param props - props for component rendering
  */
-function UpdatedLocationsList(props: Props): React.ReactElement {
+function LocationRow(props: EntityRowProps<Entity<LocationsPageEntityConnection>>): React.ReactElement {
+  const history = useHistory();
+
+  const instancesRows = props.entity.instances.map(instance => <React.Fragment key={instance.id}>
+    <td>{instance.name}</td>
+    <td>{instance.description}</td>
+  </React.Fragment>);
+
+  const onClick = (): void => {
+    history.push(`/locations/${props.entity.id}`);
+  };
+
+  const rowSpan = instancesRows.length;
+
+  return <>
+    <tr onClick={onClick}>
+      <td rowSpan={rowSpan}>{props.index + 1}</td>
+      <td rowSpan={rowSpan}>{props.entity.id}</td>
+      <td rowSpan={rowSpan}>{props.entity.coordinateX}</td>
+      <td rowSpan={rowSpan}>{props.entity.coordinateX}</td>
+      {instancesRows.shift()}
+    </tr>
+    {instancesRows.map((row, index) => <tr onClick={onClick} key={index}>{row}</tr>)}
+  </>;
+}
+
+/**
+ * Location list with custom header and rows
+ *
+ * @param props - props for rendering
+ */
+function UpdatedLocationsList(props: LocationsListProps): React.ReactElement {
   return (
     <EntitiesList<LocationsPageEntityConnection>
       entityConnection={props.entityConnection}
@@ -43,26 +82,7 @@ function UpdatedLocationsList(props: Props): React.ReactElement {
           <th>description</th>
         </tr>
       </>}
-      row={(p) => {
-        const instancesRows = p.entity.instances.map(instance => <React.Fragment key={instance.id}>
-          <td>{instance.name}</td>
-          <td>{instance.description}</td>
-        </React.Fragment>);
-
-        const rowSpan = instancesRows.length;
-
-        return <>
-          <tr>
-            <td rowSpan={rowSpan}>{p.index + 1}</td>
-            <td rowSpan={rowSpan}>{p.entity.id}</td>
-            <td rowSpan={rowSpan}>{p.entity.coordinateX}</td>
-            <td rowSpan={rowSpan}>{p.entity.coordinateX}</td>
-            {instancesRows.shift()}
-          </tr>
-          {instancesRows.map((row, index) => <tr key={index}>{row}</tr>)}
-        </>;
-      }
-      }
+      row={LocationRow}
     />
   );
 }
