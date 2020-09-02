@@ -1,0 +1,43 @@
+import { createFragmentContainer } from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
+import Tab from 'react-bootstrap/Tab';
+import LocationInstanceInfo from './LocationInstanceInfo';
+import Tabs from 'react-bootstrap/Tabs';
+import React from 'react';
+import { LocationInstancesTabs_data as LocationInstancesTabsData } from './__generated__/LocationInstancesTabs_data.graphql';
+
+interface Props {
+  data: LocationInstancesTabsData;
+}
+
+/**
+ * @param props
+ */
+function LocationInstancesTabs(props: Props): React.ReactElement {
+  return (
+    <div>
+      <Tabs>
+        {props.data.instances.map(instance => (
+          <Tab eventKey="home" title={instance.name} key={instance.id}>
+            <LocationInstanceInfo locationInstance={instance}/>
+          </Tab>
+        ))}
+      </Tabs>
+    </div>
+  );
+}
+
+export default createFragmentContainer(
+  LocationInstancesTabs,
+  {
+    data: graphql`
+        fragment LocationInstancesTabs_data on Location {
+          instances {
+            id
+            name
+            ...LocationInstanceInfo_locationInstance
+          }
+        }
+    `,
+  }
+);

@@ -18,27 +18,8 @@ function LocationView(): React.ReactElement {
       query={graphql`
         query LocationViewQuery($id: ID!) {
           entity: location(id: $id) {
-            id
-            instances {
-              id
-              name
-              demolitionDate
-              constructionDate
-              architects {
-                id
-                firstName
-                lastName
-                patronymic
-              }
-              startDate
-              endDate
-              description
-              locationTypes {
-                id
-                name
-              }
-            }
-          }
+          ...LocationInfo_data
+         }
         }
       `}
       variables={{ id }}
@@ -55,7 +36,7 @@ function LocationView(): React.ReactElement {
           return <div>There is no location with provided id</div>;
         }
 
-        return <LocationInfo entity={props.entity}/>;
+        return <LocationInfo data={props.entity}/>;
       }}
     />
   );
