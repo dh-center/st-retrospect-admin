@@ -51,7 +51,7 @@ function LocationRow(props: EntityRowProps<Entity<LocationsPageEntityConnection>
       <td rowSpan={rowSpan}>{props.index + 1}</td>
       <td rowSpan={rowSpan}>{props.entity.id}</td>
       <td rowSpan={rowSpan}>{props.entity.coordinateX}</td>
-      <td rowSpan={rowSpan}>{props.entity.coordinateX}</td>
+      <td rowSpan={rowSpan}>{props.entity.coordinateY}</td>
       {instancesRows.shift()}
     </tr>
     {instancesRows.map((row, index) => <tr onClick={onClick} key={index}>{row}</tr>)}
