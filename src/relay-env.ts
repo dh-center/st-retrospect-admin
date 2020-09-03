@@ -6,8 +6,8 @@ import {
   Store,
   Variables
 } from 'relay-runtime';
-import authController from './authController';
-import languageController from './languageController';
+import authController from './controllers/authController';
+import languageController from './controllers/languageController';
 
 /**
  * GraphQL API endpoint

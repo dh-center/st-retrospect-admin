@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { NavLink as Link } from 'react-router-dom';
-import authController from '../../authController';
+import authController from '../../controllers/authController';
 import { useHistory } from 'react-router';
 import { createFragmentContainer } from 'react-relay';
 import { Navbar, Nav, Button } from 'react-bootstrap';

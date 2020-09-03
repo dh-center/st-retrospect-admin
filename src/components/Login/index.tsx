@@ -1,5 +1,5 @@
 import React, { FormEvent, ReactElement, useState } from 'react';
-import authController from '../../authController';
+import authController from '../../controllers/authController';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Form, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
