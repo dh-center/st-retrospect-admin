@@ -10,7 +10,7 @@ import { LocationInstanceInfo_locationInstance as LocationInstance } from './__g
  */
 interface Props {
   /**
-   * Data obout locationInstance
+   * Data about locationInstance
    */
   locationInstance: LocationInstance;
 }
