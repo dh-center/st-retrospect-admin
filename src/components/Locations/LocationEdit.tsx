@@ -3,22 +3,20 @@ import graphql from 'babel-plugin-relay/macro';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
 import { useParams } from 'react-router';
-import { LocationViewQuery } from './__generated__/LocationViewQuery.graphql';
+import { LocationEditQuery } from './__generated__/LocationEditQuery.graphql';
 import LocationInfo from './LocationInfo';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Button } from 'react-bootstrap';
 
 /**
  * Page with location info to view
  */
-function LocationView(): React.ReactElement {
+function LocationEdit(): React.ReactElement {
   const { id } = useParams();
 
   return (
-    <QueryRenderer<LocationViewQuery>
+    <QueryRenderer<LocationEditQuery>
       environment={environment}
       query={graphql`
-        query LocationViewQuery($id: ID!) {
+        query LocationEditQuery($id: ID!) {
           entity: location(id: $id) {
           ...LocationInfo_data
          }
@@ -38,24 +36,10 @@ function LocationView(): React.ReactElement {
           return <div>There is no location with provided id</div>;
         }
 
-        return (
-          <div className='d-flex justify-content-center' >
-            <div
-              style={{
-                maxWidth: '800px',
-                width: '100%',
-              }}
-            >
-              <LocationInfo data={props.entity}/>
-              <LinkContainer to={`${id}/edit`}>
-                <Button variant={'outline-warning'} className='m-1'>Edit</Button>
-              </LinkContainer>
-            </div>
-          </div>
-        );
+        return <LocationInfo data={props.entity}/>;
       }}
     />
   );
 }
 
-export default LocationView;
+export default LocationEdit;
