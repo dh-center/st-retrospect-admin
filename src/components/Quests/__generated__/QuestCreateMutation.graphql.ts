@@ -12,7 +12,7 @@ export type CreateQuestInput = {
     data: EditorDataInput;
 };
 export type EditorDataInput = {
-    time?: unknown | null;
+    time?: number | null;
     blocks: Array<unknown>;
     version?: string | null;
 };

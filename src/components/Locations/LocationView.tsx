@@ -5,6 +5,8 @@ import environment from '../../relay-env';
 import { useParams } from 'react-router';
 import { LocationViewQuery } from './__generated__/LocationViewQuery.graphql';
 import LocationInfo from './LocationInfo';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Button } from 'react-bootstrap';
 
 /**
  * Page with location info to view
@@ -18,27 +20,8 @@ function LocationView(): React.ReactElement {
       query={graphql`
         query LocationViewQuery($id: ID!) {
           entity: location(id: $id) {
-            id
-            instances {
-              id
-              name
-              demolitionDate
-              constructionDate
-              architects {
-                id
-                firstName
-                lastName
-                patronymic
-              }
-              startDate
-              endDate
-              description
-              locationTypes {
-                id
-                name
-              }
-            }
-          }
+          ...LocationInfo_data
+         }
         }
       `}
       variables={{ id }}
@@ -55,7 +38,21 @@ function LocationView(): React.ReactElement {
           return <div>There is no location with provided id</div>;
         }
 
-        return <LocationInfo entity={props.entity}/>;
+        return (
+          <div className='d-flex justify-content-center' >
+            <div
+              style={{
+                maxWidth: '800px',
+                width: '100%',
+              }}
+            >
+              <LocationInfo data={props.entity}/>
+              <LinkContainer to={`${id}/edit`}>
+                <Button variant={'outline-warning'} className='m-1'>Edit</Button>
+              </LinkContainer>
+            </div>
+          </div>
+        );
       }}
     />
   );

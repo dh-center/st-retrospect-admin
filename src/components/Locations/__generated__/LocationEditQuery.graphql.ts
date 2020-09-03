@@ -4,26 +4,26 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type LocationViewQueryVariables = {
+export type LocationEditQueryVariables = {
     id: string;
 };
-export type LocationViewQueryResponse = {
-    readonly entity: {
+export type LocationEditQueryResponse = {
+    readonly location: {
         readonly " $fragmentRefs": FragmentRefs<"LocationInfo_data">;
     } | null;
 };
-export type LocationViewQuery = {
-    readonly response: LocationViewQueryResponse;
-    readonly variables: LocationViewQueryVariables;
+export type LocationEditQuery = {
+    readonly response: LocationEditQueryResponse;
+    readonly variables: LocationEditQueryVariables;
 };
 
 
 
 /*
-query LocationViewQuery(
+query LocationEditQuery(
   $id: ID!
 ) {
-  entity: location(id: $id) {
+  location(id: $id) {
     ...LocationInfo_data
     id
   }
@@ -82,10 +82,10 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "LocationViewQuery",
+    "name": "LocationEditQuery",
     "selections": [
       {
-        "alias": "entity",
+        "alias": null,
         "args": (v1/*: any*/),
         "concreteType": "Location",
         "kind": "LinkedField",
@@ -108,10 +108,10 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "LocationViewQuery",
+    "name": "LocationEditQuery",
     "selections": [
       {
-        "alias": "entity",
+        "alias": null,
         "args": (v1/*: any*/),
         "concreteType": "Location",
         "kind": "LinkedField",
@@ -193,14 +193,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "50d8da1d565baeda01d7092623cd2553",
+    "cacheID": "ba43c002908b909aaeb48909c849c2b4",
     "id": null,
     "metadata": {},
-    "name": "LocationViewQuery",
+    "name": "LocationEditQuery",
     "operationKind": "query",
-    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_data\n    id\n  }\n}\n\nfragment LocationInfo_data on Location {\n  id\n  coordinateX\n  coordinateY\n  ...LocationInstancesTabs_data\n}\n\nfragment LocationInstanceInfo_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstancesTabs_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceInfo_locationInstance\n  }\n}\n"
+    "text": "query LocationEditQuery(\n  $id: ID!\n) {\n  location(id: $id) {\n    ...LocationInfo_data\n    id\n  }\n}\n\nfragment LocationInfo_data on Location {\n  id\n  coordinateX\n  coordinateY\n  ...LocationInstancesTabs_data\n}\n\nfragment LocationInstanceInfo_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstancesTabs_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceInfo_locationInstance\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '326b4126ade982268a93e56c5c31bd26';
+(node as any).hash = '5a5fa02c39cf0b7ddd562853c6fb6f36';
 export default node;

@@ -3,6 +3,7 @@ import { Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import LocationView from './LocationView';
 import LocationPage from './LocationsPage';
+import LocationEdit from './LocationEdit';
 
 /**
  * Functional component for quests view
@@ -12,6 +13,9 @@ export default function LocationsRouter(): ReactElement {
     <Switch>
       <PrivateRoute path={'/locations/:id'}>
         <LocationView/>
+      </PrivateRoute>
+      <PrivateRoute path={'/locations/:id/edit'}>
+        <LocationEdit/>
       </PrivateRoute>
       <PrivateRoute path={'/locations'}>
         <LocationPage/>

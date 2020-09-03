@@ -1,10 +1,18 @@
 import Form from 'react-bootstrap/Form';
 import React from 'react';
-import { Location } from '../../types/entities';
 import useUniqueId from '../../utils/useUniqueId';
+import { createFragmentContainer } from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
+import { LocationInstanceInfo_locationInstance as LocationInstance } from './__generated__/LocationInstanceInfo_locationInstance.graphql';
 
+/**
+ * Props for LocationInstanceInfo rendering
+ */
 interface Props {
-  locationInstance: Location['instances'][0];
+  /**
+   * Data about locationInstance
+   */
+  locationInstance: LocationInstance;
 }
 
 /**
@@ -12,7 +20,7 @@ interface Props {
  *
  * @param props - props for component rendering
  */
-export default function LocationInstanceInfo(props: Props): React.ReactElement {
+function LocationInstanceInfo(props: Props): React.ReactElement {
   const id = useUniqueId('location-instance-info');
 
   return (
@@ -39,3 +47,20 @@ export default function LocationInstanceInfo(props: Props): React.ReactElement {
     </div>
   );
 }
+
+export default createFragmentContainer(
+  LocationInstanceInfo,
+  {
+    locationInstance: graphql`
+      fragment LocationInstanceInfo_locationInstance on LocationInstance {
+        id
+        name
+        description
+        constructionDate
+        demolitionDate
+        startDate
+        endDate
+      }
+    `,
+  }
+);
