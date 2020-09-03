@@ -28,9 +28,9 @@ function LocationInstanceInfo(props: Props): React.ReactElement {
       <Form.Group>
         <Form.Label htmlFor={id`name`}>Name</Form.Label>
         <Form.Control
-          type="text"
+          disabled
           id={id`name`}
-          disabled={true}
+          type='text'
           value={props.locationInstance.name || ''}
         />
       </Form.Group>
@@ -38,9 +38,9 @@ function LocationInstanceInfo(props: Props): React.ReactElement {
         <Form.Label htmlFor={id`description`}>Description</Form.Label>
         <Form.Control
           as='textarea'
-          rows={20}
+          disabled
           id={id`description`}
-          disabled={true}
+          rows={20}
           value={props.locationInstance.description || ''}
         />
       </Form.Group>

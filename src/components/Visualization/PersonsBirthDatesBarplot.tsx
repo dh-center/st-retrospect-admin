@@ -134,9 +134,9 @@ export default function PersonsBirthDatesBarplot(props: {
   }, []);
 
   return (
-    <div className={'visualization-block'}>
-      <h2 className={'visualization-block__header'}>Count of persons by birth date</h2>
-      <div className={'visualization-block__content'}>
+    <div className='visualization-block'>
+      <h2 className='visualization-block__header'>Count of persons by birth date</h2>
+      <div className='visualization-block__content'>
         <div className='visualization-block__plot' ref={plotRef}/>
       </div>
     </div>

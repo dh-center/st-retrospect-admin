@@ -11,13 +11,13 @@ import LocationEdit from './LocationEdit';
 export default function LocationsRouter(): ReactElement {
   return (
     <Switch>
-      <PrivateRoute path={'/locations/:id'}>
+      <PrivateRoute path='/locations/:id'>
         <LocationView/>
       </PrivateRoute>
-      <PrivateRoute path={'/locations/:id/edit'}>
+      <PrivateRoute path='/locations/:id/edit'>
         <LocationEdit/>
       </PrivateRoute>
-      <PrivateRoute path={'/locations'}>
+      <PrivateRoute path='/locations'>
         <LocationPage/>
       </PrivateRoute>
     </Switch>

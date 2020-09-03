@@ -24,7 +24,7 @@ function LocationInstancesTabs(props: Props): React.ReactElement {
     <div>
       <Tabs>
         {props.data.instances.map(instance => (
-          <Tab eventKey="home" title={instance.name} key={instance.id}>
+          <Tab eventKey='home' key={instance.id} title={instance.name}>
             <LocationInstanceInfo locationInstance={instance}/>
           </Tab>
         ))}

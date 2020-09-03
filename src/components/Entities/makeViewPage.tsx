@@ -40,7 +40,6 @@ export default function makeViewPage<P extends object>(
       <QueryRenderer<Operation<P>>
         environment={environment}
         query={query}
-        variables={{ id }}
         render={({ error, props }): React.ReactNode => {
           if (error) {
             return <div>Error!</div>;
@@ -62,14 +61,15 @@ export default function makeViewPage<P extends object>(
                   width: '100%',
                 }}
               >
-                <InfoComponent viewOnly entity={props.entity}/>
+                <InfoComponent entity={props.entity} viewOnly/>
                 <LinkContainer to={`${id}/edit`}>
-                  <Button variant={'outline-warning'} className='m-1'>Edit</Button>
+                  <Button className='m-1' variant='outline-warning'>Edit</Button>
                 </LinkContainer>
               </div>
             </div>
           );
         }}
+        variables={{ id }}
       />
     );
   }

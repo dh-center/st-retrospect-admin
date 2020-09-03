@@ -21,10 +21,6 @@ export default function PersonsPage(): ReactElement {
           ...PersonsList_entityConnection @arguments(first: $first, after: $after)
         }
         `}
-      variables={{
-        first: ENTITIES_PER_PAGE,
-        after: null,
-      }}
       render={({ error, props }): React.ReactNode => {
         if (error) {
           return <div>Error!</div>;
@@ -33,7 +29,11 @@ export default function PersonsPage(): ReactElement {
           return <div>Loading persons...</div>;
         }
 
-        return <PersonsList entityName='persons' entityConnection={props}/>;
+        return <PersonsList entityConnection={props} entityName='persons'/>;
+      }}
+      variables={{
+        first: ENTITIES_PER_PAGE,
+        after: null,
       }}
     />
   );

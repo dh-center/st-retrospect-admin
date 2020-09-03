@@ -1,6 +1,6 @@
 import { Route, Redirect } from 'react-router-dom';
 import React, { ReactElement, ReactNode } from 'react';
-import authController from '../authController';
+import authController from '../controllers/authController';
 import { RouteProps } from 'react-router';
 
 /**

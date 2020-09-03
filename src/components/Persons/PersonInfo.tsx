@@ -30,13 +30,11 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
   return (
     <div>
       <Form.Group>
-        <Form.Label htmlFor={'lastName'}>Last name</Form.Label>
+        <Form.Label htmlFor='lastName'>Last name</Form.Label>
         <Form.Control
-          type="text"
-          id={'lastName'}
           disabled={props.viewOnly}
-          name={'lastName'}
-          value={props.entity.lastName || ''}
+          id='lastName'
+          name='lastName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
@@ -44,16 +42,16 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
             });
           }}
           required
+          type='text'
+          value={props.entity.lastName || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'firstName'}>First name</Form.Label>
+        <Form.Label htmlFor='firstName'>First name</Form.Label>
         <Form.Control
-          type="text"
-          id={'firstName'}
           disabled={props.viewOnly}
-          value={props.entity.firstName || ''}
-          name={'firstName'}
+          id='firstName'
+          name='firstName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
@@ -61,128 +59,130 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
             });
           }}
           required
+          type='text'
+          value={props.entity.firstName || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'patronymic'}>Patronymic</Form.Label>
+        <Form.Label htmlFor='patronymic'>Patronymic</Form.Label>
         <Form.Control
-          type="text"
-          id={'patronymic'}
           disabled={props.viewOnly}
-          value={props.entity.patronymic || ''}
-          name={'patronymic'}
+          id='patronymic'
+          name='patronymic'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
               patronymic: e.target.value,
             });
           }}
+          type='text'
+          value={props.entity.patronymic || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'pseudonym'}>Pseudonym</Form.Label>
+        <Form.Label htmlFor='pseudonym'>Pseudonym</Form.Label>
         <Form.Control
-          type="text"
-          id={'pseudonym'}
           disabled={props.viewOnly}
-          value={props.entity.pseudonym || ''}
-          name={'pseudonym'}
+          id='pseudonym'
+          name='pseudonym'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
               pseudonym: e.target.value,
             });
           }}
+          type='text'
+          value={props.entity.pseudonym || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'profession'}>Profession</Form.Label>
+        <Form.Label htmlFor='profession'>Profession</Form.Label>
         <Form.Control
-          type="text"
-          id={'profession'}
-          name={'profession'}
           disabled={props.viewOnly}
-          value={props.entity.profession || ''}
+          id='profession'
+          name='profession'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
               profession: e.target.value,
             });
           }}
+          type='text'
+          value={props.entity.profession || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'description'}>Description</Form.Label>
+        <Form.Label htmlFor='description'>Description</Form.Label>
         <Form.Control
-          id={'description'}
           as='textarea'
           disabled={props.viewOnly}
-          rows={15}
-          value={props.entity.description || ''}
-          name={'description'}
+          id='description'
+          name='description'
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
             onChange({
               ...props.entity,
               description: e.target.value,
             });
           }}
+          rows={15}
+          value={props.entity.description || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'birthDate'}>Birth date</Form.Label>
+        <Form.Label htmlFor='birthDate'>Birth date</Form.Label>
         <Form.Control
-          type="text"
-          id={'birthDate'}
-          value={props.entity.birthDate || ''}
           disabled={props.viewOnly}
-          name={'birthDate'}
+          id='birthDate'
+          name='birthDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
               birthDate: e.target.value,
             });
           }}
+          type='text'
+          value={props.entity.birthDate || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'deathDate'}>Death date</Form.Label>
+        <Form.Label htmlFor='deathDate'>Death date</Form.Label>
         <Form.Control
-          type="text"
-          id={'deathDate'}
           disabled={props.viewOnly}
-          value={props.entity.deathDate || ''}
-          name={'deathDate'}
+          id='deathDate'
+          name='deathDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
               deathDate: e.target.value,
             });
           }}
+          type='text'
+          value={props.entity.deathDate || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'wikiLink'}>Wiki link</Form.Label>
+        <Form.Label htmlFor='wikiLink'>Wiki link</Form.Label>
         <Form.Control
-          type="text"
-          id={'wikiLink'}
-          value={props.entity.wikiLink || ''}
           disabled={props.viewOnly}
-          name={'wikiLink'}
+          id='wikiLink'
+          name='wikiLink'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
               wikiLink: e.target.value,
             });
           }}
+          type='text'
+          value={props.entity.wikiLink || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'photo'}>Photo</Form.Label>
+        <Form.Label htmlFor='photo'>Photo</Form.Label>
         <Form.File
-          id={'photo'}
-          type="text"
-          name={'photo'}
           disabled
+          id='photo'
+          name='photo'
+          type='text'
         />
       </Form.Group>
     </div>

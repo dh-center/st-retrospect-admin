@@ -304,27 +304,30 @@ function Index(props: {
 
   return (
     <div className='visualization-block relations-graph'>
-      <h2 className={'visualization-block__header'}>Relations graph</h2>
-      <div className="visualization-block__content">
+      <h2 className='visualization-block__header'>Relations graph</h2>
+      <div className='visualization-block__content'>
         <div className='visualization-block__plot' ref={plotRef}/>
         <Accordion>
           <Card>
             <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="0">
+              <Accordion.Toggle as={Button} eventKey='0' variant='link'>
                 Filter by location types
               </Accordion.Toggle>
             </Card.Header>
-            <Accordion.Collapse eventKey="0">
+            <Accordion.Collapse eventKey='0'>
               <Card.Body className='relations-graph__location-types-filter'>
                 {Object.entries(locationTypesToggles).map(([id, locType]) => (
                   <div key={id}>
-                    <input id={'graph-filter' + id} type='checkbox' checked={locType.enabled} onChange={(): void => setLocationTypesToggles({
-                      ...locationTypesToggles,
-                      [id]: {
-                        name: locType.name,
-                        enabled: !locType.enabled,
-                      },
-                    })}/> <label htmlFor={'graph-filter' + id}>{locType.name}</label> <br/>
+                    <input checked={locType.enabled}
+                      id={'graph-filter' + id}
+                      onChange={(): void => setLocationTypesToggles({
+                        ...locationTypesToggles,
+                        [id]: {
+                          name: locType.name,
+                          enabled: !locType.enabled,
+                        },
+                      })}
+                      type='checkbox'/> <label htmlFor={'graph-filter' + id}>{locType.name}</label> <br/>
                   </div>
                 ))}
               </Card.Body>

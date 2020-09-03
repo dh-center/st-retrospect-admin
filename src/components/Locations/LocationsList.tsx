@@ -54,7 +54,7 @@ function LocationRow(props: EntityRowProps<Entity<LocationsPageEntityConnection>
       <td rowSpan={rowSpan}>{props.entity.coordinateY}</td>
       {instancesRows.shift()}
     </tr>
-    {instancesRows.map((row, index) => <tr onClick={onClick} key={index}>{row}</tr>)}
+    {instancesRows.map((row, index) => <tr key={index} onClick={onClick}>{row}</tr>)}
   </>;
 }
 
@@ -68,7 +68,6 @@ function UpdatedLocationsList(props: LocationsListProps): React.ReactElement {
     <EntitiesList<LocationsPageEntityConnection>
       entityConnection={props.entityConnection}
       entityName={props.entityName}
-      relay={props.relay}
       header={<>
         <tr>
           <th rowSpan={2}>№</th>
@@ -82,6 +81,7 @@ function UpdatedLocationsList(props: LocationsListProps): React.ReactElement {
           <th>description</th>
         </tr>
       </>}
+      relay={props.relay}
       row={LocationRow}
     />
   );

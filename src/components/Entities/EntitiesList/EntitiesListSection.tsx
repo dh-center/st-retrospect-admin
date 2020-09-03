@@ -122,11 +122,11 @@ export class EntitiesListSection<T extends EntityConnection> extends React.Compo
       const entity = this.props.entityConnection.entities.edges[i].node;
       const RowElement = this.props.row || DefaultEntityRow;
 
-      entityList.push(<RowElement key={entity.id} entity={entity} index={i} entityName={this.props.entityName}/>);
+      entityList.push(<RowElement entity={entity} entityName={this.props.entityName} index={i} key={entity.id}/>);
     }
 
     return (
-      <tbody ref={this.htmlElement} data-page={this.props.pageNumber} >
+      <tbody data-page={this.props.pageNumber} ref={this.htmlElement} >
         <tr className='table-info'>
           <td colSpan={100} id={'page-' + this.props.pageNumber}>Page number {this.props.pageNumber}</td>
         </tr>

@@ -96,18 +96,18 @@ export default class EntitiesList<T extends EntityConnection> extends React.Comp
 
     for (let i = 1; i <= pagesCount; i++) {
       sectionsList.push(<EntitiesListSection
-        key={i}
-        pageNumber={i}
-        observer={this.observer}
-        entityName={this.props.entityName}
         entityConnection={this.props.entityConnection}
+        entityName={this.props.entityName}
+        key={i}
+        observer={this.observer}
+        pageNumber={i}
         row={this.props.row}/>);
     }
 
     return (
       <div className='entities-page'>
         {this.props.entityConnection.entities.edges.length > 0 ? (
-          <Table striped bordered hover size='sm' className='m-0' responsive>
+          <Table bordered className='m-0' hover responsive size='sm' striped>
             <thead>
               {this.props.header || (
                 <tr>
@@ -131,16 +131,16 @@ export default class EntitiesList<T extends EntityConnection> extends React.Comp
         <div className='entities-page__page-control p-0 pb-2'>
           <div>
             <LinkContainer to={`/${this.props.entityName}/create`}>
-              <Button variant='outline-success' className='m-1'>Create</Button>
+              <Button className='m-1' variant='outline-success'>Create</Button>
             </LinkContainer>
-            <Button variant='outline-info' onClick={this.loadMore} disabled={!this.props.relay.hasMore()}>
+            <Button disabled={!this.props.relay.hasMore()} onClick={this.loadMore} variant='outline-info'>
               {this.props.relay.isLoading() ? (
                 <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
+                  animation='border'
+                  aria-hidden='true'
+                  as='span'
+                  role='status'
+                  size='sm'
                 />
               ) : ('Load more')
               }
@@ -149,11 +149,11 @@ export default class EntitiesList<T extends EntityConnection> extends React.Comp
           </div>
           <div className='d-flex justify-content-center'>
             <PaginationControl
+              current={this.state.currentPage + 1}
+              locale={locale}
+              onChange={this.goToPage}
               pageSize={ENTITIES_PER_PAGE}
               total={this.props.entityConnection.entities.totalCount}
-              onChange={this.goToPage}
-              locale={locale}
-              current={this.state.currentPage + 1}
             />
           </div>
         </div>
