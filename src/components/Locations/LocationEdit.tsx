@@ -17,7 +17,7 @@ function LocationEdit(): React.ReactElement {
       environment={environment}
       query={graphql`
         query LocationEditQuery($id: ID!) {
-          entity: location(id: $id) {
+          location(id: $id) {
           ...LocationInfo_data
          }
         }
@@ -32,11 +32,11 @@ function LocationEdit(): React.ReactElement {
           return <div>Loading</div>;
         }
 
-        if (!props.entity) {
+        if (!props.location) {
           return <div>There is no location with provided id</div>;
         }
 
-        return <LocationInfo data={props.entity}/>;
+        return <LocationInfo data={props.location}/>;
       }}
     />
   );
