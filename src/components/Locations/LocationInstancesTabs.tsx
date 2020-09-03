@@ -6,12 +6,18 @@ import Tabs from 'react-bootstrap/Tabs';
 import React from 'react';
 import { LocationInstancesTabs_data as LocationInstancesTabsData } from './__generated__/LocationInstancesTabs_data.graphql';
 
+/**
+ * Props for LocationInstancesTabs rendering
+ */
 interface Props {
+  /**
+   * Data obout location instances
+   */
   data: LocationInstancesTabsData;
 }
 
 /**
- * @param props
+ * @param props -
  */
 function LocationInstancesTabs(props: Props): React.ReactElement {
   return (

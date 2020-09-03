@@ -7,7 +7,7 @@ import { LocationEditQuery } from './__generated__/LocationEditQuery.graphql';
 import LocationInfo from './LocationInfo';
 
 /**
- * Page with location info to view
+ * Page with form for location editing
  */
 function LocationEdit(): React.ReactElement {
   const { id } = useParams();

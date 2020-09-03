@@ -5,7 +5,13 @@ import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { LocationInstanceInfo_locationInstance as LocationInstance } from './__generated__/LocationInstanceInfo_locationInstance.graphql';
 
+/**
+ * Props for LocationInstanceInfo rendering
+ */
 interface Props {
+  /**
+   * Data obout locationInstance
+   */
   locationInstance: LocationInstance;
 }
 

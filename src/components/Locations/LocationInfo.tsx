@@ -4,7 +4,13 @@ import graphql from 'babel-plugin-relay/macro';
 import { LocationInfo_data as LocationInfoData } from './__generated__/LocationInfo_data.graphql';
 import LocationInstancesTabs from './LocationInstancesTabs';
 
-interface Props {
+/**
+ * Props for LocationInfo rendering
+ */
+interface LocationInfoProps {
+  /**
+   * Data to display
+   */
   data: LocationInfoData;
 }
 
@@ -13,7 +19,7 @@ interface Props {
  *
  * @param props - props for component rendering
  */
-function LocationInfo(props: Props): React.ReactElement {
+function LocationInfo(props: LocationInfoProps): React.ReactElement {
   return (
     <div>
       <LocationInstancesTabs data={props.data}/>
