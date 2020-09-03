@@ -40,7 +40,6 @@ const PersonEditComponent = (): React.ReactElement => {
         }
       }
     `}
-    variables={{ id }}
     render={({ error, props }): React.ReactNode => {
       if (error) {
         return <div>Error!</div>;
@@ -50,7 +49,8 @@ const PersonEditComponent = (): React.ReactElement => {
       }
 
       return <EditComponent entity={props.entity!}/>;
-    }}>
+    }}
+    variables={{ id }}>
   </QueryRenderer>;
 };
 

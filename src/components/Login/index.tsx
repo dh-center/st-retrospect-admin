@@ -28,34 +28,34 @@ function Login(props: RouteComponentProps): ReactElement {
     <div className='d-flex justify-content-center flex-column align-items-center h-100'>
       {authController.isAuthenticated() && <Redirect to='/'/>}
       <Form
+        className='mb-2'
         onSubmit={handleLogin}
-        className={'mb-2'}
       >
         <h1 className='login-page__header'>Please, login</h1>
         <Form.Group>
           <Form.Control
             className='login-page__input'
-            type="text"
-            value={email}
-            placeholder='Username'
             onChange={(e): void => setEmail(e.target.value)}
+            placeholder='Username'
+            type='text'
+            value={email}
           />
         </Form.Group>
         <Form.Group>
           <Form.Control
             className='login-page__input'
-            type="password"
-            placeholder='Password'
-            value={password}
             onChange={(e): void => setPassword(e.target.value)}
+            placeholder='Password'
+            type='password'
+            value={password}
           />
 
         </Form.Group>
-        <Button type="submit" className='login-page__submit-button'>
+        <Button className='login-page__submit-button' type='submit'>
           Enter
         </Button>
       </Form>
-      <NavLink className={''} to={'/visualization/1'}>Go to visualization</NavLink>
+      <NavLink className='' to='/visualization/1'>Go to visualization</NavLink>
     </div>
   );
 }

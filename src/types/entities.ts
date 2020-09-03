@@ -41,7 +41,7 @@ export type Entity<T extends EntityConnection = EntityConnection> = T['entities'
 /**
  * Removes id field from type
  */
-export type OmitId<T> = Omit<T, 'id'>
+export type OmitId<T> = Omit<T, 'id'>;
 
 export enum EntityTypes {
   QUEST = 'QUEST'

@@ -93,22 +93,22 @@ export default function makeEditPage<P extends object>(
     return (
       <div className='d-flex justify-content-center'>
         <Form
-          onSubmit={handleSubmit}
           className='p-2'
+          onSubmit={handleSubmit}
           style={{
             maxWidth: '800px',
             width: '100%',
           }}
         >
           <InfoComponent
-            onChange={(e): void => setEntity(e)}
             entity={editableEntity}
+            onChange={(e): void => setEntity(e)}
           />
-          <Button type={'submit'} className={'m-1'}>Save</Button>
+          <Button className='m-1' type='submit'>Save</Button>
           <Button
-            variant={'outline-danger'}
-            className={'m-1'}
+            className='m-1'
             onClick={(event): void => pushLocationBack()}
+            variant='outline-danger'
           >Cancel</Button>
         </Form>
       </div>

@@ -22,38 +22,38 @@ export default function DataLanguageSwitcher(): React.ReactElement {
   };
 
   return (
-    <div className={'text-center'}>
+    <div className='text-center'>
       Data language
       <Form inline>
         <Form.Group>
           <Form.Label
-            className={'mr-2'}
+            className='mr-2'
             htmlFor={DataLanguages.EN}
           >EN</Form.Label>
           <Form.Check
-            inline
-            type="radio"
-            name={'dataLanguage'}
-            id={DataLanguages.EN}
-            value={DataLanguages.EN}
             checked={languageController.dataLanguage === DataLanguages.EN}
+            id={DataLanguages.EN}
+            inline
+            name='dataLanguage'
             onChange={onDataLanguageChange}
+            type='radio'
+            value={DataLanguages.EN}
           />
         </Form.Group>
         <Form.Group>
           <Form.Label
-            className={'mr-2'}
+            className='mr-2'
             htmlFor={DataLanguages.RU}
           >RU</Form.Label>
           <Form.Check
-            className={'mr-0'}
-            inline
-            type="radio"
-            name={'dataLanguage'}
-            id={DataLanguages.RU}
-            value={DataLanguages.RU}
             checked={languageController.dataLanguage === DataLanguages.RU}
+            className='mr-0'
+            id={DataLanguages.RU}
+            inline
+            name='dataLanguage'
             onChange={onDataLanguageChange}
+            type='radio'
+            value={DataLanguages.RU}
           />
         </Form.Group>
       </Form>

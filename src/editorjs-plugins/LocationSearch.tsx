@@ -74,7 +74,6 @@ export default class LocationSearch {
           }
         }
       `}
-      variables={{}}
       render={({ error, props }): React.ReactNode => {
         if (error) {
           return <div>Error!</div>;
@@ -96,12 +95,13 @@ export default class LocationSearch {
           }
         }) as {readonly value: string; readonly name: string}[];
 
-        return <CustomSelect options={locationsWithNames}
-          value={this.selectedLocationInstanceId}
-          onChange={(selected): void => {
-            this.selectedLocationInstanceId = selected;
-          }}/>;
+        return <CustomSelect onChange={(selected): void => {
+          this.selectedLocationInstanceId = selected;
+        }}
+        options={locationsWithNames}
+        value={this.selectedLocationInstanceId}/>;
       }}
+      variables={{}}
     />, element);
 
     return element;

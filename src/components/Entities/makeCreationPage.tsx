@@ -79,18 +79,18 @@ export default function makeCreationPage<P extends object>(
     return (
       <div className='d-flex justify-content-center'>
         <Form
-          onSubmit={handleSubmit}
           className='p-2'
+          onSubmit={handleSubmit}
           style={{
             maxWidth: '800px',
             width: '100%',
           }}
         >
           <InfoComponent
-            onChange={(e): void => setEntity(e)}
             entity={entity}
+            onChange={(e): void => setEntity(e)}
           />
-          <Button type={'submit'}>Save</Button>
+          <Button type='submit'>Save</Button>
         </Form>
       </div>
     );

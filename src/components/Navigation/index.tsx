@@ -30,38 +30,38 @@ export function Navigation(props: NavigationProps): ReactElement {
     <Navbar>
       <Nav>
         <Nav.Item>
-          <Nav.Link as={Link} to="/persons">
+          <Nav.Link as={Link} to='/persons'>
             Persons
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link as={Link} to="/locations">
+          <Nav.Link as={Link} to='/locations'>
             Locations
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link as={Link} to="/quests">
+          <Nav.Link as={Link} to='/quests'>
             Quests
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link as={Link} to="/visualization">
+          <Nav.Link as={Link} to='/visualization'>
             Visualization
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      <Navbar.Collapse className="justify-content-end">
+      <Navbar.Collapse className='justify-content-end'>
         <DataLanguageSwitcher/>
         <Navbar.Text className='m-2'>
           Signed in as: {props.user?.me.username}
         </Navbar.Text>
         <Button
-          variant='outline-dark'
-          size='sm'
           onClick={(): void => {
             authController.logout();
             history.push(`/login`);
-          }}>
+          }}
+          size='sm'
+          variant='outline-dark'>
           Logout
         </Button>
       </Navbar.Collapse>

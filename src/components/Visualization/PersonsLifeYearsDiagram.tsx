@@ -231,9 +231,9 @@ export default function PersonLifeYearsDiagram(props: {
     }, []);
 
   return (
-    <div className={'visualization-block'}>
-      <h2 className={'visualization-block__header'}>Persons life years diagram</h2>
-      <div className={'visualization-block__content'}>
+    <div className='visualization-block'>
+      <h2 className='visualization-block__header'>Persons life years diagram</h2>
+      <div className='visualization-block__content'>
         <div className='visualization-block__plot' ref={plotRef}/>
       </div>
     </div>
