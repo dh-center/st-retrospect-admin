@@ -1,22 +1,17 @@
 import React, { ChangeEvent } from 'react';
 import { Form } from 'react-bootstrap';
-import { EntityInfoComponentProps, OmitId, Person } from '../../types/entities';
+import { DefaultInfoComponentProps, OmitId, Person } from '../../types/entities';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 
 /**
- * Generates empty person
+ * Props for PersonInfo rendering
  */
-export function generatePerson(): OmitId<Person> {
-  return {
-    description: '',
-    lastName: '',
-    patronymic: '',
-    firstName: '',
-    profession: '',
-    pseudonym: '',
-    birthDate: '',
-    deathDate: '',
-    wikiLink: '',
-  };
+interface Props extends DefaultInfoComponentProps<OmitId<Person>>{
+  /**
+   * Data about person
+   */
+  person: Person;
 }
 
 /**
@@ -24,7 +19,7 @@ export function generatePerson(): OmitId<Person> {
  *
  * @param props - props of component
  */
-export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person>>): React.ReactElement {
+function PersonInfo(props: Props): React.ReactElement {
   const onChange = props.onChange || ((e: OmitId<Person>): void => { /* do nothing */ });
 
   return (
@@ -37,13 +32,13 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           name='lastName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
-              ...props.entity,
+              ...props.person,
               lastName: e.target.value,
             });
           }}
           required
           type='text'
-          value={props.entity.lastName || ''}
+          value={props.person.lastName || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -54,13 +49,13 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           name='firstName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
-              ...props.entity,
+              ...props.person,
               firstName: e.target.value,
             });
           }}
           required
           type='text'
-          value={props.entity.firstName || ''}
+          value={props.person.firstName || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -71,12 +66,12 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           name='patronymic'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
-              ...props.entity,
+              ...props.person,
               patronymic: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.patronymic || ''}
+          value={props.person.patronymic || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -87,12 +82,12 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           name='pseudonym'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
-              ...props.entity,
+              ...props.person,
               pseudonym: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.pseudonym || ''}
+          value={props.person.pseudonym || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -103,12 +98,12 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           name='profession'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
-              ...props.entity,
+              ...props.person,
               profession: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.profession || ''}
+          value={props.person.profession || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -120,12 +115,12 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           name='description'
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
             onChange({
-              ...props.entity,
+              ...props.person,
               description: e.target.value,
             });
           }}
           rows={15}
-          value={props.entity.description || ''}
+          value={props.person.description || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -136,12 +131,12 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           name='birthDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
-              ...props.entity,
+              ...props.person,
               birthDate: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.birthDate || ''}
+          value={props.person.birthDate || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -152,12 +147,12 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           name='deathDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
-              ...props.entity,
+              ...props.person,
               deathDate: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.deathDate || ''}
+          value={props.person.deathDate || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -168,12 +163,12 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           name='wikiLink'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
-              ...props.entity,
+              ...props.person,
               wikiLink: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.wikiLink || ''}
+          value={props.person.wikiLink || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -188,3 +183,23 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
     </div>
   );
 }
+
+export default createFragmentContainer(
+  PersonInfo,
+  {
+    person: graphql`
+      fragment PersonInfo_person on Person {
+        id
+        lastName
+        firstName
+        patronymic
+        pseudonym
+        profession
+        description
+        birthDate
+        deathDate
+        wikiLink
+      }
+    `,
+  }
+);
