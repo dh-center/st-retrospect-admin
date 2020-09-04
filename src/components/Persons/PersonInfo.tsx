@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { Form } from 'react-bootstrap';
-import { DefaultInfoComponentProps, OmitId, Person } from '../../types/entities';
+import { DefaultInfoComponentProps } from '../../types/entities';
 import graphql from 'babel-plugin-relay/macro';
 import { createFragmentContainer } from 'react-relay';
 import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
@@ -12,7 +12,7 @@ interface Props extends DefaultInfoComponentProps<PersonInfo_person>{
   /**
    * Data about person
    */
-  person: Person;
+  person: PersonInfo_person;
 }
 
 /**
@@ -189,7 +189,7 @@ export default createFragmentContainer(
   PersonInfo,
   {
     person: graphql`
-      fragment PersonInfo_person on Person {
+      fragment PersonInfo_person on Person @relay(mask: false) {
         id
         lastName
         firstName

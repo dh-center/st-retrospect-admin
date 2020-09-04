@@ -15,7 +15,6 @@ export type PersonInfo_person = {
     readonly birthDate: string | null;
     readonly deathDate: string | null;
     readonly wikiLink: string | null;
-    readonly " $refType": "PersonInfo_person";
 };
 export type PersonInfo_person$data = PersonInfo_person;
 export type PersonInfo_person$key = {
@@ -28,7 +27,9 @@ export type PersonInfo_person$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "mask": false
+  },
   "name": "PersonInfo_person",
   "selections": [
     {
@@ -105,5 +106,5 @@ const node: ReaderFragment = {
   "type": "Person",
   "abstractKey": null
 };
-(node as any).hash = 'bcd6ca66ecc410f006316c366322c785';
+(node as any).hash = 'ace0e8c4ba3ad7bb7d7a707076553b5c';
 export default node;
