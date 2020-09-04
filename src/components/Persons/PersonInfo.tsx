@@ -3,11 +3,12 @@ import { Form } from 'react-bootstrap';
 import { DefaultInfoComponentProps, OmitId, Person } from '../../types/entities';
 import graphql from 'babel-plugin-relay/macro';
 import { createFragmentContainer } from 'react-relay';
+import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
 
 /**
  * Props for PersonInfo rendering
  */
-interface Props extends DefaultInfoComponentProps<OmitId<Person>>{
+interface Props extends DefaultInfoComponentProps<PersonInfo_person>{
   /**
    * Data about person
    */
@@ -20,7 +21,7 @@ interface Props extends DefaultInfoComponentProps<OmitId<Person>>{
  * @param props - props of component
  */
 function PersonInfo(props: Props): React.ReactElement {
-  const onChange = props.onChange || ((e: OmitId<Person>): void => { /* do nothing */ });
+  const onChange = props.onChange || ((e: PersonInfo_person): void => { /* do nothing */ });
 
   return (
     <div>
