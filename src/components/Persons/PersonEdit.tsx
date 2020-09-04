@@ -4,16 +4,14 @@ import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import PersonInfo from './PersonInfo';
-import { Button, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom';
-import { PersonEditQuery, PersonEditQueryResponse } from './__generated__/PersonEditQuery.graphql';
+import { PersonEditQuery } from './__generated__/PersonEditQuery.graphql';
 
 /**
  * Page with form for person editing
- *
- * @param props
  */
-function PersonEdit(props: PersonEditQueryResponse): React.ReactElement {
+function PersonEdit(): React.ReactElement {
   const { id } = useParams();
 
   /**
