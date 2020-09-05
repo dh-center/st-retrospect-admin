@@ -189,7 +189,7 @@ export default createFragmentContainer(
   PersonInfo,
   {
     person: graphql`
-      fragment PersonInfo_person on Person @relay(mask: false) {
+      fragment PersonInfo_person on Person {
         id
         lastName
         firstName

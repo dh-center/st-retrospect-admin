@@ -9,6 +9,7 @@ export type PersonEditQueryVariables = {
 };
 export type PersonEditQueryResponse = {
     readonly person: {
+        readonly id: string;
         readonly " $fragmentRefs": FragmentRefs<"PersonInfo_person">;
     } | null;
 };
@@ -24,8 +25,8 @@ query PersonEditQuery(
   $id: ID!
 ) {
   person(id: $id) {
-    ...PersonInfo_person
     id
+    ...PersonInfo_person
   }
 }
 
@@ -57,7 +58,14 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -73,6 +81,7 @@ return {
         "name": "person",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -99,13 +108,7 @@ return {
         "name": "person",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -175,14 +178,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9d77d5dd6ee35c041376b31975797d1d",
+    "cacheID": "b703bdb7d84e82ec60d508cb4b8a41aa",
     "id": null,
     "metadata": {},
     "name": "PersonEditQuery",
     "operationKind": "query",
-    "text": "query PersonEditQuery(\n  $id: ID!\n) {\n  person(id: $id) {\n    ...PersonInfo_person\n    id\n  }\n}\n\nfragment PersonInfo_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  profession\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
+    "text": "query PersonEditQuery(\n  $id: ID!\n) {\n  person(id: $id) {\n    id\n    ...PersonInfo_person\n  }\n}\n\nfragment PersonInfo_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  profession\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
   }
 };
 })();
-(node as any).hash = '7c0a6e70e5e87fd5715cba95fc10ad7a';
+(node as any).hash = '24e112e138bfd600ff4a7d9f8c912045';
 export default node;
