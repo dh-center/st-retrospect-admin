@@ -9,7 +9,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { PersonEditQuery, PersonEditQueryResponse } from './__generated__/PersonEditQuery.graphql';
 import { PersonEditLocalQuery } from './__generated__/PersonEditLocalQuery.graphql';
 import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
-import { Primitive } from 'relay-runtime/lib/store/RelayStoreTypes';
 
 function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactElement {
   useEffect(() => {
@@ -42,10 +41,6 @@ function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactEleme
       record.setValue(record.getDataID(), 'id');
     });
   };
-  /**
-   * Editable person object in state
-   */
-  // const [editablePerson, setPerson] = useState(props.person);
 
   // const history = useHistory();
   // const location = useLocation();
