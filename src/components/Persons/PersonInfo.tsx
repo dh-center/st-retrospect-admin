@@ -1,22 +1,25 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { EntityInfoComponentProps, OmitId, Person } from '../../types/entities';
+import { DefaultInfoComponentProps } from '../../types/entities';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
+import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
+import environment from '../../relay-env';
+import {
+  PersonInfoUpdateMutation,
+  PersonInfoUpdateMutationResponse,
+  UpdatePersonInput
+} from './__generated__/PersonInfoUpdateMutation.graphql';
+import commitMutation from 'relay-commit-mutation-promise';
 
 /**
- * Generates empty person
+ * Props for PersonInfo rendering
  */
-export function generatePerson(): OmitId<Person> {
-  return {
-    description: '',
-    lastName: '',
-    patronymic: '',
-    firstName: '',
-    profession: '',
-    pseudonym: '',
-    birthDate: '',
-    deathDate: '',
-    wikiLink: '',
-  };
+interface Props extends DefaultInfoComponentProps<UpdatePersonInput>{
+  /**
+   * Data about person
+   */
+  person: PersonInfo_person;
 }
 
 /**
@@ -24,8 +27,21 @@ export function generatePerson(): OmitId<Person> {
  *
  * @param props - props of component
  */
-export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person>>): React.ReactElement {
-  const onChange = props.onChange || ((e: OmitId<Person>): void => { /* do nothing */ });
+function PersonInfo(props: Props): React.ReactElement {
+  const onChange = props.onChange || ((e: PersonInfo_person): void => { /* do nothing */ });
+
+  const [personCopy, setPersonCopy] = useState(props.person);
+
+  useEffect(() => {
+    setPersonCopy(props.person);
+  }, [ props.person ]);
+
+  useEffect(() => {
+    onChange(personCopy);
+    // eslint-disable-next-line
+  }, [ personCopy ]);
+
+  const person = personCopy || props.person;
 
   return (
     <div>
@@ -36,14 +52,14 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           id='lastName'
           name='lastName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               lastName: e.target.value,
             });
           }}
           required
           type='text'
-          value={props.entity.lastName || ''}
+          value={person.lastName || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -53,14 +69,14 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           id='firstName'
           name='firstName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               firstName: e.target.value,
             });
           }}
           required
           type='text'
-          value={props.entity.firstName || ''}
+          value={person.firstName || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -70,13 +86,13 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           id='patronymic'
           name='patronymic'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               patronymic: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.patronymic || ''}
+          value={person.patronymic || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -86,13 +102,13 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           id='pseudonym'
           name='pseudonym'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               pseudonym: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.pseudonym || ''}
+          value={person.pseudonym || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -102,13 +118,13 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           id='profession'
           name='profession'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               profession: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.profession || ''}
+          value={person.profession || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -119,13 +135,13 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           id='description'
           name='description'
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               description: e.target.value,
             });
           }}
           rows={15}
-          value={props.entity.description || ''}
+          value={person.description || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -135,13 +151,13 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           id='birthDate'
           name='birthDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               birthDate: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.birthDate || ''}
+          value={person.birthDate || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -151,13 +167,13 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           id='deathDate'
           name='deathDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               deathDate: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.deathDate || ''}
+          value={person.deathDate || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -167,13 +183,13 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
           id='wikiLink'
           name='wikiLink'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               wikiLink: e.target.value,
             });
           }}
           type='text'
-          value={props.entity.wikiLink || ''}
+          value={person.wikiLink || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -187,4 +203,44 @@ export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person
       </Form.Group>
     </div>
   );
+}
+
+export default createFragmentContainer(
+  PersonInfo,
+  {
+    person: graphql`
+      fragment PersonInfo_person on Person {
+        id
+        lastName
+        firstName
+        patronymic
+        pseudonym
+        profession
+        description
+        birthDate
+        deathDate
+        wikiLink
+      }
+    `,
+  }
+);
+
+/**
+ * Executes update mutation for person
+ *
+ * @param input - updated person object
+ */
+export function updateInfo(input: UpdatePersonInput): Promise<PersonInfoUpdateMutationResponse> {
+  return commitMutation<PersonInfoUpdateMutation>(environment, {
+    mutation: graphql`
+      mutation PersonInfoUpdateMutation($input: UpdatePersonInput!) {
+        person {
+          update(input: $input) {
+            recordId
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
 }

@@ -1,6 +1,6 @@
 import { QuestViewQuery } from '../components/Quests/__generated__/QuestViewQuery.graphql';
-import { PersonViewQuery } from '../components/Persons/__generated__/PersonViewQuery.graphql';
 import { LocationViewQuery } from '../components/Locations/__generated__/LocationViewQuery.graphql';
+import { PersonInfo_person } from '../components/Persons/__generated__/PersonInfo_person.graphql';
 
 /**
  * Interface represents Relay Connection model
@@ -22,11 +22,6 @@ export interface EntityConnection {
  * Full quest info
  */
 export type Quest = NonNullable<QuestViewQuery['response']['entity']>;
-
-/**
- * Full person info
- */
-export type Person = NonNullable<PersonViewQuery['response']['entity']>;
 
 /**
  * Full location info
@@ -64,4 +59,21 @@ export interface EntityInfoComponentProps<T> {
    * Entity for displaying
    */
   readonly entity: T;
+}
+
+/**
+ * Standard properties that all info components have
+ */
+export interface DefaultInfoComponentProps<T> {
+  /**
+   * Handler for changing entity field
+   *
+   * @param e - change event
+   */
+  onChange?: (e: T) => void;
+
+  /**
+   * If true, info-component will be rendered in view-only mode (without possibility to change values)
+   */
+  viewOnly?: boolean;
 }
