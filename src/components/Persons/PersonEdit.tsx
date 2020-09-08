@@ -1,45 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
-import { commitLocalUpdate, QueryRenderer } from 'react-relay';
+import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
-import PersonInfo from './PersonInfo';
+import PersonInfo, { updateInfo } from './PersonInfo';
 import { Button } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom';
 import { PersonEditQuery, PersonEditQueryResponse } from './__generated__/PersonEditQuery.graphql';
-import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
+import { UpdatePersonInput } from './__generated__/PersonInfoUpdateMutation.graphql';
 
 function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactElement {
-  useEffect(() => {
-    commitLocalUpdate(environment, store => {
-      const root = store.getRoot();
-      const record = root.getOrCreateLinkedRecord('temp', 'Person');
-
-      if (props.person) {
-        const proxy = store.get(props.person.id);
-
-        if (proxy) {
-          record.copyFieldsFrom(proxy);
-        }
-      }
-
-      record.setValue(record.getDataID(), 'id');
-    });
-  }, []);
-
-  const setPerson = (person: PersonInfo_person): void => {
-    commitLocalUpdate(environment, store => {
-      const root = store.getRoot();
-      const record = root.getOrCreateLinkedRecord('temp', 'Person');
-
-      if (props.person) {
-        // const proxy = store.get(props.person.id);
-        (Object.keys(person) as Array<keyof PersonInfo_person>).forEach((key) => record.setValue(person[key], key));
-      }
-
-      record.setValue(record.getDataID(), 'id');
-    });
-  };
+  const [input, setInput] = useState<UpdatePersonInput|null>(null);
 
   const history = useHistory();
   const location = useLocation();
@@ -53,7 +24,7 @@ function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactEleme
     history.push(entityListPath);
   };
 
-  if (!props.temp) {
+  if (!props.person) {
     return <div>Loading</div>;
   }
 
@@ -68,11 +39,22 @@ function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactEleme
         <PersonInfo
           onChange={(e): void => {
             console.log(e);
-            setPerson(e);
+            setInput(e);
           }}
-          person={props.temp}
+          person={props.person}
         />
-        <Button className='m-1' type='submit'>Save</Button>
+        <Button
+          className='m-1'
+          onClick={() => {
+            if (input) {
+              console.log(input)
+              updateInfo(input);
+            }
+          }}
+          type='submit'
+        >
+          Save
+        </Button>
         <Button
           className='m-1'
           onClick={() => pushLocationBack()}

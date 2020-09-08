@@ -1,14 +1,16 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { DefaultInfoComponentProps } from '../../types/entities';
 import graphql from 'babel-plugin-relay/macro';
-import { createFragmentContainer } from 'react-relay';
+import { commitMutation, createFragmentContainer, Disposable } from 'react-relay';
 import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
+import environment from '../../relay-env';
+import { UpdatePersonInput } from './__generated__/PersonInfoUpdateMutation.graphql';
 
 /**
  * Props for PersonInfo rendering
  */
-interface Props extends DefaultInfoComponentProps<PersonInfo_person>{
+interface Props extends DefaultInfoComponentProps<UpdatePersonInput>{
   /**
    * Data about person
    */
@@ -23,6 +25,18 @@ interface Props extends DefaultInfoComponentProps<PersonInfo_person>{
 function PersonInfo(props: Props): React.ReactElement {
   const onChange = props.onChange || ((e: PersonInfo_person): void => { /* do nothing */ });
 
+  const [personCopy, setPersonCopy] = useState(props.person);
+
+  useEffect(() => {
+    setPersonCopy(props.person);
+  }, [ props.person ]);
+
+  useEffect(() => {
+    onChange(personCopy);
+  }, [ personCopy ]);
+
+  const person = personCopy || props.person;
+
   return (
     <div>
       <Form.Group>
@@ -32,14 +46,14 @@ function PersonInfo(props: Props): React.ReactElement {
           id='lastName'
           name='lastName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.person,
+            setPersonCopy({
+              ...person,
               lastName: e.target.value,
             });
           }}
           required
           type='text'
-          value={props.person.lastName || ''}
+          value={person.lastName || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -49,14 +63,14 @@ function PersonInfo(props: Props): React.ReactElement {
           id='firstName'
           name='firstName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.person,
+            setPersonCopy({
+              ...person,
               firstName: e.target.value,
             });
           }}
           required
           type='text'
-          value={props.person.firstName || ''}
+          value={person.firstName || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -66,13 +80,13 @@ function PersonInfo(props: Props): React.ReactElement {
           id='patronymic'
           name='patronymic'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.person,
+            setPersonCopy({
+              ...person,
               patronymic: e.target.value,
             });
           }}
           type='text'
-          value={props.person.patronymic || ''}
+          value={person.patronymic || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -82,13 +96,13 @@ function PersonInfo(props: Props): React.ReactElement {
           id='pseudonym'
           name='pseudonym'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.person,
+            setPersonCopy({
+              ...person,
               pseudonym: e.target.value,
             });
           }}
           type='text'
-          value={props.person.pseudonym || ''}
+          value={person.pseudonym || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -98,13 +112,13 @@ function PersonInfo(props: Props): React.ReactElement {
           id='profession'
           name='profession'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.person,
+            setPersonCopy({
+              ...person,
               profession: e.target.value,
             });
           }}
           type='text'
-          value={props.person.profession || ''}
+          value={person.profession || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -115,13 +129,13 @@ function PersonInfo(props: Props): React.ReactElement {
           id='description'
           name='description'
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
-            onChange({
-              ...props.person,
+            setPersonCopy({
+              ...person,
               description: e.target.value,
             });
           }}
           rows={15}
-          value={props.person.description || ''}
+          value={person.description || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -131,13 +145,13 @@ function PersonInfo(props: Props): React.ReactElement {
           id='birthDate'
           name='birthDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.person,
+            setPersonCopy({
+              ...person,
               birthDate: e.target.value,
             });
           }}
           type='text'
-          value={props.person.birthDate || ''}
+          value={person.birthDate || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -147,13 +161,13 @@ function PersonInfo(props: Props): React.ReactElement {
           id='deathDate'
           name='deathDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.person,
+            setPersonCopy({
+              ...person,
               deathDate: e.target.value,
             });
           }}
           type='text'
-          value={props.person.deathDate || ''}
+          value={person.deathDate || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -163,13 +177,13 @@ function PersonInfo(props: Props): React.ReactElement {
           id='wikiLink'
           name='wikiLink'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.person,
+            setPersonCopy({
+              ...person,
               wikiLink: e.target.value,
             });
           }}
           type='text'
-          value={props.person.wikiLink || ''}
+          value={person.wikiLink || ''}
         />
       </Form.Group>
       <Form.Group>
@@ -204,3 +218,18 @@ export default createFragmentContainer(
     `,
   }
 );
+
+export function updateInfo(input: UpdatePersonInput): Disposable {
+  return commitMutation(environment, {
+    mutation: graphql`
+      mutation PersonInfoUpdateMutation($input: UpdatePersonInput!) {
+        person {
+          update(input: $input) {
+            recordId
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
+}
