@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import PersonInfo, { updateInfo } from './PersonInfo';
 import { Button, Spinner } from 'react-bootstrap';
-import { useHistory, useLocation } from 'react-router-dom';
 import { PersonEditQuery } from './__generated__/PersonEditQuery.graphql';
 import { UpdatePersonInput } from './__generated__/PersonInfoUpdateMutation.graphql';
 import notifier from 'codex-notifier';
@@ -75,8 +75,18 @@ function PersonEditPageRenderer(): React.ReactElement {
           return <div>Error</div>;
         }
 
-        if (!props || !props.person) {
+        if (!props) {
           return <div>Loading</div>;
+        }
+
+        if (!props.person) {
+          notifier.show({
+            message: `Person with id "${id}" wasn't found`,
+            style: 'error',
+            time: 5000,
+          });
+
+          return <Redirect to='/persons'/>;
         }
 
         return (
@@ -91,7 +101,7 @@ function PersonEditPageRenderer(): React.ReactElement {
                 onChange={(e): void => {
                   setInput(e);
                 }}
-                person={props.person}
+                person={props.person!}
               />
               <Button
                 className='m-1'

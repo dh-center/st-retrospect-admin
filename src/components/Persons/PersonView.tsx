@@ -7,6 +7,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 import { PersonViewQuery } from './__generated__/PersonViewQuery.graphql';
 import PersonInfo from './PersonInfo';
+import notifier from 'codex-notifier';
+import { Redirect } from 'react-router-dom';
 
 function PersonView(): React.ReactElement {
   const { id } = useParams();
@@ -31,7 +33,13 @@ function PersonView(): React.ReactElement {
         }
 
         if (!props.person) {
-          return <div>There is no person with provided id</div>;
+          notifier.show({
+            message: `Person with id "${id}" wasn't found`,
+            style: 'error',
+            time: 5000,
+          });
+
+          return <Redirect to='/persons'/>;
         }
 
         return (

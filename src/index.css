@@ -17,6 +17,11 @@ code {
     monospace;
 }
 
+.cdx-notifies {
+  left: auto !important;
+  right: 20px;
+}
+
 .cdx-notify__cross {
   box-sizing: content-box;
 }
