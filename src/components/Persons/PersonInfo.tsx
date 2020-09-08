@@ -38,6 +38,7 @@ function PersonInfo(props: Props): React.ReactElement {
 
   useEffect(() => {
     onChange(personCopy);
+    // eslint-disable-next-line
   }, [ personCopy ]);
 
   const person = personCopy || props.person;
@@ -229,8 +230,8 @@ export default createFragmentContainer(
  *
  * @param input - updated person object
  */
-export async function updateInfo(input: UpdatePersonInput): Promise<PersonInfoUpdateMutationResponse> {
-  const response = await commitMutation<PersonInfoUpdateMutation>(environment, {
+export function updateInfo(input: UpdatePersonInput): Promise<PersonInfoUpdateMutationResponse> {
+  return commitMutation<PersonInfoUpdateMutation>(environment, {
     mutation: graphql`
       mutation PersonInfoUpdateMutation($input: UpdatePersonInput!) {
         person {
@@ -242,6 +243,4 @@ export async function updateInfo(input: UpdatePersonInput): Promise<PersonInfoUp
     `,
     variables: { input },
   });
-
-  return response;
 }

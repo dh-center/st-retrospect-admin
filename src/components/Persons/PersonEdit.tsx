@@ -6,11 +6,16 @@ import graphql from 'babel-plugin-relay/macro';
 import PersonInfo, { updateInfo } from './PersonInfo';
 import { Button, Spinner } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom';
-import { PersonEditQuery, PersonEditQueryResponse } from './__generated__/PersonEditQuery.graphql';
+import { PersonEditQuery } from './__generated__/PersonEditQuery.graphql';
 import { UpdatePersonInput } from './__generated__/PersonInfoUpdateMutation.graphql';
 import notifier from 'codex-notifier';
 
-function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactElement {
+/**
+ * Page with form for person editing
+ */
+function PersonEditPageRenderer(): React.ReactElement {
+  const { id } = useParams();
+
   const [input, setInput] = useState<UpdatePersonInput|null>(null);
   const [isLoading, setLoadingStatus] = useState(false);
 
@@ -26,76 +31,33 @@ function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactEleme
     history.push(entityListPath);
   };
 
-  if (!props.person) {
-    return <div>Loading</div>;
-  }
+  /**
+   * Saves updated person to API
+   */
+  const savePersonToApi = async (): Promise<void> => {
+    if (!input) {
+      return;
+    }
 
-  return (
-    <div className='d-flex justify-content-center' >
-      <div
-        style={{
-          maxWidth: '800px',
-          width: '100%',
-        }}
-      >
-        <PersonInfo
-          onChange={(e): void => {
-            setInput(e);
-          }}
-          person={props.person}
-        />
-        <Button
-          className='m-1'
-          onClick={() => {
-            if (input) {
-              setLoadingStatus(true);
-              updateInfo(input)
-                .then(() => {
-                  notifier.show({
-                    message: 'Entity successfully saved',
-                    style: 'success',
-                    time: 5000,
-                  });
-                  setLoadingStatus(false);
-                  pushLocationBack();
-                })
-                .catch(() => {
-                  setLoadingStatus(false);
-                  notifier.show({
-                    message: 'Something went wrong',
-                    style: 'error',
-                    time: 5000,
-                  });
-                });
-            }
-          }}
-          type='submit'
-        >
-          {isLoading ? (
-            <Spinner
-              animation='border'
-              aria-hidden='true'
-              as='span'
-              role='status'
-              size='sm'
-            />
-          ) : ('Save')}
-        </Button>
-        <Button
-          className='m-1'
-          onClick={() => pushLocationBack()}
-          variant='outline-danger'
-        >Cancel</Button>
-      </div>
-    </div>
-  );
-}
-
-/**
- * Page with form for person editing
- */
-function PersonEditPageRenderer(): React.ReactElement {
-  const { id } = useParams();
+    setLoadingStatus(true);
+    try {
+      await updateInfo(input);
+      notifier.show({
+        message: `Person "${input.lastName} ${input.firstName}" successfully saved`,
+        style: 'success',
+        time: 5000,
+      });
+      setLoadingStatus(false);
+      pushLocationBack();
+    } catch {
+      setLoadingStatus(false);
+      notifier.show({
+        message: 'Something went wrong',
+        style: 'error',
+        time: 5000,
+      });
+    }
+  };
 
   return (
     <QueryRenderer<PersonEditQuery>
@@ -113,12 +75,48 @@ function PersonEditPageRenderer(): React.ReactElement {
           return <div>Error</div>;
         }
 
-        if (!props) {
+        if (!props || !props.person) {
           return <div>Loading</div>;
         }
 
         return (
-          <PersonEditPageContent person={props.person}/>
+          <div className='d-flex justify-content-center' >
+            <div
+              style={{
+                maxWidth: '800px',
+                width: '100%',
+              }}
+            >
+              <PersonInfo
+                onChange={(e): void => {
+                  setInput(e);
+                }}
+                person={props.person}
+              />
+              <Button
+                className='m-1'
+                onClick={() => savePersonToApi()}
+                type='submit'
+              >
+                {isLoading ? (
+                  <Spinner
+                    animation='border'
+                    aria-hidden='true'
+                    as='span'
+                    role='status'
+                    size='sm'
+                  />
+                ) : ('Save')}
+              </Button>
+              <Button
+                className='m-1'
+                onClick={() => pushLocationBack()}
+                variant='outline-danger'
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
         );
       }}
       variables={{ id }}
