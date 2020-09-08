@@ -4,13 +4,15 @@ import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import PersonInfo, { updateInfo } from './PersonInfo';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom';
 import { PersonEditQuery, PersonEditQueryResponse } from './__generated__/PersonEditQuery.graphql';
 import { UpdatePersonInput } from './__generated__/PersonInfoUpdateMutation.graphql';
+import notifier from 'codex-notifier';
 
 function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactElement {
   const [input, setInput] = useState<UpdatePersonInput|null>(null);
+  const [isLoading, setLoadingStatus] = useState(false);
 
   const history = useHistory();
   const location = useLocation();
@@ -38,7 +40,6 @@ function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactEleme
       >
         <PersonInfo
           onChange={(e): void => {
-            console.log(e);
             setInput(e);
           }}
           person={props.person}
@@ -47,13 +48,38 @@ function PersonEditPageContent(props: PersonEditQueryResponse): React.ReactEleme
           className='m-1'
           onClick={() => {
             if (input) {
-              console.log(input)
-              updateInfo(input);
+              setLoadingStatus(true);
+              updateInfo(input)
+                .then(() => {
+                  notifier.show({
+                    message: 'Entity successfully saved',
+                    style: 'success',
+                    time: 5000,
+                  });
+                  setLoadingStatus(false);
+                  pushLocationBack();
+                })
+                .catch(() => {
+                  setLoadingStatus(false);
+                  notifier.show({
+                    message: 'Something went wrong',
+                    style: 'error',
+                    time: 5000,
+                  });
+                });
             }
           }}
           type='submit'
         >
-          Save
+          {isLoading ? (
+            <Spinner
+              animation='border'
+              aria-hidden='true'
+              as='span'
+              role='status'
+              size='sm'
+            />
+          ) : ('Save')}
         </Button>
         <Button
           className='m-1'
@@ -80,9 +106,6 @@ function PersonEditPageRenderer(): React.ReactElement {
             id
             ...PersonInfo_person
           }
-          temp {
-            ...PersonInfo_person
-          }
         }
       `}
       render={({ error, props }) => {
@@ -95,7 +118,7 @@ function PersonEditPageRenderer(): React.ReactElement {
         }
 
         return (
-          <PersonEditPageContent person={props.person} temp={props.temp}/>
+          <PersonEditPageContent person={props.person}/>
         );
       }}
       variables={{ id }}

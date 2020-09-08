@@ -12,9 +12,6 @@ export type PersonEditQueryResponse = {
         readonly id: string;
         readonly " $fragmentRefs": FragmentRefs<"PersonInfo_person">;
     } | null;
-    readonly temp: {
-        readonly " $fragmentRefs": FragmentRefs<"PersonInfo_person">;
-    } | null;
 };
 export type PersonEditQuery = {
     readonly response: PersonEditQueryResponse;
@@ -68,78 +65,7 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v3 = {
-  "args": null,
-  "kind": "FragmentSpread",
-  "name": "PersonInfo_person"
-},
-v4 = [
-  (v2/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "lastName",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "firstName",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "patronymic",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "pseudonym",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "profession",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "description",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "birthDate",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "deathDate",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "wikiLink",
-    "storageKey": null
-  }
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -156,26 +82,13 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/)
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "PersonInfo_person"
+          }
         ],
         "storageKey": null
-      },
-      {
-        "kind": "ClientExtension",
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Person",
-            "kind": "LinkedField",
-            "name": "temp",
-            "plural": false,
-            "selections": [
-              (v3/*: any*/)
-            ],
-            "storageKey": null
-          }
-        ]
       }
     ],
     "type": "Query",
@@ -194,23 +107,73 @@ return {
         "kind": "LinkedField",
         "name": "person",
         "plural": false,
-        "selections": (v4/*: any*/),
-        "storageKey": null
-      },
-      {
-        "kind": "ClientExtension",
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "Person",
-            "kind": "LinkedField",
-            "name": "temp",
-            "plural": false,
-            "selections": (v4/*: any*/),
+            "kind": "ScalarField",
+            "name": "lastName",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "firstName",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "patronymic",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "pseudonym",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "profession",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "description",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "birthDate",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "deathDate",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "wikiLink",
             "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
@@ -224,5 +187,5 @@ return {
   }
 };
 })();
-(node as any).hash = '2cb015c075e75fc66b0a598ee0c81a00';
+(node as any).hash = '24e112e138bfd600ff4a7d9f8c912045';
 export default node;

@@ -2,10 +2,15 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { DefaultInfoComponentProps } from '../../types/entities';
 import graphql from 'babel-plugin-relay/macro';
-import { commitMutation, createFragmentContainer, Disposable } from 'react-relay';
+import { createFragmentContainer } from 'react-relay';
 import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
 import environment from '../../relay-env';
-import { UpdatePersonInput } from './__generated__/PersonInfoUpdateMutation.graphql';
+import {
+  PersonInfoUpdateMutation,
+  PersonInfoUpdateMutationResponse,
+  UpdatePersonInput
+} from './__generated__/PersonInfoUpdateMutation.graphql';
+import commitMutation from 'relay-commit-mutation-promise';
 
 /**
  * Props for PersonInfo rendering
@@ -219,8 +224,13 @@ export default createFragmentContainer(
   }
 );
 
-export function updateInfo(input: UpdatePersonInput): Disposable {
-  return commitMutation(environment, {
+/**
+ * Executes update mutation for person
+ *
+ * @param input - updated person object
+ */
+export async function updateInfo(input: UpdatePersonInput): Promise<PersonInfoUpdateMutationResponse> {
+  const response = await commitMutation<PersonInfoUpdateMutation>(environment, {
     mutation: graphql`
       mutation PersonInfoUpdateMutation($input: UpdatePersonInput!) {
         person {
@@ -232,4 +242,6 @@ export function updateInfo(input: UpdatePersonInput): Disposable {
     `,
     variables: { input },
   });
+
+  return response;
 }
