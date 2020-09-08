@@ -24,11 +24,6 @@ export interface EntityConnection {
 export type Quest = NonNullable<QuestViewQuery['response']['entity']>;
 
 /**
- * Full person info
- */
-export type Person = NonNullable<PersonInfo_person>;
-
-/**
  * Full location info
  */
 export type Location = NonNullable<LocationViewQuery['response']['entity']>;
