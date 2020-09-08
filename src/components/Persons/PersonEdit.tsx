@@ -98,9 +98,7 @@ function PersonEditPageRenderer(): React.ReactElement {
               }}
             >
               <PersonInfo
-                onChange={(e): void => {
-                  setInput(e);
-                }}
+                onChange={setInput}
                 person={props.person!}
               />
               <Button
