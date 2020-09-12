@@ -22,7 +22,6 @@ function LocationEdit(): React.ReactElement {
          }
         }
       `}
-      variables={{ id }}
       render={({ error, props }) => {
         if (error) {
           return <div>Error</div>;
@@ -38,6 +37,7 @@ function LocationEdit(): React.ReactElement {
 
         return <LocationInfo data={props.location}/>;
       }}
+      variables={{ id }}
     />
   );
 }

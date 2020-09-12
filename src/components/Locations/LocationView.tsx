@@ -24,7 +24,6 @@ function LocationView(): React.ReactElement {
          }
         }
       `}
-      variables={{ id }}
       render={({ error, props }) => {
         if (error) {
           return <div>Error</div>;
@@ -48,12 +47,13 @@ function LocationView(): React.ReactElement {
             >
               <LocationInfo data={props.entity}/>
               <LinkContainer to={`${id}/edit`}>
-                <Button variant={'outline-warning'} className='m-1'>Edit</Button>
+                <Button className='m-1' variant='outline-warning'>Edit</Button>
               </LinkContainer>
             </div>
           </div>
         );
       }}
+      variables={{ id }}
     />
   );
 }
