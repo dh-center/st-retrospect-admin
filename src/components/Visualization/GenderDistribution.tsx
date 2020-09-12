@@ -112,12 +112,12 @@ export default function GenderDistribution(props: {
   }, []);
 
   return (
-    <div className={'visualization-block'}>
-      <h2 className={'visualization-block__header'}>Gender distribution</h2>
-      <div className={'visualization-block__content'}>
+    <div className='visualization-block'>
+      <h2 className='visualization-block__header'>Gender distribution</h2>
+      <div className='visualization-block__content'>
         <div className='visualization-block__plot' ref={plotRef}/>
       </div>
-      <div className={'visualization-block__caption'}>Genders were calculated via <a href="https://www.npmjs.com/package/lvovich">lvovich</a> based on persons names</div>
+      <div className='visualization-block__caption'>Genders were calculated via <a href='https://www.npmjs.com/package/lvovich'>lvovich</a> based on persons names</div>
     </div>
   );
 }

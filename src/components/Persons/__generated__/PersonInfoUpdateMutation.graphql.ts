@@ -3,7 +3,8 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type CreatePersonInput = {
+export type UpdatePersonInput = {
+    id: string;
     firstName?: string | null;
     lastName?: string | null;
     patronymic?: string | null;
@@ -14,29 +15,29 @@ export type CreatePersonInput = {
     deathDate?: string | null;
     wikiLink?: string | null;
 };
-export type PersonCreateMutationVariables = {
-    input: CreatePersonInput;
+export type PersonInfoUpdateMutationVariables = {
+    input: UpdatePersonInput;
 };
-export type PersonCreateMutationResponse = {
+export type PersonInfoUpdateMutationResponse = {
     readonly person: {
-        readonly create: {
+        readonly update: {
             readonly recordId: string | null;
         };
     } | null;
 };
-export type PersonCreateMutation = {
-    readonly response: PersonCreateMutationResponse;
-    readonly variables: PersonCreateMutationVariables;
+export type PersonInfoUpdateMutation = {
+    readonly response: PersonInfoUpdateMutationResponse;
+    readonly variables: PersonInfoUpdateMutationVariables;
 };
 
 
 
 /*
-mutation PersonCreateMutation(
-  $input: CreatePersonInput!
+mutation PersonInfoUpdateMutation(
+  $input: UpdatePersonInput!
 ) {
   person {
-    create(input: $input) {
+    update(input: $input) {
       recordId
     }
   }
@@ -69,9 +70,9 @@ v1 = [
             "variableName": "input"
           }
         ],
-        "concreteType": "CreatePersonPayload",
+        "concreteType": "UpdatePersonPayload",
         "kind": "LinkedField",
-        "name": "create",
+        "name": "update",
         "plural": false,
         "selections": [
           {
@@ -93,7 +94,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonCreateMutation",
+    "name": "PersonInfoUpdateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -102,18 +103,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonCreateMutation",
+    "name": "PersonInfoUpdateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "f81bb9de788119b2b2441998a2d756cb",
+    "cacheID": "fe686e80d3140429e55727e4473237d1",
     "id": null,
     "metadata": {},
-    "name": "PersonCreateMutation",
+    "name": "PersonInfoUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonCreateMutation(\n  $input: CreatePersonInput!\n) {\n  person {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation PersonInfoUpdateMutation(\n  $input: UpdatePersonInput!\n) {\n  person {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3254e28612db9ff77ff6cd8c1f05f7b5';
+(node as any).hash = 'cda7b814e1581b3cc62e1e705054cf9c';
 export default node;

@@ -1,22 +1,25 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { EntityInfoComponentProps, OmitId, Person } from '../../types/entities';
+import { DefaultInfoComponentProps } from '../../types/entities';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
+import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
+import environment from '../../relay-env';
+import {
+  PersonInfoUpdateMutation,
+  PersonInfoUpdateMutationResponse,
+  UpdatePersonInput
+} from './__generated__/PersonInfoUpdateMutation.graphql';
+import commitMutation from 'relay-commit-mutation-promise';
 
 /**
- * Generates empty person
+ * Props for PersonInfo rendering
  */
-export function generatePerson(): OmitId<Person> {
-  return {
-    description: '',
-    lastName: '',
-    patronymic: '',
-    firstName: '',
-    profession: '',
-    pseudonym: '',
-    birthDate: '',
-    deathDate: '',
-    wikiLink: '',
-  };
+interface Props extends DefaultInfoComponentProps<UpdatePersonInput>{
+  /**
+   * Data about person
+   */
+  person: PersonInfo_person;
 }
 
 /**
@@ -24,167 +27,220 @@ export function generatePerson(): OmitId<Person> {
  *
  * @param props - props of component
  */
-export default function PersonInfo(props: EntityInfoComponentProps<OmitId<Person>>): React.ReactElement {
-  const onChange = props.onChange || ((e: OmitId<Person>): void => { /* do nothing */ });
+function PersonInfo(props: Props): React.ReactElement {
+  const onChange = props.onChange || ((e: PersonInfo_person): void => { /* do nothing */ });
+
+  const [personCopy, setPersonCopy] = useState(props.person);
+
+  useEffect(() => {
+    setPersonCopy(props.person);
+  }, [ props.person ]);
+
+  useEffect(() => {
+    onChange(personCopy);
+    // eslint-disable-next-line
+  }, [ personCopy ]);
+
+  const person = personCopy || props.person;
 
   return (
     <div>
       <Form.Group>
-        <Form.Label htmlFor={'lastName'}>Last name</Form.Label>
+        <Form.Label htmlFor='lastName'>Last name</Form.Label>
         <Form.Control
-          type="text"
-          id={'lastName'}
           disabled={props.viewOnly}
-          name={'lastName'}
-          value={props.entity.lastName || ''}
+          id='lastName'
+          name='lastName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               lastName: e.target.value,
             });
           }}
           required
+          type='text'
+          value={person.lastName || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'firstName'}>First name</Form.Label>
+        <Form.Label htmlFor='firstName'>First name</Form.Label>
         <Form.Control
-          type="text"
-          id={'firstName'}
           disabled={props.viewOnly}
-          value={props.entity.firstName || ''}
-          name={'firstName'}
+          id='firstName'
+          name='firstName'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               firstName: e.target.value,
             });
           }}
           required
+          type='text'
+          value={person.firstName || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'patronymic'}>Patronymic</Form.Label>
+        <Form.Label htmlFor='patronymic'>Patronymic</Form.Label>
         <Form.Control
-          type="text"
-          id={'patronymic'}
           disabled={props.viewOnly}
-          value={props.entity.patronymic || ''}
-          name={'patronymic'}
+          id='patronymic'
+          name='patronymic'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               patronymic: e.target.value,
             });
           }}
+          type='text'
+          value={person.patronymic || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'pseudonym'}>Pseudonym</Form.Label>
+        <Form.Label htmlFor='pseudonym'>Pseudonym</Form.Label>
         <Form.Control
-          type="text"
-          id={'pseudonym'}
           disabled={props.viewOnly}
-          value={props.entity.pseudonym || ''}
-          name={'pseudonym'}
+          id='pseudonym'
+          name='pseudonym'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               pseudonym: e.target.value,
             });
           }}
+          type='text'
+          value={person.pseudonym || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'profession'}>Profession</Form.Label>
+        <Form.Label htmlFor='profession'>Profession</Form.Label>
         <Form.Control
-          type="text"
-          id={'profession'}
-          name={'profession'}
           disabled={props.viewOnly}
-          value={props.entity.profession || ''}
+          id='profession'
+          name='profession'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               profession: e.target.value,
             });
           }}
+          type='text'
+          value={person.profession || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'description'}>Description</Form.Label>
+        <Form.Label htmlFor='description'>Description</Form.Label>
         <Form.Control
-          id={'description'}
           as='textarea'
           disabled={props.viewOnly}
-          rows={15}
-          value={props.entity.description || ''}
-          name={'description'}
+          id='description'
+          name='description'
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               description: e.target.value,
             });
           }}
+          rows={15}
+          value={person.description || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'birthDate'}>Birth date</Form.Label>
+        <Form.Label htmlFor='birthDate'>Birth date</Form.Label>
         <Form.Control
-          type="text"
-          id={'birthDate'}
-          value={props.entity.birthDate || ''}
           disabled={props.viewOnly}
-          name={'birthDate'}
+          id='birthDate'
+          name='birthDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               birthDate: e.target.value,
             });
           }}
+          type='text'
+          value={person.birthDate || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'deathDate'}>Death date</Form.Label>
+        <Form.Label htmlFor='deathDate'>Death date</Form.Label>
         <Form.Control
-          type="text"
-          id={'deathDate'}
           disabled={props.viewOnly}
-          value={props.entity.deathDate || ''}
-          name={'deathDate'}
+          id='deathDate'
+          name='deathDate'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               deathDate: e.target.value,
             });
           }}
+          type='text'
+          value={person.deathDate || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'wikiLink'}>Wiki link</Form.Label>
+        <Form.Label htmlFor='wikiLink'>Wiki link</Form.Label>
         <Form.Control
-          type="text"
-          id={'wikiLink'}
-          value={props.entity.wikiLink || ''}
           disabled={props.viewOnly}
-          name={'wikiLink'}
+          id='wikiLink'
+          name='wikiLink'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-            onChange({
-              ...props.entity,
+            setPersonCopy({
+              ...person,
               wikiLink: e.target.value,
             });
           }}
+          type='text'
+          value={person.wikiLink || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'photo'}>Photo</Form.Label>
+        <Form.Label htmlFor='photo'>Photo</Form.Label>
         <Form.File
-          id={'photo'}
-          type="text"
-          name={'photo'}
           disabled
+          id='photo'
+          name='photo'
+          type='text'
         />
       </Form.Group>
     </div>
   );
+}
+
+export default createFragmentContainer(
+  PersonInfo,
+  {
+    person: graphql`
+      fragment PersonInfo_person on Person {
+        id
+        lastName
+        firstName
+        patronymic
+        pseudonym
+        profession
+        description
+        birthDate
+        deathDate
+        wikiLink
+      }
+    `,
+  }
+);
+
+/**
+ * Executes update mutation for person
+ *
+ * @param input - updated person object
+ */
+export function updateInfo(input: UpdatePersonInput): Promise<PersonInfoUpdateMutationResponse> {
+  return commitMutation<PersonInfoUpdateMutation>(environment, {
+    mutation: graphql`
+      mutation PersonInfoUpdateMutation($input: UpdatePersonInput!) {
+        person {
+          update(input: $input) {
+            recordId
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
 }

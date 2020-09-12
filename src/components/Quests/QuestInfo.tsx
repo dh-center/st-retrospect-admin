@@ -87,12 +87,11 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
   return (
     <div>
       <Form.Group>
-        <Form.Label htmlFor={'name'}>Name</Form.Label>
+        <Form.Label htmlFor='name'>Name</Form.Label>
         <Form.Control
-          type="text"
-          id={'name'}
-          name={'name'}
-          value={props.entity.name}
+          disabled={props.viewOnly}
+          id='name'
+          name='name'
           onChange={(e: ChangeEvent<HTMLInputElement>): void => {
             onChange({
               ...props.entity,
@@ -100,18 +99,17 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
             });
           }}
           required
-          disabled={props.viewOnly}
+          type='text'
+          value={props.entity.name}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'description'}>Description</Form.Label>
+        <Form.Label htmlFor='description'>Description</Form.Label>
         <Form.Control
-          disabled={props.viewOnly}
-          id={'description'}
           as='textarea'
-          rows={15}
-          value={props.entity.description || ''}
-          name={'description'}
+          disabled={props.viewOnly}
+          id='description'
+          name='description'
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => {
             onChange({
               ...props.entity,
@@ -119,28 +117,29 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
             });
           }}
           required
+          rows={15}
+          value={props.entity.description || ''}
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor={'photo'}>Photo</Form.Label>
+        <Form.Label htmlFor='photo'>Photo</Form.Label>
         <Form.File
-          id={'photo'}
-          type="text"
-          name={'photo'}
           disabled
+          id='photo'
+          name='photo'
+          type='text'
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor="">Type</Form.Label>
+        <Form.Label htmlFor=''>Type</Form.Label>
         <div>
           <Form.Check
-            inline
-            type="radio"
-            name={'type'}
-            value={'QUIZ'}
-            label='Quiz'
-            id={'quiz'}
             checked={props.entity.type === 'QUIZ'}
+            disabled={props.viewOnly}
+            id='quiz'
+            inline
+            label='Quiz'
+            name='type'
             onChange={(e: ChangeEvent<HTMLInputElement>): void => {
               onChange({
                 ...props.entity,
@@ -148,16 +147,16 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
               });
             }}
             required
-            disabled={props.viewOnly}
+            type='radio'
+            value='QUIZ'
           />
           <Form.Check
-            inline
-            type="radio"
-            name={'type'}
-            value={'ROUTE'}
-            label='Route'
             checked={props.entity.type === 'ROUTE'}
-            id={'route'}
+            disabled={props.viewOnly}
+            id='route'
+            inline
+            label='Route'
+            name='type'
             onChange={(e: ChangeEvent<HTMLInputElement>): void => {
               onChange({
                 ...props.entity,
@@ -165,7 +164,8 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
               });
             }}
             required
-            disabled={props.viewOnly}
+            type='radio'
+            value='ROUTE'
           />
         </div>
       </Form.Group>

@@ -21,10 +21,6 @@ export default function QuestsPage(): ReactElement {
           ...QuestsList_entityConnection @arguments(first: $first, after: $after)
         }
             `}
-      variables={{
-        first: ENTITIES_PER_PAGE,
-        after: null,
-      }}
       render={({ error, props }): React.ReactNode => {
         if (error) {
           return <div>Error!</div>;
@@ -33,7 +29,11 @@ export default function QuestsPage(): ReactElement {
           return <div>Loading quests...</div>;
         }
 
-        return <QuestsList entityName='quests' entityConnection={props} />;
+        return <QuestsList entityConnection={props} entityName='quests' />;
+      }}
+      variables={{
+        first: ENTITIES_PER_PAGE,
+        after: null,
       }}
     />
   );

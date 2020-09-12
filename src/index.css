@@ -16,3 +16,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.cdx-notifies {
+  left: auto !important;
+  right: 20px;
+}
+
+.cdx-notify__cross {
+  box-sizing: content-box;
+}

@@ -11,13 +11,13 @@ import QuestPage from './QuestsPage';
 export default function QuestsRouter(): ReactElement {
   return (
     <Switch>
-      <PrivateRoute path={'/quests/create'}>
+      <PrivateRoute path='/quests/create'>
         <QuestCreate/>
       </PrivateRoute>
-      <PrivateRoute path={'/quests/:id'}>
+      <PrivateRoute path='/quests/:id'>
         <QuestView/>
       </PrivateRoute>
-      <PrivateRoute path={'/quests'}>
+      <PrivateRoute path='/quests'>
         <QuestPage/>
       </PrivateRoute>
     </Switch>

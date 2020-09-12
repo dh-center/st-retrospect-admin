@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import PrivateRoute from '../PrivateRoute';
 import { Switch } from 'react-router-dom';
-import PersonCreateComponent from './PersonCreate';
-import PersonViewComponent from './PersonView';
-import PersonEditComponent from "./PersonEdit";
+// import PersonCreate from './PersonCreate';
+import PersonView from './PersonView';
+import PersonEditPageRenderer from './PersonEdit';
 import PersonsPage from './PersonsPage';
 
 /**
@@ -12,16 +12,16 @@ import PersonsPage from './PersonsPage';
 export default function PersonsRouter(): ReactElement {
   return (
     <Switch>
-      <PrivateRoute path={'/persons/create'}>
-        <PersonCreateComponent/>
+      {/*<PrivateRoute path='/persons/create'>*/}
+      {/*  <PersonCreate/>*/}
+      {/*</PrivateRoute>*/}
+      <PrivateRoute path='/persons/:id/edit'>
+        <PersonEditPageRenderer/>
       </PrivateRoute>
-      <PrivateRoute path={'/persons/:id/edit'}>
-        <PersonEditComponent/>
+      <PrivateRoute path='/persons/:id'>
+        <PersonView/>
       </PrivateRoute>
-      <PrivateRoute path={'/persons/:id'}>
-        <PersonViewComponent/>
-      </PrivateRoute>
-      <PrivateRoute path={'/persons'}>
+      <PrivateRoute path='/persons'>
         <PersonsPage/>
       </PrivateRoute>
     </Switch>

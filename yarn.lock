@@ -10079,6 +10079,11 @@ relateurl@^0.2.7:
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
   integrity sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=
 
+relay-commit-mutation-promise@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/relay-commit-mutation-promise/-/relay-commit-mutation-promise-1.1.3.tgz#ed5a2372589d6c19d342fb230300288e706f193b"
+  integrity sha512-fnF8M89VXVcwetNHKFM78PJUTwIe1eykQ7GDUAHEVRg84enqAUbRZaxka439cXM2kcfp4k7fbeDSscInX9XmbA==
+
 relay-compiler-language-typescript@^13.0.1:
   version "13.0.1"
   resolved "https://registry.yarnpkg.com/relay-compiler-language-typescript/-/relay-compiler-language-typescript-13.0.1.tgz#f2a9875b9d06361fbc7dd0a50951819daf161a4e"

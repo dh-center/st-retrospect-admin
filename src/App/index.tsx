@@ -60,14 +60,14 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
  */
 function App(): ReactElement {
   return (
-    <div className="h-100">
+    <div className='h-100'>
       <Switch>
 
         <Route path='/login'>
           <Login/>
         </Route>
 
-        <Route path={'/visualization/:chartName?'}>
+        <Route path='/visualization/:chartName?'>
           <VisualizationPage/>
         </Route>
 
@@ -79,8 +79,8 @@ function App(): ReactElement {
                     ...Navigation_user
                 }
             `}
-            variables={{}}
-            render={renderQuery}/>
+            render={renderQuery}
+            variables={{}}/>
         </PrivateRoute>
 
       </Switch>
