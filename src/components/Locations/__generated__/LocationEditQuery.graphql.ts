@@ -9,7 +9,7 @@ export type LocationEditQueryVariables = {
 };
 export type LocationEditQueryResponse = {
     readonly location: {
-        readonly " $fragmentRefs": FragmentRefs<"LocationInfo_data">;
+        readonly " $fragmentRefs": FragmentRefs<"LocationInfo_location">;
     } | null;
 };
 export type LocationEditQuery = {
@@ -24,12 +24,12 @@ query LocationEditQuery(
   $id: ID!
 ) {
   location(id: $id) {
-    ...LocationInfo_data
+    ...LocationInfo_location
     id
   }
 }
 
-fragment LocationInfo_data on Location {
+fragment LocationInfo_location on Location {
   id
   coordinateX
   coordinateY
@@ -95,7 +95,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "LocationInfo_data"
+            "name": "LocationInfo_location"
           }
         ],
         "storageKey": null
@@ -193,14 +193,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ba43c002908b909aaeb48909c849c2b4",
+    "cacheID": "d51af1bc000a933f504b1d719b62f9e2",
     "id": null,
     "metadata": {},
     "name": "LocationEditQuery",
     "operationKind": "query",
-    "text": "query LocationEditQuery(\n  $id: ID!\n) {\n  location(id: $id) {\n    ...LocationInfo_data\n    id\n  }\n}\n\nfragment LocationInfo_data on Location {\n  id\n  coordinateX\n  coordinateY\n  ...LocationInstancesTabs_data\n}\n\nfragment LocationInstanceInfo_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstancesTabs_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceInfo_locationInstance\n  }\n}\n"
+    "text": "query LocationEditQuery(\n  $id: ID!\n) {\n  location(id: $id) {\n    ...LocationInfo_location\n    id\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  coordinateX\n  coordinateY\n  ...LocationInstancesTabs_data\n}\n\nfragment LocationInstanceInfo_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstancesTabs_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceInfo_locationInstance\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5a5fa02c39cf0b7ddd562853c6fb6f36';
+(node as any).hash = 'c3a10f630e119c608d7abe0e8343843e';
 export default node;

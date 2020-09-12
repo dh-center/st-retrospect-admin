@@ -1,17 +1,19 @@
 import React from 'react';
 import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import { LocationInfo_data as LocationInfoData } from './__generated__/LocationInfo_data.graphql';
 import LocationInstancesTabs from './LocationInstancesTabs';
+import { DefaultInfoComponentProps } from '../../types/entities';
+import { UpdatePersonInput } from '../Persons/__generated__/PersonInfoUpdateMutation.graphql';
+import { LocationInfo_location } from './__generated__/LocationInfo_location.graphql';
 
 /**
  * Props for LocationInfo rendering
  */
-interface LocationInfoProps {
+interface LocationInfoProps extends DefaultInfoComponentProps<UpdatePersonInput>{
   /**
    * Data to display
    */
-  data: LocationInfoData;
+  location: LocationInfo_location;
 }
 
 /**
@@ -22,7 +24,7 @@ interface LocationInfoProps {
 function LocationInfo(props: LocationInfoProps): React.ReactElement {
   return (
     <div>
-      <LocationInstancesTabs data={props.data}/>
+      <LocationInstancesTabs data={props.location}/>
     </div>
   );
 }
@@ -30,8 +32,8 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
 export default createFragmentContainer(
   LocationInfo,
   {
-    data: graphql`
-        fragment LocationInfo_data on Location {
+    location: graphql`
+        fragment LocationInfo_location on Location {
           id
           coordinateX
           coordinateY

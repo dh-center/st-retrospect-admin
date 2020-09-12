@@ -4,17 +4,17 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type LocationInfo_data = {
+export type LocationInfo_location = {
     readonly id: string;
     readonly coordinateX: number | null;
     readonly coordinateY: number | null;
     readonly " $fragmentRefs": FragmentRefs<"LocationInstancesTabs_data">;
-    readonly " $refType": "LocationInfo_data";
+    readonly " $refType": "LocationInfo_location";
 };
-export type LocationInfo_data$data = LocationInfo_data;
-export type LocationInfo_data$key = {
-    readonly " $data"?: LocationInfo_data$data;
-    readonly " $fragmentRefs": FragmentRefs<"LocationInfo_data">;
+export type LocationInfo_location$data = LocationInfo_location;
+export type LocationInfo_location$key = {
+    readonly " $data"?: LocationInfo_location$data;
+    readonly " $fragmentRefs": FragmentRefs<"LocationInfo_location">;
 };
 
 
@@ -23,7 +23,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "LocationInfo_data",
+  "name": "LocationInfo_location",
   "selections": [
     {
       "alias": null,
@@ -55,5 +55,5 @@ const node: ReaderFragment = {
   "type": "Location",
   "abstractKey": null
 };
-(node as any).hash = '2d671a202306c33dc5c826b395ee3e17';
+(node as any).hash = '6e44d000dfac718930398cee2d437135';
 export default node;

@@ -20,7 +20,7 @@ function LocationView(): React.ReactElement {
       query={graphql`
         query LocationViewQuery($id: ID!) {
           entity: location(id: $id) {
-          ...LocationInfo_data
+          ...LocationInfo_location
          }
         }
       `}
@@ -45,7 +45,7 @@ function LocationView(): React.ReactElement {
                 width: '100%',
               }}
             >
-              <LocationInfo data={props.entity}/>
+              <LocationInfo location={props.entity}/>
               <LinkContainer to={`${id}/edit`}>
                 <Button className='m-1' variant='outline-warning'>Edit</Button>
               </LinkContainer>
