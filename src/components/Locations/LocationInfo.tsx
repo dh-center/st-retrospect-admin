@@ -5,6 +5,7 @@ import LocationInstancesTabs from './LocationInstancesTabs';
 import { DefaultInfoComponentProps } from '../../types/entities';
 import { UpdatePersonInput } from '../Persons/__generated__/PersonInfoUpdateMutation.graphql';
 import { LocationInfo_location } from './__generated__/LocationInfo_location.graphql';
+import Button from "react-bootstrap/Button";
 
 /**
  * Props for LocationInfo rendering
@@ -24,6 +25,7 @@ interface LocationInfoProps extends DefaultInfoComponentProps<UpdatePersonInput>
 function LocationInfo(props: LocationInfoProps): React.ReactElement {
   return (
     <div>
+      <Button>Add location instance</Button>
       <LocationInstancesTabs data={props.location}/>
     </div>
   );
