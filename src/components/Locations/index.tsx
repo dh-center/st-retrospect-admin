@@ -12,14 +12,14 @@ import LocationCreate from './LocationCreate';
 export default function LocationsRouter(): ReactElement {
   return (
     <Switch>
+      <PrivateRoute path='/locations/create'>
+        <LocationCreate/>
+      </PrivateRoute>
       <PrivateRoute path='/locations/:id'>
         <LocationView/>
       </PrivateRoute>
       <PrivateRoute path='/locations/:id/edit'>
         <LocationEdit/>
-      </PrivateRoute>
-      <PrivateRoute path='/locations/create'>
-        <LocationCreate/>
       </PrivateRoute>
       <PrivateRoute path='/locations'>
         <LocationPage/>

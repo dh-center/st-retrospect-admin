@@ -56,6 +56,54 @@ input Coordinates {
   latitude: Float!
 }
 
+input CreateLocationInput {
+  """Location coordinate by X"""
+  coordinateX: Float
+
+  """Location coordinate by Y"""
+  coordinateY: Float
+
+  """Possible location representations"""
+  instances: [CreateLocationInstanceInput!]!
+}
+
+input CreateLocationInstanceInput {
+  """Location's name"""
+  name: String!
+
+  """Location's description"""
+  description: String
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+}
+
+type CreateLocationPayload {
+  """Created location id"""
+  recordId: ID!
+
+  """Created location"""
+  record: Location!
+}
+
 input CreatePersonInput {
   """Person's first name"""
   firstName: String
@@ -119,6 +167,11 @@ type CreateQuestPayload {
 }
 
 scalar Cursor
+
+type DeleteLocationPayload {
+  """Deleted location id"""
+  recordId: ID!
+}
 
 type DeletePersonPayload {
   """Deleted person id"""
@@ -257,6 +310,17 @@ type LocationInstance {
   architects: [Person]
 }
 
+type LocationMutations {
+  """Create location"""
+  create(input: CreateLocationInput!): CreateLocationPayload!
+
+  """Update location"""
+  update(input: UpdateLocationInput!): UpdateLocationPayload!
+
+  """Delete location"""
+  delete(id: ID!): DeleteLocationPayload!
+}
+
 """Location type to add it to Location"""
 type LocationType {
   """LocationType's ID"""
@@ -276,6 +340,7 @@ type Mutation {
   """Unused field to let extend this type"""
   _: Boolean
   person: PersonMutations
+  location: LocationMutations!
 
   """Save route to user"""
   saveRoute(routeId: String!): User!
@@ -677,6 +742,25 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 """
 scalar Timestamp
 
+input UpdateLocationInput {
+  """Location coordinate by X"""
+  coordinateX: Float
+
+  """Location coordinate by Y"""
+  coordinateY: Float
+
+  """Possible location instances id"""
+  instances: [ID!]!
+}
+
+type UpdateLocationPayload {
+  """Updated location id"""
+  recordId: ID!
+
+  """Updated location"""
+  record: Location!
+}
+
 input UpdatePersonInput {
   """ID of person for updating"""
   id: ID!
@@ -738,10 +822,10 @@ input UpdateQuestInput {
 }
 
 type UpdateQuestPayload {
-  """Created quest id"""
+  """Updated quest id"""
   recordId: ID!
 
-  """Created quest"""
+  """Updated quest"""
   record: Quest!
 }
 

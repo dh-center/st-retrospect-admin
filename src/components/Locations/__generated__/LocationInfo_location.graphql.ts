@@ -8,7 +8,7 @@ export type LocationInfo_location = {
     readonly id: string;
     readonly coordinateX: number | null;
     readonly coordinateY: number | null;
-    readonly " $fragmentRefs": FragmentRefs<"LocationInstancesTabs_data">;
+    readonly " $fragmentRefs": FragmentRefs<"LocationInstancesList_data">;
     readonly " $refType": "LocationInfo_location";
 };
 export type LocationInfo_location$data = LocationInfo_location;
@@ -49,11 +49,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "LocationInstancesTabs_data"
+      "name": "LocationInstancesList_data"
     }
   ],
   "type": "Location",
   "abstractKey": null
 };
-(node as any).hash = '6e44d000dfac718930398cee2d437135';
+(node as any).hash = '5fce293de768cba2125dd8470dfd8cd2';
 export default node;

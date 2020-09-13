@@ -33,10 +33,10 @@ fragment LocationInfo_location on Location {
   id
   coordinateX
   coordinateY
-  ...LocationInstancesTabs_data
+  ...LocationInstancesList_data
 }
 
-fragment LocationInstanceInfo_locationInstance on LocationInstance {
+fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
   id
   name
   description
@@ -46,11 +46,18 @@ fragment LocationInstanceInfo_locationInstance on LocationInstance {
   endDate
 }
 
-fragment LocationInstancesTabs_data on Location {
+fragment LocationInstanceListItem_instance on LocationInstance {
+  name
+  mainPhotoLink
+  description
+}
+
+fragment LocationInstancesList_data on Location {
   instances {
     id
     name
-    ...LocationInstanceInfo_locationInstance
+    ...LocationInstanceListItem_instance
+    ...LocationInstanceInfoDialog_locationInstance
   }
 }
 */
@@ -153,6 +160,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "mainPhotoLink",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "description",
                 "storageKey": null
               },
@@ -193,12 +207,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c073661cabdcaec68ce3030b65b5da09",
+    "cacheID": "4290dc63dc41b412c4ff8066b3f83f34",
     "id": null,
     "metadata": {},
     "name": "LocationViewQuery",
     "operationKind": "query",
-    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n    id\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  coordinateX\n  coordinateY\n  ...LocationInstancesTabs_data\n}\n\nfragment LocationInstanceInfo_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstancesTabs_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceInfo_locationInstance\n  }\n}\n"
+    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n    id\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  coordinateX\n  coordinateY\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();
