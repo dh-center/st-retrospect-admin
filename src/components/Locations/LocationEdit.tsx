@@ -5,6 +5,7 @@ import environment from '../../relay-env';
 import { useParams } from 'react-router';
 import { LocationEditQuery } from './__generated__/LocationEditQuery.graphql';
 import LocationInfo from './LocationInfo';
+import ContentWrapper from "../ContentWrapper";
 
 /**
  * Page with form for location editing
@@ -35,7 +36,11 @@ function LocationEdit(): React.ReactElement {
           return <div>There is no location with provided id</div>;
         }
 
-        return <LocationInfo location={props.location}/>;
+        return (
+          <ContentWrapper>
+            <LocationInfo location={props.location}/>
+          </ContentWrapper>
+        );
       }}
       variables={{ id }}
     />

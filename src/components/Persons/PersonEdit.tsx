@@ -9,6 +9,7 @@ import { Button, Spinner } from 'react-bootstrap';
 import { PersonEditQuery } from './__generated__/PersonEditQuery.graphql';
 import { UpdatePersonInput } from './__generated__/PersonInfoUpdateMutation.graphql';
 import notifier from 'codex-notifier';
+import ContentWrapper from '../ContentWrapper';
 
 /**
  * Page with form for person editing
@@ -90,41 +91,34 @@ function PersonEditPageRenderer(): React.ReactElement {
         }
 
         return (
-          <div className='d-flex justify-content-center' >
-            <div
-              style={{
-                maxWidth: '800px',
-                width: '100%',
-              }}
+          <ContentWrapper>
+            <PersonInfo
+              onChange={setInput}
+              person={props.person}
+            />
+            <Button
+              className='m-1'
+              onClick={() => savePersonToApi()}
+              type='submit'
             >
-              <PersonInfo
-                onChange={setInput}
-                person={props.person!}
-              />
-              <Button
-                className='m-1'
-                onClick={() => savePersonToApi()}
-                type='submit'
-              >
-                {isLoading ? (
-                  <Spinner
-                    animation='border'
-                    aria-hidden='true'
-                    as='span'
-                    role='status'
-                    size='sm'
-                  />
-                ) : ('Save')}
-              </Button>
-              <Button
-                className='m-1'
-                onClick={() => pushLocationBack()}
-                variant='outline-danger'
-              >
+              {isLoading ? (
+                <Spinner
+                  animation='border'
+                  aria-hidden='true'
+                  as='span'
+                  role='status'
+                  size='sm'
+                />
+              ) : ('Save')}
+            </Button>
+            <Button
+              className='m-1'
+              onClick={() => pushLocationBack()}
+              variant='outline-danger'
+            >
                 Cancel
-              </Button>
-            </div>
-          </div>
+            </Button>
+          </ContentWrapper>
         );
       }}
       variables={{ id }}

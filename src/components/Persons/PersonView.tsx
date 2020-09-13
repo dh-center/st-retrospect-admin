@@ -9,6 +9,7 @@ import { PersonViewQuery } from './__generated__/PersonViewQuery.graphql';
 import PersonInfo from './PersonInfo';
 import notifier from 'codex-notifier';
 import { Redirect } from 'react-router-dom';
+import ContentWrapper from '../ContentWrapper';
 
 function PersonView(): React.ReactElement {
   const { id } = useParams();
@@ -43,19 +44,12 @@ function PersonView(): React.ReactElement {
         }
 
         return (
-          <div className='d-flex justify-content-center' >
-            <div
-              style={{
-                maxWidth: '800px',
-                width: '100%',
-              }}
-            >
-              <PersonInfo person={props.person} viewOnly/>
-              <LinkContainer to={`${id}/edit`}>
-                <Button className='m-1' variant='outline-warning'>Edit</Button>
-              </LinkContainer>
-            </div>
-          </div>
+          <ContentWrapper>
+            <PersonInfo person={props.person} viewOnly/>
+            <LinkContainer to={`${id}/edit`}>
+              <Button className='m-1' variant='outline-warning'>Edit</Button>
+            </LinkContainer>
+          </ContentWrapper>
         );
       }}
       variables={{ id }}

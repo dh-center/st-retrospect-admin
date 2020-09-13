@@ -12,6 +12,7 @@ import commitMutation from 'relay-commit-mutation-promise';
 import notifier from 'codex-notifier';
 import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+import ContentWrapper from "../ContentWrapper";
 
 function generateLocationInput(): CreateLocationInput {
   return {
@@ -102,7 +103,7 @@ export default function LocationCreate(): React.ReactElement {
   };
 
   return (
-    <div>
+    <ContentWrapper>
       <Form onSubmit={saveLocationToApi}>
         <Input
           label='Location instance name'
@@ -151,6 +152,6 @@ export default function LocationCreate(): React.ReactElement {
           ) : 'Create'}
         </Button>
       </Form>
-    </div>
+    </ContentWrapper>
   );
 }
