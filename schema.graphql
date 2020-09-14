@@ -64,7 +64,7 @@ input CreateLocationInput {
   coordinateY: Float!
 
   """Possible location representations"""
-  instances: [CreateLocationInstanceInput!]!
+  instances: [LocationInstanceInput!]!
 }
 
 input CreateLocationInstanceInput {
@@ -94,6 +94,7 @@ input CreateLocationInstanceInput {
 
   """End of period"""
   endDate: String
+  locationId: ObjectId!
 }
 
 type CreateLocationInstancePayload {
@@ -321,6 +322,35 @@ type LocationInstance {
 
   """Array of architects"""
   architects: [Person]
+}
+
+input LocationInstanceInput {
+  """Location's name"""
+  name: MultilingualString!
+
+  """Location's description"""
+  description: MultilingualString!
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
 }
 
 type LocationInstanceMutations {

@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { LocationInstancesList_data as LocationInstancesListData } from './__generated__/LocationInstancesList_data.graphql';
 import LocationInstanceInfoDialog from './LocationInstanceInfoDialog';
 import LocationInstanceListItem from './LocationInstanceListItem';
+import { UpdateLocationInstanceInput } from './__generated__/LocationInstanceInfoDialogUpdateMutation.graphql';
+import { CreateLocationInstanceInput } from './__generated__/LocationInstanceInfoDialogCreateMutation.graphql';
 
 /**
  * Props for LocationInstancesList rendering
@@ -26,8 +28,11 @@ interface Props {
  * @param props - props for rendering
  */
 function LocationInstancesList(props: Props): React.ReactElement {
-  const [currentInstance, setCurrentInstance] = useState<LocationInstancesListData['instances'][0] | null>(null);
+  const [currentInstanceId, setCurrentInstanceId] = useState<string | undefined>(props.data.instances[0] && props.data.instances[0].id);
   const [isDialogShowed, setIsDialogShowed] = useState(false);
+  // const [input, setInput] = useState<CreateLocationInstanceInput | UpdateLocationInstanceInput | null>(null);
+
+  const currentInstance = props.data.instances.find(inst => inst.id === currentInstanceId);
 
   return (
     <div>
@@ -36,17 +41,23 @@ function LocationInstancesList(props: Props): React.ReactElement {
           instance={instance}
           key={instance.id}
           onClick={() => {
-            setCurrentInstance(instance);
+            setCurrentInstanceId(instance.id);
             setIsDialogShowed(true);
           }}
         />
       )}
-      <button>
+      <button
+        onClick={() => {
+          setIsDialogShowed(true);
+          setCurrentInstanceId(undefined);
+        }}
+      >
         Add location instance
       </button>
       <LocationInstanceInfoDialog
         isShown={isDialogShowed}
-        locationInstance={currentInstance}
+        locationInstance={currentInstance || null}
+        // onChange={setInput}
         onHide={() => setIsDialogShowed(false)}
       />
     </div>

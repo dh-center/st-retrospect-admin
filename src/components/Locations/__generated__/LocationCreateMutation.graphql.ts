@@ -6,9 +6,9 @@ import { ConcreteRequest } from "relay-runtime";
 export type CreateLocationInput = {
     coordinateX: number;
     coordinateY: number;
-    instances: Array<CreateLocationInstanceInput>;
+    instances: Array<LocationInstanceInput>;
 };
-export type CreateLocationInstanceInput = {
+export type LocationInstanceInput = {
     name: string;
     description: string;
     wikiLink?: string | null;

@@ -1,7 +1,9 @@
 import React, { FormEvent, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import {
-  CreateLocationInput, CreateLocationInstanceInput, LocationCreateMutation,
+  CreateLocationInput,
+  LocationInstanceInput,
+  LocationCreateMutation,
   LocationCreateMutationResponse
 } from './__generated__/LocationCreateMutation.graphql';
 import environment from '../../relay-env';
@@ -56,9 +58,9 @@ export default function LocationCreate(): React.ReactElement {
 
   const instance = input.instances[0];
 
-  const updateLocationInstance = <T extends keyof CreateLocationInstanceInput>(
+  const updateLocationInstance = <T extends keyof LocationInstanceInput>(
     key: T,
-    value: CreateLocationInstanceInput[T]
+    value: LocationInstanceInput[T]
   ): void => {
     setInput({
       ...input,

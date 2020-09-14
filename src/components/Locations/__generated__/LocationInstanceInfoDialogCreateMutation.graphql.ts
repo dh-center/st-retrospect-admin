@@ -13,6 +13,7 @@ export type CreateLocationInstanceInput = {
     demolitionDate?: string | null;
     startDate?: string | null;
     endDate?: string | null;
+    locationId: string;
 };
 export type LocationInstanceInfoDialogCreateMutationVariables = {
     input: CreateLocationInstanceInput;
@@ -20,7 +21,14 @@ export type LocationInstanceInfoDialogCreateMutationVariables = {
 export type LocationInstanceInfoDialogCreateMutationResponse = {
     readonly locationInstances: {
         readonly create: {
-            readonly recordId: string;
+            readonly record: {
+                readonly id: string;
+                readonly location: {
+                    readonly instances: ReadonlyArray<{
+                        readonly id: string;
+                    }>;
+                };
+            };
         };
     };
 };
@@ -37,7 +45,14 @@ mutation LocationInstanceInfoDialogCreateMutation(
 ) {
   locationInstances {
     create(input: $input) {
-      recordId
+      record {
+        id
+        location {
+          instances {
+            id
+          }
+        }
+      }
     }
   }
 }
@@ -51,7 +66,14 @@ var v0 = [
     "name": "input"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -77,8 +99,36 @@ v1 = [
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "recordId",
+            "concreteType": "LocationInstance",
+            "kind": "LinkedField",
+            "name": "record",
+            "plural": false,
+            "selections": [
+              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Location",
+                "kind": "LinkedField",
+                "name": "location",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "LocationInstance",
+                    "kind": "LinkedField",
+                    "name": "instances",
+                    "plural": true,
+                    "selections": [
+                      (v1/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -94,7 +144,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "LocationInstanceInfoDialogCreateMutation",
-    "selections": (v1/*: any*/),
+    "selections": (v2/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -103,17 +153,17 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "LocationInstanceInfoDialogCreateMutation",
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "4cee8e5d2c088bdc0a011531db8ef615",
+    "cacheID": "7770a79a343754bb2c8da37737caa6dd",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      record {\n        id\n        location {\n          instances {\n            id\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b62bff48242c6b97bc6765c6ad45e7db';
+(node as any).hash = 'dce1fc9938d2982f3e53322f4f46a467';
 export default node;

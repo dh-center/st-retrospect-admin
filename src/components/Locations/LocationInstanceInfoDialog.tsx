@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import useUniqueId from '../../utils/useUniqueId';
@@ -8,52 +8,134 @@ import { LocationInstanceInfoDialog_locationInstance } from './__generated__/Loc
 import ContentWrapper from '../ContentWrapper';
 import commitMutation from 'relay-commit-mutation-promise';
 import environment from '../../relay-env';
-import {
+import type {
   LocationInstanceInfoDialogUpdateMutation,
   LocationInstanceInfoDialogUpdateMutationResponse,
   UpdateLocationInstanceInput
 } from './__generated__/LocationInstanceInfoDialogUpdateMutation.graphql';
-import {
+import type {
+  CreateLocationInstanceInput,
   LocationInstanceInfoDialogCreateMutation,
-  LocationInstanceInfoDialogCreateMutationResponse,
-  CreateLocationInstanceInput
+  LocationInstanceInfoDialogCreateMutationResponse
 } from './__generated__/LocationInstanceInfoDialogCreateMutation.graphql';
+import { DefaultInfoComponentProps } from '../../types/entities';
+import Button from 'react-bootstrap/Button';
+import { useParams } from 'react-router-dom';
 
-interface Props {
+type LocationInstanceInputs = CreateLocationInstanceInput | UpdateLocationInstanceInput;
+
+interface Props extends DefaultInfoComponentProps<LocationInstanceInputs>{
   onHide(): void;
   isShown: boolean;
   locationInstance: LocationInstanceInfoDialog_locationInstance | null;
 }
 
-function LocationInstanceInfoDialog(props: Props): React.ReactElement {
-  const id = useUniqueId('location-instance-info-dialog');
+function isUpdateInput(input: LocationInstanceInputs): input is UpdateLocationInstanceInput {
+  return 'id' in input;
+}
 
-  if (!props.locationInstance) {
-    return <Modal>Loading</Modal>;
+function generateLocationInstanceInput(locationId: string): CreateLocationInstanceInput {
+  return {
+    constructionDate: '',
+    demolitionDate: '',
+    description: '',
+    endDate: '',
+    name: '',
+    startDate: '',
+    locationId,
+  };
+}
+
+function instanceToInput(instance: LocationInstanceInfoDialog_locationInstance | null, locationId: string): LocationInstanceInputs {
+  if (!instance) {
+    return generateLocationInstanceInput(locationId);
   }
+
+  return {
+    locationId,
+    constructionDate: instance.constructionDate,
+    demolitionDate: instance.demolitionDate,
+    description: instance.description || '',
+    endDate: instance.endDate,
+    name: instance.name || '',
+    startDate: instance.startDate,
+    id: instance.id,
+  };
+}
+
+function LocationInstanceInfoDialog(props: Props): React.ReactElement {
+  const { id: locationId } = useParams();
+  const id = useUniqueId('location-instance-info-dialog');
+  const [instanceCopy, setInstanceCopy] = useState(props.locationInstance);
+  const [input, setInput] = useState<LocationInstanceInputs>(instanceToInput(instanceCopy, locationId));
+
+  useEffect(() => {
+    setInstanceCopy(props.locationInstance);
+    setInput(instanceToInput(props.locationInstance, locationId));
+  }, [props.locationInstance, locationId]);
+
+  useEffect(() => {
+    props.onChange && props.onChange(input);
+  }, [input, props]);
+
+  const submit = async (e: FormEvent): Promise<void> => {
+    e.preventDefault();
+    if (isUpdateInput(input)) {
+      return;
+    }
+
+    await create(input)
+    props.onHide()
+  };
 
   return (
     <Modal onHide={props.onHide} show={props.isShown}>
       <ContentWrapper>
-        <Form.Group>
-          <Form.Label htmlFor={id`name`}>Name</Form.Label>
-          <Form.Control
-            disabled
-            id={id`name`}
-            type='text'
-            value={props.locationInstance.name || ''}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label htmlFor={id`description`}>Description</Form.Label>
-          <Form.Control
-            as='textarea'
-            disabled
-            id={id`description`}
-            rows={20}
-            value={props.locationInstance.description || ''}
-          />
-        </Form.Group>
+        <Form onSubmit={submit}>
+          <Form.Group>
+            <Form.Label htmlFor={id`name`}>Name</Form.Label>
+            <Form.Control
+              disabled={props.viewOnly}
+              id={id`name`}
+              onChange={(e) => {
+                setInput({
+                  ...input,
+                  name: e.target.value,
+                });
+              }}
+              type='text'
+              value={input.name || ''}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor={id`description`}>Description</Form.Label>
+            <Form.Control
+              as='textarea'
+              disabled={props.viewOnly}
+              id={id`description`}
+              onChange={(e) => {
+                setInput({
+                  ...input,
+                  description: e.target.value,
+                });
+              }}
+              rows={20}
+              value={input.description || ''}
+
+            />
+          </Form.Group>
+          <div>
+            { !props.locationInstance &&
+            <Button type='submit'>Create</Button>
+            }
+            { props.locationInstance &&
+            <>
+              <Button>Edit</Button>
+              <Button type='button'>Delete</Button>
+            </>
+            }
+          </div>
+        </Form>
       </ContentWrapper>
     </Modal>
   );
@@ -86,7 +168,7 @@ export default createRefetchContainer(
 /**
  * Mutation for creating LocationInstance
  *
- * @param input - input data for updating
+ * @param input - input data for creating
  */
 export function create(input: CreateLocationInstanceInput): Promise<LocationInstanceInfoDialogCreateMutationResponse> {
   return commitMutation<LocationInstanceInfoDialogCreateMutation>(environment, {
@@ -94,7 +176,14 @@ export function create(input: CreateLocationInstanceInput): Promise<LocationInst
       mutation LocationInstanceInfoDialogCreateMutation($input: CreateLocationInstanceInput!) {
         locationInstances {
           create(input: $input) {
-            recordId
+            record {
+              id
+              location {
+                instances {
+                  id
+                }
+              }
+            }
           }
         }
       }
