@@ -3,45 +3,41 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type CreateLocationInput = {
-    coordinateX: number;
-    coordinateY: number;
-    instances: Array<CreateLocationInstanceInput>;
-};
-export type CreateLocationInstanceInput = {
+export type UpdateLocationInstanceInput = {
+    id: string;
     name: string;
-    description: string;
+    description?: string | null;
     wikiLink?: string | null;
-    photoLinks?: Array<string> | null;
+    photoLinks?: Array<string | null> | null;
     mainPhotoLink?: string | null;
     constructionDate?: string | null;
     demolitionDate?: string | null;
     startDate?: string | null;
     endDate?: string | null;
 };
-export type LocationCreateMutationVariables = {
-    input: CreateLocationInput;
+export type LocationInstanceInfoDialogUpdateMutationVariables = {
+    input: UpdateLocationInstanceInput;
 };
-export type LocationCreateMutationResponse = {
-    readonly location: {
-        readonly create: {
+export type LocationInstanceInfoDialogUpdateMutationResponse = {
+    readonly locationInstances: {
+        readonly update: {
             readonly recordId: string;
         };
     };
 };
-export type LocationCreateMutation = {
-    readonly response: LocationCreateMutationResponse;
-    readonly variables: LocationCreateMutationVariables;
+export type LocationInstanceInfoDialogUpdateMutation = {
+    readonly response: LocationInstanceInfoDialogUpdateMutationResponse;
+    readonly variables: LocationInstanceInfoDialogUpdateMutationVariables;
 };
 
 
 
 /*
-mutation LocationCreateMutation(
-  $input: CreateLocationInput!
+mutation LocationInstanceInfoDialogUpdateMutation(
+  $input: UpdateLocationInstanceInput!
 ) {
-  location {
-    create(input: $input) {
+  locationInstances {
+    update(input: $input) {
       recordId
     }
   }
@@ -60,9 +56,9 @@ v1 = [
   {
     "alias": null,
     "args": null,
-    "concreteType": "LocationMutations",
+    "concreteType": "LocationInstanceMutations",
     "kind": "LinkedField",
-    "name": "location",
+    "name": "locationInstances",
     "plural": false,
     "selections": [
       {
@@ -74,9 +70,9 @@ v1 = [
             "variableName": "input"
           }
         ],
-        "concreteType": "CreateLocationPayload",
+        "concreteType": "UpdateLocationInstancePayload",
         "kind": "LinkedField",
-        "name": "create",
+        "name": "update",
         "plural": false,
         "selections": [
           {
@@ -98,7 +94,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "LocationCreateMutation",
+    "name": "LocationInstanceInfoDialogUpdateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -107,18 +103,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "LocationCreateMutation",
+    "name": "LocationInstanceInfoDialogUpdateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "4a87f62b77961e0090fe9f7255f959e7",
+    "cacheID": "9c25480cd7aa1034fc1da2d073040960",
     "id": null,
     "metadata": {},
-    "name": "LocationCreateMutation",
+    "name": "LocationInstanceInfoDialogUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationCreateMutation(\n  $input: CreateLocationInput!\n) {\n  location {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation LocationInstanceInfoDialogUpdateMutation(\n  $input: UpdateLocationInstanceInput!\n) {\n  locationInstances {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c3f5ca0cf2b09e35d0d4e95da162c12b';
+(node as any).hash = '54bab4a6343204cd51c8338ffa45bcce';
 export default node;

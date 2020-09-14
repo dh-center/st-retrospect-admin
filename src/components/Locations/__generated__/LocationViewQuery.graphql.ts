@@ -25,7 +25,6 @@ query LocationViewQuery(
 ) {
   entity: location(id: $id) {
     ...LocationInfo_location
-    id
   }
 }
 
@@ -207,12 +206,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4290dc63dc41b412c4ff8066b3f83f34",
+    "cacheID": "f32af682fae67a64324acc3ba22be5c6",
     "id": null,
     "metadata": {},
     "name": "LocationViewQuery",
     "operationKind": "query",
-    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n    id\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  coordinateX\n  coordinateY\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
+    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  coordinateX\n  coordinateY\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();

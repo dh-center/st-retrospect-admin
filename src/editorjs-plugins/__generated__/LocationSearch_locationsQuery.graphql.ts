@@ -33,7 +33,6 @@ query LocationSearch_locationsQuery {
           name
           id
         }
-        id
       }
     }
   }
@@ -53,13 +52,6 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
   "storageKey": null
 };
 return {
@@ -159,11 +151,16 @@ return {
                     "selections": [
                       (v0/*: any*/),
                       (v1/*: any*/),
-                      (v2/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
-                  },
-                  (v2/*: any*/)
+                  }
                 ],
                 "storageKey": null
               }
@@ -176,12 +173,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a7d18d0c17cba516de7b15a7130854fb",
+    "cacheID": "7c979a422558a943735c083557172879",
     "id": null,
     "metadata": {},
     "name": "LocationSearch_locationsQuery",
     "operationKind": "query",
-    "text": "query LocationSearch_locationsQuery {\n  locations {\n    edges {\n      node {\n        instances {\n          value: id\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query LocationSearch_locationsQuery {\n  locations {\n    edges {\n      node {\n        instances {\n          value: id\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

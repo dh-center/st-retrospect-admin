@@ -58,10 +58,10 @@ input Coordinates {
 
 input CreateLocationInput {
   """Location coordinate by X"""
-  coordinateX: Float
+  coordinateX: Float!
 
   """Location coordinate by Y"""
-  coordinateY: Float
+  coordinateY: Float!
 
   """Possible location representations"""
   instances: [CreateLocationInstanceInput!]!
@@ -69,16 +69,16 @@ input CreateLocationInput {
 
 input CreateLocationInstanceInput {
   """Location's name"""
-  name: String!
+  name: MultilingualString!
 
   """Location's description"""
-  description: String
+  description: MultilingualString!
 
   """Link for location info"""
   wikiLink: String
 
   """Contains links with location's photos"""
-  photoLinks: [String]
+  photoLinks: [String!]
 
   """Link with main photo"""
   mainPhotoLink: String
@@ -96,9 +96,17 @@ input CreateLocationInstanceInput {
   endDate: String
 }
 
-type CreateLocationPayload {
+type CreateLocationInstancePayload {
   """Created location id"""
   recordId: ID!
+
+  """Created location"""
+  record: LocationInstance!
+}
+
+type CreateLocationPayload {
+  """Created location id"""
+  recordId: ObjectId!
 
   """Created location"""
   record: Location!
@@ -168,6 +176,11 @@ type CreateQuestPayload {
 
 scalar Cursor
 
+type DeleteLocationInstancePayload {
+  """Created location id"""
+  recordId: ID!
+}
+
 type DeleteLocationPayload {
   """Deleted location id"""
   recordId: ID!
@@ -227,7 +240,7 @@ enum Languages {
 """Location for displaying on map and making relations with persons"""
 type Location {
   """Location's ID"""
-  id: ID!
+  id: ObjectId!
 
   """Location coordinate by X"""
   coordinateX: Float
@@ -310,6 +323,17 @@ type LocationInstance {
   architects: [Person]
 }
 
+type LocationInstanceMutations {
+  """Create location instance"""
+  create(input: CreateLocationInstanceInput!): CreateLocationInstancePayload!
+
+  """Update location instance"""
+  update(input: UpdateLocationInstanceInput!): UpdateLocationInstancePayload!
+
+  """Delete location instance"""
+  delete(id: ID!): DeleteLocationInstancePayload!
+}
+
 type LocationMutations {
   """Create location"""
   create(input: CreateLocationInput!): CreateLocationPayload!
@@ -335,12 +359,15 @@ The `BigInt` scalar type represents non-fractional signed whole numeric values.
 """
 scalar Long
 
+scalar MultilingualString
+
 """API mutations"""
 type Mutation {
   """Unused field to let extend this type"""
   _: Boolean
   person: PersonMutations
   location: LocationMutations!
+  locationInstances: LocationInstanceMutations!
 
   """Save route to user"""
   saveRoute(routeId: String!): User!
@@ -355,6 +382,9 @@ type Mutation {
   dislikeRoute(routeId: String!): User!
   quest: QuestMutations!
 }
+
+"""MongoDB ObjectId type"""
+scalar ObjectId
 
 """Information about current page"""
 type PageInfo {
@@ -373,7 +403,7 @@ type PageInfo {
 
 type Person {
   """Person's id"""
-  id: ID!
+  id: ObjectId!
 
   """Person's first name"""
   firstName: String
@@ -750,7 +780,47 @@ input UpdateLocationInput {
   coordinateY: Float
 
   """Possible location instances id"""
-  instances: [ID!]!
+  instances: [ObjectId!]!
+}
+
+input UpdateLocationInstanceInput {
+  """Location instance id"""
+  id: ID!
+
+  """Location's name"""
+  name: String!
+
+  """Location's description"""
+  description: String
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+}
+
+type UpdateLocationInstancePayload {
+  """Created location id"""
+  recordId: ID!
+
+  """Created location"""
+  record: LocationInstance!
 }
 
 type UpdateLocationPayload {

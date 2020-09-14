@@ -25,7 +25,6 @@ query PersonViewQuery(
 ) {
   person(id: $id) {
     ...PersonInfo_person
-    id
   }
 }
 
@@ -175,12 +174,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "09ad23eb7300005226a08bd32d34f75b",
+    "cacheID": "c2096fc9ba89c543b5d343a3af4723a9",
     "id": null,
     "metadata": {},
     "name": "PersonViewQuery",
     "operationKind": "query",
-    "text": "query PersonViewQuery(\n  $id: ID!\n) {\n  person(id: $id) {\n    ...PersonInfo_person\n    id\n  }\n}\n\nfragment PersonInfo_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  profession\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
+    "text": "query PersonViewQuery(\n  $id: ID!\n) {\n  person(id: $id) {\n    ...PersonInfo_person\n  }\n}\n\nfragment PersonInfo_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  profession\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
   }
 };
 })();
