@@ -10,14 +10,15 @@ import notifier from 'codex-notifier';
 import { useHistory } from 'react-router-dom';
 import { UpdateLocationInput } from './__generated__/LocationInfoUpdateMutation.graphql';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/cjs/Button';
+import Button from 'react-bootstrap/Button';
+import { LinkContainer } from 'react-router-bootstrap';
 
 /**
  * Page with form for location editing
  */
 function LocationEdit(): React.ReactElement {
   const { id } = useParams();
-  const [input, setInput] = useState<UpdateLocationInput|null>(null);
+  const [input, setInput] = useState<UpdateLocationInput | null>(null);
   const [isLoading, setLoadingStatus] = useState(false);
   const history = useHistory();
 
@@ -32,7 +33,7 @@ function LocationEdit(): React.ReactElement {
       return;
     }
 
-    console.log(input)
+    console.log(input);
 
     setLoadingStatus(true);
     try {
@@ -81,8 +82,16 @@ function LocationEdit(): React.ReactElement {
           <ContentWrapper>
             <Form onSubmit={updateLocation}>
               <LocationInfo location={props.location} onChange={setInput}/>
-              <Button type='submit'>Save</Button>
-              <Button type='button'>Cancel</Button>
+              <Button className='m-1' type='submit' variant='outline-primary'>Save</Button>
+              <LinkContainer to={`/locations/${id}`} exact>
+                <Button
+                  className='m-1'
+                  type='submit'
+                  variant='outline-secondary'
+                >
+                  Cancel
+                </Button>
+              </LinkContainer>
             </Form>
           </ContentWrapper>
         );

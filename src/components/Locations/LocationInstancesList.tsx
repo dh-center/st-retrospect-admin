@@ -51,11 +51,13 @@ function LocationInstancesList(props: Props): React.ReactElement {
       )}
       {!props.viewOnly &&
         <Button
+          className='m-1'
           onClick={() => {
             setIsDialogShowed(true);
             setCurrentInstanceId(undefined);
           }}
           size='sm'
+          variant={"outline-warning"}
           type='button'
         >
           Add location instance

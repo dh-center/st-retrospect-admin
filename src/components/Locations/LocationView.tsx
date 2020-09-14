@@ -7,6 +7,7 @@ import { LocationViewQuery } from './__generated__/LocationViewQuery.graphql';
 import LocationInfo from './LocationInfo';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
+import ContentWrapper from '../ContentWrapper';
 
 /**
  * Page with location info to view
@@ -38,19 +39,15 @@ function LocationView(): React.ReactElement {
         }
 
         return (
-          <div className='d-flex justify-content-center' >
-            <div
-              style={{
-                maxWidth: '800px',
-                width: '100%',
-              }}
-            >
-              <LocationInfo location={props.entity} viewOnly/>
-              <LinkContainer to={`${id}/edit`}>
+          <ContentWrapper>
+            <LocationInfo location={props.entity} viewOnly/>
+            <div>
+              <LinkContainer to={`/locations/${id}/edit`}>
                 <Button className='m-1' variant='outline-warning'>Edit</Button>
               </LinkContainer>
+              <Button className='m-1' variant='outline-danger'>Delete</Button>
             </div>
-          </div>
+          </ContentWrapper>
         );
       }}
       variables={{ id }}

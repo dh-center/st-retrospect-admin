@@ -130,8 +130,8 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             }
             { props.locationInstance &&
             <>
-              <Button onClick={() => setIsEditing(true)}>Edit</Button>
-              <Button type='button'>Delete</Button>
+              <Button className={'m-1'} onClick={() => setIsEditing(true)} variant='outline-warning'>Edit</Button>
+              <Button className={'m-1'} type='button' variant='outline-danger'>Delete</Button>
             </>
             }
           </div>
