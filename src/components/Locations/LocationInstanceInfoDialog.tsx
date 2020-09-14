@@ -9,9 +9,15 @@ import ContentWrapper from '../ContentWrapper';
 import commitMutation from 'relay-commit-mutation-promise';
 import environment from '../../relay-env';
 import {
-  LocationInstanceInfoDialogUpdateMutation, LocationInstanceInfoDialogUpdateMutationResponse,
+  LocationInstanceInfoDialogUpdateMutation,
+  LocationInstanceInfoDialogUpdateMutationResponse,
   UpdateLocationInstanceInput
 } from './__generated__/LocationInstanceInfoDialogUpdateMutation.graphql';
+import {
+  LocationInstanceInfoDialogCreateMutation,
+  LocationInstanceInfoDialogCreateMutationResponse,
+  CreateLocationInstanceInput
+} from './__generated__/LocationInstanceInfoDialogCreateMutation.graphql';
 
 interface Props {
   onHide(): void;
@@ -76,6 +82,26 @@ export default createRefetchContainer(
     }
   `
 );
+
+/**
+ * Mutation for creating LocationInstance
+ *
+ * @param input - input data for updating
+ */
+export function create(input: CreateLocationInstanceInput): Promise<LocationInstanceInfoDialogCreateMutationResponse> {
+  return commitMutation<LocationInstanceInfoDialogCreateMutation>(environment, {
+    mutation: graphql`
+      mutation LocationInstanceInfoDialogCreateMutation($input: CreateLocationInstanceInput!) {
+        locationInstances {
+          create(input: $input) {
+            recordId
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
+}
 
 /**
  * Mutation for updating LocationInstance info
