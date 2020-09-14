@@ -12,7 +12,7 @@ import commitMutation from 'relay-commit-mutation-promise';
 import notifier from 'codex-notifier';
 import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
-import ContentWrapper from "../ContentWrapper";
+import ContentWrapper from '../ContentWrapper';
 
 function generateLocationInput(): CreateLocationInput {
   return {
