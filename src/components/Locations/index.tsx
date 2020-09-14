@@ -15,11 +15,11 @@ export default function LocationsRouter(): ReactElement {
       <PrivateRoute path='/locations/create'>
         <LocationCreate/>
       </PrivateRoute>
-      <PrivateRoute path='/locations/:id'>
-        <LocationView/>
-      </PrivateRoute>
       <PrivateRoute path='/locations/:id/edit'>
         <LocationEdit/>
+      </PrivateRoute>
+      <PrivateRoute path='/locations/:id'>
+        <LocationView/>
       </PrivateRoute>
       <PrivateRoute path='/locations'>
         <LocationPage/>

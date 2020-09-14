@@ -20,6 +20,8 @@ interface Props {
    * On change handler
    */
   onChange(ids: string[]): void;
+
+  viewOnly?: boolean;
 }
 
 /**
@@ -46,18 +48,19 @@ function LocationInstancesList(props: Props): React.ReactElement {
           }}
         />
       )}
-      <button
-        onClick={() => {
-          setIsDialogShowed(true);
-          setCurrentInstanceId(undefined);
-        }}
-      >
-        Add location instance
-      </button>
+      {!props.viewOnly &&
+        <button
+          onClick={() => {
+            setIsDialogShowed(true);
+            setCurrentInstanceId(undefined);
+          }}
+        >
+          Add location instance
+        </button>
+      }
       <LocationInstanceInfoDialog
         isShown={isDialogShowed}
         locationInstance={currentInstance || null}
-        // onChange={setInput}
         onHide={() => setIsDialogShowed(false)}
       />
     </div>

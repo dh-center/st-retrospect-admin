@@ -4,6 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateLocationInput = {
+    id: string;
     coordinateX?: number | null;
     coordinateY?: number | null;
     instances: Array<string>;

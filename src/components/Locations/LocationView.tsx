@@ -45,7 +45,7 @@ function LocationView(): React.ReactElement {
                 width: '100%',
               }}
             >
-              <LocationInfo location={props.entity}/>
+              <LocationInfo location={props.entity} viewOnly/>
               <LinkContainer to={`${id}/edit`}>
                 <Button className='m-1' variant='outline-warning'>Edit</Button>
               </LinkContainer>

@@ -3,15 +3,15 @@ import { commitMutation, createFragmentContainer, Disposable } from 'react-relay
 import graphql from 'babel-plugin-relay/macro';
 import { DefaultInfoComponentProps } from '../../types/entities';
 import { LocationInfo_location } from './__generated__/LocationInfo_location.graphql';
-import Form from 'react-bootstrap/Form';
 import environment from '../../relay-env';
 import { LocationInfoUpdateMutation, UpdateLocationInput } from './__generated__/LocationInfoUpdateMutation.graphql';
 import LocationInstancesTabs from './LocationInstancesList';
+import Input from '../utils/Input';
 
 /**
  * Props for LocationInfo rendering
  */
-interface LocationInfoProps extends DefaultInfoComponentProps<UpdateLocationInput>{
+interface LocationInfoProps extends DefaultInfoComponentProps<UpdateLocationInput> {
   /**
    * Data to display
    */
@@ -24,7 +24,8 @@ interface LocationInfoProps extends DefaultInfoComponentProps<UpdateLocationInpu
  * @param props - props for component rendering
  */
 function LocationInfo(props: LocationInfoProps): React.ReactElement {
-  const onChange = props.onChange || ((e: UpdateLocationInput): void => { /* do nothing */ });
+  const onChange = props.onChange || ((e: UpdateLocationInput): void => { /* do nothing */
+  });
 
   const [location, setLocation] = useState(props.location);
   const [input, setInput] = useState<UpdateLocationInput | null>(null);
@@ -37,26 +38,41 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
 
   useEffect(() => {
     setInput({
+      id: location.id,
       coordinateX: location.coordinateX,
       coordinateY: location.coordinateY,
-      instances: [],
+      instances: location.instances.map(ins => ins.id),
     });
     // eslint-disable-next-line
-  }, [ location ])
+  }, [location])
 
   return (
     <div>
-      <Form.Control
-        onChange={(e) => {
+      <Input
+        disabled={props.viewOnly}
+        label='coordinateX'
+        onChange={(value) => {
+          console.log(value);
           setLocation({
             ...location,
-            coordinateX: +e.target.value,
+            coordinateX: value,
           });
         }}
         type='text'
-        value={location.coordinateX || ''}
+        value={location.coordinateX || 0}
       />
-      <Form.Control readOnly type='text' value={location.coordinateY || ''}/>
+      <Input
+        disabled={props.viewOnly}
+        label='coordinateY'
+        onChange={(value) => {
+          setLocation({
+            ...location,
+            coordinateY: value,
+          });
+        }}
+        type='text'
+        value={location.coordinateY || 0}
+      />
       <LocationInstancesTabs
         data={props.location}
         onChange={(v) => {
@@ -65,6 +81,7 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
           //   instances: v,
           // });
         }}
+        viewOnly={props.viewOnly}
       />
     </div>
   );
@@ -74,12 +91,15 @@ export default createFragmentContainer(
   LocationInfo,
   {
     location: graphql`
-        fragment LocationInfo_location on Location {
+      fragment LocationInfo_location on Location {
+        id
+        coordinateX
+        coordinateY
+        instances {
           id
-          coordinateX
-          coordinateY
-          ...LocationInstancesList_data
         }
+        ...LocationInstancesList_data
+      }
     `,
   }
 );

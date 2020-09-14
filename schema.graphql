@@ -389,6 +389,11 @@ The `BigInt` scalar type represents non-fractional signed whole numeric values.
 """
 scalar Long
 
+"""
+The `String` scalar type represents textual data, represented as UTF-8 character
+sequences. The String type is most often used by GraphQL to represent free-form
+human-readable text.
+"""
 scalar MultilingualString
 
 """API mutations"""
@@ -413,7 +418,11 @@ type Mutation {
   quest: QuestMutations!
 }
 
-"""MongoDB ObjectId type"""
+"""
+A field whose value conforms with the standard mongodb object ID as described
+here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId.
+Example: 5e5677d71bdc2ae76344968c
+"""
 scalar ObjectId
 
 """Information about current page"""
@@ -803,6 +812,9 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 scalar Timestamp
 
 input UpdateLocationInput {
+  """Location id to update"""
+  id: ObjectId!
+
   """Location coordinate by X"""
   coordinateX: Float
 

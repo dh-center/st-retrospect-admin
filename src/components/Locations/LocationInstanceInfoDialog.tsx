@@ -18,13 +18,12 @@ import type {
   LocationInstanceInfoDialogCreateMutation,
   LocationInstanceInfoDialogCreateMutationResponse
 } from './__generated__/LocationInstanceInfoDialogCreateMutation.graphql';
-import { DefaultInfoComponentProps } from '../../types/entities';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 
 type LocationInstanceInputs = CreateLocationInstanceInput | UpdateLocationInstanceInput;
 
-interface Props extends DefaultInfoComponentProps<LocationInstanceInputs>{
+interface Props {
   onHide(): void;
   isShown: boolean;
   locationInstance: LocationInstanceInfoDialog_locationInstance | null;
@@ -67,6 +66,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   const { id: locationId } = useParams();
   const id = useUniqueId('location-instance-info-dialog');
   const [instanceCopy, setInstanceCopy] = useState(props.locationInstance);
+  const [isEditing, setIsEditing] = useState(!props.locationInstance);
   const [input, setInput] = useState<LocationInstanceInputs>(instanceToInput(instanceCopy, locationId));
 
   useEffect(() => {
@@ -74,28 +74,24 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
     setInput(instanceToInput(props.locationInstance, locationId));
   }, [props.locationInstance, locationId]);
 
-  useEffect(() => {
-    props.onChange && props.onChange(input);
-  }, [input, props]);
-
   const submit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     if (isUpdateInput(input)) {
       return;
     }
 
-    await create(input)
-    props.onHide()
+    await create(input);
+    props.onHide();
   };
 
   return (
-    <Modal onHide={props.onHide} show={props.isShown}>
+    <Modal onHide={props.onHide} show={props.isShown} size='xl'>
       <ContentWrapper>
         <Form onSubmit={submit}>
           <Form.Group>
             <Form.Label htmlFor={id`name`}>Name</Form.Label>
             <Form.Control
-              disabled={props.viewOnly}
+              disabled={!isEditing}
               id={id`name`}
               onChange={(e) => {
                 setInput({
@@ -111,7 +107,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             <Form.Label htmlFor={id`description`}>Description</Form.Label>
             <Form.Control
               as='textarea'
-              disabled={props.viewOnly}
+              disabled={!isEditing}
               id={id`description`}
               onChange={(e) => {
                 setInput({
@@ -130,7 +126,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             }
             { props.locationInstance &&
             <>
-              <Button>Edit</Button>
+              <Button onClick={() => setIsEditing(true)}>Edit</Button>
               <Button type='button'>Delete</Button>
             </>
             }

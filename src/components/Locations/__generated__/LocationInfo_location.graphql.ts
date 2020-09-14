@@ -8,6 +8,9 @@ export type LocationInfo_location = {
     readonly id: string;
     readonly coordinateX: number | null;
     readonly coordinateY: number | null;
+    readonly instances: ReadonlyArray<{
+        readonly id: string;
+    }>;
     readonly " $fragmentRefs": FragmentRefs<"LocationInstancesList_data">;
     readonly " $refType": "LocationInfo_location";
 };
@@ -19,19 +22,21 @@ export type LocationInfo_location$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "LocationInfo_location",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -47,6 +52,18 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "LocationInstance",
+      "kind": "LinkedField",
+      "name": "instances",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "LocationInstancesList_data"
@@ -55,5 +72,6 @@ const node: ReaderFragment = {
   "type": "Location",
   "abstractKey": null
 };
-(node as any).hash = '5fce293de768cba2125dd8470dfd8cd2';
+})();
+(node as any).hash = '261cf72ccf54c14876765dac55573ae7';
 export default node;

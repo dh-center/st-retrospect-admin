@@ -8,6 +8,7 @@ interface InputProps<T extends number | string> {
   label: string;
   type?: string;
   required?: boolean;
+  disabled?: boolean;
 }
 
 export default function Input<T extends number | string>(props: InputProps<T>): React.ReactElement {
@@ -19,13 +20,11 @@ export default function Input<T extends number | string>(props: InputProps<T>): 
         {props.label}
       </Form.Label>}
       <Form.Control
+        disabled={props.disabled}
         id={id`input`}
         onChange={(e) => {
-          let value: number | string = e.target.value;
+          const value = e.target.value;
 
-          if (typeof props.value === 'number') {
-            value = +value;
-          }
           props.onChange(value as T);
         }}
         required={props.required}
@@ -39,4 +38,5 @@ export default function Input<T extends number | string>(props: InputProps<T>): 
 Input.defaultProps = {
   required: false,
   type: 'text',
+  disabled: false,
 };
