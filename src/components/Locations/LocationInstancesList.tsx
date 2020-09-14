@@ -27,6 +27,7 @@ interface Props {
  */
 function LocationInstancesList(props: Props): React.ReactElement {
   const [currentInstance, setCurrentInstance] = useState<LocationInstancesListData['instances'][0] | null>(null);
+  const [isDialogShowed, setIsDialogShowed] = useState(false);
 
   return (
     <div>
@@ -36,6 +37,7 @@ function LocationInstancesList(props: Props): React.ReactElement {
           key={instance.id}
           onClick={() => {
             setCurrentInstance(instance);
+            setIsDialogShowed(true);
           }}
         />
       )}
@@ -43,8 +45,9 @@ function LocationInstancesList(props: Props): React.ReactElement {
         Add location instance
       </button>
       <LocationInstanceInfoDialog
+        isShown={isDialogShowed}
         locationInstance={currentInstance}
-        onHide={() => setCurrentInstance(null)}
+        onHide={() => setIsDialogShowed(false)}
       />
     </div>
   );
