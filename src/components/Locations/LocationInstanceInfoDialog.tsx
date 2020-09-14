@@ -5,6 +5,7 @@ import useUniqueId from '../../utils/useUniqueId';
 import { createRefetchContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { LocationInstanceInfoDialog_locationInstance } from './__generated__/LocationInstanceInfoDialog_locationInstance.graphql';
+import ContentWrapper from '../ContentWrapper';
 
 interface Props {
   onHide(): void;
@@ -20,7 +21,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
 
   return (
     <Modal onHide={props.onHide} show={!!props.locationInstance}>
-      <div>
+      <ContentWrapper>
         <Form.Group>
           <Form.Label htmlFor={id`name`}>Name</Form.Label>
           <Form.Control
@@ -40,7 +41,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             value={props.locationInstance.description || ''}
           />
         </Form.Group>
-      </div>
+      </ContentWrapper>
     </Modal>
   );
 }
