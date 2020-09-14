@@ -74,6 +74,10 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
     setInput(instanceToInput(props.locationInstance, locationId));
   }, [props.locationInstance, locationId]);
 
+  useEffect(() => {
+    setIsEditing(!props.locationInstance);
+  }, [ props.locationInstance ]);
+
   const submit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     if (isUpdateInput(input)) {
