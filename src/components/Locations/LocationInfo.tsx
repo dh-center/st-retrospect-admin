@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { commitMutation, createFragmentContainer, Disposable } from 'react-relay';
+import { createFragmentContainer, Disposable } from 'react-relay';
+import commitMutation from 'relay-commit-mutation-promise';
 import graphql from 'babel-plugin-relay/macro';
 import { DefaultInfoComponentProps } from '../../types/entities';
 import { LocationInfo_location } from './__generated__/LocationInfo_location.graphql';
 import environment from '../../relay-env';
-import { LocationInfoUpdateMutation, UpdateLocationInput } from './__generated__/LocationInfoUpdateMutation.graphql';
+import {
+  LocationInfoUpdateMutation,
+  LocationInfoUpdateMutationResponse,
+  UpdateLocationInput
+} from './__generated__/LocationInfoUpdateMutation.graphql';
 import LocationInstancesTabs from './LocationInstancesList';
 import Input from '../utils/Input';
 
@@ -104,7 +109,7 @@ export default createFragmentContainer(
   }
 );
 
-export function updateInfo(input: UpdateLocationInput): Disposable {
+export function updateInfo(input: UpdateLocationInput): Promise<LocationInfoUpdateMutationResponse> {
   return commitMutation<LocationInfoUpdateMutation>(environment, {
     mutation: graphql`
       mutation LocationInfoUpdateMutation($input: UpdateLocationInput!) {
