@@ -6,9 +6,16 @@ import { createRefetchContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { LocationInstanceInfoDialog_locationInstance } from './__generated__/LocationInstanceInfoDialog_locationInstance.graphql';
 import ContentWrapper from '../ContentWrapper';
+import commitMutation from 'relay-commit-mutation-promise';
+import environment from '../../relay-env';
+import {
+  LocationInstanceInfoDialogUpdateMutation, LocationInstanceInfoDialogUpdateMutationResponse,
+  UpdateLocationInstanceInput
+} from './__generated__/LocationInstanceInfoDialogUpdateMutation.graphql';
 
 interface Props {
   onHide(): void;
+  isShown: boolean;
   locationInstance: LocationInstanceInfoDialog_locationInstance | null;
 }
 
@@ -20,7 +27,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   }
 
   return (
-    <Modal onHide={props.onHide} show={!!props.locationInstance}>
+    <Modal onHide={props.onHide} show={props.isShown}>
       <ContentWrapper>
         <Form.Group>
           <Form.Label htmlFor={id`name`}>Name</Form.Label>
@@ -69,3 +76,23 @@ export default createRefetchContainer(
     }
   `
 );
+
+/**
+ * Mutation for updating LocationInstance info
+ *
+ * @param input - input data for updating
+ */
+export function update(input: UpdateLocationInstanceInput): Promise<LocationInstanceInfoDialogUpdateMutationResponse> {
+  return commitMutation<LocationInstanceInfoDialogUpdateMutation>(environment, {
+    mutation: graphql`
+        mutation LocationInstanceInfoDialogUpdateMutation($input: UpdateLocationInstanceInput!) {
+          locationInstances {
+            update(input: $input) {
+              recordId
+            }
+          }
+        }
+    `,
+    variables: { input },
+  });
+}
