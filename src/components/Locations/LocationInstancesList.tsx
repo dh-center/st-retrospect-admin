@@ -6,6 +6,7 @@ import LocationInstanceInfoDialog from './LocationInstanceInfoDialog';
 import LocationInstanceListItem from './LocationInstanceListItem';
 import { UpdateLocationInstanceInput } from './__generated__/LocationInstanceInfoDialogUpdateMutation.graphql';
 import { CreateLocationInstanceInput } from './__generated__/LocationInstanceInfoDialogCreateMutation.graphql';
+import Button from 'react-bootstrap/cjs/Button';
 
 /**
  * Props for LocationInstancesList rendering
@@ -49,14 +50,16 @@ function LocationInstancesList(props: Props): React.ReactElement {
         />
       )}
       {!props.viewOnly &&
-        <button
+        <Button
           onClick={() => {
             setIsDialogShowed(true);
             setCurrentInstanceId(undefined);
           }}
+          size='sm'
+          type='button'
         >
           Add location instance
-        </button>
+        </Button>
       }
       <LocationInstanceInfoDialog
         isShown={isDialogShowed}
