@@ -57,7 +57,6 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
         disabled={props.viewOnly}
         label='coordinateX'
         onChange={(value) => {
-          console.log(value);
           setLocation({
             ...location,
             coordinateX: value,
@@ -80,12 +79,6 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
       />
       <LocationInstancesTabs
         data={props.location}
-        onChange={(v) => {
-          // setLocation({
-          //   ...location,
-          //   instances: v,
-          // });
-        }}
         viewOnly={props.viewOnly}
       />
     </div>
