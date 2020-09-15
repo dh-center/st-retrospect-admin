@@ -12,6 +12,10 @@ import {
 } from './__generated__/LocationInfoUpdateMutation.graphql';
 import LocationInstancesTabs from './LocationInstancesList';
 import Input from '../utils/Input';
+import {
+  LocationInfoDeleteMutation,
+  LocationInfoDeleteMutationResponse
+} from './__generated__/LocationInfoDeleteMutation.graphql';
 
 /**
  * Props for LocationInfo rendering
@@ -114,5 +118,25 @@ export function updateInfo(input: UpdateLocationInput): Promise<LocationInfoUpda
       }
     `,
     variables: { input },
+  });
+}
+
+/**
+ * Removes location by its id
+ *
+ * @param id - location id to remove
+ */
+export function remove(id: string): Promise<LocationInfoDeleteMutationResponse> {
+  return commitMutation<LocationInfoDeleteMutation>(environment, {
+    mutation: graphql`
+     mutation LocationInfoDeleteMutation($id: ObjectId!) {
+       location {
+         delete(id: $id) {
+           recordId
+         }
+       }
+     }
+    `,
+    variables: { id },
   });
 }
