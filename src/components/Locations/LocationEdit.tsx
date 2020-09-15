@@ -12,6 +12,7 @@ import { UpdateLocationInput } from './__generated__/LocationInfoUpdateMutation.
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Spinner } from 'react-bootstrap';
 
 /**
  * Page with form for location editing
@@ -33,18 +34,16 @@ function LocationEdit(): React.ReactElement {
       return;
     }
 
-    console.log(input);
-
     setLoadingStatus(true);
     try {
       await updateInfo(input);
       notifier.show({
-        message: `Successfully created`,
+        message: `Successfully updated`,
         style: 'success',
         time: 5000,
       });
       setLoadingStatus(false);
-      history.push('/locations');
+      history.push(`/locations/${id}`);
     } catch {
       setLoadingStatus(false);
       notifier.show({
@@ -82,8 +81,18 @@ function LocationEdit(): React.ReactElement {
           <ContentWrapper>
             <Form onSubmit={updateLocation}>
               <LocationInfo location={props.location} onChange={setInput}/>
-              <Button className='m-1' type='submit' variant='outline-primary'>Save</Button>
-              <LinkContainer to={`/locations/${id}`} exact>
+              <Button className='m-1' type='submit' variant='outline-primary'>
+                {isLoading ? (
+                  <Spinner
+                    animation='border'
+                    aria-hidden='true'
+                    as='span'
+                    role='status'
+                    size='sm'
+                  />
+                ) : 'Save'}
+              </Button>
+              <LinkContainer exact to={`/locations/${id}`}>
                 <Button
                   className='m-1'
                   type='submit'
