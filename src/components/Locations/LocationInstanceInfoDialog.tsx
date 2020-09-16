@@ -190,6 +190,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
 
   const submit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
+    e.stopPropagation();
     if (isUpdateInput(input)) {
       try {
         await update(input);
