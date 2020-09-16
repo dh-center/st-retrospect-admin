@@ -30,6 +30,12 @@ directive @authCheck on FIELD_DEFINITION
 """Directive for checking admin permissions"""
 directive @adminCheck on FIELD_DEFINITION
 
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
 """Location address representation"""
 type Address {
   """Address's ID"""
@@ -54,6 +60,65 @@ type Address {
 input Coordinates {
   longitude: Float!
   latitude: Float!
+}
+
+input CreateLocationInput {
+  """Location coordinate by X"""
+  coordinateX: Float!
+
+  """Location coordinate by Y"""
+  coordinateY: Float!
+
+  """Possible location representations"""
+  instances: [LocationInstanceInput!]!
+}
+
+input CreateLocationInstanceInput {
+  """Location's name"""
+  name: MultilingualString!
+
+  """Location's description"""
+  description: MultilingualString!
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+
+  """Location id to which this instance below"""
+  locationId: ObjectId!
+}
+
+type CreateLocationInstancePayload {
+  """Created location id"""
+  recordId: ID!
+
+  """Created location"""
+  record: LocationInstance!
+}
+
+type CreateLocationPayload {
+  """Created location id"""
+  recordId: ObjectId!
+
+  """Created location"""
+  record: Location!
 }
 
 input CreatePersonInput {
@@ -120,6 +185,16 @@ type CreateQuestPayload {
 
 scalar Cursor
 
+type DeleteLocationInstancePayload {
+  """Created location id"""
+  recordId: ID!
+}
+
+type DeleteLocationPayload {
+  """Deleted location id"""
+  recordId: ID!
+}
+
 type DeletePersonPayload {
   """Deleted person id"""
   recordId: ID
@@ -174,7 +249,7 @@ enum Languages {
 """Location for displaying on map and making relations with persons"""
 type Location {
   """Location's ID"""
-  id: ID!
+  id: ObjectId!
 
   """Location coordinate by X"""
   coordinateX: Float
@@ -257,6 +332,57 @@ type LocationInstance {
   architects: [Person]
 }
 
+input LocationInstanceInput {
+  """Location's name"""
+  name: MultilingualString!
+
+  """Location's description"""
+  description: MultilingualString!
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+}
+
+type LocationInstanceMutations {
+  """Create location instance"""
+  create(input: CreateLocationInstanceInput!): CreateLocationInstancePayload!
+
+  """Update location instance"""
+  update(input: UpdateLocationInstanceInput!): UpdateLocationInstancePayload!
+
+  """Delete location instance"""
+  delete(id: ObjectId!): DeleteLocationInstancePayload!
+}
+
+type LocationMutations {
+  """Create location"""
+  create(input: CreateLocationInput!): CreateLocationPayload!
+
+  """Update location"""
+  update(input: UpdateLocationInput!): UpdateLocationPayload!
+
+  """Delete location"""
+  delete(id: ObjectId!): DeleteLocationPayload!
+}
+
 """Location type to add it to Location"""
 type LocationType {
   """LocationType's ID"""
@@ -271,11 +397,20 @@ The `BigInt` scalar type represents non-fractional signed whole numeric values.
 """
 scalar Long
 
+"""
+The `String` scalar type represents textual data, represented as UTF-8 character
+sequences. The String type is most often used by GraphQL to represent free-form
+human-readable text.
+"""
+scalar MultilingualString
+
 """API mutations"""
 type Mutation {
   """Unused field to let extend this type"""
   _: Boolean
   person: PersonMutations
+  location: LocationMutations!
+  locationInstances: LocationInstanceMutations!
 
   """Save route to user"""
   saveRoute(routeId: String!): User!
@@ -290,6 +425,13 @@ type Mutation {
   dislikeRoute(routeId: String!): User!
   quest: QuestMutations!
 }
+
+"""
+A field whose value conforms with the standard mongodb object ID as described
+here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId.
+Example: 5e5677d71bdc2ae76344968c
+"""
+scalar ObjectId
 
 """Information about current page"""
 type PageInfo {
@@ -308,7 +450,7 @@ type PageInfo {
 
 type Person {
   """Person's id"""
-  id: ID!
+  id: ObjectId!
 
   """Person's first name"""
   firstName: String
@@ -677,6 +819,68 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 """
 scalar Timestamp
 
+input UpdateLocationInput {
+  """Location id to update"""
+  id: ObjectId!
+
+  """Location coordinate by X"""
+  coordinateX: Float
+
+  """Location coordinate by Y"""
+  coordinateY: Float
+
+  """Possible location instances id"""
+  instances: [ObjectId!]!
+}
+
+input UpdateLocationInstanceInput {
+  """Location instance id"""
+  id: ID!
+
+  """Location's name"""
+  name: String!
+
+  """Location's description"""
+  description: String
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+}
+
+type UpdateLocationInstancePayload {
+  """Created location id"""
+  recordId: ID!
+
+  """Created location"""
+  record: LocationInstance!
+}
+
+type UpdateLocationPayload {
+  """Updated location id"""
+  recordId: ID!
+
+  """Updated location"""
+  record: Location!
+}
+
 input UpdatePersonInput {
   """ID of person for updating"""
   id: ID!
@@ -738,10 +942,10 @@ input UpdateQuestInput {
 }
 
 type UpdateQuestPayload {
-  """Created quest id"""
+  """Updated quest id"""
   recordId: ID!
 
-  """Created quest"""
+  """Updated quest"""
   record: Quest!
 }
 

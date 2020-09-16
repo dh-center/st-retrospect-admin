@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PersonInfo_person = {
-    readonly id: string;
+    readonly id: unknown;
     readonly lastName: string | null;
     readonly firstName: string | null;
     readonly patronymic: string | null;

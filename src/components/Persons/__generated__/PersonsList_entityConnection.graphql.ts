@@ -9,7 +9,7 @@ export type PersonsList_entityConnection = {
         readonly totalCount: number;
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly id: string;
+                readonly id: unknown;
                 readonly lastName: string | null;
                 readonly firstName: string | null;
                 readonly patronymic: string | null;

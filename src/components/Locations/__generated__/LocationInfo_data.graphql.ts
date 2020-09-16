@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type LocationInfo_data = {
-    readonly id: string;
+    readonly id: unknown;
     readonly coordinateX: number | null;
     readonly coordinateY: number | null;
     readonly " $fragmentRefs": FragmentRefs<"LocationInstancesTabs_data">;
