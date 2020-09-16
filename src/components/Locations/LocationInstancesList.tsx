@@ -20,6 +20,9 @@ interface Props {
    */
   onChange?(ids: string[]): void;
 
+  /**
+   * If true, view mode enabled and editing forbidden
+   */
   viewOnly?: boolean;
 }
 

@@ -282,12 +282,12 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             />
           </Form.Group>
           <div>
-            { !props.locationInstance &&
+            {!props.locationInstance &&
             <Button type='submit'>Create</Button>
             }
-            { props.locationInstance &&
+            {props.locationInstance &&
             <>
-              { !isEditing &&
+              {!isEditing &&
               <Button
                 className='m-1'
                 onClick={() => setIsEditing(true)}
@@ -298,7 +298,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
               }
               {
                 isEditing &&
-                  <Button type='submit'>Save</Button>
+                <Button type='submit'>Save</Button>
               }
               <Button
                 className='m-1'
