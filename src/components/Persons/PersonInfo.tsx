@@ -3,7 +3,6 @@ import { Form } from 'react-bootstrap';
 import { DefaultInfoComponentProps } from '../../types/entities';
 import graphql from 'babel-plugin-relay/macro';
 import { createFragmentContainer } from 'react-relay';
-import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
 import environment from '../../relay-env';
 import {
   PersonInfoUpdateMutation,
@@ -15,29 +14,81 @@ import {
   PersonInfoDeleteMutation,
   PersonInfoDeleteMutationResponse
 } from './__generated__/PersonInfoDeleteMutation.graphql';
+import {
+  CreatePersonInput,
+  PersonInfoCreateMutation,
+  PersonInfoCreateMutationResponse
+} from './__generated__/PersonInfoCreateMutation.graphql';
+import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
 
 /**
  * Props for PersonInfo rendering
  */
-interface Props extends DefaultInfoComponentProps<UpdatePersonInput>{
+interface Props extends DefaultInfoComponentProps<PersonInputs>{
   /**
    * Data about person
    */
-  person: PersonInfo_person;
+  person: PersonInfo_person | null;
 }
 
 /**
- * Component of quest fields
+ * Person inputs types
+ */
+export type PersonInputs = CreatePersonInput | UpdatePersonInput;
+
+/**
+ * Generate person input for form
+ */
+function generatePersonInput(): CreatePersonInput {
+  return {
+    firstName: '',
+    lastName: '',
+    patronymic: '',
+    pseudonym: '',
+    profession: '',
+    description: '',
+    birthDate: '',
+    deathDate: '',
+    wikiLink: '',
+  };
+}
+
+/**
+ * Generate person object if parameter person is null
+ *
+ * @param person - object for checking
+ */
+function personToInput(person: PersonInfo_person | null): PersonInputs {
+  if (!person) {
+    return generatePersonInput();
+  }
+
+  return {
+    id: person.id,
+    firstName: person.firstName,
+    lastName: person.lastName,
+    patronymic: person.patronymic,
+    pseudonym: person.pseudonym,
+    profession: person.profession,
+    description: person.description,
+    birthDate: person.birthDate,
+    deathDate: person.deathDate,
+    wikiLink: person.wikiLink,
+  };
+}
+
+/**
+ * Component of person fields
  *
  * @param props - props of component
  */
 function PersonInfo(props: Props): React.ReactElement {
-  const onChange = props.onChange || ((e: PersonInfo_person): void => { /* do nothing */ });
+  const onChange = props.onChange || ((e: PersonInputs): void => { /* do nothing */ });
 
-  const [personCopy, setPersonCopy] = useState(props.person);
+  const [personCopy, setPersonCopy] = useState(personToInput(props.person));
 
   useEffect(() => {
-    setPersonCopy(props.person);
+    setPersonCopy(personToInput(props.person));
   }, [ props.person ]);
 
   useEffect(() => {
@@ -228,6 +279,26 @@ export default createFragmentContainer(
     `,
   }
 );
+
+/**
+ * Executes create mutation for person
+ *
+ * @param input - created person object
+ */
+export function create(input: CreatePersonInput): Promise<PersonInfoCreateMutationResponse> {
+  return commitMutation<PersonInfoCreateMutation>(environment, {
+    mutation: graphql`
+      mutation PersonInfoCreateMutation($input: CreatePersonInput!) {
+        person {
+          create(input: $input) {
+            recordId
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
+}
 
 /**
  * Executes update mutation for person

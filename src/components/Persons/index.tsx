@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 import PrivateRoute from '../PrivateRoute';
 import { Switch } from 'react-router-dom';
-// import PersonCreate from './PersonCreate';
 import PersonView from './PersonView';
 import PersonEditPageRenderer from './PersonEdit';
 import PersonsPage from './PersonsPage';
+import PersonCreate from './PersonCreate';
 
 /**
  * Page for displaying persons
@@ -12,9 +12,9 @@ import PersonsPage from './PersonsPage';
 export default function PersonsRouter(): ReactElement {
   return (
     <Switch>
-      {/* <PrivateRoute path='/persons/create'>*/}
-      {/*  <PersonCreate/>*/}
-      {/* </PrivateRoute>*/}
+      <PrivateRoute path='/persons/create'>
+        <PersonCreate/>
+      </PrivateRoute>
       <PrivateRoute path='/persons/:id/edit'>
         <PersonEditPageRenderer/>
       </PrivateRoute>

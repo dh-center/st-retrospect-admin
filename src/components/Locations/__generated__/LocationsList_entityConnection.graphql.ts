@@ -9,7 +9,7 @@ export type LocationsList_entityConnection = {
         readonly totalCount: number;
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly id: unknown;
+                readonly id: string;
                 readonly coordinateX: number | null;
                 readonly coordinateY: number | null;
                 readonly instances: ReadonlyArray<{

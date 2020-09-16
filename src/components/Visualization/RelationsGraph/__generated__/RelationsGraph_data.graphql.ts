@@ -10,7 +10,7 @@ export type RelationsGraph_data = {
             readonly node: {
                 readonly id: string;
                 readonly person: {
-                    readonly id: unknown;
+                    readonly id: string;
                     readonly lastName: string | null;
                     readonly firstName: string | null;
                     readonly patronymic: string | null;

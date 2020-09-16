@@ -9,7 +9,7 @@ export type PersonEditQueryVariables = {
 };
 export type PersonEditQueryResponse = {
     readonly person: {
-        readonly id: unknown;
+        readonly id: string;
         readonly " $fragmentRefs": FragmentRefs<"PersonInfo_person">;
     } | null;
 };
