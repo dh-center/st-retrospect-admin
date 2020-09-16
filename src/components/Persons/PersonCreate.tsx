@@ -8,7 +8,7 @@ import PersonInfo, { create } from './PersonInfo';
 import { CreatePersonInput } from './__generated__/PersonInfoCreateMutation.graphql';
 
 /**
- *
+ * Component implements person create
  */
 export default function PersonCreate(): React.ReactElement {
   const [input, setInput] = useState<CreatePersonInput | null>(null);
