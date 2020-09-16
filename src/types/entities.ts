@@ -1,6 +1,5 @@
 import { QuestViewQuery } from '../components/Quests/__generated__/QuestViewQuery.graphql';
 import { LocationViewQuery } from '../components/Locations/__generated__/LocationViewQuery.graphql';
-import { PersonInfo_person } from '../components/Persons/__generated__/PersonInfo_person.graphql';
 
 /**
  * Interface represents Relay Connection model
@@ -11,6 +10,7 @@ export interface EntityConnection {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         readonly [key: string]: any;
       };
     }>;

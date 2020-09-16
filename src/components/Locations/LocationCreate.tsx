@@ -35,7 +35,7 @@ function generateLocationInput(): CreateLocationInput {
 }
 
 /**
- * Mutation for creating new person
+ * Mutation for creating new location
  *
  * @param input - input data for creating
  */
@@ -54,6 +54,9 @@ export function create(input: CreateLocationInput): Promise<LocationCreateMutati
   });
 }
 
+/**
+ * Form for creating new location
+ */
 export default function LocationCreate(): React.ReactElement {
   const [input, setInput] = useState<CreateLocationInput>(generateLocationInput());
   const [isLoading, setLoadingStatus] = useState(false);
