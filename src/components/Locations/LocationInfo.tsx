@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createFragmentContainer, Disposable } from 'react-relay';
+import { createFragmentContainer } from 'react-relay';
 import commitMutation from 'relay-commit-mutation-promise';
 import graphql from 'babel-plugin-relay/macro';
 import { DefaultInfoComponentProps } from '../../types/entities';
@@ -33,8 +33,7 @@ interface LocationInfoProps extends DefaultInfoComponentProps<UpdateLocationInpu
  * @param props - props for component rendering
  */
 function LocationInfo(props: LocationInfoProps): React.ReactElement {
-  const onChange = props.onChange || ((e: UpdateLocationInput): void => { /* do nothing */
-  });
+  const onChange: (e: UpdateLocationInput) => void = props.onChange || (() => { /* do nothing */ });
 
   const [location, setLocation] = useState(props.location);
   const [input, setInput] = useState<UpdateLocationInput | null>(null);
@@ -106,6 +105,11 @@ export default createFragmentContainer(
   }
 );
 
+/**
+ * Updates information about location
+ *
+ * @param input - data for updating
+ */
 export function updateInfo(input: UpdateLocationInput): Promise<LocationInfoUpdateMutationResponse> {
   return commitMutation<LocationInfoUpdateMutation>(environment, {
     mutation: graphql`

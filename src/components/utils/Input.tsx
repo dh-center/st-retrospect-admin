@@ -36,7 +36,7 @@ export default function Input<T extends number | string>(props: InputProps<T>): 
 }
 
 Input.defaultProps = {
+  disabled: false,
   required: false,
   type: 'text',
-  disabled: false,
 };

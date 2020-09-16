@@ -16,6 +16,9 @@ import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 
+/**
+ * Generates input data for creating new location
+ */
 function generateLocationInput(): CreateLocationInput {
   return {
     coordinateX: 0,
@@ -32,9 +35,9 @@ function generateLocationInput(): CreateLocationInput {
 }
 
 /**
- * Executes update mutation for person
+ * Mutation for creating new location
  *
- * @param input - updated person object
+ * @param input - input data for creating
  */
 export function create(input: CreateLocationInput): Promise<LocationCreateMutationResponse> {
   return commitMutation<LocationCreateMutation>(environment, {
@@ -51,6 +54,9 @@ export function create(input: CreateLocationInput): Promise<LocationCreateMutati
   });
 }
 
+/**
+ * Form for creating new location
+ */
 export default function LocationCreate(): React.ReactElement {
   const [input, setInput] = useState<CreateLocationInput>(generateLocationInput());
   const [isLoading, setLoadingStatus] = useState(false);
