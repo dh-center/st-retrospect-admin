@@ -12,9 +12,9 @@ import PersonsPage from './PersonsPage';
 export default function PersonsRouter(): ReactElement {
   return (
     <Switch>
-      {/*<PrivateRoute path='/persons/create'>*/}
+      {/* <PrivateRoute path='/persons/create'>*/}
       {/*  <PersonCreate/>*/}
-      {/*</PrivateRoute>*/}
+      {/* </PrivateRoute>*/}
       <PrivateRoute path='/persons/:id/edit'>
         <PersonEditPageRenderer/>
       </PrivateRoute>

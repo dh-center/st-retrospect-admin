@@ -2,17 +2,38 @@ import React from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import { LocationViewQuery } from './__generated__/LocationViewQuery.graphql';
-import LocationInfo from './LocationInfo';
+import LocationInfo, { remove } from './LocationInfo';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
+import ContentWrapper from '../ContentWrapper';
+import notifier from 'codex-notifier';
 
 /**
  * Page with location info to view
  */
 function LocationView(): React.ReactElement {
   const { id } = useParams();
+  const history = useHistory();
+
+  const removeLocation = async (): Promise<void> => {
+    try {
+      await remove(id);
+      notifier.show({
+        message: `Successfully deleted`,
+        style: 'success',
+        time: 5000,
+      });
+      history.push('/locations');
+    } catch {
+      notifier.show({
+        message: 'Something went wrong',
+        style: 'error',
+        time: 5000,
+      });
+    }
+  };
 
   return (
     <QueryRenderer<LocationViewQuery>
@@ -20,7 +41,7 @@ function LocationView(): React.ReactElement {
       query={graphql`
         query LocationViewQuery($id: ID!) {
           entity: location(id: $id) {
-          ...LocationInfo_data
+          ...LocationInfo_location
          }
         }
       `}
@@ -38,19 +59,15 @@ function LocationView(): React.ReactElement {
         }
 
         return (
-          <div className='d-flex justify-content-center' >
-            <div
-              style={{
-                maxWidth: '800px',
-                width: '100%',
-              }}
-            >
-              <LocationInfo data={props.entity}/>
-              <LinkContainer to={`${id}/edit`}>
+          <ContentWrapper>
+            <LocationInfo location={props.entity} viewOnly/>
+            <div>
+              <LinkContainer to={`/locations/${id}/edit`}>
                 <Button className='m-1' variant='outline-warning'>Edit</Button>
               </LinkContainer>
+              <Button className='m-1' onClick={removeLocation} variant='outline-danger'>Delete</Button>
             </div>
-          </div>
+          </ContentWrapper>
         );
       }}
       variables={{ id }}

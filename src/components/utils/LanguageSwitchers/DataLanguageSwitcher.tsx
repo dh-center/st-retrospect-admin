@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
-import languageController, { DataLanguages } from '../../controllers/languageController';
+import languageController, { DataLanguages } from '../../../controllers/languageController';
 
 /**
  * Data language switcher component

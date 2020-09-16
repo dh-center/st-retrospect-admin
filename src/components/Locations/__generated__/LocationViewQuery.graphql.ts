@@ -9,7 +9,7 @@ export type LocationViewQueryVariables = {
 };
 export type LocationViewQueryResponse = {
     readonly entity: {
-        readonly " $fragmentRefs": FragmentRefs<"LocationInfo_data">;
+        readonly " $fragmentRefs": FragmentRefs<"LocationInfo_location">;
     } | null;
 };
 export type LocationViewQuery = {
@@ -24,18 +24,21 @@ query LocationViewQuery(
   $id: ID!
 ) {
   entity: location(id: $id) {
-    ...LocationInfo_data
+    ...LocationInfo_location
   }
 }
 
-fragment LocationInfo_data on Location {
+fragment LocationInfo_location on Location {
   id
   coordinateX
   coordinateY
-  ...LocationInstancesTabs_data
+  instances {
+    id
+  }
+  ...LocationInstancesList_data
 }
 
-fragment LocationInstanceInfo_locationInstance on LocationInstance {
+fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
   id
   name
   description
@@ -45,11 +48,18 @@ fragment LocationInstanceInfo_locationInstance on LocationInstance {
   endDate
 }
 
-fragment LocationInstancesTabs_data on Location {
+fragment LocationInstanceListItem_instance on LocationInstance {
+  name
+  mainPhotoLink
+  description
+}
+
+fragment LocationInstancesList_data on Location {
   instances {
     id
     name
-    ...LocationInstanceInfo_locationInstance
+    ...LocationInstanceListItem_instance
+    ...LocationInstanceInfoDialog_locationInstance
   }
 }
 */
@@ -94,7 +104,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "LocationInfo_data"
+            "name": "LocationInfo_location"
           }
         ],
         "storageKey": null
@@ -152,6 +162,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "mainPhotoLink",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "description",
                 "storageKey": null
               },
@@ -192,14 +209,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cc1a7ea9ab9875851bb7abf8e31ee92b",
+    "cacheID": "1e472bc4acc627caef850faeabee995d",
     "id": null,
     "metadata": {},
     "name": "LocationViewQuery",
     "operationKind": "query",
-    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_data\n  }\n}\n\nfragment LocationInfo_data on Location {\n  id\n  coordinateX\n  coordinateY\n  ...LocationInstancesTabs_data\n}\n\nfragment LocationInstanceInfo_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstancesTabs_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceInfo_locationInstance\n  }\n}\n"
+    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  coordinateX\n  coordinateY\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '326b4126ade982268a93e56c5c31bd26';
+(node as any).hash = '3f0fd87d8703f2bc010331d15bc92afd';
 export default node;
