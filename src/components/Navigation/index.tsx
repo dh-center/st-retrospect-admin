@@ -6,7 +6,7 @@ import { createFragmentContainer } from 'react-relay';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import graphql from 'babel-plugin-relay/macro';
 import { Navigation_user as NavigationUser } from './__generated__/Navigation_user.graphql';
-import DataLanguageSwitcher from '../LanguageSwitchers/DataLanguageSwitcher';
+import DataLanguageSwitcher from '../utils/LanguageSwitchers/DataLanguageSwitcher';
 
 /**
  * Props for Navigation component

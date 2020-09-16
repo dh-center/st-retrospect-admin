@@ -4,41 +4,39 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PersonViewQueryVariables = {
-    id: string;
+export type LocationInstanceInfoDialogRefetchQueryVariables = {
+    locationInstaceId: string;
 };
-export type PersonViewQueryResponse = {
-    readonly person: {
-        readonly " $fragmentRefs": FragmentRefs<"PersonInfo_person">;
+export type LocationInstanceInfoDialogRefetchQueryResponse = {
+    readonly locationInstance: {
+        readonly " $fragmentRefs": FragmentRefs<"LocationInstanceInfoDialog_locationInstance">;
     } | null;
 };
-export type PersonViewQuery = {
-    readonly response: PersonViewQueryResponse;
-    readonly variables: PersonViewQueryVariables;
+export type LocationInstanceInfoDialogRefetchQuery = {
+    readonly response: LocationInstanceInfoDialogRefetchQueryResponse;
+    readonly variables: LocationInstanceInfoDialogRefetchQueryVariables;
 };
 
 
 
 /*
-query PersonViewQuery(
-  $id: ID!
+query LocationInstanceInfoDialogRefetchQuery(
+  $locationInstaceId: ID!
 ) {
-  person(id: $id) {
-    ...PersonInfo_person
+  locationInstance(id: $locationInstaceId) {
+    ...LocationInstanceInfoDialog_locationInstance
+    id
   }
 }
 
-fragment PersonInfo_person on Person {
+fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
   id
-  lastName
-  firstName
-  patronymic
-  pseudonym
-  profession
+  name
   description
-  birthDate
-  deathDate
-  wikiLink
+  constructionDate
+  demolitionDate
+  startDate
+  endDate
 }
 */
 
@@ -47,14 +45,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "locationInstaceId"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "id"
+    "variableName": "locationInstaceId"
   }
 ];
 return {
@@ -62,20 +60,20 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonViewQuery",
+    "name": "LocationInstanceInfoDialogRefetchQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Person",
+        "concreteType": "LocationInstance",
         "kind": "LinkedField",
-        "name": "person",
+        "name": "locationInstance",
         "plural": false,
         "selections": [
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PersonInfo_person"
+            "name": "LocationInstanceInfoDialog_locationInstance"
           }
         ],
         "storageKey": null
@@ -88,14 +86,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonViewQuery",
+    "name": "LocationInstanceInfoDialogRefetchQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Person",
+        "concreteType": "LocationInstance",
         "kind": "LinkedField",
-        "name": "person",
+        "name": "locationInstance",
         "plural": false,
         "selections": [
           {
@@ -109,35 +107,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "lastName",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "firstName",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "patronymic",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "pseudonym",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "profession",
+            "name": "name",
             "storageKey": null
           },
           {
@@ -151,21 +121,28 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "birthDate",
+            "name": "constructionDate",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "deathDate",
+            "name": "demolitionDate",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "wikiLink",
+            "name": "startDate",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "endDate",
             "storageKey": null
           }
         ],
@@ -174,14 +151,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c2096fc9ba89c543b5d343a3af4723a9",
+    "cacheID": "4f468c006847bd1a07c4c2949463fb1b",
     "id": null,
     "metadata": {},
-    "name": "PersonViewQuery",
+    "name": "LocationInstanceInfoDialogRefetchQuery",
     "operationKind": "query",
-    "text": "query PersonViewQuery(\n  $id: ID!\n) {\n  person(id: $id) {\n    ...PersonInfo_person\n  }\n}\n\nfragment PersonInfo_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  profession\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
+    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: ID!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n"
   }
 };
 })();
-(node as any).hash = '409e6ada4c3aaaeb373277f34d48f8c2';
+(node as any).hash = '211649f125b98a1576147c63240a903f';
 export default node;

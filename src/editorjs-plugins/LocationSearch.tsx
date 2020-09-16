@@ -2,7 +2,7 @@
 import EditorJS from '@editorjs/editorjs';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CustomSelect from '../components/CustomSelect';
+import CustomSelect from '../components/utils/CustomSelect';
 import { QueryRenderer } from 'react-relay';
 import environment from '../relay-env';
 import graphql from 'babel-plugin-relay/macro';

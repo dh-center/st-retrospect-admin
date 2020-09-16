@@ -4,18 +4,18 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type LocationInstancesTabs_data = {
+export type LocationInstancesList_data = {
     readonly instances: ReadonlyArray<{
         readonly id: string;
         readonly name: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"LocationInstanceInfo_locationInstance">;
+        readonly " $fragmentRefs": FragmentRefs<"LocationInstanceListItem_instance" | "LocationInstanceInfoDialog_locationInstance">;
     }>;
-    readonly " $refType": "LocationInstancesTabs_data";
+    readonly " $refType": "LocationInstancesList_data";
 };
-export type LocationInstancesTabs_data$data = LocationInstancesTabs_data;
-export type LocationInstancesTabs_data$key = {
-    readonly " $data"?: LocationInstancesTabs_data$data;
-    readonly " $fragmentRefs": FragmentRefs<"LocationInstancesTabs_data">;
+export type LocationInstancesList_data$data = LocationInstancesList_data;
+export type LocationInstancesList_data$key = {
+    readonly " $data"?: LocationInstancesList_data$data;
+    readonly " $fragmentRefs": FragmentRefs<"LocationInstancesList_data">;
 };
 
 
@@ -24,7 +24,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "LocationInstancesTabs_data",
+  "name": "LocationInstancesList_data",
   "selections": [
     {
       "alias": null,
@@ -51,7 +51,12 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "LocationInstanceInfo_locationInstance"
+          "name": "LocationInstanceListItem_instance"
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "LocationInstanceInfoDialog_locationInstance"
         }
       ],
       "storageKey": null
@@ -60,5 +65,5 @@ const node: ReaderFragment = {
   "type": "Location",
   "abstractKey": null
 };
-(node as any).hash = 'a5ce367f5c79aa8201c60267ed519deb';
+(node as any).hash = '988b9d4c8116529a28124dc33b1b9813';
 export default node;

@@ -4,6 +4,7 @@ import PrivateRoute from '../PrivateRoute';
 import LocationView from './LocationView';
 import LocationPage from './LocationsPage';
 import LocationEdit from './LocationEdit';
+import LocationCreate from './LocationCreate';
 
 /**
  * Functional component for quests view
@@ -11,11 +12,14 @@ import LocationEdit from './LocationEdit';
 export default function LocationsRouter(): ReactElement {
   return (
     <Switch>
-      <PrivateRoute path='/locations/:id'>
-        <LocationView/>
+      <PrivateRoute path='/locations/create'>
+        <LocationCreate/>
       </PrivateRoute>
       <PrivateRoute path='/locations/:id/edit'>
         <LocationEdit/>
+      </PrivateRoute>
+      <PrivateRoute path='/locations/:id'>
+        <LocationView/>
       </PrivateRoute>
       <PrivateRoute path='/locations'>
         <LocationPage/>
