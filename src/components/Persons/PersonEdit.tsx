@@ -4,10 +4,9 @@ import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
-import PersonInfo, { updateInfo } from './PersonInfo';
+import PersonInfo, { PersonInputs, updateInfo } from './PersonInfo';
 import { Button, Spinner } from 'react-bootstrap';
 import { PersonEditQuery } from './__generated__/PersonEditQuery.graphql';
-import { UpdatePersonInput } from './__generated__/PersonInfoUpdateMutation.graphql';
 import notifier from 'codex-notifier';
 import ContentWrapper from '../ContentWrapper';
 
@@ -17,7 +16,7 @@ import ContentWrapper from '../ContentWrapper';
 function PersonEditPageRenderer(): React.ReactElement {
   const { id } = useParams();
 
-  const [input, setInput] = useState<UpdatePersonInput|null>(null);
+  const [input, setInput] = useState<PersonInputs | null>(null);
   const [isLoading, setLoadingStatus] = useState(false);
 
   const history = useHistory();
@@ -41,22 +40,24 @@ function PersonEditPageRenderer(): React.ReactElement {
     }
 
     setLoadingStatus(true);
-    try {
-      await updateInfo(input);
-      notifier.show({
-        message: `Person "${input.lastName} ${input.firstName}" successfully saved`,
-        style: 'success',
-        time: 5000,
-      });
-      setLoadingStatus(false);
-      pushLocationBack();
-    } catch {
-      setLoadingStatus(false);
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+    if ('id' in input) {
+      try {
+        await updateInfo(input);
+        notifier.show({
+          message: `Person "${input.lastName} ${input.firstName}" successfully saved`,
+          style: 'success',
+          time: 5000,
+        });
+        setLoadingStatus(false);
+        pushLocationBack();
+      } catch {
+        setLoadingStatus(false);
+        notifier.show({
+          message: 'Something went wrong',
+          style: 'error',
+          time: 5000,
+        });
+      }
     }
   };
 
@@ -96,28 +97,30 @@ function PersonEditPageRenderer(): React.ReactElement {
               onChange={setInput}
               person={props.person}
             />
-            <Button
-              className='m-1'
-              onClick={() => savePersonToApi()}
-              type='submit'
-            >
-              {isLoading ? (
-                <Spinner
-                  animation='border'
-                  aria-hidden='true'
-                  as='span'
-                  role='status'
-                  size='sm'
-                />
-              ) : ('Save')}
-            </Button>
-            <Button
-              className='m-1'
-              onClick={() => pushLocationBack()}
-              variant='outline-danger'
-            >
+            <div>
+              <Button
+                className='m-1'
+                onClick={() => savePersonToApi()}
+                type='submit'
+              >
+                {isLoading ? (
+                  <Spinner
+                    animation='border'
+                    aria-hidden='true'
+                    as='span'
+                    role='status'
+                    size='sm'
+                  />
+                ) : ('Save')}
+              </Button>
+              <Button
+                className='m-1'
+                onClick={() => pushLocationBack()}
+                variant='outline-danger'
+              >
                 Cancel
-            </Button>
+              </Button>
+            </div>
           </ContentWrapper>
         );
       }}
