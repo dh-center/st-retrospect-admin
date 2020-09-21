@@ -25,7 +25,7 @@ const MAX_BOUNDS: LngLatBoundsLike = [
 
 interface Props {
   lngLat?: LngLatLike;
-  onChange(lngLan: LngLat): void;
+  onChange(lngLat: LngLat): void;
   viewOnly?: boolean;
 }
 
