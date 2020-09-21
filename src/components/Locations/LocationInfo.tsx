@@ -11,11 +11,13 @@ import {
   UpdateLocationInput
 } from './__generated__/LocationInfoUpdateMutation.graphql';
 import LocationInstancesTabs from './LocationInstancesList';
-import Input from '../utils/Input';
+import Form from 'react-bootstrap/Form';
 import {
   LocationInfoDeleteMutation,
   LocationInfoDeleteMutationResponse
 } from './__generated__/LocationInfoDeleteMutation.graphql';
+import LocationMap from '../LocationMap';
+import styles from './LocationInfo.module.css';
 
 /**
  * Props for LocationInfo rendering
@@ -56,30 +58,35 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
 
   return (
     <div>
-      <Input
-        disabled={props.viewOnly}
-        label='latitude'
-        onChange={(value) => {
-          setLocation({
-            ...location,
-            latitude: value,
-          });
-        }}
-        type='text'
-        value={location.latitude || 0}
-      />
-      <Input
-        disabled={props.viewOnly}
-        label='longitude'
-        onChange={(value) => {
-          setLocation({
-            ...location,
-            longitude: value,
-          });
-        }}
-        type='text'
-        value={location.longitude || 0}
-      />
+      <div className={styles.positionRow}>
+        <div className={styles.coordinatesColumn}>
+          <Form.Group>
+            <Form.Label>Latitude:</Form.Label>
+            <div>{location.latitude}</div>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Longitude:</Form.Label>
+            <div>{location.longitude}</div>
+          </Form.Group>
+        </div>
+        <div className={styles.mapWrapper}>
+          <LocationMap
+            lngLat={location.longitude && location.latitude ? [location.longitude, location.latitude] : undefined}
+            onChange={lngLan => {
+              console.log({
+                longitude: lngLan.lng,
+                latitude: lngLan.lat,
+              });
+              setLocation({
+                ...location,
+                longitude: lngLan.lng,
+                latitude: lngLan.lat,
+              });
+            }}
+            viewOnly={props.viewOnly}
+          />
+        </div>
+      </div>
       <LocationInstancesTabs
         data={props.location}
         viewOnly={props.viewOnly}

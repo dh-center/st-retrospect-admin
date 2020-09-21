@@ -1,0 +1,14 @@
+.positionRow {
+  display: flex;
+}
+
+.mapWrapper {
+  margin-left: 10px;
+  flex: 1;
+  min-height: 400px;
+}
+
+.coordinatesColumn {
+  width: 200px;
+  flex-shrink: 0;
+}
