@@ -3,6 +3,8 @@ import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { LocationInstanceListItem_instance } from './__generated__/LocationInstanceListItem_instance.graphql';
 import styles from './LocationInstanceListItem.module.css';
+import { useImage } from 'react-image';
+import ImageView from '../utils/ImageView';
 
 /**
  * LocationInstanceListItem props
@@ -20,7 +22,7 @@ interface Props {
 }
 
 /**
- * Item with short information about location lisst
+ * Item with short information about location list
  *
  * @param props - props for rendering
  */
@@ -30,12 +32,11 @@ function LocationInstanceListItem(props: Props): React.ReactElement {
       className={styles.container}
       onClick={props.onClick}
     >
-      <div
+      <ImageView
         className={styles.image}
-        style={{
-          backgroundImage: `url(${props.instance.mainPhotoLink})`,
-        }}
-      />
+        height={150}
+        src={props.instance.mainPhotoLink}
+        width={200}/>
       <div className={styles.info}>
         <h3>{props.instance.name}</h3>
         <p className={styles.description}>{props.instance.description}</p>

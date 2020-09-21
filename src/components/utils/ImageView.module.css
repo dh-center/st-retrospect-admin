@@ -1,0 +1,15 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.image {
+  width: 100%;
+}
+
+.info {
+  font-size: 10px;
+  color: gray;
+}
