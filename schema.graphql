@@ -30,12 +30,6 @@ directive @authCheck on FIELD_DEFINITION
 """Directive for checking admin permissions"""
 directive @adminCheck on FIELD_DEFINITION
 
-"""Exposes a URL that specifies the behaviour of this scalar."""
-directive @specifiedBy(
-  """The URL that specifies the behaviour of this scalar."""
-  url: String!
-) on SCALAR
-
 """Location address representation"""
 type Address {
   """Address's ID"""
@@ -64,10 +58,10 @@ input Coordinates {
 
 input CreateLocationInput {
   """Location coordinate by X"""
-  coordinateX: Float!
+  latitude: Float!
 
   """Location coordinate by Y"""
-  coordinateY: Float!
+  longitude: Float!
 
   """Possible location representations"""
   instances: [LocationInstanceInput!]!
@@ -252,10 +246,10 @@ type Location {
   id: ObjectId!
 
   """Location coordinate by X"""
-  coordinateX: Float
+  latitude: Float
 
   """Location coordinate by Y"""
-  coordinateY: Float
+  longitude: Float
 
   """Array of addresses ids"""
   addresses: [Address]
@@ -824,10 +818,10 @@ input UpdateLocationInput {
   id: ObjectId!
 
   """Location coordinate by X"""
-  coordinateX: Float
+  latitude: Float
 
   """Location coordinate by Y"""
-  coordinateY: Float
+  longitude: Float
 
   """Possible location instances id"""
   instances: [ObjectId!]!

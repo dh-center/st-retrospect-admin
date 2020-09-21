@@ -47,8 +47,8 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
   useEffect(() => {
     setInput({
       id: location.id,
-      coordinateX: location.coordinateX,
-      coordinateY: location.coordinateY,
+      latitude: location.latitude,
+      longitude: location.longitude,
       instances: location.instances.map(ins => ins.id),
     });
     // eslint-disable-next-line
@@ -58,27 +58,27 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
     <div>
       <Input
         disabled={props.viewOnly}
-        label='coordinateX'
+        label='latitude'
         onChange={(value) => {
           setLocation({
             ...location,
-            coordinateX: value,
+            latitude: value,
           });
         }}
         type='text'
-        value={location.coordinateX || 0}
+        value={location.latitude || 0}
       />
       <Input
         disabled={props.viewOnly}
-        label='coordinateY'
+        label='longitude'
         onChange={(value) => {
           setLocation({
             ...location,
-            coordinateY: value,
+            longitude: value,
           });
         }}
         type='text'
-        value={location.coordinateY || 0}
+        value={location.longitude || 0}
       />
       <LocationInstancesTabs
         data={props.location}
@@ -94,8 +94,8 @@ export default createFragmentContainer(
     location: graphql`
       fragment LocationInfo_location on Location {
         id
-        coordinateX
-        coordinateY
+        latitude
+        longitude
         instances {
           id
         }

@@ -5,8 +5,8 @@
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateLocationInput = {
     id: string;
-    coordinateX?: number | null;
-    coordinateY?: number | null;
+    latitude?: number | null;
+    longitude?: number | null;
     instances: Array<string>;
 };
 export type LocationInfoUpdateMutationVariables = {
