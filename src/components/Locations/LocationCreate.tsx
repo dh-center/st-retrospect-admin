@@ -15,6 +15,7 @@ import notifier from 'codex-notifier';
 import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
+import LocationMap from '../LocationMap';
 
 /**
  * Generates input data for creating new location
@@ -125,6 +126,19 @@ export default function LocationCreate(): React.ReactElement {
           required
           value={instance.description || ''}
         />
+        <div style={{ height: 400 }}>
+          <LocationMap
+            lngLat={[input.longitude, input.latitude]}
+            onChange={(lngLat) => {
+              setInput({
+                ...input,
+                latitude: lngLat.lat,
+                longitude: lngLat.lng,
+              });
+            }}
+          />
+        </div>
+
         <Input
           label='Link to the wiki about this location'
           onChange={(v) => updateLocationInstance('wikiLink', v)}

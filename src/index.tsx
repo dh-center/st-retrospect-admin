@@ -5,6 +5,14 @@ import './index.css';
 import App from './App/index';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+if (process.env.REACT_APP_MAPBOX_ACCESS_TOKEN) {
+  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+} else {
+  console.warn('You must provide Mapbox access token to work with map');
+}
 
 ReactDOM.render(
   <BrowserRouter>
