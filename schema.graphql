@@ -57,10 +57,10 @@ input Coordinates {
 }
 
 input CreateLocationInput {
-  """Location coordinate by X"""
+  """Location position latitude"""
   latitude: Float!
 
-  """Location coordinate by Y"""
+  """Location position longitude"""
   longitude: Float!
 
   """Possible location representations"""
@@ -245,10 +245,10 @@ type Location {
   """Location's ID"""
   id: ObjectId!
 
-  """Location coordinate by X"""
+  """Location position latitude"""
   latitude: Float
 
-  """Location coordinate by Y"""
+  """Location position longitude"""
   longitude: Float
 
   """Array of addresses ids"""
@@ -817,10 +817,10 @@ input UpdateLocationInput {
   """Location id to update"""
   id: ObjectId!
 
-  """Location coordinate by X"""
+  """Location position latitude"""
   latitude: Float
 
-  """Location coordinate by Y"""
+  """Location position longitude"""
   longitude: Float
 
   """Possible location instances id"""
