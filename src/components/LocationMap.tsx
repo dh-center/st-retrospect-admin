@@ -23,12 +23,33 @@ const MAX_BOUNDS: LngLatBoundsLike = [
   ],
 ];
 
+/**
+ * Props for LocationMap component
+ */
 interface Props {
+  /**
+   * Latitude and longitude of location position
+   */
   lngLat?: LngLatLike;
+
+  /**
+   * Handler for changing location position
+   *
+   * @param lngLat - new position
+   */
   onChange(lngLat: LngLat): void;
+
+  /**
+   * Is changing position enabled
+   */
   viewOnly?: boolean;
 }
 
+/**
+ * Component for displaying and changing point on map where location located
+ *
+ * @param props - props for component rendering
+ */
 export default function LocationMap(props: Props): React.ReactElement {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map>();
