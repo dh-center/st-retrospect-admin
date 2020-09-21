@@ -21,8 +21,8 @@ import ContentWrapper from '../ContentWrapper';
  */
 function generateLocationInput(): CreateLocationInput {
   return {
-    coordinateX: 0,
-    coordinateY: 0,
+    latitude: 0,
+    longitude: 0,
     instances: [ {
       name: '',
       description: '',

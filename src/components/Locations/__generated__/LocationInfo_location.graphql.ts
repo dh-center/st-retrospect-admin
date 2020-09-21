@@ -6,8 +6,8 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type LocationInfo_location = {
     readonly id: string;
-    readonly coordinateX: number | null;
-    readonly coordinateY: number | null;
+    readonly latitude: number | null;
+    readonly longitude: number | null;
     readonly instances: ReadonlyArray<{
         readonly id: string;
     }>;
@@ -41,14 +41,14 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "coordinateX",
+      "name": "latitude",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "coordinateY",
+      "name": "longitude",
       "storageKey": null
     },
     {
@@ -73,5 +73,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '261cf72ccf54c14876765dac55573ae7';
+(node as any).hash = '5134a8cfe9b3cc48c8d39ef05781bdc6';
 export default node;

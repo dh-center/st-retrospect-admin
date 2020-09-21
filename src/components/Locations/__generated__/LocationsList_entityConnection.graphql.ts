@@ -10,8 +10,8 @@ export type LocationsList_entityConnection = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly coordinateX: number | null;
-                readonly coordinateY: number | null;
+                readonly latitude: number | null;
+                readonly longitude: number | null;
                 readonly instances: ReadonlyArray<{
                     readonly id: string;
                     readonly name: string | null;
@@ -102,14 +102,14 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "coordinateX",
+                  "name": "latitude",
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "coordinateY",
+                  "name": "longitude",
                   "storageKey": null
                 },
                 {
@@ -191,5 +191,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f30faa4780b3febcbcac08bab39c8d15';
+(node as any).hash = 'dd126f3d22d065dff59d358f5ae4e540';
 export default node;

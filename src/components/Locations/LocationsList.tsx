@@ -50,8 +50,8 @@ function LocationRow(props: EntityRowProps<Entity<LocationsPageEntityConnection>
     <tr onClick={onClick}>
       <td rowSpan={rowSpan}>{props.index + 1}</td>
       <td rowSpan={rowSpan}>{props.entity.id}</td>
-      <td rowSpan={rowSpan}>{props.entity.coordinateX}</td>
-      <td rowSpan={rowSpan}>{props.entity.coordinateY}</td>
+      <td rowSpan={rowSpan}>{props.entity.latitude}</td>
+      <td rowSpan={rowSpan}>{props.entity.longitude}</td>
       {instancesRows.shift()}
     </tr>
     {instancesRows.map((row, index) => <tr key={index} onClick={onClick}>{row}</tr>)}
@@ -72,8 +72,8 @@ function UpdatedLocationsList(props: LocationsListProps): React.ReactElement {
         <tr>
           <th rowSpan={2}>№</th>
           <th rowSpan={2}>id</th>
-          <th rowSpan={2}>coordinateX</th>
-          <th rowSpan={2}>coordinateY</th>
+          <th rowSpan={2}>latitude</th>
+          <th rowSpan={2}>longitude</th>
           <th colSpan={2}>instances</th>
         </tr>
         <tr>
@@ -103,8 +103,8 @@ const LocationsList = createPaginationContainer<EntitiesListProps<LocationsPageE
           edges {
             node {
               id
-              coordinateX
-              coordinateY
+              latitude
+              longitude
               instances {
                 id
                 name

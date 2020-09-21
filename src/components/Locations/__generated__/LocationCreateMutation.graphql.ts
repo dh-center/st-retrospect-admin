@@ -4,8 +4,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateLocationInput = {
-    coordinateX: number;
-    coordinateY: number;
+    latitude: number;
+    longitude: number;
     instances: Array<LocationInstanceInput>;
 };
 export type LocationInstanceInput = {
