@@ -2,7 +2,6 @@ import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
 import EntitiesList, { EntitiesListProps } from '../Entities/EntitiesList';
 import graphql from 'babel-plugin-relay/macro';
 import { RelationsList_entityConnection } from './__generated__/RelationsList_entityConnection.graphql';
-import { LocationsList_entityConnection as LocationsPageEntityConnection } from '../Locations/__generated__/LocationsList_entityConnection.graphql';
 import React, { ReactElement } from 'react';
 import RelationsRow from './RelationsRow';
 
