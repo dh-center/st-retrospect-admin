@@ -25,6 +25,9 @@ import {
   LocationInstanceInfoDialogDeleteMutationResponse
 } from './__generated__/LocationInstanceInfoDialogDeleteMutation.graphql';
 import notifier from 'codex-notifier';
+import ImageGallery from '../utils/ImageGallery';
+import ImageUploader from '../utils/ImageUploader';
+import styles from './LocationInstanceInfoDialog.module.css';
 
 /**
  * Union type for inputs for creating and updating location instances
@@ -93,6 +96,8 @@ function instanceToInput(instance: LocationInstanceInfoDialog_locationInstance |
     constructionDate: instance.constructionDate,
     demolitionDate: instance.demolitionDate,
     description: instance.description || '',
+    mainPhotoLink: instance.mainPhotoLink,
+    photoLinks: [ ...instance.photoLinks || [] ],
     endDate: instance.endDate,
     name: instance.name || '',
     startDate: instance.startDate,
@@ -282,6 +287,39 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
 
             />
           </Form.Group>
+          <Form.Group>
+            <Form.Label>Main photo</Form.Label>
+            <ImageGallery images={input.mainPhotoLink ? [ input.mainPhotoLink ] : undefined}/>
+            {
+              isEditing &&
+              <ImageUploader
+                onImageUpload={(url) => {
+                  setInput({
+                    ...input,
+                    mainPhotoLink: url,
+                  });
+                }}
+              />
+            }
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Photos</Form.Label>
+            <ImageGallery
+              className={styles.photosGallery}
+              images={input.photoLinks || undefined}
+            />
+            {
+              isEditing &&
+              <ImageUploader
+                onImageUpload={(url) => {
+                  setInput({
+                    ...input,
+                    photoLinks: [...(input.photoLinks || []), url],
+                  });
+                }}
+              />
+            }
+          </Form.Group>
           <div>
             {!props.locationInstance &&
             <Button type='submit'>Create</Button>
@@ -330,6 +368,8 @@ export default createRefetchContainer(
         demolitionDate
         startDate
         endDate
+        mainPhotoLink
+        photoLinks
       }
     `,
   },

@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  overflow: auto hidden;
+}
+
+.imageWrapper {
+  height: 100%;
+  margin: 0 10px;
+}

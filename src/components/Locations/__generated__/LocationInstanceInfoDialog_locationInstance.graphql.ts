@@ -12,6 +12,8 @@ export type LocationInstanceInfoDialog_locationInstance = {
     readonly demolitionDate: string | null;
     readonly startDate: string | null;
     readonly endDate: string | null;
+    readonly mainPhotoLink: string | null;
+    readonly photoLinks: ReadonlyArray<string> | null;
     readonly " $refType": "LocationInstanceInfoDialog_locationInstance";
 };
 export type LocationInstanceInfoDialog_locationInstance$data = LocationInstanceInfoDialog_locationInstance;
@@ -76,10 +78,24 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "endDate",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mainPhotoLink",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "photoLinks",
+      "storageKey": null
     }
   ],
   "type": "LocationInstance",
   "abstractKey": null
 };
-(node as any).hash = '6e3d62a9444dba7dfd07bfccd23f4114';
+(node as any).hash = '946764686e0263f4618b821d35be624f';
 export default node;

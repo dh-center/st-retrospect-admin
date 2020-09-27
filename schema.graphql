@@ -30,6 +30,12 @@ directive @authCheck on FIELD_DEFINITION
 """Directive for checking admin permissions"""
 directive @adminCheck on FIELD_DEFINITION
 
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
 """Location address representation"""
 type Address {
   """Address's ID"""
@@ -177,6 +183,28 @@ type CreateQuestPayload {
   record: Quest!
 }
 
+input CreateRelationInput {
+  """Person ID in relation"""
+  personId: ObjectId!
+
+  """Location Instance ID in relation"""
+  locationInstanceId: ObjectId!
+
+  """Relation type ID"""
+  relationId: ObjectId!
+
+  """Quote about relation"""
+  quote: MultilingualString!
+}
+
+type CreateRelationPayload {
+  """Created relation id"""
+  recordId: ObjectId!
+
+  """Created relation"""
+  record: Relation!
+}
+
 scalar Cursor
 
 type DeleteLocationInstancePayload {
@@ -197,6 +225,11 @@ type DeletePersonPayload {
 type DeleteQuestPayload {
   """Deleted quest id"""
   recordId: ID!
+}
+
+type DeleteRelationPayload {
+  """Deleted relation id"""
+  recordId: ObjectId
 }
 
 """
@@ -302,7 +335,7 @@ type LocationInstance {
   locationTypes: [LocationType]
 
   """Contains links with location's photos"""
-  photoLinks: [String]
+  photoLinks: [String!]
 
   """Link with main photo"""
   mainPhotoLink: String
@@ -405,6 +438,7 @@ type Mutation {
   person: PersonMutations
   location: LocationMutations!
   locationInstances: LocationInstanceMutations!
+  relation: RelationMutations!
 
   """Save route to user"""
   saveRoute(routeId: String!): User!
@@ -763,6 +797,17 @@ type RelationEdge {
   node: Relation!
 }
 
+type RelationMutations {
+  """Create relation"""
+  create(input: CreateRelationInput!): CreateRelationPayload!
+
+  """Update relation"""
+  update(input: UpdateRelationInput!): UpdateRelationPayload!
+
+  """Delete relation"""
+  delete(id: ObjectId!): DeleteRelationPayload!
+}
+
 """Represents one of the relations types"""
 type RelationType {
   """Relation type id"""
@@ -832,16 +877,16 @@ input UpdateLocationInstanceInput {
   id: ID!
 
   """Location's name"""
-  name: String!
+  name: MultilingualString!
 
   """Location's description"""
-  description: String
+  description: MultilingualString!
 
   """Link for location info"""
   wikiLink: String
 
   """Contains links with location's photos"""
-  photoLinks: [String]
+  photoLinks: [String!]
 
   """Link with main photo"""
   mainPhotoLink: String
@@ -941,6 +986,31 @@ type UpdateQuestPayload {
 
   """Updated quest"""
   record: Quest!
+}
+
+input UpdateRelationInput {
+  """ID of relation for updating"""
+  id: ID!
+
+  """Person ID in relation"""
+  personId: ObjectId
+
+  """Location Instance ID in relation"""
+  locationInstanceId: ObjectId
+
+  """Relation type ID"""
+  relationId: ObjectId
+
+  """Quote about relation"""
+  quote: MultilingualString
+}
+
+type UpdateRelationPayload {
+  """Updated relation id"""
+  recordId: ObjectId!
+
+  """Updated relation"""
+  record: Relation!
 }
 
 type User {
