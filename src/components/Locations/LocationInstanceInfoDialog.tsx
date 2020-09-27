@@ -289,10 +289,14 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           </Form.Group>
           <Form.Group>
             <Form.Label>Main photo</Form.Label>
-            <ImageGallery className={styles.mainPhoto} images={input.mainPhotoLink ? [ input.mainPhotoLink ] : undefined}/>
+            <ImageGallery
+              className={styles.mainPhoto}
+              images={input.mainPhotoLink ? [ input.mainPhotoLink ] : undefined}
+            />
             {
               isEditing &&
               <ImageUploader
+                entityName='location'
                 onImageUpload={(url) => {
                   setInput({
                     ...input,
@@ -311,6 +315,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             {
               isEditing &&
               <ImageUploader
+                entityName='location'
                 onImageUpload={(url) => {
                   setInput({
                     ...input,
