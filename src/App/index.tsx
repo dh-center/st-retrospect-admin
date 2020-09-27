@@ -5,6 +5,7 @@ import Login from '../components/Login';
 import PrivateRoute from '../components/PrivateRoute';
 import PersonsPage from '../components/Persons';
 import QuestsPage from '../components/Quests';
+import RelationsPage from '../components/Relations';
 import Quiz from '../components/Quiz';
 import { QueryRenderer } from 'react-relay';
 import environment from '../relay-env';
@@ -41,6 +42,10 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
 
         <PrivateRoute path='/quests'>
           <QuestsPage/>
+        </PrivateRoute>
+
+        <PrivateRoute path='/relations'>
+          <RelationsPage/>
         </PrivateRoute>
 
         <PrivateRoute path='/quiz'>
