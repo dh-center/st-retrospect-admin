@@ -5,5 +5,8 @@
 
 .imageWrapper {
   height: 100%;
+}
+
+.imageWrapper + .imageWrapper {
   margin: 0 10px;
 }

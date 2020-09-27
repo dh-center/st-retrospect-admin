@@ -1,3 +1,11 @@
+.mainPhoto {
+  height: 250px;
+}
+
 .photosGallery {
   height: 100px;
+}
+
+.mainPhoto, .photosGallery {
+  margin-bottom: 10px;
 }

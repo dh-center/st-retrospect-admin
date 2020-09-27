@@ -1,17 +1,35 @@
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import styles from './ImageUploader.module.css';
 
+/**
+ * Props for ImageUploader components
+ */
 interface ImageUploaderProps {
   maxFiles?: number;
   onImageUpload(url: string): void;
 }
 
+/**
+ * Response from image uploading API
+ */
 interface UploadRequestResults {
+  /**
+   * Uploaded image data
+   */
   file: {
+    /**
+     * Uploaded image URL
+     */
     url: string;
   };
 }
 
+/**
+ * Component for image uploading
+ *
+ * @param props - props for component rendering
+ */
 export default function ImageUploader(props: ImageUploaderProps): React.ReactElement {
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const formData = new FormData();
@@ -30,7 +48,7 @@ export default function ImageUploader(props: ImageUploaderProps): React.ReactEle
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()}>
+    <div {...getRootProps({ className: styles.dropzone })}>
       <input {...getInputProps()} />
       {
         isDragActive

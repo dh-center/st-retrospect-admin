@@ -289,7 +289,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           </Form.Group>
           <Form.Group>
             <Form.Label>Main photo</Form.Label>
-            <ImageGallery images={input.mainPhotoLink ? [ input.mainPhotoLink ] : undefined}/>
+            <ImageGallery className={styles.mainPhoto} images={input.mainPhotoLink ? [ input.mainPhotoLink ] : undefined}/>
             {
               isEditing &&
               <ImageUploader
