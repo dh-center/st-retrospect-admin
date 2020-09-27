@@ -37,6 +37,8 @@ fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
   demolitionDate
   startDate
   endDate
+  mainPhotoLink
+  photoLinks
 }
 */
 
@@ -144,6 +146,20 @@ return {
             "kind": "ScalarField",
             "name": "endDate",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "mainPhotoLink",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "photoLinks",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -151,12 +167,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4f468c006847bd1a07c4c2949463fb1b",
+    "cacheID": "5256f88a95328948b98c64d87f7a4f14",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogRefetchQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: ID!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n"
+    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: ID!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n}\n"
   }
 };
 })();

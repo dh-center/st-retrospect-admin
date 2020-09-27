@@ -46,6 +46,8 @@ fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
   demolitionDate
   startDate
   endDate
+  mainPhotoLink
+  photoLinks
 }
 
 fragment LocationInstanceListItem_instance on LocationInstance {
@@ -199,6 +201,13 @@ return {
                 "kind": "ScalarField",
                 "name": "endDate",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "photoLinks",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -209,12 +218,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7e9614b01929ef7547adf44c2ad287d6",
+    "cacheID": "993a6bc1f0548ff22d001b8587e8fba6",
     "id": null,
     "metadata": {},
     "name": "LocationViewQuery",
     "operationKind": "query",
-    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
+    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();
