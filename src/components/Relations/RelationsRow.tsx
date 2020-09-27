@@ -3,15 +3,7 @@ import { EntityRowProps } from '../Entities/EntitiesList/EntitiesListSection';
 import { RelationsList_entityConnection } from './__generated__/RelationsList_entityConnection.graphql';
 import { Entity } from '../../types/entities';
 import { useHistory } from 'react-router';
-
-/**
- * Creates person's full name
- *
- * @param person - person's lastname, firstname and patronymic
- */
-function personsFullName(person: {lastName: string | null;firstName: string | null;patronymic: string | null}): string {
-  return (`${person.lastName} ${person.firstName} ${person.patronymic}`).trim();
-}
+import personsFullName from '../../utils/personsFullname';
 
 /**
  * Displays relation row in relations list
