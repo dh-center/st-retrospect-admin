@@ -6,9 +6,9 @@ import { ConcreteRequest } from "relay-runtime";
 export type UpdateLocationInstanceInput = {
     id: string;
     name: string;
-    description?: string | null;
+    description: string;
     wikiLink?: string | null;
-    photoLinks?: Array<string | null> | null;
+    photoLinks?: Array<string> | null;
     mainPhotoLink?: string | null;
     constructionDate?: string | null;
     demolitionDate?: string | null;

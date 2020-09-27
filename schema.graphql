@@ -335,7 +335,7 @@ type LocationInstance {
   locationTypes: [LocationType]
 
   """Contains links with location's photos"""
-  photoLinks: [String]
+  photoLinks: [String!]
 
   """Link with main photo"""
   mainPhotoLink: String
@@ -877,16 +877,16 @@ input UpdateLocationInstanceInput {
   id: ID!
 
   """Location's name"""
-  name: String!
+  name: MultilingualString!
 
   """Location's description"""
-  description: String
+  description: MultilingualString!
 
   """Link for location info"""
   wikiLink: String
 
   """Contains links with location's photos"""
-  photoLinks: [String]
+  photoLinks: [String!]
 
   """Link with main photo"""
   mainPhotoLink: String
