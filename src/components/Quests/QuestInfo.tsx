@@ -34,7 +34,7 @@ export function generateQuest(): OmitId<Quest> {
 export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>): React.ReactElement {
   const editorRef = useRef<EditorJS>();
   const editorElementRef = useRef<HTMLDivElement>(null);
-  const onChange = props.onChange || ((e: OmitId<Quest>): void => { /* do nothing */ });
+  const onChange = props.onChange || ((): void => { /* do nothing */ });
 
   const onEditorChangeCallback = useRef<(data: OutputData) => Promise<void>>();
 
@@ -140,7 +140,7 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
             inline
             label='Quiz'
             name='type'
-            onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+            onChange={(): void => {
               onChange({
                 ...props.entity,
                 type: 'QUIZ',
@@ -157,7 +157,7 @@ export default function QuestInfo(props: EntityInfoComponentProps<OmitId<Quest>>
             inline
             label='Route'
             name='type'
-            onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+            onChange={(): void => {
               onChange({
                 ...props.entity,
                 type: 'ROUTE',
