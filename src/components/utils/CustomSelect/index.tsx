@@ -14,6 +14,7 @@ interface ComponentProps {
  * @param props - CustomSelect component props
  */
 export default function CustomSelect(props: ComponentProps): React.ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
   const [selectedValue, setSelectedValue] = useState<SelectedOptionValue | SelectedOptionValue[]>();
   const onChange = props.onChange;
 
