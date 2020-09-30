@@ -3,7 +3,6 @@ import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { LocationInstanceListItem_instance } from './__generated__/LocationInstanceListItem_instance.graphql';
 import styles from './LocationInstanceListItem.module.css';
-import { useImage } from 'react-image';
 import ImageView from '../utils/ImageView';
 
 /**

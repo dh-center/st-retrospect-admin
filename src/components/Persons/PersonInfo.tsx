@@ -83,7 +83,7 @@ function personToInput(person: PersonInfo_person | null): PersonInputs {
  * @param props - props of component
  */
 function PersonInfo(props: Props): React.ReactElement {
-  const onChange = props.onChange || ((e: PersonInputs): void => { /* do nothing */ });
+  const onChange = props.onChange || ((): void => { /* do nothing */ });
 
   const [personCopy, setPersonCopy] = useState(personToInput(props.person));
 

@@ -23,14 +23,6 @@ const professionsKeywords = {
   'скульптор': /скульптор/,
 };
 
-interface DataByYear {
-  [key: string]: number;
-}
-
-interface DataByProfession {
-  [key: string]: DataByYear;
-}
-
 /**
  * Displays barplot with count of persons by birth date
  *
