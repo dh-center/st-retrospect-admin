@@ -58,7 +58,7 @@ function LocationEdit(): React.ReactElement {
     <QueryRenderer<LocationEditQuery>
       environment={environment}
       query={graphql`
-        query LocationEditQuery($id: ID!) {
+        query LocationEditQuery($id: GlobalId!) {
           location(id: $id) {
           ...LocationInfo_location
          }

@@ -31,7 +31,7 @@ export type RelationViewQuery = {
 
 /*
 query RelationViewQuery(
-  $id: ID!
+  $id: GlobalId!
 ) {
   relation(id: $id) {
     id
@@ -39,6 +39,7 @@ query RelationViewQuery(
       lastName
       firstName
       patronymic
+      id
     }
     locationInstance {
       name
@@ -77,47 +78,36 @@ v2 = {
 v3 = {
   "alias": null,
   "args": null,
-  "concreteType": "Person",
-  "kind": "LinkedField",
-  "name": "person",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "lastName",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "firstName",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "patronymic",
-      "storageKey": null
-    }
-  ],
+  "kind": "ScalarField",
+  "name": "lastName",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "firstName",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "patronymic",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v5 = [
-  (v4/*: any*/)
+v7 = [
+  (v6/*: any*/)
 ],
-v6 = [
-  (v4/*: any*/),
+v8 = [
+  (v6/*: any*/),
   (v2/*: any*/)
 ];
 return {
@@ -136,7 +126,20 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Person",
+            "kind": "LinkedField",
+            "name": "person",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/)
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -144,7 +147,7 @@ return {
             "kind": "LinkedField",
             "name": "locationInstance",
             "plural": false,
-            "selections": (v5/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": null
           },
           {
@@ -154,7 +157,7 @@ return {
             "kind": "LinkedField",
             "name": "relationType",
             "plural": false,
-            "selections": (v5/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": null
           }
         ],
@@ -179,7 +182,21 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Person",
+            "kind": "LinkedField",
+            "name": "person",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -187,7 +204,7 @@ return {
             "kind": "LinkedField",
             "name": "locationInstance",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v8/*: any*/),
             "storageKey": null
           },
           {
@@ -197,7 +214,7 @@ return {
             "kind": "LinkedField",
             "name": "relationType",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v8/*: any*/),
             "storageKey": null
           }
         ],
@@ -206,14 +223,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d5abd26d49b5eb814e3386174a79822b",
+    "cacheID": "61281d3b33473a6c19c1b748cd49cd66",
     "id": null,
     "metadata": {},
     "name": "RelationViewQuery",
     "operationKind": "query",
-    "text": "query RelationViewQuery(\n  $id: ID!\n) {\n  relation(id: $id) {\n    id\n    person {\n      lastName\n      firstName\n      patronymic\n    }\n    locationInstance {\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query RelationViewQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    locationInstance {\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ea144e01114766502d4244eaadfc0f51';
+(node as any).hash = 'c0967ba6844b0c77f60fe775214c028a';
 export default node;

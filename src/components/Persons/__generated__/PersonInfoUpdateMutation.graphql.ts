@@ -21,7 +21,7 @@ export type PersonInfoUpdateMutationVariables = {
 export type PersonInfoUpdateMutationResponse = {
     readonly person: {
         readonly update: {
-            readonly recordId: string | null;
+            readonly recordId: string;
         };
     } | null;
 };

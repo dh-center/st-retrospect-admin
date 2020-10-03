@@ -22,7 +22,7 @@ export type LocationInfoDeleteMutation = {
 
 /*
 mutation LocationInfoDeleteMutation(
-  $id: ObjectId!
+  $id: GlobalId!
 ) {
   location {
     delete(id: $id) {
@@ -95,14 +95,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "7b905c8fc00d473894326686c88b8190",
+    "cacheID": "c811df94408679345eb0dc92671c5159",
     "id": null,
     "metadata": {},
     "name": "LocationInfoDeleteMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationInfoDeleteMutation(\n  $id: ObjectId!\n) {\n  location {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation LocationInfoDeleteMutation(\n  $id: GlobalId!\n) {\n  location {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '06cf9c35de29702c92c462ed42654728';
+(node as any).hash = '2eaec8fd7d201bc13983ac5c5d7be933';
 export default node;

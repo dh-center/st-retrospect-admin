@@ -51,6 +51,7 @@ mutation LocationInstanceInfoDialogCreateMutation(
           instances {
             id
           }
+          id
         }
       }
     }
@@ -66,62 +67,73 @@ var v0 = [
     "name": "input"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "LocationInstanceMutations",
-    "kind": "LinkedField",
-    "name": "locationInstances",
-    "plural": false,
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "LocationInstance",
+  "kind": "LinkedField",
+  "name": "instances",
+  "plural": true,
+  "selections": [
+    (v2/*: any*/)
+  ],
+  "storageKey": null
+};
+return {
+  "fragment": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "LocationInstanceInfoDialogCreateMutation",
     "selections": [
       {
         "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input"
-          }
-        ],
-        "concreteType": "CreateLocationInstancePayload",
+        "args": null,
+        "concreteType": "LocationInstanceMutations",
         "kind": "LinkedField",
-        "name": "create",
+        "name": "locationInstances",
         "plural": false,
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "concreteType": "LocationInstance",
+            "args": (v1/*: any*/),
+            "concreteType": "CreateLocationInstancePayload",
             "kind": "LinkedField",
-            "name": "record",
+            "name": "create",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Location",
+                "concreteType": "LocationInstance",
                 "kind": "LinkedField",
-                "name": "location",
+                "name": "record",
                 "plural": false,
                 "selections": [
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "LocationInstance",
+                    "concreteType": "Location",
                     "kind": "LinkedField",
-                    "name": "instances",
-                    "plural": true,
+                    "name": "location",
+                    "plural": false,
                     "selections": [
-                      (v1/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -135,16 +147,6 @@ v2 = [
         "storageKey": null
       }
     ],
-    "storageKey": null
-  }
-];
-return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "LocationInstanceInfoDialogCreateMutation",
-    "selections": (v2/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -153,15 +155,63 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "LocationInstanceInfoDialogCreateMutation",
-    "selections": (v2/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "LocationInstanceMutations",
+        "kind": "LinkedField",
+        "name": "locationInstances",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "CreateLocationInstancePayload",
+            "kind": "LinkedField",
+            "name": "create",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LocationInstance",
+                "kind": "LinkedField",
+                "name": "record",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
+                    "name": "location",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "7770a79a343754bb2c8da37737caa6dd",
+    "cacheID": "3cc3dc1bfd223c5d90aebb9cd22667d4",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      record {\n        id\n        location {\n          instances {\n            id\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      record {\n        id\n        location {\n          instances {\n            id\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

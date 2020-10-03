@@ -29,7 +29,7 @@ export type QuestViewQuery = {
 
 /*
 query QuestViewQuery(
-  $id: ID!
+  $id: GlobalId!
 ) {
   entity: quest(id: $id) {
     id
@@ -150,14 +150,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "4037283c8ef0447d7985bc4c84e269df",
+    "cacheID": "3ac1a3a4c449e53c670dee500315bef2",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestViewQuery(\n  $id: ID!\n) {\n  entity: quest(id: $id) {\n    id\n    name\n    description\n    type\n    data {\n      time\n      version\n      blocks\n    }\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  entity: quest(id: $id) {\n    id\n    name\n    description\n    type\n    data {\n      time\n      version\n      blocks\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '13988429ad5e6830db384060359d125d';
+(node as any).hash = '3e72f9903c09f95f5773a23be0961c1a';
 export default node;

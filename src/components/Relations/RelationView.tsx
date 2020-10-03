@@ -24,7 +24,7 @@ import personsFullName from '../../utils/personsFullname';
 function remove(id: string): Promise<RelationViewDeleteMutationResponse> {
   return commitMutation<RelationViewDeleteMutation>(environment, {
     mutation: graphql`
-      mutation RelationViewDeleteMutation($id: ObjectId!) {
+      mutation RelationViewDeleteMutation($id: GlobalId!) {
         relation {
           delete(id: $id) {
             recordId
@@ -76,7 +76,7 @@ function RelationView(): React.ReactElement {
     <QueryRenderer<RelationViewQuery>
       environment={environment}
       query={graphql`
-        query RelationViewQuery($id: ID!) {
+        query RelationViewQuery($id: GlobalId!) {
           relation(id: $id) {
             id
             person {

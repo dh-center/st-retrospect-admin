@@ -328,7 +328,7 @@ export function updateInfo(input: UpdatePersonInput): Promise<PersonInfoUpdateMu
 export function deleteInfo(id: string): Promise<PersonInfoDeleteMutationResponse> {
   return commitMutation<PersonInfoDeleteMutation>(environment, {
     mutation: graphql`
-      mutation PersonInfoDeleteMutation($id: ID!) {
+      mutation PersonInfoDeleteMutation($id: GlobalId!) {
         person {
           delete(id: $id) {
             recordId

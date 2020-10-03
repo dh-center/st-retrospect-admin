@@ -7,7 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "relay": "relay-compiler --src ./src --schema ./schema.graphql --language typescript --customScalars.Timestamp=Int --customScalars.MultilingualString=String --customScalars.ObjectId=String",
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql --language typescript --customScalars.Timestamp=Int --customScalars.MultilingualString=String --customScalars.ObjectId=String --customScalars.GlobalId=ID",
     "get-schema": "get-graphql-schema https://api.st-retrospect.dh-center.ru/graphql > schema.graphql",
     "get-schema:stage": "get-graphql-schema https://api.stage.st-retrospect.dh-center.ru/graphql > schema.graphql",
     "get-schema:local": "get-graphql-schema http://localhost:4000/graphql > schema.graphql",
