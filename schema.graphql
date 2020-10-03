@@ -1,3 +1,6 @@
+"""Converts MongoDB ObjectId value to the Global Unique ID"""
+directive @toGlobalId(type: String!) on FIELD_DEFINITION
+
 """Extracts value from specified field in parent object"""
 directive @fromField(name: String!) on FIELD_DEFINITION
 
@@ -37,7 +40,7 @@ directive @specifiedBy(
 ) on SCALAR
 
 """Location address representation"""
-type Address {
+type Address implements Node {
   """Address's ID"""
   id: ID!
 
@@ -102,12 +105,12 @@ input CreateLocationInstanceInput {
   endDate: String
 
   """Location id to which this instance below"""
-  locationId: ObjectId!
+  locationId: GlobalId!
 }
 
 type CreateLocationInstancePayload {
   """Created location id"""
-  recordId: ID!
+  recordId: GlobalId!
 
   """Created location"""
   record: LocationInstance!
@@ -115,7 +118,7 @@ type CreateLocationInstancePayload {
 
 type CreateLocationPayload {
   """Created location id"""
-  recordId: ObjectId!
+  recordId: GlobalId!
 
   """Created location"""
   record: Location!
@@ -152,10 +155,10 @@ input CreatePersonInput {
 
 type CreatePersonPayload {
   """Created person id"""
-  recordId: ID
+  recordId: GlobalId!
 
   """Created person"""
-  record: Person
+  record: Person!
 }
 
 input CreateQuestInput {
@@ -177,7 +180,7 @@ input CreateQuestInput {
 
 type CreateQuestPayload {
   """Created quest id"""
-  recordId: ID!
+  recordId: GlobalId!
 
   """Created quest"""
   record: Quest!
@@ -185,13 +188,13 @@ type CreateQuestPayload {
 
 input CreateRelationInput {
   """Person ID in relation"""
-  personId: ObjectId!
+  personId: GlobalId!
 
   """Location Instance ID in relation"""
-  locationInstanceId: ObjectId!
+  locationInstanceId: GlobalId!
 
   """Relation type ID"""
-  relationId: ObjectId!
+  relationId: GlobalId!
 
   """Quote about relation"""
   quote: MultilingualString!
@@ -199,7 +202,7 @@ input CreateRelationInput {
 
 type CreateRelationPayload {
   """Created relation id"""
-  recordId: ObjectId!
+  recordId: GlobalId!
 
   """Created relation"""
   record: Relation!
@@ -209,27 +212,27 @@ scalar Cursor
 
 type DeleteLocationInstancePayload {
   """Created location id"""
-  recordId: ID!
+  recordId: GlobalId!
 }
 
 type DeleteLocationPayload {
   """Deleted location id"""
-  recordId: ID!
+  recordId: GlobalId!
 }
 
 type DeletePersonPayload {
   """Deleted person id"""
-  recordId: ID
+  recordId: GlobalId!
 }
 
 type DeleteQuestPayload {
   """Deleted quest id"""
-  recordId: ID!
+  recordId: GlobalId!
 }
 
 type DeleteRelationPayload {
   """Deleted relation id"""
-  recordId: ObjectId
+  recordId: GlobalId!
 }
 
 """
@@ -262,6 +265,8 @@ input EditorDataInput {
   version: String
 }
 
+scalar GlobalId
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -274,9 +279,9 @@ enum Languages {
 }
 
 """Location for displaying on map and making relations with persons"""
-type Location {
+type Location implements Node {
   """Location's ID"""
-  id: ObjectId!
+  id: ID!
 
   """Location position latitude"""
   latitude: Float
@@ -315,7 +320,7 @@ type LocationEdge {
 """
 Location context. This can be a time period, a special description for a particular route, etc.
 """
-type LocationInstance {
+type LocationInstance implements Node {
   """Instance's ID"""
   id: ID!
 
@@ -396,7 +401,7 @@ type LocationInstanceMutations {
   update(input: UpdateLocationInstanceInput!): UpdateLocationInstancePayload!
 
   """Delete location instance"""
-  delete(id: ObjectId!): DeleteLocationInstancePayload!
+  delete(id: GlobalId!): DeleteLocationInstancePayload!
 }
 
 type LocationMutations {
@@ -407,11 +412,11 @@ type LocationMutations {
   update(input: UpdateLocationInput!): UpdateLocationPayload!
 
   """Delete location"""
-  delete(id: ObjectId!): DeleteLocationPayload!
+  delete(id: GlobalId!): DeleteLocationPayload!
 }
 
 """Location type to add it to Location"""
-type LocationType {
+type LocationType implements Node {
   """LocationType's ID"""
   id: ID!
 
@@ -454,6 +459,12 @@ type Mutation {
   quest: QuestMutations!
 }
 
+"""An object with a Globally Unique ID"""
+interface Node {
+  """The ID of the object."""
+  id: ID!
+}
+
 """
 A field whose value conforms with the standard mongodb object ID as described
 here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId.
@@ -476,9 +487,9 @@ type PageInfo {
   endCursor: Cursor
 }
 
-type Person {
+type Person implements Node {
   """Person's id"""
-  id: ObjectId!
+  id: ID!
 
   """Person's first name"""
   firstName: String
@@ -546,18 +557,17 @@ type PersonMutations {
   update(input: UpdatePersonInput!): UpdatePersonPayload!
 
   """Delete person"""
-  delete(id: ID!): DeletePersonPayload!
+  delete(id: GlobalId!): DeletePersonPayload!
 }
 
 """API queries"""
 type Query {
-  """Healthcheck endpoint"""
-  health: String!
+  node(id: ID!): Node
 
   """Get specific person"""
   person(
     """Person id"""
-    id: ID!
+    id: GlobalId!
   ): Person
 
   """Get all persons"""
@@ -582,7 +592,7 @@ type Query {
   """Get specific location"""
   location(
     """Location id"""
-    id: ID!
+    id: GlobalId!
   ): Location
 
   """Get all locations"""
@@ -607,7 +617,7 @@ type Query {
   """Get specific locationInstances"""
   locationInstance(
     """locationInstances id"""
-    id: ID!
+    id: GlobalId!
   ): LocationInstance
 
   """Get all locationInstances"""
@@ -625,7 +635,7 @@ type Query {
   """Get specific relation"""
   relation(
     """Relation id"""
-    id: ID!
+    id: GlobalId!
   ): Relation
 
   """Get all relations"""
@@ -668,7 +678,7 @@ type Query {
   """Get specific route by id"""
   route(
     """Route id"""
-    id: ID!
+    id: GlobalId!
   ): Route
 
   """Get info about user"""
@@ -677,7 +687,7 @@ type Query {
   """Get specific Quest"""
   quest(
     """Quest id"""
-    id: ID!
+    id: GlobalId!
   ): Quest
 
   """Get all quests"""
@@ -700,7 +710,7 @@ type Query {
   ): QuestConnection!
 }
 
-type Quest {
+type Quest implements Node {
   """Quest ID"""
   id: ID!
 
@@ -755,11 +765,11 @@ type QuestMutations {
   update(input: UpdateQuestInput!): UpdateQuestPayload!
 
   """Delete quest"""
-  delete(id: ID!): DeleteQuestPayload!
+  delete(id: GlobalId!): DeleteQuestPayload!
 }
 
 """Represents relation between person and location"""
-type Relation {
+type Relation implements Node {
   """Relation's id"""
   id: ID!
 
@@ -805,11 +815,11 @@ type RelationMutations {
   update(input: UpdateRelationInput!): UpdateRelationPayload!
 
   """Delete relation"""
-  delete(id: ObjectId!): DeleteRelationPayload!
+  delete(id: GlobalId!): DeleteRelationPayload!
 }
 
 """Represents one of the relations types"""
-type RelationType {
+type RelationType implements Node {
   """Relation type id"""
   id: ID!
 
@@ -821,7 +831,7 @@ type RelationType {
 }
 
 """Route between locations"""
-type Route {
+type Route implements Node {
   """Route id"""
   id: ID!
 
@@ -860,7 +870,7 @@ scalar Timestamp
 
 input UpdateLocationInput {
   """Location id to update"""
-  id: ObjectId!
+  id: GlobalId!
 
   """Location position latitude"""
   latitude: Float
@@ -869,12 +879,12 @@ input UpdateLocationInput {
   longitude: Float
 
   """Possible location instances id"""
-  instances: [ObjectId!]!
+  instances: [GlobalId!]!
 }
 
 input UpdateLocationInstanceInput {
   """Location instance id"""
-  id: ID!
+  id: GlobalId!
 
   """Location's name"""
   name: MultilingualString!
@@ -906,7 +916,7 @@ input UpdateLocationInstanceInput {
 
 type UpdateLocationInstancePayload {
   """Created location id"""
-  recordId: ID!
+  recordId: GlobalId!
 
   """Created location"""
   record: LocationInstance!
@@ -914,7 +924,7 @@ type UpdateLocationInstancePayload {
 
 type UpdateLocationPayload {
   """Updated location id"""
-  recordId: ID!
+  recordId: GlobalId!
 
   """Updated location"""
   record: Location!
@@ -922,7 +932,7 @@ type UpdateLocationPayload {
 
 input UpdatePersonInput {
   """ID of person for updating"""
-  id: ID!
+  id: GlobalId!
 
   """Person's first name"""
   firstName: String
@@ -954,15 +964,15 @@ input UpdatePersonInput {
 
 type UpdatePersonPayload {
   """Updated person id"""
-  recordId: ID
+  recordId: GlobalId!
 
   """Updated person"""
-  record: Person
+  record: Person!
 }
 
 input UpdateQuestInput {
   """Quest ID"""
-  id: ID!
+  id: GlobalId!
 
   """Quest name"""
   name: String
@@ -982,7 +992,7 @@ input UpdateQuestInput {
 
 type UpdateQuestPayload {
   """Updated quest id"""
-  recordId: ID!
+  recordId: GlobalId!
 
   """Updated quest"""
   record: Quest!
@@ -990,16 +1000,16 @@ type UpdateQuestPayload {
 
 input UpdateRelationInput {
   """ID of relation for updating"""
-  id: ID!
+  id: GlobalId!
 
   """Person ID in relation"""
-  personId: ObjectId
+  personId: GlobalId
 
   """Location Instance ID in relation"""
-  locationInstanceId: ObjectId
+  locationInstanceId: GlobalId
 
   """Relation type ID"""
-  relationId: ObjectId
+  relationId: GlobalId
 
   """Quote about relation"""
   quote: MultilingualString
@@ -1007,13 +1017,13 @@ input UpdateRelationInput {
 
 type UpdateRelationPayload {
   """Updated relation id"""
-  recordId: ObjectId!
+  recordId: GlobalId!
 
   """Updated relation"""
   record: Relation!
 }
 
-type User {
+type User implements Node {
   """User's ID"""
   id: ID!
 

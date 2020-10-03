@@ -20,7 +20,7 @@ export type PersonInfoCreateMutationVariables = {
 export type PersonInfoCreateMutationResponse = {
     readonly person: {
         readonly create: {
-            readonly recordId: string | null;
+            readonly recordId: string;
         };
     } | null;
 };

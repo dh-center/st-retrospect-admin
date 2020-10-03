@@ -36,6 +36,7 @@ fragment RelationsList_entityConnection_2HEEH6 on Query {
           lastName
           firstName
           patronymic
+          id
         }
         locationInstance {
           name
@@ -185,7 +186,8 @@ return {
                         "kind": "ScalarField",
                         "name": "patronymic",
                         "storageKey": null
-                      }
+                      },
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -269,12 +271,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "519a29a7ce70f678a28dfdfec551a68f",
+    "cacheID": "6d1936f319aee1e6f6c30e7bb10b3494",
     "id": null,
     "metadata": {},
     "name": "RelationsListForwardQuery",
     "operationKind": "query",
-    "text": "query RelationsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...RelationsList_entityConnection_2HEEH6\n}\n\nfragment RelationsList_entityConnection_2HEEH6 on Query {\n  entities: relations(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        person {\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          name\n          id\n        }\n        relationType {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query RelationsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...RelationsList_entityConnection_2HEEH6\n}\n\nfragment RelationsList_entityConnection_2HEEH6 on Query {\n  entities: relations(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        person {\n          lastName\n          firstName\n          patronymic\n          id\n        }\n        locationInstance {\n          name\n          id\n        }\n        relationType {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

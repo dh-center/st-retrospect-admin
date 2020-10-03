@@ -21,10 +21,11 @@ export type LocationViewQuery = {
 
 /*
 query LocationViewQuery(
-  $id: ID!
+  $id: GlobalId!
 ) {
   entity: location(id: $id) {
     ...LocationInfo_location
+    id
   }
 }
 
@@ -218,14 +219,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "993a6bc1f0548ff22d001b8587e8fba6",
+    "cacheID": "38c4c391b790d51c1788385493e64a42",
     "id": null,
     "metadata": {},
     "name": "LocationViewQuery",
     "operationKind": "query",
-    "text": "query LocationViewQuery(\n  $id: ID!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
+    "text": "query LocationViewQuery(\n  $id: GlobalId!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n    id\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3f0fd87d8703f2bc010331d15bc92afd';
+(node as any).hash = '4bb4234fc21ffd85cfc25c6bfdf8a9bf';
 export default node;

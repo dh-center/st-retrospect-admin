@@ -39,7 +39,7 @@ function LocationView(): React.ReactElement {
     <QueryRenderer<LocationViewQuery>
       environment={environment}
       query={graphql`
-        query LocationViewQuery($id: ID!) {
+        query LocationViewQuery($id: GlobalId!) {
           entity: location(id: $id) {
           ...LocationInfo_location
          }

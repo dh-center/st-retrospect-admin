@@ -22,7 +22,7 @@ export type LocationInstanceInfoDialogDeleteMutation = {
 
 /*
 mutation LocationInstanceInfoDialogDeleteMutation(
-  $id: ObjectId!
+  $id: GlobalId!
 ) {
   locationInstances {
     delete(id: $id) {
@@ -95,14 +95,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "f6fc60e8df59a5691408b7bc4d2554ee",
+    "cacheID": "a5db04c5713849818b5b8993201ca2c0",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogDeleteMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationInstanceInfoDialogDeleteMutation(\n  $id: ObjectId!\n) {\n  locationInstances {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation LocationInstanceInfoDialogDeleteMutation(\n  $id: GlobalId!\n) {\n  locationInstances {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '78fdce382a71b5258df99aed380b38e0';
+(node as any).hash = '7d38ae8712713a1a1252ec09792271fd';
 export default node;

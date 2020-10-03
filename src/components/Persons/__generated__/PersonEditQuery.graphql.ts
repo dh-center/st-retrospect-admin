@@ -22,7 +22,7 @@ export type PersonEditQuery = {
 
 /*
 query PersonEditQuery(
-  $id: ID!
+  $id: GlobalId!
 ) {
   person(id: $id) {
     id
@@ -178,14 +178,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b703bdb7d84e82ec60d508cb4b8a41aa",
+    "cacheID": "10def63390fbb2d40e376a3cff66d73c",
     "id": null,
     "metadata": {},
     "name": "PersonEditQuery",
     "operationKind": "query",
-    "text": "query PersonEditQuery(\n  $id: ID!\n) {\n  person(id: $id) {\n    id\n    ...PersonInfo_person\n  }\n}\n\nfragment PersonInfo_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  profession\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
+    "text": "query PersonEditQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    ...PersonInfo_person\n  }\n}\n\nfragment PersonInfo_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  profession\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
   }
 };
 })();
-(node as any).hash = '24e112e138bfd600ff4a7d9f8c912045';
+(node as any).hash = '8466767d1bdd8d615bc11f0ff348098d';
 export default node;

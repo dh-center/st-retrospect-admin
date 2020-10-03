@@ -21,7 +21,7 @@ export type LocationInstanceInfoDialogRefetchQuery = {
 
 /*
 query LocationInstanceInfoDialogRefetchQuery(
-  $locationInstaceId: ID!
+  $locationInstaceId: GlobalId!
 ) {
   locationInstance(id: $locationInstaceId) {
     ...LocationInstanceInfoDialog_locationInstance
@@ -167,14 +167,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5256f88a95328948b98c64d87f7a4f14",
+    "cacheID": "d74575c2f2c8153b847581c2ebbc836b",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogRefetchQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: ID!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n}\n"
+    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: GlobalId!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n}\n"
   }
 };
 })();
-(node as any).hash = '211649f125b98a1576147c63240a903f';
+(node as any).hash = '41799bb88f30e6f84ee2f81291c220a1';
 export default node;

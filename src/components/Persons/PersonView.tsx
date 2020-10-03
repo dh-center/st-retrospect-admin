@@ -57,7 +57,7 @@ function PersonView(): React.ReactElement {
     <QueryRenderer<PersonViewQuery>
       environment={environment}
       query={graphql`
-        query PersonViewQuery($id: ID!) {
+        query PersonViewQuery($id: GlobalId!) {
           person(id: $id) {
             ...PersonInfo_person
           }

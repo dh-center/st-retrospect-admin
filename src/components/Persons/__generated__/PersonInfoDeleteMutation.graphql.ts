@@ -9,7 +9,7 @@ export type PersonInfoDeleteMutationVariables = {
 export type PersonInfoDeleteMutationResponse = {
     readonly person: {
         readonly delete: {
-            readonly recordId: string | null;
+            readonly recordId: string;
         };
     } | null;
 };
@@ -22,7 +22,7 @@ export type PersonInfoDeleteMutation = {
 
 /*
 mutation PersonInfoDeleteMutation(
-  $id: ID!
+  $id: GlobalId!
 ) {
   person {
     delete(id: $id) {
@@ -95,14 +95,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "e5930048af572704128733b8e70ee4e5",
+    "cacheID": "534e22fc916af30b08e9090fe52b26f8",
     "id": null,
     "metadata": {},
     "name": "PersonInfoDeleteMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonInfoDeleteMutation(\n  $id: ID!\n) {\n  person {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation PersonInfoDeleteMutation(\n  $id: GlobalId!\n) {\n  person {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8b3ac28fdced75602f411bc31100af99';
+(node as any).hash = 'c60c1867069663e36a5dce78f0faa011';
 export default node;

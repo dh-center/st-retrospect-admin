@@ -140,7 +140,7 @@ export function updateInfo(input: UpdateLocationInput): Promise<LocationInfoUpda
 export function remove(id: string): Promise<LocationInfoDeleteMutationResponse> {
   return commitMutation<LocationInfoDeleteMutation>(environment, {
     mutation: graphql`
-     mutation LocationInfoDeleteMutation($id: ObjectId!) {
+     mutation LocationInfoDeleteMutation($id: GlobalId!) {
        location {
          delete(id: $id) {
            recordId

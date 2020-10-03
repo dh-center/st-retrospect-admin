@@ -160,7 +160,7 @@ export function update(input: UpdateLocationInstanceInput): Promise<LocationInst
 export function remove(id: string): Promise<LocationInstanceInfoDialogDeleteMutationResponse> {
   return commitMutation<LocationInstanceInfoDialogDeleteMutation>(environment, {
     mutation: graphql`
-      mutation LocationInstanceInfoDialogDeleteMutation($id: ObjectId!) {
+      mutation LocationInstanceInfoDialogDeleteMutation($id: GlobalId!) {
         locationInstances {
           delete(id: $id) {
             recordId
@@ -379,7 +379,7 @@ export default createRefetchContainer(
     `,
   },
   graphql`
-    query LocationInstanceInfoDialogRefetchQuery($locationInstaceId: ID!) {
+    query LocationInstanceInfoDialogRefetchQuery($locationInstaceId: GlobalId!) {
       locationInstance(id: $locationInstaceId) {
         ...LocationInstanceInfoDialog_locationInstance
       }

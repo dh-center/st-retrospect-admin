@@ -9,7 +9,7 @@ export type RelationViewDeleteMutationVariables = {
 export type RelationViewDeleteMutationResponse = {
     readonly relation: {
         readonly delete: {
-            readonly recordId: string | null;
+            readonly recordId: string;
         };
     };
 };
@@ -22,7 +22,7 @@ export type RelationViewDeleteMutation = {
 
 /*
 mutation RelationViewDeleteMutation(
-  $id: ObjectId!
+  $id: GlobalId!
 ) {
   relation {
     delete(id: $id) {
@@ -95,14 +95,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "c32f9c829a9e65adf405f11b705101f3",
+    "cacheID": "3e6cc52577d18dde7130bcbea371143b",
     "id": null,
     "metadata": {},
     "name": "RelationViewDeleteMutation",
     "operationKind": "mutation",
-    "text": "mutation RelationViewDeleteMutation(\n  $id: ObjectId!\n) {\n  relation {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation RelationViewDeleteMutation(\n  $id: GlobalId!\n) {\n  relation {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '94122318a667317dfb290205de300383';
+(node as any).hash = '9b791b344e6b6e66ea06a23d068220a0';
 export default node;

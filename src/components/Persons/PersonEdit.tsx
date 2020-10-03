@@ -65,7 +65,7 @@ function PersonEditPageRenderer(): React.ReactElement {
     <QueryRenderer<PersonEditQuery>
       environment={environment}
       query={graphql`
-        query PersonEditQuery($id: ID!) {
+        query PersonEditQuery($id: GlobalId!) {
           person(id: $id) {
             id
             ...PersonInfo_person
