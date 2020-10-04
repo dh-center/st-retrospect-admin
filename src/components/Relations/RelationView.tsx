@@ -80,11 +80,15 @@ function RelationView(): React.ReactElement {
           relation(id: $id) {
             id
             person {
+              id
               lastName
               firstName
               patronymic
             }
             locationInstance {
+              location {
+                id
+              }
               name
             }
             relationType {
@@ -112,6 +116,7 @@ function RelationView(): React.ReactElement {
               <InfoPlate
                 content={props.relation.person ? personsFullName(props.relation.person) : null}
                 label='Person'
+                link={props.relation.person ? `/persons/${props.relation.person.id}` : null}
               />
               <InfoPlate
                 content={props.relation.relationType?.name}
@@ -120,6 +125,7 @@ function RelationView(): React.ReactElement {
               <InfoPlate
                 content={props.relation.locationInstance?.name}
                 label='Location instance'
+                link={props.relation.locationInstance ? `/locations/${props.relation.locationInstance.location.id}` : null}
               />
             </div>
             <div>

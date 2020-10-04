@@ -10,7 +10,12 @@
 
 .content {
   font-size: 1.2rem;
+  color: #17a2b8;
+}
+
+.contentWithLink {
   color: #007bff;
+  cursor: pointer;
 }
 
 .contentUndefined {
