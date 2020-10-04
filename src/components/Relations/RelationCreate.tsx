@@ -52,8 +52,7 @@ function create(input: CreateRelationInput): Promise<RelationCreateMutationRespo
 }
 
 /**
- *
- * @class
+ * Displays component for creating relations
  */
 export default function RelationCreate(): ReactElement {
   const [input, setInput] = useState<CreateRelationInput>(generateRelationInput());
