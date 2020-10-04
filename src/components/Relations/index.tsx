@@ -3,6 +3,7 @@ import { Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import RelationsPage from './RelationsPage';
 import RelationView from './RelationView';
+import RelationCreate from './RelationCreate';
 
 /**
  * Page for displaying relations pages
@@ -10,6 +11,9 @@ import RelationView from './RelationView';
 export default function RelationsRouter(): ReactElement {
   return (
     <Switch>
+      <PrivateRoute path='/relations/create'>
+        <RelationCreate/>
+      </PrivateRoute>
       <PrivateRoute path='/relations/:id'>
         <RelationView/>
       </PrivateRoute>

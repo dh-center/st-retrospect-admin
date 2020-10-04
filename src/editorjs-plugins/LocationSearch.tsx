@@ -99,7 +99,9 @@ export default class LocationSearch {
           this.selectedLocationInstanceId = selected;
         }}
         options={locationsWithNames}
-        value={this.selectedLocationInstanceId}/>;
+        placeholder='Select a location...'
+        value={this.selectedLocationInstanceId}
+        />;
       }}
       variables={{}}
     />, element);

@@ -657,6 +657,9 @@ type Query {
     last: Int
   ): RelationConnection!
 
+  """List of available relation types"""
+  relationTypes: [RelationType!]!
+
   """Get all routes"""
   routes(
     """Search filter"""
