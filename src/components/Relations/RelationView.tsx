@@ -13,9 +13,8 @@ import {
   RelationViewDeleteMutation,
   RelationViewDeleteMutationResponse
 } from './__generated__/RelationViewDeleteMutation.graphql';
-import Form from 'react-bootstrap/Form';
 import personsFullName from '../../utils/personsFullname';
-import InfoPlate from "../utils/InfoPlate";
+import InfoPlate from '../utils/InfoPlate';
 
 /**
  * Removes relation by its id
@@ -111,16 +110,16 @@ function RelationView(): React.ReactElement {
           <ContentWrapper>
             <div>
               <InfoPlate
-                label={'Person'}
                 content={props.relation.person ? personsFullName(props.relation.person) : null}
+                label='Person'
               />
               <InfoPlate
-                label={'Relation type'}
                 content={props.relation.relationType?.name}
+                label='Relation type'
               />
               <InfoPlate
-                label={'Location instance'}
                 content={props.relation.locationInstance?.name}
+                label='Location instance'
               />
             </div>
             <div>
