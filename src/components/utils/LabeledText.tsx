@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from './InfoPlate.module.css';
+import styles from './LabeledText.module.css';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 /**
- * InfoPlate component props
+ * LabeledText component props
  */
-interface InfoPlateProps {
+interface LabeledTextProps {
   /**
    * Label for displaying
    */
@@ -26,9 +26,9 @@ interface InfoPlateProps {
 /**
  * Displays plate for information in view components
  *
- * @param props - InfoPlate component props
+ * @param props - LabeledText component props
  */
-export default function InfoPlate(props: InfoPlateProps): React.ReactElement {
+export default function LabeledText(props: LabeledTextProps): React.ReactElement {
   return (
     <div className={styles.container}>
       <div className={styles.label}>{props.label}:</div>
