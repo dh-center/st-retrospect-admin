@@ -13,8 +13,8 @@ import {
   RelationViewDeleteMutation,
   RelationViewDeleteMutationResponse
 } from './__generated__/RelationViewDeleteMutation.graphql';
-import Form from 'react-bootstrap/Form';
 import personsFullName from '../../utils/personsFullname';
+import LabeledText from '../utils/LabeledText';
 
 /**
  * Removes relation by its id
@@ -80,11 +80,15 @@ function RelationView(): React.ReactElement {
           relation(id: $id) {
             id
             person {
+              id
               lastName
               firstName
               patronymic
             }
             locationInstance {
+              location {
+                id
+              }
               name
             }
             relationType {
@@ -109,18 +113,20 @@ function RelationView(): React.ReactElement {
         return (
           <ContentWrapper>
             <div>
-              <Form.Group>
-                <Form.Label>Person:</Form.Label>
-                <div>{props.relation.person ? personsFullName(props.relation.person) : '—'}</div>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Relation type:</Form.Label>
-                <div>{props.relation.relationType ? props.relation.relationType.name : '—'}</div>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Location instance:</Form.Label>
-                <div>{props.relation.locationInstance ? props.relation.locationInstance.name : '—'}</div>
-              </Form.Group>
+              <LabeledText
+                content={props.relation.person ? personsFullName(props.relation.person) : null}
+                label='Person'
+                link={props.relation.person ? `/persons/${props.relation.person.id}` : null}
+              />
+              <LabeledText
+                content={props.relation.relationType?.name}
+                label='Relation type'
+              />
+              <LabeledText
+                content={props.relation.locationInstance?.name}
+                label='Location instance'
+                link={props.relation.locationInstance ? `/locations/${props.relation.locationInstance.location.id}` : null}
+              />
             </div>
             <div>
               <LinkContainer to={`/relations/${id}/edit`}>

@@ -10,11 +10,15 @@ export type RelationViewQueryResponse = {
     readonly relation: {
         readonly id: string;
         readonly person: {
+            readonly id: string;
             readonly lastName: string | null;
             readonly firstName: string | null;
             readonly patronymic: string | null;
         } | null;
         readonly locationInstance: {
+            readonly location: {
+                readonly id: string;
+            };
             readonly name: string | null;
         } | null;
         readonly relationType: {
@@ -36,12 +40,15 @@ query RelationViewQuery(
   relation(id: $id) {
     id
     person {
+      id
       lastName
       firstName
       patronymic
-      id
     }
     locationInstance {
+      location {
+        id
+      }
       name
       id
     }
@@ -78,38 +85,55 @@ v2 = {
 v3 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "lastName",
+  "concreteType": "Person",
+  "kind": "LinkedField",
+  "name": "person",
+  "plural": false,
+  "selections": [
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "lastName",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "firstName",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "patronymic",
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "firstName",
+  "concreteType": "Location",
+  "kind": "LinkedField",
+  "name": "location",
+  "plural": false,
+  "selections": [
+    (v2/*: any*/)
+  ],
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "patronymic",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-},
-v7 = [
-  (v6/*: any*/)
-],
-v8 = [
-  (v6/*: any*/),
-  (v2/*: any*/)
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -126,20 +150,7 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Person",
-            "kind": "LinkedField",
-            "name": "person",
-            "plural": false,
-            "selections": [
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/)
-            ],
-            "storageKey": null
-          },
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -147,7 +158,10 @@ return {
             "kind": "LinkedField",
             "name": "locationInstance",
             "plural": false,
-            "selections": (v7/*: any*/),
+            "selections": [
+              (v4/*: any*/),
+              (v5/*: any*/)
+            ],
             "storageKey": null
           },
           {
@@ -157,7 +171,9 @@ return {
             "kind": "LinkedField",
             "name": "relationType",
             "plural": false,
-            "selections": (v7/*: any*/),
+            "selections": [
+              (v5/*: any*/)
+            ],
             "storageKey": null
           }
         ],
@@ -182,15 +198,15 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "Person",
+            "concreteType": "LocationInstance",
             "kind": "LinkedField",
-            "name": "person",
+            "name": "locationInstance",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
               (v4/*: any*/),
               (v5/*: any*/),
               (v2/*: any*/)
@@ -200,21 +216,14 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "LocationInstance",
-            "kind": "LinkedField",
-            "name": "locationInstance",
-            "plural": false,
-            "selections": (v8/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "RelationType",
             "kind": "LinkedField",
             "name": "relationType",
             "plural": false,
-            "selections": (v8/*: any*/),
+            "selections": [
+              (v5/*: any*/),
+              (v2/*: any*/)
+            ],
             "storageKey": null
           }
         ],
@@ -223,14 +232,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "61281d3b33473a6c19c1b748cd49cd66",
+    "cacheID": "ca26c5630349aa7dc7d8629cf94ad0a3",
     "id": null,
     "metadata": {},
     "name": "RelationViewQuery",
     "operationKind": "query",
-    "text": "query RelationViewQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      lastName\n      firstName\n      patronymic\n      id\n    }\n    locationInstance {\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query RelationViewQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    locationInstance {\n      location {\n        id\n      }\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c0967ba6844b0c77f60fe775214c028a';
+(node as any).hash = '8a4827c632619caf026f20e3d58040d1';
 export default node;
