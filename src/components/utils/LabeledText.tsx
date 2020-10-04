@@ -24,7 +24,7 @@ interface LabeledTextProps {
 }
 
 /**
- * Displays plate for information in view components
+ * Displays label and information in view components
  *
  * @param props - LabeledText component props
  */
