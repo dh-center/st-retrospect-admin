@@ -16,6 +16,11 @@ interface PersonsCustomSelectProps {
    * @param selected - selected value id
    */
   onChange: (selected: string) => void;
+
+  /**
+   * Default person id for displaying
+   */
+  defaultPersonId?: string;
 }
 
 /**
@@ -24,7 +29,7 @@ interface PersonsCustomSelectProps {
  * @param componentProps - props with onChange event handler
  */
 export default function PersonsCustomSelect(componentProps: PersonsCustomSelectProps): ReactElement {
-  const [selectedPerson, setSelectedPerson] = useState<string | undefined>();
+  const [selectedPerson, setSelectedPerson] = useState<string | undefined>(componentProps.defaultPersonId);
   const onChange = componentProps.onChange;
 
   return (
