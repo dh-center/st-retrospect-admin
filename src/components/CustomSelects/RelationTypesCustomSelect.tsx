@@ -15,6 +15,11 @@ interface RelationTypesCustomSelectProps {
    * @param selected - selected value id
    */
   onChange: (selected: string) => void;
+
+  /**
+   * Default relation type id for displaying
+   */
+  defaultRelationTypeId?: string;
 }
 
 /**
@@ -23,7 +28,7 @@ interface RelationTypesCustomSelectProps {
  * @param componentProps - props with onChange event handler
  */
 export default function RelationTypesCustomSelect(componentProps: RelationTypesCustomSelectProps): ReactElement {
-  const [selectedRelationType, setSelectedRelationType] = useState<string | undefined>();
+  const [selectedRelationType, setSelectedRelationType] = useState<string | undefined>(componentProps.defaultRelationTypeId);
   const onChange = componentProps.onChange;
 
   return (

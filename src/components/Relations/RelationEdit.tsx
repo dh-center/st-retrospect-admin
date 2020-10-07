@@ -38,6 +38,9 @@ function update(input: UpdateRelationInput): Promise<RelationEditMutationRespons
   });
 }
 
+/**
+ * Displays edit component for relations
+ */
 export default function RelationEdit(): ReactElement {
   const { id } = useParams();
 
@@ -61,6 +64,12 @@ export default function RelationEdit(): ReactElement {
    */
   const saveRelationToApi = async (): Promise<void> => {
     if (!input) {
+      notifier.show({
+        message: 'Please make changes in relation',
+        style: 'error',
+        time: 5000,
+      });
+
       return;
     }
 
@@ -135,6 +144,7 @@ export default function RelationEdit(): ReactElement {
               }}
             />
             <RelationTypesCustomSelect
+              defaultRelationTypeId={props.relation.relationType?.id}
               onChange={(selected) => {
                 setInput({
                   ...input,
@@ -144,6 +154,7 @@ export default function RelationEdit(): ReactElement {
               }}
             />
             <LocationInstancesCustomSelect
+              defaultLocationInstanceId={props.relation.locationInstance?.id}
               onChange={(selected) => {
                 setInput({
                   ...input,
