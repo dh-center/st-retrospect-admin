@@ -3,8 +3,8 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type RelationCreate_personsQueryVariables = {};
-export type RelationCreate_personsQueryResponse = {
+export type PersonsCustomSelect_personsQueryVariables = {};
+export type PersonsCustomSelect_personsQueryResponse = {
     readonly persons: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -16,15 +16,15 @@ export type RelationCreate_personsQueryResponse = {
         }>;
     };
 };
-export type RelationCreate_personsQuery = {
-    readonly response: RelationCreate_personsQueryResponse;
-    readonly variables: RelationCreate_personsQueryVariables;
+export type PersonsCustomSelect_personsQuery = {
+    readonly response: PersonsCustomSelect_personsQueryResponse;
+    readonly variables: PersonsCustomSelect_personsQueryVariables;
 };
 
 
 
 /*
-query RelationCreate_personsQuery {
+query PersonsCustomSelect_personsQuery {
   persons {
     edges {
       node {
@@ -73,7 +73,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "RelationCreate_personsQuery",
+    "name": "PersonsCustomSelect_personsQuery",
     "selections": [
       {
         "alias": null,
@@ -120,7 +120,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "RelationCreate_personsQuery",
+    "name": "PersonsCustomSelect_personsQuery",
     "selections": [
       {
         "alias": null,
@@ -169,14 +169,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9611dc8c5d051b51e2e26f05fb699622",
+    "cacheID": "233ac6767bb49ee4df5b3f1ffaa876a1",
     "id": null,
     "metadata": {},
-    "name": "RelationCreate_personsQuery",
+    "name": "PersonsCustomSelect_personsQuery",
     "operationKind": "query",
-    "text": "query RelationCreate_personsQuery {\n  persons {\n    edges {\n      node {\n        value: id\n        lastName\n        firstName\n        patronymic\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PersonsCustomSelect_personsQuery {\n  persons {\n    edges {\n      node {\n        value: id\n        lastName\n        firstName\n        patronymic\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '189454a583dcd6e90ffc90603a27a865';
+(node as any).hash = '62acf5878b8a6989ee159da98caf17ef';
 export default node;

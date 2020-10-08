@@ -1,4 +1,4 @@
-import React, { FormEvent, ReactElement, ReactNode, useState } from 'react';
+import React, { FormEvent, ReactElement, useState } from 'react';
 import commitMutation from 'relay-commit-mutation-promise';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
@@ -11,13 +11,10 @@ import { useHistory } from 'react-router-dom';
 import ContentWrapper from '../ContentWrapper';
 import { Form, Spinner } from 'react-bootstrap';
 import notifier from 'codex-notifier';
-import { QueryRenderer } from 'react-relay';
-import { RelationCreate_personsQuery } from './__generated__/RelationCreate_personsQuery.graphql';
-import personsFullName from '../../utils/personsFullname';
-import CustomSelect from '../utils/CustomSelect';
-import { RelationCreate_locationInstancesQuery } from './__generated__/RelationCreate_locationInstancesQuery.graphql';
 import Button from 'react-bootstrap/Button';
-import { RelationCreate_relationTypesQuery } from './__generated__/RelationCreate_relationTypesQuery.graphql';
+import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
+import RelationTypesCustomSelect from '../CustomSelects/RelationTypesCustomSelect';
+import LocationInstancesCustomSelect from '../CustomSelects/LocationInstancesCustomSelect';
 
 /**
  * Generates input data for creating new relation
@@ -93,134 +90,29 @@ export default function RelationCreate(): ReactElement {
   return (
     <ContentWrapper>
       <Form onSubmit={saveRelationToApi}>
-        <QueryRenderer<RelationCreate_personsQuery>
-          environment={environment}
-          query={graphql`
-            query RelationCreate_personsQuery {
-              persons {
-                edges {
-                  node {
-                    value: id
-                    lastName
-                    firstName
-                    patronymic
-                  }
-                }
-              }
-            }
-          `}
-          render={({ error, props }): ReactNode => {
-            if (error) {
-              return <div>Error!</div>;
-            }
-
-            if (!props) {
-              return <div>Loading persons...</div>;
-            }
-
-            /**
-             * Get list of persons from response
-             */
-            const edges = props.persons.edges;
-            const persons = edges.map((edge) => edge.node);
-            const personsWithFullNames = persons.map((person) => {
-              return {
-                value: person.value,
-                name: personsFullName(person),
-              };
+        <PersonsCustomSelect
+          onChange={(selected) => {
+            setInput({
+              ...input,
+              personId: selected,
             });
-
-            return <CustomSelect
-              onChange={(selected) => {
-                setInput({
-                  ...input,
-                  personId: selected,
-                });
-              }}
-              options={personsWithFullNames}
-              placeholder='Select a person...'
-              value={input.personId}
-            />;
           }}
-          variables={{}}
         />
-        <QueryRenderer<RelationCreate_relationTypesQuery>
-          environment={environment}
-          query={graphql`
-            query RelationCreate_relationTypesQuery {
-              relationTypes {
-                value: id
-                name
-              }
-            }
-          `}
-          render={({ error, props }): ReactNode => {
-            if (error) {
-              return <div>Error!</div>;
-            }
-
-            if (!props) {
-              return <div>Loading relation types...</div>;
-            }
-
-            const relationTypesWithNames = props.relationTypes.filter((relationType) => {
-              if (relationType.name !== null) {
-                return relationType;
-              }
-            }) as {readonly value: string; readonly name: string}[];
-
-            return <CustomSelect
-              onChange={(selected) => {
-                setInput({
-                  ...input,
-                  relationId: selected,
-                });
-              }}
-              options={relationTypesWithNames}
-              placeholder='Select a relation type...'
-              value={input.relationId}
-            />;
+        <RelationTypesCustomSelect
+          onChange={(selected) => {
+            setInput({
+              ...input,
+              relationId: selected,
+            });
           }}
-          variables={{}}
         />
-        <QueryRenderer<RelationCreate_locationInstancesQuery>
-          environment={environment}
-          query={graphql`
-            query RelationCreate_locationInstancesQuery {
-              locationInstances {
-                value: id
-                name
-              }
-            }
-          `}
-          render={({ error, props }): ReactNode => {
-            if (error) {
-              return <div>Error!</div>;
-            }
-
-            if (!props) {
-              return <div>Loading locations...</div>;
-            }
-
-            const locationsWithNames = props.locationInstances.filter((location) => {
-              if (location.name !== null) {
-                return location;
-              }
-            }) as {readonly value: string; readonly name: string}[];
-
-            return <CustomSelect
-              onChange={(selected) => {
-                setInput({
-                  ...input,
-                  locationInstanceId: selected,
-                });
-              }}
-              options={locationsWithNames}
-              placeholder='Select a location...'
-              value={input.locationInstanceId}
-            />;
+        <LocationInstancesCustomSelect
+          onChange={(selected) => {
+            setInput({
+              ...input,
+              locationInstanceId: selected,
+            });
           }}
-          variables={{}}
         />
         <Button
           className='m-1'

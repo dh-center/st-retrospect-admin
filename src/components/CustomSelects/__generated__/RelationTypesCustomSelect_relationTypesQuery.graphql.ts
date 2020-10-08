@@ -3,22 +3,22 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type RelationCreate_relationTypesQueryVariables = {};
-export type RelationCreate_relationTypesQueryResponse = {
+export type RelationTypesCustomSelect_relationTypesQueryVariables = {};
+export type RelationTypesCustomSelect_relationTypesQueryResponse = {
     readonly relationTypes: ReadonlyArray<{
         readonly value: string;
         readonly name: string | null;
     }>;
 };
-export type RelationCreate_relationTypesQuery = {
-    readonly response: RelationCreate_relationTypesQueryResponse;
-    readonly variables: RelationCreate_relationTypesQueryVariables;
+export type RelationTypesCustomSelect_relationTypesQuery = {
+    readonly response: RelationTypesCustomSelect_relationTypesQueryResponse;
+    readonly variables: RelationTypesCustomSelect_relationTypesQueryVariables;
 };
 
 
 
 /*
-query RelationCreate_relationTypesQuery {
+query RelationTypesCustomSelect_relationTypesQuery {
   relationTypes {
     value: id
     name
@@ -47,7 +47,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "RelationCreate_relationTypesQuery",
+    "name": "RelationTypesCustomSelect_relationTypesQuery",
     "selections": [
       {
         "alias": null,
@@ -70,7 +70,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "RelationCreate_relationTypesQuery",
+    "name": "RelationTypesCustomSelect_relationTypesQuery",
     "selections": [
       {
         "alias": null,
@@ -95,14 +95,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16e6820c8be00f0b4476d3f6cd0c0314",
+    "cacheID": "7e18bf2726a670c2cca40406e9ac4270",
     "id": null,
     "metadata": {},
-    "name": "RelationCreate_relationTypesQuery",
+    "name": "RelationTypesCustomSelect_relationTypesQuery",
     "operationKind": "query",
-    "text": "query RelationCreate_relationTypesQuery {\n  relationTypes {\n    value: id\n    name\n    id\n  }\n}\n"
+    "text": "query RelationTypesCustomSelect_relationTypesQuery {\n  relationTypes {\n    value: id\n    name\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c6ef725a4158f8efae426c437e4b319c';
+(node as any).hash = '03f070f5663cf55d0e411beec41a7578';
 export default node;

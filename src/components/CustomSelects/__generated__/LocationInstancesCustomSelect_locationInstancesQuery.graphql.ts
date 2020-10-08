@@ -3,22 +3,22 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type RelationCreate_locationInstancesQueryVariables = {};
-export type RelationCreate_locationInstancesQueryResponse = {
+export type LocationInstancesCustomSelect_locationInstancesQueryVariables = {};
+export type LocationInstancesCustomSelect_locationInstancesQueryResponse = {
     readonly locationInstances: ReadonlyArray<{
         readonly value: string;
         readonly name: string | null;
     }>;
 };
-export type RelationCreate_locationInstancesQuery = {
-    readonly response: RelationCreate_locationInstancesQueryResponse;
-    readonly variables: RelationCreate_locationInstancesQueryVariables;
+export type LocationInstancesCustomSelect_locationInstancesQuery = {
+    readonly response: LocationInstancesCustomSelect_locationInstancesQueryResponse;
+    readonly variables: LocationInstancesCustomSelect_locationInstancesQueryVariables;
 };
 
 
 
 /*
-query RelationCreate_locationInstancesQuery {
+query LocationInstancesCustomSelect_locationInstancesQuery {
   locationInstances {
     value: id
     name
@@ -47,7 +47,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "RelationCreate_locationInstancesQuery",
+    "name": "LocationInstancesCustomSelect_locationInstancesQuery",
     "selections": [
       {
         "alias": null,
@@ -70,7 +70,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "RelationCreate_locationInstancesQuery",
+    "name": "LocationInstancesCustomSelect_locationInstancesQuery",
     "selections": [
       {
         "alias": null,
@@ -95,14 +95,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "055a91d261f048556ab87459cecf68f1",
+    "cacheID": "93baff2b0b86565f64a4c3213eb36cd6",
     "id": null,
     "metadata": {},
-    "name": "RelationCreate_locationInstancesQuery",
+    "name": "LocationInstancesCustomSelect_locationInstancesQuery",
     "operationKind": "query",
-    "text": "query RelationCreate_locationInstancesQuery {\n  locationInstances {\n    value: id\n    name\n    id\n  }\n}\n"
+    "text": "query LocationInstancesCustomSelect_locationInstancesQuery {\n  locationInstances {\n    value: id\n    name\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5cbec72465b702a80a8c3ad435e9f9d8';
+(node as any).hash = '9b14dea9926d82d79ec90ef313569756';
 export default node;
