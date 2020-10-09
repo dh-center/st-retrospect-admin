@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useState } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import CustomSelect from '../utils/CustomSelect';
@@ -15,6 +15,11 @@ interface RelationTypesCustomSelectProps {
    * @param selected - selected value id
    */
   onChange: (selected: string) => void;
+
+  /**
+   * Default relation type id for displaying
+   */
+  value?: string;
 }
 
 /**
@@ -23,7 +28,6 @@ interface RelationTypesCustomSelectProps {
  * @param componentProps - props with onChange event handler
  */
 export default function RelationTypesCustomSelect(componentProps: RelationTypesCustomSelectProps): ReactElement {
-  const [selectedRelationType, setSelectedRelationType] = useState<string | undefined>();
   const onChange = componentProps.onChange;
 
   return (
@@ -54,12 +58,11 @@ export default function RelationTypesCustomSelect(componentProps: RelationTypesC
 
         return <CustomSelect
           onChange={(selected) => {
-            setSelectedRelationType(selected);
             onChange(selected);
           }}
           options={relationTypesWithNames}
           placeholder='Select a relation type...'
-          value={selectedRelationType}
+          value={componentProps.value}
         />;
       }}
       variables={{}}
