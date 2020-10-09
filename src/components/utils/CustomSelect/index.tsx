@@ -36,19 +36,19 @@ interface ComponentProps {
  */
 export default function CustomSelect(props: ComponentProps): React.ReactElement {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
-  const [selectedValue, setSelectedValue] = useState<SelectedOptionValue | SelectedOptionValue[]>();
+  const [selectedValue, setSelectedValue] = useState<string | undefined>(props.value);
   const onChange = props.onChange;
 
   return (
     <SelectSearch
       onChange={(selected): void => {
-        setSelectedValue(selected);
+        setSelectedValue(selected.toString());
         onChange(selected.toString());
       }}
       options={props.options}
       placeholder={props.placeholder}
       search
-      value={props.value}
+      value={selectedValue}
     />
   );
 }

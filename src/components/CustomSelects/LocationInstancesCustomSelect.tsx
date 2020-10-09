@@ -19,7 +19,7 @@ interface LocationInstancesCustomSelectProps {
   /**
    * Default location instance id for displaying
    */
-  defaultLocationInstanceId?: string;
+  value?: string;
 }
 
 /**
@@ -28,7 +28,7 @@ interface LocationInstancesCustomSelectProps {
  * @param componentProps - props with onChange event handler
  */
 export default function LocationInstancesCustomSelect(componentProps: LocationInstancesCustomSelectProps): ReactElement {
-  const [selectedLocationInstance, setSelectedLocationInstance] = useState<string | undefined>(componentProps.defaultLocationInstanceId);
+  const [selectedLocationInstance, setSelectedLocationInstance] = useState<string | undefined>(componentProps.value);
   const onChange = componentProps.onChange;
 
   return (

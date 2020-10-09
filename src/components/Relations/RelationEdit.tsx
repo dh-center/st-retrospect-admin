@@ -134,7 +134,6 @@ export default function RelationEdit(): ReactElement {
         return (
           <ContentWrapper>
             <PersonsCustomSelect
-              defaultPersonId={props.relation.person?.id}
               onChange={(selected) => {
                 setInput({
                   ...input,
@@ -142,9 +141,9 @@ export default function RelationEdit(): ReactElement {
                   personId: selected,
                 });
               }}
+              value={input?.personId || props.relation.person?.id}
             />
             <RelationTypesCustomSelect
-              defaultRelationTypeId={props.relation.relationType?.id}
               onChange={(selected) => {
                 setInput({
                   ...input,
@@ -152,9 +151,9 @@ export default function RelationEdit(): ReactElement {
                   relationId: selected,
                 });
               }}
+              value={input?.relationId || props.relation.relationType?.id}
             />
             <LocationInstancesCustomSelect
-              defaultLocationInstanceId={props.relation.locationInstance?.id}
               onChange={(selected) => {
                 setInput({
                   ...input,
@@ -162,6 +161,7 @@ export default function RelationEdit(): ReactElement {
                   locationInstanceId: selected,
                 });
               }}
+              value={input?.locationInstanceId || props.relation.locationInstance?.id}
             />
             <div>
               <Button
