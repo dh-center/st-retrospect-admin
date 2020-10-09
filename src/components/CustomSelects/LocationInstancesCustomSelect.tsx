@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useState } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import CustomSelect from '../utils/CustomSelect';
@@ -28,7 +28,6 @@ interface LocationInstancesCustomSelectProps {
  * @param componentProps - props with onChange event handler
  */
 export default function LocationInstancesCustomSelect(componentProps: LocationInstancesCustomSelectProps): ReactElement {
-  const [selectedLocationInstance, setSelectedLocationInstance] = useState<string | undefined>(componentProps.value);
   const onChange = componentProps.onChange;
 
   return (
@@ -59,12 +58,11 @@ export default function LocationInstancesCustomSelect(componentProps: LocationIn
 
         return <CustomSelect
           onChange={(selected) => {
-            setSelectedLocationInstance(selected);
             onChange(selected);
           }}
           options={locationsWithNames}
           placeholder='Select a location instance...'
-          value={selectedLocationInstance}
+          value={componentProps.value}
         />;
       }}
       variables={{}}

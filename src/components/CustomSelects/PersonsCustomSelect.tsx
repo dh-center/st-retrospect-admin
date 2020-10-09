@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useState } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import personsFullName from '../../utils/personsFullname';
@@ -29,7 +29,6 @@ interface PersonsCustomSelectProps {
  * @param componentProps - props with onChange event handler
  */
 export default function PersonsCustomSelect(componentProps: PersonsCustomSelectProps): ReactElement {
-  const [selectedPerson, setSelectedPerson] = useState<string | undefined>(componentProps.value);
   const onChange = componentProps.onChange;
 
   return (
@@ -72,12 +71,11 @@ export default function PersonsCustomSelect(componentProps: PersonsCustomSelectP
 
         return <CustomSelect
           onChange={(selected) => {
-            setSelectedPerson(selected);
             onChange(selected);
           }}
           options={personsWithFullNames}
           placeholder='Select a person...'
-          value={selectedPerson}
+          value={componentProps.value}
         />;
       }}
       variables={{}}
