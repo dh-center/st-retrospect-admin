@@ -6,30 +6,45 @@ import { useParams } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Spinner } from 'react-bootstrap';
 import { PersonViewQuery } from './__generated__/PersonViewQuery.graphql';
-import PersonInfo, { deleteInfo } from './PersonInfo';
 import notifier from 'codex-notifier';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
+import commitMutation from 'relay-commit-mutation-promise';
+import {
+  PersonViewDeleteMutation,
+  PersonViewDeleteMutationResponse
+} from './__generated__/PersonViewDeleteMutation.graphql';
+import ContentWrapper from '../ContentWrapper';
+import LabeledText from '../utils/LabeledText';
+
+/**
+ * Removes person by its id
+ *
+ * @param id - person id to remove
+ */
+function remove(id: string): Promise<PersonViewDeleteMutationResponse> {
+  return commitMutation<PersonViewDeleteMutation>(environment, {
+    mutation: graphql`
+      mutation PersonViewDeleteMutation($id: GlobalId!) {
+        person {
+          delete(id: $id) {
+            recordId
+          }
+        }
+      }
+    `,
+    variables: { id },
+  });
+}
 
 function PersonView(): React.ReactElement {
   const { id } = useParams();
   const [isDeleting, setDeletingStatus] = useState(false);
-
   const history = useHistory();
-  const location = useLocation();
-
-  /**
-   * Push location back to persons page
-   */
-  const pushToPersonsPage = (): void => {
-    const entityListPath = location.pathname.replace(`/${id}`, '');
-
-    history.push(entityListPath);
-  };
 
   /**
    * Creates notifier window and executes delete mutation for current person
    */
-  const deletePerson = async (): Promise<void> => {
+  const removePerson = async (): Promise<void> => {
     notifier.show({
       message: 'Are you sure you want to delete this person?',
       type: 'confirm',
@@ -38,9 +53,9 @@ function PersonView(): React.ReactElement {
       okHandler: async () => {
         setDeletingStatus(true);
         try {
-          await deleteInfo(id);
+          await remove(id);
           setDeletingStatus(false);
-          pushToPersonsPage();
+          history.push('/persons');
         } catch {
           setDeletingStatus(false);
           notifier.show({
@@ -59,7 +74,16 @@ function PersonView(): React.ReactElement {
       query={graphql`
         query PersonViewQuery($id: GlobalId!) {
           person(id: $id) {
-            ...PersonInfo_person
+            id
+            lastName
+            firstName
+            patronymic
+            pseudonym
+            profession
+            description
+            birthDate
+            deathDate
+            wikiLink
           }
         }
       `}
@@ -83,18 +107,50 @@ function PersonView(): React.ReactElement {
         }
 
         return (
-          <div className='d-flex justify-content-center' >
-            <div
-              style={{
-                maxWidth: '800px',
-                width: '100%',
-              }}
-            >
-              <PersonInfo person={props.person} viewOnly/>
-              <LinkContainer to={`${id}/edit`}>
+          <ContentWrapper>
+            <div>
+              <LabeledText
+                content={props.person.lastName}
+                label='Last name'
+              />
+              <LabeledText
+                content={props.person.firstName}
+                label='First name'
+              />
+              <LabeledText
+                content={props.person.patronymic}
+                label='Patronymic'
+              />
+              <LabeledText
+                content={props.person.pseudonym}
+                label='Pseudonym'
+              />
+              <LabeledText
+                content={props.person.profession}
+                label='Profession'
+              />
+              <LabeledText
+                content={props.person.description}
+                label='Description'
+              />
+              <LabeledText
+                content={props.person.birthDate}
+                label='Birth date'
+              />
+              <LabeledText
+                content={props.person.deathDate}
+                label='Death date'
+              />
+              <LabeledText
+                content={props.person.wikiLink}
+                label='Wiki links'
+              />
+            </div>
+            <div>
+              <LinkContainer to={`/persons/${id}/edit`}>
                 <Button className='m-1' variant='outline-warning'>Edit</Button>
               </LinkContainer>
-              <Button className='m-1' onClick={() => deletePerson()} variant='outline-danger'>
+              <Button className='m-1' onClick={() => removePerson()} variant='outline-danger'>
                 {isDeleting ? (
                   <Spinner
                     animation='border'
@@ -106,7 +162,7 @@ function PersonView(): React.ReactElement {
                 ) : ('Delete')}
               </Button>
             </div>
-          </div>
+          </ContentWrapper>
         );
       }}
       variables={{ id }}

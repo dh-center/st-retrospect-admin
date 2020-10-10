@@ -3,25 +3,25 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type PersonInfoDeleteMutationVariables = {
+export type PersonViewDeleteMutationVariables = {
     id: string;
 };
-export type PersonInfoDeleteMutationResponse = {
+export type PersonViewDeleteMutationResponse = {
     readonly person: {
         readonly delete: {
             readonly recordId: string;
         };
     } | null;
 };
-export type PersonInfoDeleteMutation = {
-    readonly response: PersonInfoDeleteMutationResponse;
-    readonly variables: PersonInfoDeleteMutationVariables;
+export type PersonViewDeleteMutation = {
+    readonly response: PersonViewDeleteMutationResponse;
+    readonly variables: PersonViewDeleteMutationVariables;
 };
 
 
 
 /*
-mutation PersonInfoDeleteMutation(
+mutation PersonViewDeleteMutation(
   $id: GlobalId!
 ) {
   person {
@@ -82,7 +82,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonInfoDeleteMutation",
+    "name": "PersonViewDeleteMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -91,18 +91,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonInfoDeleteMutation",
+    "name": "PersonViewDeleteMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "534e22fc916af30b08e9090fe52b26f8",
+    "cacheID": "39488d35416802443d55697c3c8d4bac",
     "id": null,
     "metadata": {},
-    "name": "PersonInfoDeleteMutation",
+    "name": "PersonViewDeleteMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonInfoDeleteMutation(\n  $id: GlobalId!\n) {\n  person {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation PersonViewDeleteMutation(\n  $id: GlobalId!\n) {\n  person {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c60c1867069663e36a5dce78f0faa011';
+(node as any).hash = 'e310ecd3d2328444225c56af9ddb6035';
 export default node;

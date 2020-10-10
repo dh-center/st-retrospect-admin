@@ -11,10 +11,6 @@ import {
 } from './__generated__/PersonInfoUpdateMutation.graphql';
 import commitMutation from 'relay-commit-mutation-promise';
 import {
-  PersonInfoDeleteMutation,
-  PersonInfoDeleteMutationResponse
-} from './__generated__/PersonInfoDeleteMutation.graphql';
-import {
   CreatePersonInput,
   PersonInfoCreateMutation,
   PersonInfoCreateMutationResponse
@@ -317,25 +313,5 @@ export function updateInfo(input: UpdatePersonInput): Promise<PersonInfoUpdateMu
       }
     `,
     variables: { input },
-  });
-}
-
-/**
- * Executes delete mutation for person
- *
- * @param id - id of person for deleting
- */
-export function deleteInfo(id: string): Promise<PersonInfoDeleteMutationResponse> {
-  return commitMutation<PersonInfoDeleteMutation>(environment, {
-    mutation: graphql`
-      mutation PersonInfoDeleteMutation($id: GlobalId!) {
-        person {
-          delete(id: $id) {
-            recordId
-          }
-        }
-      }
-    `,
-    variables: { id },
   });
 }
