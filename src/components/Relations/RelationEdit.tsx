@@ -14,9 +14,9 @@ import { QueryRenderer } from 'react-relay';
 import ContentWrapper from '../ContentWrapper';
 import { Button, Spinner } from 'react-bootstrap';
 import { RelationEditQuery } from './__generated__/RelationEditQuery.graphql';
-import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
-import RelationTypesCustomSelect from '../CustomSelects/RelationTypesCustomSelect';
-import LocationInstancesCustomSelect from '../CustomSelects/LocationInstancesCustomSelect';
+import LabeledPersonsCustomSelect from '../CustomSelects/LabeledPersonsCustomSelect';
+import LabeledRelationTypesCustomSelect from '../CustomSelects/LabeledRelationTypesCustomSelect';
+import LabeledLocationInstancesCustomSelect from '../CustomSelects/LabeledLocationInstancesCustomSelect';
 
 /**
  * Mutation for save edited relation
@@ -133,7 +133,8 @@ export default function RelationEdit(): ReactElement {
 
         return (
           <ContentWrapper>
-            <PersonsCustomSelect
+            <LabeledPersonsCustomSelect
+              label='Person'
               onChange={(selected) => {
                 setInput({
                   ...input,
@@ -143,7 +144,8 @@ export default function RelationEdit(): ReactElement {
               }}
               value={input?.personId || props.relation.person?.id}
             />
-            <RelationTypesCustomSelect
+            <LabeledRelationTypesCustomSelect
+              label='Relation type'
               onChange={(selected) => {
                 setInput({
                   ...input,
@@ -153,7 +155,8 @@ export default function RelationEdit(): ReactElement {
               }}
               value={input?.relationId || props.relation.relationType?.id}
             />
-            <LocationInstancesCustomSelect
+            <LabeledLocationInstancesCustomSelect
+              label='Location instance'
               onChange={(selected) => {
                 setInput({
                   ...input,
