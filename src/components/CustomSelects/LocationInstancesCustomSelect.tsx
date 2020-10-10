@@ -4,6 +4,7 @@ import graphql from 'babel-plugin-relay/macro';
 import CustomSelect from '../utils/CustomSelect';
 import { QueryRenderer } from 'react-relay';
 import { LocationInstancesCustomSelect_locationInstancesQuery } from './__generated__/LocationInstancesCustomSelect_locationInstancesQuery.graphql';
+import withLabel from '../utils/LabeledComponent';
 
 /**
  * Interface of props for LocationInstancesCustomSelect component
@@ -69,3 +70,8 @@ export default function LocationInstancesCustomSelect(componentProps: LocationIn
     />
   );
 }
+
+/**
+ * Returns LocationInstancesCustomSelect component with label
+ */
+export const LabeledLocationInstancesCustomSelect = withLabel(LocationInstancesCustomSelect);

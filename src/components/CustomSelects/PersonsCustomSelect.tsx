@@ -5,6 +5,7 @@ import personsFullName from '../../utils/personsFullname';
 import CustomSelect from '../utils/CustomSelect';
 import { QueryRenderer } from 'react-relay';
 import { PersonsCustomSelect_personsQuery } from './__generated__/PersonsCustomSelect_personsQuery.graphql';
+import withLabel from '../utils/LabeledComponent';
 
 /**
  * Interface of props for PersonsCustomSelect component
@@ -82,3 +83,8 @@ export default function PersonsCustomSelect(componentProps: PersonsCustomSelectP
     />
   );
 }
+
+/**
+ * Returns PersonsCustomSelect component with label
+ */
+export const LabeledPersonsCustomSelect = withLabel(PersonsCustomSelect);

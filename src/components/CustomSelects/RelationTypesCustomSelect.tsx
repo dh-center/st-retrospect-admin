@@ -4,6 +4,7 @@ import graphql from 'babel-plugin-relay/macro';
 import CustomSelect from '../utils/CustomSelect';
 import { QueryRenderer } from 'react-relay';
 import { RelationTypesCustomSelect_relationTypesQuery } from './__generated__/RelationTypesCustomSelect_relationTypesQuery.graphql';
+import withLabel from '../utils/LabeledComponent';
 
 /**
  * Interface of props for RelationTypesCustomSelect component
@@ -69,3 +70,8 @@ export default function RelationTypesCustomSelect(componentProps: RelationTypesC
     />
   );
 }
+
+/**
+ * Returns RelationTypesCustomSelect with label
+ */
+export const LabeledRelationTypesCustomSelect = withLabel(RelationTypesCustomSelect);

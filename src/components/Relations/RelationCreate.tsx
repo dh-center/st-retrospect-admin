@@ -12,9 +12,9 @@ import ContentWrapper from '../ContentWrapper';
 import { Form, Spinner } from 'react-bootstrap';
 import notifier from 'codex-notifier';
 import Button from 'react-bootstrap/Button';
-import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
-import RelationTypesCustomSelect from '../CustomSelects/RelationTypesCustomSelect';
-import LocationInstancesCustomSelect from '../CustomSelects/LocationInstancesCustomSelect';
+import { LabeledPersonsCustomSelect } from '../CustomSelects/PersonsCustomSelect';
+import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypesCustomSelect';
+import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
 
 /**
  * Generates input data for creating new relation
@@ -90,7 +90,8 @@ export default function RelationCreate(): ReactElement {
   return (
     <ContentWrapper>
       <Form onSubmit={saveRelationToApi}>
-        <PersonsCustomSelect
+        <LabeledPersonsCustomSelect
+          label='Person'
           onChange={(selected) => {
             setInput({
               ...input,
@@ -98,7 +99,8 @@ export default function RelationCreate(): ReactElement {
             });
           }}
         />
-        <RelationTypesCustomSelect
+        <LabeledRelationTypesCustomSelect
+          label='Relation type'
           onChange={(selected) => {
             setInput({
               ...input,
@@ -106,7 +108,8 @@ export default function RelationCreate(): ReactElement {
             });
           }}
         />
-        <LocationInstancesCustomSelect
+        <LabeledLocationInstancesCustomSelect
+          label='Location instance'
           onChange={(selected) => {
             setInput({
               ...input,
