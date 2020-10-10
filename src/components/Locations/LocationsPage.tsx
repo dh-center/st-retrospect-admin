@@ -5,6 +5,7 @@ import { LocationsPageQuery } from './__generated__/LocationsPageQuery.graphql';
 import environment from '../../relay-env';
 import { ENTITIES_PER_PAGE } from '../../constants';
 import LocationsList from './LocationsList';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Functional component for Locations view
@@ -26,7 +27,9 @@ export default function LocationsPage(): ReactElement {
           return <div>Error!</div>;
         }
         if (!props) {
-          return <div>Loading Locations...</div>;
+          return <LoadingPlaceholder
+            alt='Loading locations...'
+          />;
         }
 
         return <LocationsList entityConnection={props} entityName='locations' />;

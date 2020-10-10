@@ -11,6 +11,7 @@ import { Slide } from './Slide';
 import './index.css';
 import GenderDistribution from './GenderDistribution';
 import PersonsTreeMap from './PersonsTreeMap';
+import LoadingPlaceholder from "../utils/LoadingPlaceholder";
 
 /**
  * Page with plots for visualisation of Database content
@@ -98,7 +99,9 @@ export default function VisualizationPage(): React.ReactElement {
           }
 
           if (!props) {
-            return <div>Loading...</div>;
+            return <LoadingPlaceholder
+              alt='Loading page...'
+            />;
           }
 
           const charts = {
