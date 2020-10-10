@@ -17,7 +17,7 @@ interface TextareaProps<T extends number | string> {
   /**
    * Value for displaying
    */
-  value: T;
+  value: T | null;
 
   /**
    * Label for displaying
@@ -64,7 +64,7 @@ export default function Textarea<T extends number | string>(props: TextareaProps
         }}
         required={props.required}
         rows={props.rows}
-        value={props.value}
+        value={props.value || ''}
       />
     </Form.Group>
   );

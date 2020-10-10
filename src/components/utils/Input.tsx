@@ -5,7 +5,7 @@ import styles from './Input.module.css';
 
 interface InputProps<T extends number | string> {
   onChange(value: T): void;
-  value: T;
+  value: T | null;
   label: string;
   type?: string;
   required?: boolean;
@@ -30,7 +30,7 @@ export default function Input<T extends number | string>(props: InputProps<T>): 
         }}
         required={props.required}
         type={props.type}
-        value={props.value}
+        value={props.value || ''}
       />
     </Form.Group>
   );
