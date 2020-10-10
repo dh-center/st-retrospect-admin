@@ -27,7 +27,7 @@ export function Navigation(props: NavigationProps): ReactElement {
   const history = useHistory();
 
   return (
-    <Navbar className='flex-shrink-1'>
+    <Navbar className='flex-shrink-0'>
       <Nav>
         <Nav.Item>
           <Nav.Link as={Link} to='/persons'>
