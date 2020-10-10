@@ -28,11 +28,11 @@ export default function withLabel<T extends object>(WrappedComponent: ComponentT
     const id = useUniqueId('app-labeled-component');
 
     return (
-      <Form.Group className={styles.container} controlId={id`labeled-component`}>
-        <Form.Label className={styles.label}>{props.label}:</Form.Label>
-        <Form.Row className={styles.content}>
-          <WrappedComponent {...props}/>
-        </Form.Row>
+      <Form.Group className={styles.container}>
+        <Form.Label className={styles.label} htmlFor={id`labeled-component`}>{props.label}:</Form.Label>
+        <div className={styles.content}>
+          <WrappedComponent {...props} id={id`labeled-component`}/>
+        </div>
       </Form.Group>
     );
   }
