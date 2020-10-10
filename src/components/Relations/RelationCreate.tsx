@@ -12,9 +12,9 @@ import ContentWrapper from '../ContentWrapper';
 import { Form, Spinner } from 'react-bootstrap';
 import notifier from 'codex-notifier';
 import Button from 'react-bootstrap/Button';
-import LabeledPersonsCustomSelect from '../CustomSelects/LabeledPersonsCustomSelect';
-import LabeledRelationTypesCustomSelect from '../CustomSelects/LabeledRelationTypesCustomSelect';
-import LabeledLocationInstancesCustomSelect from '../CustomSelects/LabeledLocationInstancesCustomSelect';
+import { LabeledPersonsCustomSelect } from '../CustomSelects/PersonsCustomSelect';
+import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypesCustomSelect';
+import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
 
 /**
  * Generates input data for creating new relation
