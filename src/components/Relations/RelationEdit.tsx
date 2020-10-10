@@ -14,9 +14,9 @@ import { QueryRenderer } from 'react-relay';
 import ContentWrapper from '../ContentWrapper';
 import { Button, Spinner } from 'react-bootstrap';
 import { RelationEditQuery } from './__generated__/RelationEditQuery.graphql';
-import LabeledPersonsCustomSelect from '../CustomSelects/LabeledPersonsCustomSelect';
-import LabeledRelationTypesCustomSelect from '../CustomSelects/LabeledRelationTypesCustomSelect';
-import LabeledLocationInstancesCustomSelect from '../CustomSelects/LabeledLocationInstancesCustomSelect';
+import { LabeledPersonsCustomSelect } from '../CustomSelects/PersonsCustomSelect';
+import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypesCustomSelect';
+import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
 
 /**
  * Mutation for save edited relation
