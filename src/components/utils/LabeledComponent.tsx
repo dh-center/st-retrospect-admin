@@ -1,5 +1,7 @@
 import React, { ComponentType, FC, ReactElement } from 'react';
 import styles from './LabeledComponent.module.css';
+import { Form } from 'react-bootstrap';
+import useUniqueId from '../../utils/useUniqueId';
 
 /**
  * Interface of LabeledComponent props
@@ -23,13 +25,15 @@ export default function withLabel<T extends object>(WrappedComponent: ComponentT
    * @param props - props of new LabeledComponent
    */
   function LabeledComponent(props: LabeledComponentProps & T): ReactElement {
+    const id = useUniqueId('app-labeled-component');
+
     return (
-      <div className={styles.container}>
-        <div className={styles.label}>{props.label}:</div>
-        <div>
+      <Form.Group className={styles.container}>
+        <Form.Label className={styles.label} htmlFor={id`labeled-component`}>{props.label}:</Form.Label>
+        <Form.Row className={styles.content} id={id`labeled-component`}>
           <WrappedComponent {...props}/>
-        </div>
-      </div>
+        </Form.Row>
+      </Form.Group>
     );
   }
   LabeledComponent.displayName = `withLabel(${WrappedComponent.displayName || WrappedComponent.name || 'WrappedComponent'})`;
