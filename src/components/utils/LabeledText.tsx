@@ -15,7 +15,7 @@ interface LabeledTextProps {
   /**
    * Content for displaying
    */
-  content: string | null | undefined;
+  content: string | number | null | undefined;
 
   /**
    * Link to open when clicks on content
