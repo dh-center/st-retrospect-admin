@@ -14,25 +14,25 @@ export type CreatePersonInput = {
     deathDate?: string | null;
     wikiLink?: string | null;
 };
-export type PersonInfoCreateMutationVariables = {
+export type PersonCreateMutationVariables = {
     input: CreatePersonInput;
 };
-export type PersonInfoCreateMutationResponse = {
+export type PersonCreateMutationResponse = {
     readonly person: {
         readonly create: {
             readonly recordId: string;
         };
     } | null;
 };
-export type PersonInfoCreateMutation = {
-    readonly response: PersonInfoCreateMutationResponse;
-    readonly variables: PersonInfoCreateMutationVariables;
+export type PersonCreateMutation = {
+    readonly response: PersonCreateMutationResponse;
+    readonly variables: PersonCreateMutationVariables;
 };
 
 
 
 /*
-mutation PersonInfoCreateMutation(
+mutation PersonCreateMutation(
   $input: CreatePersonInput!
 ) {
   person {
@@ -93,7 +93,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonInfoCreateMutation",
+    "name": "PersonCreateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -102,18 +102,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonInfoCreateMutation",
+    "name": "PersonCreateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "ce7278021042b62e2153aaae6c43004c",
+    "cacheID": "f81bb9de788119b2b2441998a2d756cb",
     "id": null,
     "metadata": {},
-    "name": "PersonInfoCreateMutation",
+    "name": "PersonCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonInfoCreateMutation(\n  $input: CreatePersonInput!\n) {\n  person {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation PersonCreateMutation(\n  $input: CreatePersonInput!\n) {\n  person {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c990ddfd5a269f6d4493d2f3ec3e1584';
+(node as any).hash = '3254e28612db9ff77ff6cd8c1f05f7b5';
 export default node;

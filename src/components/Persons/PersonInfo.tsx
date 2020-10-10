@@ -10,12 +10,8 @@ import {
   UpdatePersonInput
 } from './__generated__/PersonInfoUpdateMutation.graphql';
 import commitMutation from 'relay-commit-mutation-promise';
-import {
-  CreatePersonInput,
-  PersonInfoCreateMutation,
-  PersonInfoCreateMutationResponse
-} from './__generated__/PersonInfoCreateMutation.graphql';
 import { PersonInfo_person } from './__generated__/PersonInfo_person.graphql';
+import { CreatePersonInput } from './__generated__/PersonCreateMutation.graphql';
 
 /**
  * Props for PersonInfo rendering
@@ -275,26 +271,6 @@ export default createFragmentContainer(
     `,
   }
 );
-
-/**
- * Executes create mutation for person
- *
- * @param input - created person object
- */
-export function create(input: CreatePersonInput): Promise<PersonInfoCreateMutationResponse> {
-  return commitMutation<PersonInfoCreateMutation>(environment, {
-    mutation: graphql`
-      mutation PersonInfoCreateMutation($input: CreatePersonInput!) {
-        person {
-          create(input: $input) {
-            recordId
-          }
-        }
-      }
-    `,
-    variables: { input },
-  });
-}
 
 /**
  * Executes update mutation for person

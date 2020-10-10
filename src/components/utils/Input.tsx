@@ -1,6 +1,7 @@
 import Form from 'react-bootstrap/Form';
 import React from 'react';
 import useUniqueId from '../../utils/useUniqueId';
+import styles from './Input.module.css';
 
 interface InputProps<T extends number | string> {
   onChange(value: T): void;
@@ -15,9 +16,9 @@ export default function Input<T extends number | string>(props: InputProps<T>): 
   const id = useUniqueId('app-input');
 
   return (
-    <Form.Group>
-      {props.label && <Form.Label htmlFor={id`input`}>
-        {props.label}
+    <Form.Group className={styles.container}>
+      {props.label && <Form.Label className={styles.label} htmlFor={id`input`}>
+        {props.label}:
       </Form.Label>}
       <Form.Control
         disabled={props.disabled}

@@ -1,24 +1,72 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import notifier from 'codex-notifier';
 import ContentWrapper from '../ContentWrapper';
 import Button from 'react-bootstrap/Button';
-import { Spinner } from 'react-bootstrap';
-import PersonInfo, { create } from './PersonInfo';
-import { CreatePersonInput } from './__generated__/PersonInfoCreateMutation.graphql';
+import { Form, Spinner } from 'react-bootstrap';
+import commitMutation from 'relay-commit-mutation-promise';
+import environment from '../../relay-env';
+import {
+  CreatePersonInput,
+  PersonCreateMutation,
+  PersonCreateMutationResponse
+} from './__generated__/PersonCreateMutation.graphql';
+import graphql from 'babel-plugin-relay/macro';
+import Input from '../utils/Input';
+import Textarea from '../utils/Textarea';
+
+/**
+ * Generates input data for creating new person
+ */
+function generatePersonInput(): CreatePersonInput {
+  return {
+    firstName: '',
+    lastName: '',
+    patronymic: '',
+    pseudonym: '',
+    profession: '',
+    description: '',
+    birthDate: '',
+    deathDate: '',
+    wikiLink: '',
+  };
+}
+
+/**
+ * Mutation for creating new person
+ *
+ * @param input - input data for creating
+ */
+function create(input: CreatePersonInput): Promise<PersonCreateMutationResponse> {
+  return commitMutation<PersonCreateMutation>(environment, {
+    mutation: graphql`
+      mutation PersonCreateMutation($input: CreatePersonInput!) {
+        person {
+          create(input: $input) {
+            recordId
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
+}
 
 /**
  * Component implements person create
  */
 export default function PersonCreate(): React.ReactElement {
-  const [input, setInput] = useState<CreatePersonInput | null>(null);
+  const [input, setInput] = useState<CreatePersonInput>(generatePersonInput);
   const [isLoading, setLoadingStatus] = useState(false);
   const history = useHistory();
 
   /**
    * Saves created person to API
+   *
+   * @param e - form submit event
    */
-  const savePersonToApi = async (): Promise<void> => {
+  const savePersonToApi = async (e: FormEvent): Promise<void> => {
+    e.preventDefault();
     if (!input) {
       return;
     }
@@ -45,25 +93,96 @@ export default function PersonCreate(): React.ReactElement {
 
   return (
     <ContentWrapper>
-      <PersonInfo
-        onChange={setInput}
-        person={null}
-      />
-      <Button
-        className='m-1'
-        onClick={() => savePersonToApi()}
-        type='submit'
-      >
-        {isLoading ? (
-          <Spinner
-            animation='border'
-            aria-hidden='true'
-            as='span'
-            role='status'
-            size='sm'
-          />
-        ) : 'Create'}
-      </Button>
+      <Form onSubmit={savePersonToApi}>
+        <Input
+          label='Last name'
+          onChange={value => setInput({
+            ...input,
+            lastName: value,
+          })}
+          required
+          value={input.lastName || ''}
+        />
+        <Input
+          label='First name'
+          onChange={value => setInput({
+            ...input,
+            firstName: value,
+          })}
+          required
+          value={input.firstName || ''}
+        />
+        <Input
+          label='Patronymic'
+          onChange={value => setInput({
+            ...input,
+            patronymic: value,
+          })}
+          value={input.patronymic || ''}
+        />
+        <Input
+          label='Pseudonym'
+          onChange={value => setInput({
+            ...input,
+            pseudonym: value,
+          })}
+          value={input.pseudonym || ''}
+        />
+        <Input
+          label='Profession'
+          onChange={value => setInput({
+            ...input,
+            profession: value,
+          })}
+          value={input.profession || ''}
+        />
+        <Textarea
+          label='Description'
+          onChange={value => setInput({
+            ...input,
+            description: value,
+          })}
+          value={input.description || ''}
+        />
+        <Input
+          label='Birth date'
+          onChange={value => setInput({
+            ...input,
+            birthDate: value,
+          })}
+          value={input.birthDate || ''}
+        />
+        <Input
+          label='Death date'
+          onChange={value => setInput({
+            ...input,
+            deathDate: value,
+          })}
+          value={input.deathDate || ''}
+        />
+        <Input
+          label='Wiki link'
+          onChange={value => setInput({
+            ...input,
+            wikiLink: value,
+          })}
+          value={input.wikiLink || ''}
+        />
+        <Button
+          className='m-1'
+          type='submit'
+        >
+          {isLoading ? (
+            <Spinner
+              animation='border'
+              aria-hidden='true'
+              as='span'
+              role='status'
+              size='sm'
+            />
+          ) : 'Create'}
+        </Button>
+      </Form>
     </ContentWrapper>
   );
 }
