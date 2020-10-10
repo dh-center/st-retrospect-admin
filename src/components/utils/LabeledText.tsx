@@ -34,8 +34,8 @@ export default function LabeledText(props: LabeledTextProps): React.ReactElement
   const id = useUniqueId('app-labeled-text');
 
   return (
-    <Form.Group className={styles.container}>
-      <Form.Label className={styles.label} htmlFor={id`labeled-text`}>{props.label}:</Form.Label>
+    <Form.Group className={styles.container} controlId={id`labeled-text`}>
+      <Form.Label className={styles.label}>{props.label}:</Form.Label>
       <Form.Row
         className={classNames(
           styles.content,
@@ -44,7 +44,6 @@ export default function LabeledText(props: LabeledTextProps): React.ReactElement
             [styles.contentWithLink]: props.link,
           }
         )}
-        id={id`labeled-text`}
       >
         {props.link
           ? <Link to={props.link}>
