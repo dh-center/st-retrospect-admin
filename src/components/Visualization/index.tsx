@@ -11,7 +11,7 @@ import { Slide } from './Slide';
 import './index.css';
 import GenderDistribution from './GenderDistribution';
 import PersonsTreeMap from './PersonsTreeMap';
-import LoadingPlaceholder from "../utils/LoadingPlaceholder";
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Page with plots for visualisation of Database content
