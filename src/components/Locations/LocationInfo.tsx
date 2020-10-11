@@ -15,7 +15,7 @@ import {
   LocationInfoDeleteMutation,
   LocationInfoDeleteMutationResponse
 } from './__generated__/LocationInfoDeleteMutation.graphql';
-import LocationMap from '../LocationMap';
+import { LabeledLocationMap } from '../LocationMap';
 import styles from './LocationInfo.module.css';
 import LabeledText from '../utils/LabeledText';
 
@@ -70,7 +70,8 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
           />
         </div>
         <div className={styles.mapWrapper}>
-          <LocationMap
+          <LabeledLocationMap
+            label='Location on map'
             lngLat={location.longitude && location.latitude ? [location.longitude, location.latitude] : undefined}
             onChange={lngLan => {
               console.log({
