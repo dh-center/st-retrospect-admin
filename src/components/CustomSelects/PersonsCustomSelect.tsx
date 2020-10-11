@@ -6,8 +6,8 @@ import CustomSelect from '../utils/CustomSelect';
 import { QueryRenderer } from 'react-relay';
 import { PersonsCustomSelect_personsQuery } from './__generated__/PersonsCustomSelect_personsQuery.graphql';
 import withLabel from '../utils/LabeledComponent';
-import styles from "./CustomSelects.module.css";
-import LoadingPlaceholder from "../utils/LoadingPlaceholder";
+import styles from './CustomSelects.module.css';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Interface of props for PersonsCustomSelect component
