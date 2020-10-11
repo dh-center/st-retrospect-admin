@@ -12,6 +12,7 @@
 .content {
   font-size: 1.2rem;
   color: #17a2b8;
+  white-space: pre-wrap;
 }
 
 .contentWithLink {

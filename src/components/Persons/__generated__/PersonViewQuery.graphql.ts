@@ -3,13 +3,21 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type PersonViewQueryVariables = {
     id: string;
 };
 export type PersonViewQueryResponse = {
     readonly person: {
-        readonly " $fragmentRefs": FragmentRefs<"PersonInfo_person">;
+        readonly id: string;
+        readonly lastName: string | null;
+        readonly firstName: string | null;
+        readonly patronymic: string | null;
+        readonly pseudonym: string | null;
+        readonly profession: string | null;
+        readonly description: string | null;
+        readonly birthDate: string | null;
+        readonly deathDate: string | null;
+        readonly wikiLink: string | null;
     } | null;
 };
 export type PersonViewQuery = {
@@ -24,22 +32,17 @@ query PersonViewQuery(
   $id: GlobalId!
 ) {
   person(id: $id) {
-    ...PersonInfo_person
     id
+    lastName
+    firstName
+    patronymic
+    pseudonym
+    profession
+    description
+    birthDate
+    deathDate
+    wikiLink
   }
-}
-
-fragment PersonInfo_person on Person {
-  id
-  lastName
-  firstName
-  patronymic
-  pseudonym
-  profession
-  description
-  birthDate
-  deathDate
-  wikiLink
 }
 */
 
@@ -53,9 +56,91 @@ var v0 = [
 ],
 v1 = [
   {
-    "kind": "Variable",
-    "name": "id",
-    "variableName": "id"
+    "alias": null,
+    "args": [
+      {
+        "kind": "Variable",
+        "name": "id",
+        "variableName": "id"
+      }
+    ],
+    "concreteType": "Person",
+    "kind": "LinkedField",
+    "name": "person",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "id",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "lastName",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "firstName",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "patronymic",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "pseudonym",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "profession",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "description",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "birthDate",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "deathDate",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "wikiLink",
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
   }
 ];
 return {
@@ -64,24 +149,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "PersonViewQuery",
-    "selections": [
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "Person",
-        "kind": "LinkedField",
-        "name": "person",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "PersonInfo_person"
-          }
-        ],
-        "storageKey": null
-      }
-    ],
+    "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
@@ -90,99 +158,17 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "PersonViewQuery",
-    "selections": [
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "Person",
-        "kind": "LinkedField",
-        "name": "person",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "lastName",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "firstName",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "patronymic",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "pseudonym",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "profession",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "description",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "birthDate",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "deathDate",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "wikiLink",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ]
+    "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "7888233d0bd71af100a9061d97f680be",
+    "cacheID": "e76232479dc4c3b9e09bf947121adb2f",
     "id": null,
     "metadata": {},
     "name": "PersonViewQuery",
     "operationKind": "query",
-    "text": "query PersonViewQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    ...PersonInfo_person\n    id\n  }\n}\n\nfragment PersonInfo_person on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  profession\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
+    "text": "query PersonViewQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    profession\n    description\n    birthDate\n    deathDate\n    wikiLink\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0ff88cae7fb6ea8cc793c2685de306df';
+(node as any).hash = '3fae57f416b36d850e0f61b9801dd2b6';
 export default node;
