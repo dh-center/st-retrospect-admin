@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type UpdateLocationInstanceInput = {
     id: string;
     name: string;
@@ -22,6 +23,12 @@ export type LocationInstanceInfoDialogUpdateMutationResponse = {
     readonly locationInstances: {
         readonly update: {
             readonly recordId: string;
+            readonly record: {
+                readonly id: string;
+                readonly location: {
+                    readonly " $fragmentRefs": FragmentRefs<"LocationInfo_location">;
+                };
+            };
         };
     };
 };
@@ -39,7 +46,51 @@ mutation LocationInstanceInfoDialogUpdateMutation(
   locationInstances {
     update(input: $input) {
       recordId
+      record {
+        id
+        location {
+          ...LocationInfo_location
+          id
+        }
+      }
     }
+  }
+}
+
+fragment LocationInfo_location on Location {
+  id
+  latitude
+  longitude
+  instances {
+    id
+  }
+  ...LocationInstancesList_data
+}
+
+fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
+  id
+  name
+  description
+  constructionDate
+  demolitionDate
+  startDate
+  endDate
+  mainPhotoLink
+  photoLinks
+}
+
+fragment LocationInstanceListItem_instance on LocationInstance {
+  name
+  mainPhotoLink
+  description
+}
+
+fragment LocationInstancesList_data on Location {
+  instances {
+    id
+    name
+    ...LocationInstanceListItem_instance
+    ...LocationInstanceInfoDialog_locationInstance
   }
 }
 */
@@ -54,48 +105,84 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": null,
-    "concreteType": "LocationInstanceMutations",
-    "kind": "LinkedField",
-    "name": "locationInstances",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "input",
-            "variableName": "input"
-          }
-        ],
-        "concreteType": "UpdateLocationInstancePayload",
-        "kind": "LinkedField",
-        "name": "update",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "recordId",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "recordId",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "LocationInstanceInfoDialogUpdateMutation",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "LocationInstanceMutations",
+        "kind": "LinkedField",
+        "name": "locationInstances",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "UpdateLocationInstancePayload",
+            "kind": "LinkedField",
+            "name": "update",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LocationInstance",
+                "kind": "LinkedField",
+                "name": "record",
+                "plural": false,
+                "selections": [
+                  (v3/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
+                    "name": "location",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "LocationInfo_location"
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -104,17 +191,147 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "LocationInstanceInfoDialogUpdateMutation",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "LocationInstanceMutations",
+        "kind": "LinkedField",
+        "name": "locationInstances",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "UpdateLocationInstancePayload",
+            "kind": "LinkedField",
+            "name": "update",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "LocationInstance",
+                "kind": "LinkedField",
+                "name": "record",
+                "plural": false,
+                "selections": [
+                  (v3/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
+                    "name": "location",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "latitude",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "longitude",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "LocationInstance",
+                        "kind": "LinkedField",
+                        "name": "instances",
+                        "plural": true,
+                        "selections": [
+                          (v3/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "mainPhotoLink",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "description",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "constructionDate",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "demolitionDate",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "startDate",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "endDate",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "photoLinks",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "9c25480cd7aa1034fc1da2d073040960",
+    "cacheID": "ce140a4d70d522fd7bf2d20c00e91503",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationInstanceInfoDialogUpdateMutation(\n  $input: UpdateLocationInstanceInput!\n) {\n  locationInstances {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation LocationInstanceInfoDialogUpdateMutation(\n  $input: UpdateLocationInstanceInput!\n) {\n  locationInstances {\n    update(input: $input) {\n      recordId\n      record {\n        id\n        location {\n          ...LocationInfo_location\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '54bab4a6343204cd51c8338ffa45bcce';
+(node as any).hash = '50763c1c777dee33d110a0fb0d1cff8a';
 export default node;
