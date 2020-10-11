@@ -5,6 +5,7 @@ import graphql from 'babel-plugin-relay/macro';
 import { ENTITIES_PER_PAGE } from '../../constants';
 import RelationsList from './RelationsList';
 import { RelationsPageQuery } from './__generated__/RelationsPageQuery.graphql';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Displays relations list component
@@ -27,7 +28,9 @@ export default function RelationsPage(): ReactElement {
         }
 
         if (!props) {
-          return <div>Loading relations...</div>;
+          return <LoadingPlaceholder
+            alt='Loading relations...'
+          />;
         }
 
         return <RelationsList entityConnection={props} entityName='relations'/>;

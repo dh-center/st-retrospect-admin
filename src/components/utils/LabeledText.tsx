@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './LabeledText.module.css';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { Form } from 'react-bootstrap';
+import useUniqueId from '../../utils/useUniqueId';
 
 /**
  * LabeledText component props
@@ -15,7 +17,7 @@ interface LabeledTextProps {
   /**
    * Content for displaying
    */
-  content: string | null | undefined;
+  content: string | number | null | undefined;
 
   /**
    * Link to open when clicks on content
@@ -29,16 +31,21 @@ interface LabeledTextProps {
  * @param props - LabeledText component props
  */
 export default function LabeledText(props: LabeledTextProps): React.ReactElement {
+  const id = useUniqueId('app-labeled-text');
+
   return (
-    <div className={styles.container}>
-      <div className={styles.label}>{props.label}:</div>
-      <div className={classNames(
-        styles.content,
-        {
-          [styles.contentUndefined]: !props.content,
-          [styles.contentWithLink]: props.link,
-        }
-      )}>
+    <Form.Group className={styles.container}>
+      <Form.Label className={styles.label} htmlFor={id`labeled-text`}>{props.label}:</Form.Label>
+      <div
+        className={classNames(
+          styles.content,
+          {
+            [styles.contentUndefined]: !props.content,
+            [styles.contentWithLink]: props.link,
+          }
+        )}
+        id={id`labeled-text`}
+      >
         {props.link
           ? <Link to={props.link}>
             {props.content || '—'}
@@ -46,6 +53,6 @@ export default function LabeledText(props: LabeledTextProps): React.ReactElement
           : <div>{props.content || '—'}</div>
         }
       </div>
-    </div>
+    </Form.Group>
   );
 }

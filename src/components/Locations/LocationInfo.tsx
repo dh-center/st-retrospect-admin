@@ -11,13 +11,13 @@ import {
   UpdateLocationInput
 } from './__generated__/LocationInfoUpdateMutation.graphql';
 import LocationInstancesTabs from './LocationInstancesList';
-import Form from 'react-bootstrap/Form';
 import {
   LocationInfoDeleteMutation,
   LocationInfoDeleteMutationResponse
 } from './__generated__/LocationInfoDeleteMutation.graphql';
 import LocationMap from '../LocationMap';
 import styles from './LocationInfo.module.css';
+import LabeledText from '../utils/LabeledText';
 
 /**
  * Props for LocationInfo rendering
@@ -60,14 +60,14 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
     <div>
       <div className={styles.positionRow}>
         <div className={styles.coordinatesColumn}>
-          <Form.Group>
-            <Form.Label>Latitude:</Form.Label>
-            <div>{location.latitude}</div>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Longitude:</Form.Label>
-            <div>{location.longitude}</div>
-          </Form.Group>
+          <LabeledText
+            content={location.latitude}
+            label='Latitude'
+          />
+          <LabeledText
+            content={location.longitude}
+            label='Longitude'
+          />
         </div>
         <div className={styles.mapWrapper}>
           <LocationMap

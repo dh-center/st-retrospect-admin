@@ -3,29 +3,40 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type PersonInfoDeleteMutationVariables = {
-    id: string;
+export type CreatePersonInput = {
+    firstName?: string | null;
+    lastName?: string | null;
+    patronymic?: string | null;
+    pseudonym?: string | null;
+    profession?: string | null;
+    description?: string | null;
+    birthDate?: string | null;
+    deathDate?: string | null;
+    wikiLink?: string | null;
 };
-export type PersonInfoDeleteMutationResponse = {
+export type PersonCreateMutationVariables = {
+    input: CreatePersonInput;
+};
+export type PersonCreateMutationResponse = {
     readonly person: {
-        readonly delete: {
+        readonly create: {
             readonly recordId: string;
         };
     } | null;
 };
-export type PersonInfoDeleteMutation = {
-    readonly response: PersonInfoDeleteMutationResponse;
-    readonly variables: PersonInfoDeleteMutationVariables;
+export type PersonCreateMutation = {
+    readonly response: PersonCreateMutationResponse;
+    readonly variables: PersonCreateMutationVariables;
 };
 
 
 
 /*
-mutation PersonInfoDeleteMutation(
-  $id: GlobalId!
+mutation PersonCreateMutation(
+  $input: CreatePersonInput!
 ) {
   person {
-    delete(id: $id) {
+    create(input: $input) {
       recordId
     }
   }
@@ -37,7 +48,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "input"
   }
 ],
 v1 = [
@@ -54,13 +65,13 @@ v1 = [
         "args": [
           {
             "kind": "Variable",
-            "name": "id",
-            "variableName": "id"
+            "name": "input",
+            "variableName": "input"
           }
         ],
-        "concreteType": "DeletePersonPayload",
+        "concreteType": "CreatePersonPayload",
         "kind": "LinkedField",
-        "name": "delete",
+        "name": "create",
         "plural": false,
         "selections": [
           {
@@ -82,7 +93,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonInfoDeleteMutation",
+    "name": "PersonCreateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -91,18 +102,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonInfoDeleteMutation",
+    "name": "PersonCreateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "534e22fc916af30b08e9090fe52b26f8",
+    "cacheID": "f81bb9de788119b2b2441998a2d756cb",
     "id": null,
     "metadata": {},
-    "name": "PersonInfoDeleteMutation",
+    "name": "PersonCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonInfoDeleteMutation(\n  $id: GlobalId!\n) {\n  person {\n    delete(id: $id) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation PersonCreateMutation(\n  $input: CreatePersonInput!\n) {\n  person {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c60c1867069663e36a5dce78f0faa011';
+(node as any).hash = '3254e28612db9ff77ff6cd8c1f05f7b5';
 export default node;

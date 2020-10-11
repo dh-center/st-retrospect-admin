@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import SelectSearch, { SelectedOptionValue, SelectSearchOption } from 'react-select-search';
+import React from 'react';
+import SelectSearch, { SelectSearchOption } from 'react-select-search';
 import './index.css';
 
 /**
@@ -14,7 +14,7 @@ interface ComponentProps {
   /**
    * Default value
    */
-  value: string | undefined;
+  value?: string;
 
   /**
    * onChange event handler
@@ -35,14 +35,11 @@ interface ComponentProps {
  * @param props - CustomSelect component props
  */
 export default function CustomSelect(props: ComponentProps): React.ReactElement {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-unused-vars-experimental
-  const [selectedValue, setSelectedValue] = useState<SelectedOptionValue | SelectedOptionValue[]>();
   const onChange = props.onChange;
 
   return (
     <SelectSearch
       onChange={(selected): void => {
-        setSelectedValue(selected);
         onChange(selected.toString());
       }}
       options={props.options}

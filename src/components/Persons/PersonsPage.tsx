@@ -5,6 +5,7 @@ import environment from '../../relay-env';
 import graphql from 'babel-plugin-relay/macro';
 import { ENTITIES_PER_PAGE } from '../../constants';
 import PersonsList from './PersonsList';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Page for displaying persons
@@ -26,7 +27,9 @@ export default function PersonsPage(): ReactElement {
           return <div>Error!</div>;
         }
         if (!props) {
-          return <div>Loading persons...</div>;
+          return <LoadingPlaceholder
+            alt='Loading persons...'
+          />;
         }
 
         return <PersonsList entityConnection={props} entityName='persons'/>;

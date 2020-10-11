@@ -15,25 +15,25 @@ export type UpdatePersonInput = {
     deathDate?: string | null;
     wikiLink?: string | null;
 };
-export type PersonInfoUpdateMutationVariables = {
+export type PersonEditUpdateMutationVariables = {
     input: UpdatePersonInput;
 };
-export type PersonInfoUpdateMutationResponse = {
+export type PersonEditUpdateMutationResponse = {
     readonly person: {
         readonly update: {
             readonly recordId: string;
         };
     } | null;
 };
-export type PersonInfoUpdateMutation = {
-    readonly response: PersonInfoUpdateMutationResponse;
-    readonly variables: PersonInfoUpdateMutationVariables;
+export type PersonEditUpdateMutation = {
+    readonly response: PersonEditUpdateMutationResponse;
+    readonly variables: PersonEditUpdateMutationVariables;
 };
 
 
 
 /*
-mutation PersonInfoUpdateMutation(
+mutation PersonEditUpdateMutation(
   $input: UpdatePersonInput!
 ) {
   person {
@@ -94,7 +94,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonInfoUpdateMutation",
+    "name": "PersonEditUpdateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -103,18 +103,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonInfoUpdateMutation",
+    "name": "PersonEditUpdateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "fe686e80d3140429e55727e4473237d1",
+    "cacheID": "446c5f73b1dff5b9ebbe2d1d18bc1c72",
     "id": null,
     "metadata": {},
-    "name": "PersonInfoUpdateMutation",
+    "name": "PersonEditUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonInfoUpdateMutation(\n  $input: UpdatePersonInput!\n) {\n  person {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation PersonEditUpdateMutation(\n  $input: UpdatePersonInput!\n) {\n  person {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'cda7b814e1581b3cc62e1e705054cf9c';
+(node as any).hash = 'bc499b1b7578825d8bbb85dbd1f11085';
 export default node;

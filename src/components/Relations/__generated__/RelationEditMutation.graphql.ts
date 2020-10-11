@@ -3,40 +3,36 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type CreatePersonInput = {
-    firstName?: string | null;
-    lastName?: string | null;
-    patronymic?: string | null;
-    pseudonym?: string | null;
-    profession?: string | null;
-    description?: string | null;
-    birthDate?: string | null;
-    deathDate?: string | null;
-    wikiLink?: string | null;
+export type UpdateRelationInput = {
+    id: string;
+    personId?: string | null;
+    locationInstanceId?: string | null;
+    relationId?: string | null;
+    quote?: string | null;
 };
-export type PersonInfoCreateMutationVariables = {
-    input: CreatePersonInput;
+export type RelationEditMutationVariables = {
+    input: UpdateRelationInput;
 };
-export type PersonInfoCreateMutationResponse = {
-    readonly person: {
-        readonly create: {
+export type RelationEditMutationResponse = {
+    readonly relation: {
+        readonly update: {
             readonly recordId: string;
         };
-    } | null;
+    };
 };
-export type PersonInfoCreateMutation = {
-    readonly response: PersonInfoCreateMutationResponse;
-    readonly variables: PersonInfoCreateMutationVariables;
+export type RelationEditMutation = {
+    readonly response: RelationEditMutationResponse;
+    readonly variables: RelationEditMutationVariables;
 };
 
 
 
 /*
-mutation PersonInfoCreateMutation(
-  $input: CreatePersonInput!
+mutation RelationEditMutation(
+  $input: UpdateRelationInput!
 ) {
-  person {
-    create(input: $input) {
+  relation {
+    update(input: $input) {
       recordId
     }
   }
@@ -55,9 +51,9 @@ v1 = [
   {
     "alias": null,
     "args": null,
-    "concreteType": "PersonMutations",
+    "concreteType": "RelationMutations",
     "kind": "LinkedField",
-    "name": "person",
+    "name": "relation",
     "plural": false,
     "selections": [
       {
@@ -69,9 +65,9 @@ v1 = [
             "variableName": "input"
           }
         ],
-        "concreteType": "CreatePersonPayload",
+        "concreteType": "UpdateRelationPayload",
         "kind": "LinkedField",
-        "name": "create",
+        "name": "update",
         "plural": false,
         "selections": [
           {
@@ -93,7 +89,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonInfoCreateMutation",
+    "name": "RelationEditMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -102,18 +98,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonInfoCreateMutation",
+    "name": "RelationEditMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "ce7278021042b62e2153aaae6c43004c",
+    "cacheID": "6be7c7331fe2c8aebf5b7d1c37055d56",
     "id": null,
     "metadata": {},
-    "name": "PersonInfoCreateMutation",
+    "name": "RelationEditMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonInfoCreateMutation(\n  $input: CreatePersonInput!\n) {\n  person {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation RelationEditMutation(\n  $input: UpdateRelationInput!\n) {\n  relation {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c990ddfd5a269f6d4493d2f3ec3e1584';
+(node as any).hash = '3c5ef8882cac6abc8d74b86aeb578209';
 export default node;

@@ -15,6 +15,7 @@ import {
 } from './__generated__/RelationViewDeleteMutation.graphql';
 import personsFullName from '../../utils/personsFullname';
 import LabeledText from '../utils/LabeledText';
+import { Redirect } from 'react-router-dom';
 
 /**
  * Removes relation by its id
@@ -107,7 +108,13 @@ function RelationView(): React.ReactElement {
         }
 
         if (!props.relation) {
-          return <div>There is no relation with provided id</div>;
+          notifier.show({
+            message: `Relation with id "${id}" wasn't found`,
+            style: 'error',
+            time: 5000,
+          });
+
+          return <Redirect to='/relations'/>;
         }
 
         return (
