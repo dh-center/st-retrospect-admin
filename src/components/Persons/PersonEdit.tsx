@@ -15,6 +15,7 @@ import {
 } from './__generated__/PersonEditUpdateMutation.graphql';
 import Input from '../utils/Input';
 import Textarea from '../utils/Textarea';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Executes update mutation for person
@@ -121,7 +122,9 @@ export default function PersonEdit(): ReactElement {
         }
 
         if (!props) {
-          return <div>Loading...</div>;
+          return <LoadingPlaceholder
+            alt='Loading person...'
+          />;
         }
 
         if (!props.person) {

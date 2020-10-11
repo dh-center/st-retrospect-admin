@@ -9,6 +9,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 import notifier from 'codex-notifier';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Page with location info to view
@@ -51,7 +52,9 @@ function LocationView(): React.ReactElement {
         }
 
         if (!props) {
-          return <div>Loading</div>;
+          return <LoadingPlaceholder
+            alt='Loading location...'
+          />;
         }
 
         if (!props.entity) {
