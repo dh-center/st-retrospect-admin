@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl, { LngLat, LngLatBoundsLike, LngLatLike } from 'mapbox-gl';
 import styles from './LocationMap.module.css';
+import withLabel from './utils/LabeledComponent';
 
 /**
  * Max map bounds. Restricts view area
@@ -63,12 +64,23 @@ export default function LocationMap(props: Props): React.ReactElement {
   useEffect(() => {
     if (mapContainer.current) {
       map.current = new mapboxgl.Map({
+        attributionControl: false,
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [mapState.lng, mapState.lat],
         zoom: mapState.zoom,
         maxBounds: MAX_BOUNDS,
       });
+
+      const navigationControl = new mapboxgl.NavigationControl();
+      const scaleControl = new mapboxgl.ScaleControl();
+      const fullscreenControl = new mapboxgl.FullscreenControl();
+      const attributionControl = new mapboxgl.AttributionControl({ compact: true });
+
+      map.current.addControl(fullscreenControl, 'top-right');
+      map.current.addControl(navigationControl, 'top-right');
+      map.current.addControl(scaleControl, 'bottom-right');
+      map.current.addControl(attributionControl, 'bottom-left');
 
       map.current.on('move', () => {
         map.current && setMapState({
@@ -112,3 +124,8 @@ export default function LocationMap(props: Props): React.ReactElement {
 LocationMap.defaultProps = {
   viewOnly: false,
 };
+
+/**
+ * Returns LocationMap with label
+ */
+export const LabeledLocationMap = withLabel(LocationMap);
