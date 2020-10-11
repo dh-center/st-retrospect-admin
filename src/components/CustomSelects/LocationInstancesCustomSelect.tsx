@@ -5,6 +5,8 @@ import CustomSelect from '../utils/CustomSelect';
 import { QueryRenderer } from 'react-relay';
 import { LocationInstancesCustomSelect_locationInstancesQuery } from './__generated__/LocationInstancesCustomSelect_locationInstancesQuery.graphql';
 import withLabel from '../utils/LabeledComponent';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
+import styles from './CustomSelects.module.css';
 
 /**
  * Interface of props for LocationInstancesCustomSelect component
@@ -48,13 +50,18 @@ export default function LocationInstancesCustomSelect(componentProps: LocationIn
         }
 
         if (!props) {
-          return <div>Loading locations...</div>;
+          return (
+            <div className={styles.loadingContainer}>
+              <LoadingPlaceholder
+                alt='Loading locations...'
+                isSmall
+              />
+            </div>
+          );
         }
 
         const locationsWithNames = props.locationInstances.filter((location) => {
-          if (location.name !== null) {
-            return location;
-          }
+          return location && location.name;
         }) as {readonly value: string; readonly name: string}[];
 
         return <CustomSelect

@@ -17,6 +17,7 @@ import { RelationEditQuery } from './__generated__/RelationEditQuery.graphql';
 import { LabeledPersonsCustomSelect } from '../CustomSelects/PersonsCustomSelect';
 import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypesCustomSelect';
 import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Mutation for save edited relation
@@ -118,7 +119,9 @@ export default function RelationEdit(): ReactElement {
         }
 
         if (!props) {
-          return <div>Loading...</div>;
+          return <LoadingPlaceholder
+            alt='Loading relation...'
+          />;
         }
 
         if (!props.relation) {
