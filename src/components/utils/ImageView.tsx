@@ -54,7 +54,7 @@ function ImageViewWithRequiredSrc(props: ImageViewWithRequiredSrcProps): React.R
   return (
     <>
       { isLoading &&
-        <div>
+        <div className={styles.spinnerContainer}>
           <Spinner animation='border' variant='secondary'/>
         </div>
       }
