@@ -61,9 +61,7 @@ export default function LocationInstancesCustomSelect(componentProps: LocationIn
         }
 
         const locationsWithNames = props.locationInstances.filter((location) => {
-          if (location.name !== null) {
-            return location;
-          }
+          return location && location.name;
         }) as {readonly value: string; readonly name: string}[];
 
         return <CustomSelect

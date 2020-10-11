@@ -61,9 +61,7 @@ export default function RelationTypesCustomSelect(componentProps: RelationTypesC
         }
 
         const relationTypesWithNames = props.relationTypes.filter((relationType) => {
-          if (relationType.name !== null) {
-            return relationType;
-          }
+          return relationType && relationType.name;
         }) as {readonly value: string; readonly name: string}[];
 
         return <CustomSelect
