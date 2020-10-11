@@ -6,6 +6,8 @@ import CustomSelect from '../utils/CustomSelect';
 import { QueryRenderer } from 'react-relay';
 import { PersonsCustomSelect_personsQuery } from './__generated__/PersonsCustomSelect_personsQuery.graphql';
 import withLabel from '../utils/LabeledComponent';
+import styles from "./CustomSelects.module.css";
+import LoadingPlaceholder from "../utils/LoadingPlaceholder";
 
 /**
  * Interface of props for PersonsCustomSelect component
@@ -55,7 +57,14 @@ export default function PersonsCustomSelect(componentProps: PersonsCustomSelectP
         }
 
         if (!props) {
-          return <div>Loading persons...</div>;
+          return (
+            <div className={styles.loadingContainer}>
+              <LoadingPlaceholder
+                alt='Loading persons...'
+                isSmall
+              />
+            </div>
+          );
         }
 
         /**

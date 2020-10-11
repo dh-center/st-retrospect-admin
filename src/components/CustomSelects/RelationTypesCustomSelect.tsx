@@ -5,6 +5,8 @@ import CustomSelect from '../utils/CustomSelect';
 import { QueryRenderer } from 'react-relay';
 import { RelationTypesCustomSelect_relationTypesQuery } from './__generated__/RelationTypesCustomSelect_relationTypesQuery.graphql';
 import withLabel from '../utils/LabeledComponent';
+import styles from "./CustomSelects.module.css";
+import LoadingPlaceholder from "../utils/LoadingPlaceholder";
 
 /**
  * Interface of props for RelationTypesCustomSelect component
@@ -48,7 +50,14 @@ export default function RelationTypesCustomSelect(componentProps: RelationTypesC
         }
 
         if (!props) {
-          return <div>Loading relation types...</div>;
+          return (
+            <div className={styles.loadingContainer}>
+              <LoadingPlaceholder
+                alt='Loading relation types...'
+                isSmall
+              />
+            </div>
+          );
         }
 
         const relationTypesWithNames = props.relationTypes.filter((relationType) => {
