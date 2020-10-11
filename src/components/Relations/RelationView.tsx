@@ -16,6 +16,7 @@ import {
 import personsFullName from '../../utils/personsFullname';
 import LabeledText from '../utils/LabeledText';
 import { Redirect } from 'react-router-dom';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Removes relation by its id
@@ -104,7 +105,9 @@ function RelationView(): React.ReactElement {
         }
 
         if (!props) {
-          return <div>Loading...</div>;
+          return <LoadingPlaceholder
+            alt='Loading relation...'
+          />;
         }
 
         if (!props.relation) {

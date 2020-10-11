@@ -13,6 +13,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Spinner } from 'react-bootstrap';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Page with form for location editing
@@ -70,7 +71,9 @@ function LocationEdit(): React.ReactElement {
         }
 
         if (!props) {
-          return <div>Loading</div>;
+          return <LoadingPlaceholder
+            alt='Loading location...'
+          />;
         }
 
         if (!props.location) {

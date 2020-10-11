@@ -15,6 +15,7 @@ import {
 } from './__generated__/PersonViewDeleteMutation.graphql';
 import ContentWrapper from '../ContentWrapper';
 import LabeledText from '../utils/LabeledText';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Removes person by its id
@@ -93,7 +94,9 @@ function PersonView(): React.ReactElement {
         }
 
         if (!props) {
-          return <div>Loading</div>;
+          return <LoadingPlaceholder
+            alt='Loading person...'
+          />;
         }
 
         if (!props.person) {
