@@ -39,6 +39,9 @@ fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
   endDate
   mainPhotoLink
   photoLinks
+  location {
+    id
+  }
 }
 */
 
@@ -56,7 +59,14 @@ v1 = [
     "name": "id",
     "variableName": "locationInstaceId"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -98,13 +108,7 @@ return {
         "name": "locationInstance",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -160,6 +164,18 @@ return {
             "kind": "ScalarField",
             "name": "photoLinks",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Location",
+            "kind": "LinkedField",
+            "name": "location",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/)
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -167,12 +183,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d74575c2f2c8153b847581c2ebbc836b",
+    "cacheID": "c239e421da5a997ca0dce47fbed6ac42",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogRefetchQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: GlobalId!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n}\n"
+    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: GlobalId!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  location {\n    id\n  }\n}\n"
   }
 };
 })();

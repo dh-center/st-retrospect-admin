@@ -14,6 +14,9 @@ export type LocationInstanceInfoDialog_locationInstance = {
     readonly endDate: string | null;
     readonly mainPhotoLink: string | null;
     readonly photoLinks: ReadonlyArray<string> | null;
+    readonly location: {
+        readonly id: string;
+    };
     readonly " $refType": "LocationInstanceInfoDialog_locationInstance";
 };
 export type LocationInstanceInfoDialog_locationInstance$data = LocationInstanceInfoDialog_locationInstance;
@@ -24,19 +27,21 @@ export type LocationInstanceInfoDialog_locationInstance$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "LocationInstanceInfoDialog_locationInstance",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -92,10 +97,23 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "photoLinks",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Location",
+      "kind": "LinkedField",
+      "name": "location",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "LocationInstance",
   "abstractKey": null
 };
-(node as any).hash = '946764686e0263f4618b821d35be624f';
+})();
+(node as any).hash = '49d3244712ed0286caa0252ea57024ec';
 export default node;

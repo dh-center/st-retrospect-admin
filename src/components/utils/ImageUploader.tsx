@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import styles from './ImageUploader.module.css';
 import notifier from 'codex-notifier';
