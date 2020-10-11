@@ -309,6 +309,11 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             <ImageGallery
               className={styles.mainPhoto}
               images={input.mainPhotoLink ? [ input.mainPhotoLink ] : undefined}
+              onChange={([ link ]) => setInput({
+                ...input,
+                mainPhotoLink: link,
+              })}
+              viewOnly={!isEditing}
             />
             {
               isEditing &&
@@ -328,6 +333,13 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             <ImageGallery
               className={styles.photosGallery}
               images={input.photoLinks || undefined}
+              onChange={(urls) => {
+                setInput({
+                  ...input,
+                  photoLinks: urls,
+                });
+              }}
+              viewOnly={!isEditing}
             />
             {
               isEditing &&
