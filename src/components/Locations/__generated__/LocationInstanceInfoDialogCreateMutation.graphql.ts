@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type CreateLocationInstanceInput = {
     name: string;
     description: string;
@@ -24,9 +25,7 @@ export type LocationInstanceInfoDialogCreateMutationResponse = {
             readonly record: {
                 readonly id: string;
                 readonly location: {
-                    readonly instances: ReadonlyArray<{
-                        readonly id: string;
-                    }>;
+                    readonly " $fragmentRefs": FragmentRefs<"LocationInfo_location">;
                 };
             };
         };
@@ -48,13 +47,51 @@ mutation LocationInstanceInfoDialogCreateMutation(
       record {
         id
         location {
-          instances {
-            id
-          }
+          ...LocationInfo_location
           id
         }
       }
     }
+  }
+}
+
+fragment LocationInfo_location on Location {
+  id
+  latitude
+  longitude
+  instances {
+    id
+  }
+  ...LocationInstancesList_data
+}
+
+fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
+  id
+  name
+  description
+  constructionDate
+  demolitionDate
+  startDate
+  endDate
+  mainPhotoLink
+  photoLinks
+  location {
+    id
+  }
+}
+
+fragment LocationInstanceListItem_instance on LocationInstance {
+  name
+  mainPhotoLink
+  description
+}
+
+fragment LocationInstancesList_data on Location {
+  instances {
+    id
+    name
+    ...LocationInstanceListItem_instance
+    ...LocationInstanceInfoDialog_locationInstance
   }
 }
 */
@@ -79,18 +116,6 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "LocationInstance",
-  "kind": "LinkedField",
-  "name": "instances",
-  "plural": true,
-  "selections": [
-    (v2/*: any*/)
-  ],
   "storageKey": null
 };
 return {
@@ -133,7 +158,11 @@ return {
                     "name": "location",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/)
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "LocationInfo_location"
+                      }
                     ],
                     "storageKey": null
                   }
@@ -189,8 +218,101 @@ return {
                     "name": "location",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
-                      (v2/*: any*/)
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "latitude",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "longitude",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "LocationInstance",
+                        "kind": "LinkedField",
+                        "name": "instances",
+                        "plural": true,
+                        "selections": [
+                          (v2/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "mainPhotoLink",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "description",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "constructionDate",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "demolitionDate",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "startDate",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "endDate",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "photoLinks",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Location",
+                            "kind": "LinkedField",
+                            "name": "location",
+                            "plural": false,
+                            "selections": [
+                              (v2/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
                   }
@@ -206,14 +328,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3cc3dc1bfd223c5d90aebb9cd22667d4",
+    "cacheID": "1b4d60a54ceddd8f196a0b0811aec156",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      record {\n        id\n        location {\n          instances {\n            id\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      record {\n        id\n        location {\n          ...LocationInfo_location\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  location {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'dce1fc9938d2982f3e53322f4f46a467';
+(node as any).hash = '6776c68d8a519076fcd8daf136515df3';
 export default node;

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import styles from './ImageUploader.module.css';
 import notifier from 'codex-notifier';
@@ -39,7 +39,7 @@ interface UploadRequestResults {
  * @param props - props for component rendering
  */
 export default function ImageUploader(props: ImageUploaderProps): React.ReactElement {
-  const onDrop = useCallback(async (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+  const onDrop = async (acceptedFiles: File[], fileRejections: FileRejection[]): Promise<void> => {
     if (fileRejections.length) {
       notifier.show({
         message: 'There is errors while uploading files. There may be too many files or some of them are too large\\small',
@@ -64,7 +64,7 @@ export default function ImageUploader(props: ImageUploaderProps): React.ReactEle
     const parsedResult = await result.json() as UploadRequestResults;
 
     props.onImageUpload(parsedResult.file.url);
-  }, []);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

@@ -119,9 +119,7 @@ export function create(input: CreateLocationInstanceInput): Promise<LocationInst
             record {
               id
               location {
-                instances {
-                  id
-                }
+                ...LocationInfo_location
               }
             }
           }
@@ -144,6 +142,12 @@ export function update(input: UpdateLocationInstanceInput): Promise<LocationInst
         locationInstances {
           update(input: $input) {
             recordId
+            record {
+              id
+              location {
+                ...LocationInfo_location
+              }
+            }
           }
         }
       }
@@ -155,9 +159,9 @@ export function update(input: UpdateLocationInstanceInput): Promise<LocationInst
 /**
  * Mutation for deleting LocationInstance
  *
- * @param id - instance id to remove
+ * @param locationInstance - instance id to remove
  */
-export function remove(id: string): Promise<LocationInstanceInfoDialogDeleteMutationResponse> {
+export function remove(locationInstance: LocationInstanceInfoDialog_locationInstance): Promise<LocationInstanceInfoDialogDeleteMutationResponse> {
   return commitMutation<LocationInstanceInfoDialogDeleteMutation>(environment, {
     mutation: graphql`
       mutation LocationInstanceInfoDialogDeleteMutation($id: GlobalId!) {
@@ -168,7 +172,25 @@ export function remove(id: string): Promise<LocationInstanceInfoDialogDeleteMuta
         }
       }
     `,
-    variables: { id },
+    variables: { id: locationInstance.id },
+    updater: (proxyStore) => {
+      const locationProxy = proxyStore
+        .get(locationInstance.location.id);
+
+      if (!locationProxy) {
+        return;
+      }
+
+      const instances = locationProxy.getLinkedRecords('instances');
+
+      if (instances) {
+        const newInstancesList = instances.filter(inst => inst.getDataID() !== locationInstance.id);
+
+        locationProxy.setLinkedRecords(newInstancesList, 'instances');
+      }
+
+      proxyStore.delete(locationInstance.id);
+    },
   });
 }
 
@@ -180,18 +202,13 @@ export function remove(id: string): Promise<LocationInstanceInfoDialogDeleteMuta
 function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   const { id: locationId } = useParams();
   const id = useUniqueId('location-instance-info-dialog');
-  const [instanceCopy, setInstanceCopy] = useState(props.locationInstance);
   const [isEditing, setIsEditing] = useState(!props.locationInstance);
-  const [input, setInput] = useState<LocationInstanceInputs>(instanceToInput(instanceCopy, locationId));
+  const [input, setInput] = useState<LocationInstanceInputs>(instanceToInput(props.locationInstance, locationId));
 
   useEffect(() => {
-    setInstanceCopy(props.locationInstance);
     setInput(instanceToInput(props.locationInstance, locationId));
-  }, [props.locationInstance, locationId]);
-
-  useEffect(() => {
     setIsEditing(!props.locationInstance);
-  }, [ props.locationInstance ]);
+  }, [props.locationInstance, locationId]);
 
   const submit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
@@ -232,9 +249,9 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   };
 
   const removeInstance = async (): Promise<void> => {
-    if (instanceCopy) {
+    if (props.locationInstance) {
       try {
-        await remove(instanceCopy.id);
+        await remove(props.locationInstance);
         notifier.show({
           message: `Successfully deleted`,
           style: 'success',
@@ -375,6 +392,9 @@ export default createRefetchContainer(
         endDate
         mainPhotoLink
         photoLinks
+        location {
+          id
+        }
       }
     `,
   },
