@@ -32,7 +32,7 @@ interface ImageGalleryProps {
  * @param props - props for component rendering
  */
 export default function ImageGallery(props: ImageGalleryProps & WithClassName): React.ReactElement {
-  if (!props.images) {
+  if (!props.images || !props.images.length) {
     return <div>There is no images</div>;
   }
 
