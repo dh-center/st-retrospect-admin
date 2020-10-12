@@ -28,6 +28,11 @@ interface ImageViewProps {
    * Optional className for custom styling
    */
   className?: string;
+
+  /**
+   * Handler called when user click delete button
+   */
+  onDelete?(): void;
 }
 
 /**
@@ -54,7 +59,7 @@ function ImageViewWithRequiredSrc(props: ImageViewWithRequiredSrcProps): React.R
   return (
     <>
       { isLoading &&
-        <div>
+        <div className={styles.spinnerContainer}>
           <Spinner animation='border' variant='secondary'/>
         </div>
       }
@@ -98,6 +103,9 @@ export default function ImageView(props: ImageViewProps): React.ReactElement {
       }}
     >
       {content}
+      { props.onDelete &&
+        <div className={styles.deleteButton} onClick={props.onDelete}>x</div>
+      }
     </div>
   );
 }

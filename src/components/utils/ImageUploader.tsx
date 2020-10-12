@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import styles from './ImageUploader.module.css';
 import notifier from 'codex-notifier';
+import ProgressBar from 'react-bootstrap/cjs/ProgressBar';
 
 /**
  * Props for ImageUploader components
@@ -39,6 +40,8 @@ interface UploadRequestResults {
  * @param props - props for component rendering
  */
 export default function ImageUploader(props: ImageUploaderProps): React.ReactElement {
+  const [progress, setProgress] = useState<number|null>(null);
+
   const onDrop = async (acceptedFiles: File[], fileRejections: FileRejection[]): Promise<void> => {
     if (fileRejections.length) {
       notifier.show({
@@ -56,14 +59,29 @@ export default function ImageUploader(props: ImageUploaderProps): React.ReactEle
 
     formData.append('image', acceptedFiles[0]);
 
-    const result = await window.fetch(`${process.env.REACT_APP_API_ENDPOINT}upload/${props.entityName}`, {
-      method: 'POST',
-      body: formData,
-    });
+    const xhr = new XMLHttpRequest();
 
-    const parsedResult = await result.json() as UploadRequestResults;
+    xhr.open('POST', `${process.env.REACT_APP_API_ENDPOINT}upload/${props.entityName}`);
 
-    props.onImageUpload(parsedResult.file.url);
+    xhr.upload.addEventListener('progress', function (evt) {
+      if (evt.lengthComputable) {
+        const percentComplete = evt.loaded / evt.total * 100;
+
+        setProgress(percentComplete);
+      }
+    }, false);
+
+    xhr.onloadstart = function () {
+      setProgress(0);
+    };
+
+    xhr.onloadend = function () {
+      const response = JSON.parse(xhr.response) as UploadRequestResults;
+
+      props.onImageUpload(response.file.url);
+      setProgress(null);
+    };
+    xhr.send(formData);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -71,6 +89,10 @@ export default function ImageUploader(props: ImageUploaderProps): React.ReactEle
     maxFiles: 1,
     accept: 'image/jpeg, image/png',
   });
+
+  if (progress !== null) {
+    return <div><ProgressBar now={progress}/></div>;
+  }
 
   return (
     <div {...getRootProps({ className: styles.dropzone })}>

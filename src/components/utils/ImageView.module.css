@@ -5,6 +5,7 @@
   justify-content: center;
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 
 .image {
@@ -14,4 +15,21 @@
 .info {
   font-size: 10px;
   color: gray;
+}
+
+.spinnerContainer {
+  width: 150px;
+}
+
+.deleteButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: black;
+  color: #fff;
+  width: 20px;
+  text-align: center;
+  height: 20px;
+  line-height: 20px;
+  cursor: pointer;
 }

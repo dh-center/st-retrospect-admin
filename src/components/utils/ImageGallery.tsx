@@ -12,6 +12,18 @@ interface ImageGalleryProps {
    * Images to show
    */
   images?: string[];
+
+  /**
+   * Called when deleting images
+   *
+   * @param urls - new image url array
+   */
+  onChange(urls: string[]): void;
+
+  /**
+   * Forbid deleting images
+   */
+  viewOnly: boolean;
 }
 
 /**
@@ -20,9 +32,16 @@ interface ImageGalleryProps {
  * @param props - props for component rendering
  */
 export default function ImageGallery(props: ImageGalleryProps & WithClassName): React.ReactElement {
-  if (!props.images) {
+  if (!props.images || !props.images.length) {
     return <div>There is no images</div>;
   }
+
+  const onDelete = !props.viewOnly ? (image: string) => () => {
+    if (!props.images) {
+      return;
+    }
+    props.onChange(props.images.filter(im => im !== image));
+  } : undefined;
 
   return (
     <div className={classNames(styles.container, props.className)}>
@@ -32,7 +51,8 @@ export default function ImageGallery(props: ImageGalleryProps & WithClassName): 
          */
         <div className={styles.imageWrapper}
           key={index + image} >
-          <ImageView src={image}/>
+          <ImageView onDelete={onDelete && onDelete(image)}
+            src={image}/>
         </div>
       )}
     </div>
