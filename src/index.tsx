@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App/index';
@@ -12,6 +14,21 @@ if (process.env.REACT_APP_MAPBOX_ACCESS_TOKEN) {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 } else {
   console.warn('You must provide Mapbox access token to work with map');
+}
+
+if (process.env.REACT_APP_SENTRY_DNS) {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DNS,
+    integrations: [
+      new Integrations.BrowserTracing(),
+    ],
+
+    // We recommend adjusting this value in production, or using tracesSampler
+    // for finer control
+    tracesSampleRate: 0.5,
+  });
+} else {
+  console.warn('You must provide Sentry DNS for tracking errors');
 }
 
 ReactDOM.render(
