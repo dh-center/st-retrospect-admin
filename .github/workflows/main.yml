@@ -15,13 +15,12 @@ jobs:
       - name: Set branch name to environment variable
         run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
 
-      - name: Set .env filename to descrypt
-        run: echo "::set-env name=ENV_FILENAME::$(echo ".env-${BRANCH_NAME}.gpg")"
-
-      - name: Decrypt .env file
-        run: .github/scripts/decrypt_secret.sh
-        env:
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
+          envkey_REACT_APP_API_ENDPOINT: ${{ secrets.REACT_APP_API_ENDPOINT }}
+          envkey_REACT_APP_SENTRY_DNS: ${{ secrets.REACT_APP_SENTRY_DNS }}
 
       - name: Change API endpoint if prod
         if: endsWith(github.ref, '/prod')
