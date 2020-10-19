@@ -3,6 +3,7 @@ import { Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import RelationTypesPage from './RelationTypesPage';
 import RelationTypeView from './RelationTypeView';
+import RelationTypeCreate from './RelationTypeCreate';
 
 /**
  * Page for displaying relation types pages
@@ -10,6 +11,9 @@ import RelationTypeView from './RelationTypeView';
 export default function RelationTypesRouter(): ReactElement {
   return (
     <Switch>
+      <PrivateRoute path='/relationTypes/create'>
+        <RelationTypeCreate/>
+      </PrivateRoute>
       <PrivateRoute path='/relationTypes/:id'>
         <RelationTypeView/>
       </PrivateRoute>

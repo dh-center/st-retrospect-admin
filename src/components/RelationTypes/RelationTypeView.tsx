@@ -116,7 +116,7 @@ function RelationTypeView(): React.ReactElement {
               <LabeledText
                 content={props.relationType.synonyms
                   .filter(synonym => synonym !== null)
-                  .join('; ') + '.'}
+                  .join('; ')}
                 label='Synonyms'
               />
             </div>
