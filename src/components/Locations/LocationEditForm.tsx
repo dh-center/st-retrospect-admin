@@ -18,6 +18,7 @@ import {
   LocationEditFormMutationResponse,
   UpdateLocationInput
 } from './__generated__/LocationEditFormMutation.graphql';
+import { LinkContainer } from 'react-router-bootstrap';
 
 /**
  * Updates information about location
@@ -139,6 +140,9 @@ function LocationEditForm(props: Props): React.ReactElement {
             />
           ) : 'Save'}
         </Button>
+        <LinkContainer to={'/locations/' + props.originalLocation.id}>
+          <Button variant='outline-info'>Cancel</Button>
+        </LinkContainer>
       </Form>
     </ContentWrapper>
   );
