@@ -7,8 +7,3 @@
   flex: 1;
   min-height: 400px;
 }
-
-.coordinatesColumn {
-  width: 400px;
-  flex-shrink: 0;
-}
