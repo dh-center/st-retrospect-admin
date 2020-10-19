@@ -16,6 +16,7 @@ import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 import { LabeledLocationMap } from '../LocationMap';
+import LabeledText from '../utils/LabeledText';
 
 /**
  * Generates input data for creating new location
@@ -32,6 +33,13 @@ function generateLocationInput(): CreateLocationInput {
       startDate: '',
       endDate: '',
     } ],
+    addresses: [
+      {
+        countryCode: 'RU',
+        regionCode: 'RU-SPE',
+        address: '',
+      },
+    ],
   };
 }
 
@@ -137,6 +145,34 @@ export default function LocationCreate(): React.ReactElement {
             });
           }}
         />
+        {
+          input.addresses.map((address, index) =>
+            <Input
+              key={index}
+              label='Location address'
+              onChange={(value) => {
+                const newAddresses = [ ...input.addresses ];
+
+                newAddresses[0].address = value;
+                setInput({
+                  ...input,
+                  addresses: newAddresses,
+                });
+              }}
+              value={address.address || ''}
+            />
+          )
+        }
+        <div>
+          <LabeledText
+            content={input.latitude}
+            label='Latitude'
+          />
+          <LabeledText
+            content={input.longitude}
+            label='Longitude'
+          />
+        </div>
 
         <Input
           label='Link to the wiki about this location'

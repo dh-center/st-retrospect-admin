@@ -59,6 +59,9 @@ fragment LocationInfo_location on Location {
   id
   latitude
   longitude
+  addresses {
+    address
+  }
   instances {
     id
   }
@@ -236,6 +239,24 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "concreteType": "Address",
+                        "kind": "LinkedField",
+                        "name": "addresses",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "address",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "LocationInstance",
                         "kind": "LinkedField",
                         "name": "instances",
@@ -328,12 +349,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1b4d60a54ceddd8f196a0b0811aec156",
+    "cacheID": "4ffa50c0d8491d7094a4e0a2cc651637",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      record {\n        id\n        location {\n          ...LocationInfo_location\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  location {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
+    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      record {\n        id\n        location {\n          ...LocationInfo_location\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  addresses {\n    address\n  }\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  location {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();

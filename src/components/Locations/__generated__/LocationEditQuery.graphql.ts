@@ -9,7 +9,7 @@ export type LocationEditQueryVariables = {
 };
 export type LocationEditQueryResponse = {
     readonly location: {
-        readonly " $fragmentRefs": FragmentRefs<"LocationInfo_location">;
+        readonly " $fragmentRefs": FragmentRefs<"LocationEditForm_originalLocation">;
     } | null;
 };
 export type LocationEditQuery = {
@@ -24,48 +24,17 @@ query LocationEditQuery(
   $id: GlobalId!
 ) {
   location(id: $id) {
-    ...LocationInfo_location
+    ...LocationEditForm_originalLocation
     id
   }
 }
 
-fragment LocationInfo_location on Location {
+fragment LocationEditForm_originalLocation on Location {
   id
   latitude
   longitude
-  instances {
-    id
-  }
-  ...LocationInstancesList_data
-}
-
-fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
-  id
-  name
-  description
-  constructionDate
-  demolitionDate
-  startDate
-  endDate
-  mainPhotoLink
-  photoLinks
-  location {
-    id
-  }
-}
-
-fragment LocationInstanceListItem_instance on LocationInstance {
-  name
-  mainPhotoLink
-  description
-}
-
-fragment LocationInstancesList_data on Location {
-  instances {
-    id
-    name
-    ...LocationInstanceListItem_instance
-    ...LocationInstanceInfoDialog_locationInstance
+  addresses {
+    address
   }
 }
 */
@@ -84,14 +53,7 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -110,7 +72,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "LocationInfo_location"
+            "name": "LocationEditForm_originalLocation"
           }
         ],
         "storageKey": null
@@ -133,7 +95,13 @@ return {
         "name": "location",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -151,78 +119,16 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "LocationInstance",
+            "concreteType": "Address",
             "kind": "LinkedField",
-            "name": "instances",
+            "name": "addresses",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "mainPhotoLink",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "description",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "constructionDate",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "demolitionDate",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "startDate",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "endDate",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "photoLinks",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Location",
-                "kind": "LinkedField",
-                "name": "location",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/)
-                ],
+                "name": "address",
                 "storageKey": null
               }
             ],
@@ -234,14 +140,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0fead471f162deb5bfb51c34bffe1ed9",
+    "cacheID": "a1c967e4d9c7e0d6fd6b6365d6172086",
     "id": null,
     "metadata": {},
     "name": "LocationEditQuery",
     "operationKind": "query",
-    "text": "query LocationEditQuery(\n  $id: GlobalId!\n) {\n  location(id: $id) {\n    ...LocationInfo_location\n    id\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  location {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
+    "text": "query LocationEditQuery(\n  $id: GlobalId!\n) {\n  location(id: $id) {\n    ...LocationEditForm_originalLocation\n    id\n  }\n}\n\nfragment LocationEditForm_originalLocation on Location {\n  id\n  latitude\n  longitude\n  addresses {\n    address\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2f361a58b532945bfa507d281ce4be07';
+(node as any).hash = '518234b0feb70108bf60b69fcd69ddda';
 export default node;

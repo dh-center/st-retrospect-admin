@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { createFragmentContainer } from 'react-relay';
 import commitMutation from 'relay-commit-mutation-promise';
 import graphql from 'babel-plugin-relay/macro';
-import { DefaultInfoComponentProps } from '../../types/entities';
 import { LocationInfo_location } from './__generated__/LocationInfo_location.graphql';
 import environment from '../../relay-env';
-import {
-  LocationInfoUpdateMutation,
-  LocationInfoUpdateMutationResponse,
-  UpdateLocationInput
-} from './__generated__/LocationInfoUpdateMutation.graphql';
 import LocationInstancesTabs from './LocationInstancesList';
 import {
   LocationInfoDeleteMutation,
@@ -22,7 +16,7 @@ import LabeledText from '../utils/LabeledText';
 /**
  * Props for LocationInfo rendering
  */
-interface LocationInfoProps extends DefaultInfoComponentProps<UpdateLocationInput> {
+interface LocationInfoProps {
   /**
    * Data to display
    */
@@ -34,32 +28,14 @@ interface LocationInfoProps extends DefaultInfoComponentProps<UpdateLocationInpu
  *
  * @param props - props for component rendering
  */
-function LocationInfo(props: LocationInfoProps): React.ReactElement {
-  const onChange: (e: UpdateLocationInput) => void = props.onChange || (() => { /* do nothing */ });
-
-  const [location, setLocation] = useState(props.location);
-  const [input, setInput] = useState<UpdateLocationInput | null>(null);
-
-  useEffect(() => {
-    if (input) {
-      onChange(input);
-    }
-  }, [ input ]);
-
-  useEffect(() => {
-    setInput({
-      id: location.id,
-      latitude: location.latitude,
-      longitude: location.longitude,
-      instances: location.instances.map(ins => ins.id),
-    });
-    // eslint-disable-next-line
-  }, [location])
+function LocationInfo({ location }: LocationInfoProps): React.ReactElement {
+  const [ firstAddress ] = (location.addresses || []);
 
   return (
     <div>
       <div className={styles.positionRow}>
         <div className={styles.coordinatesColumn}>
+          <h3>{firstAddress.address}</h3>
           <LabeledText
             content={location.latitude}
             label='Latitude'
@@ -73,24 +49,13 @@ function LocationInfo(props: LocationInfoProps): React.ReactElement {
           <LabeledLocationMap
             label='Location on map'
             lngLat={location.longitude && location.latitude ? [location.longitude, location.latitude] : undefined}
-            onChange={lngLan => {
-              console.log({
-                longitude: lngLan.lng,
-                latitude: lngLan.lat,
-              });
-              setLocation({
-                ...location,
-                longitude: lngLan.lng,
-                latitude: lngLan.lat,
-              });
-            }}
-            viewOnly={props.viewOnly}
+            viewOnly
           />
         </div>
       </div>
       <LocationInstancesTabs
-        data={props.location}
-        viewOnly={props.viewOnly}
+        data={location}
+        viewOnly
       />
     </div>
   );
@@ -104,6 +69,9 @@ export default createFragmentContainer(
         id
         latitude
         longitude
+        addresses {
+          address
+        }
         instances {
           id
         }
@@ -112,26 +80,6 @@ export default createFragmentContainer(
     `,
   }
 );
-
-/**
- * Updates information about location
- *
- * @param input - data for updating
- */
-export function updateInfo(input: UpdateLocationInput): Promise<LocationInfoUpdateMutationResponse> {
-  return commitMutation<LocationInfoUpdateMutation>(environment, {
-    mutation: graphql`
-      mutation LocationInfoUpdateMutation($input: UpdateLocationInput!) {
-        location {
-          update(input: $input) {
-            recordId
-          }
-        }
-      }
-    `,
-    variables: { input },
-  });
-}
 
 /**
  * Removes location by its id

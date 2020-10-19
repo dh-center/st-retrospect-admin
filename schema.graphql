@@ -40,29 +40,35 @@ directive @specifiedBy(
 ) on SCALAR
 
 """Location address representation"""
-type Address implements Node {
-  """Address's ID"""
-  id: ID!
+type Address {
+  country: Country
+  region: Region
+  place: MultilingualString
+  locality: MultilingualString
+  address: MultilingualString
+  address2: MultilingualString
+  postcode: MultilingualString
+}
 
-  """Street on which the location is located"""
-  street: String
-
-  """Build name"""
-  build: String
-
-  """House number on the street"""
-  homeNumber: String
-
-  """Corps of home"""
-  housing: String
-
-  """Link for location info"""
-  link: String
+input AddressInput {
+  countryCode: String
+  regionCode: String
+  place: MultilingualString
+  locality: MultilingualString
+  address: MultilingualString
+  address2: MultilingualString
+  postcode: MultilingualString
 }
 
 input Coordinates {
   longitude: Float!
   latitude: Float!
+}
+
+type Country implements Node {
+  id: ID!
+  code: String!
+  name: MultilingualString!
 }
 
 input CreateLocationInput {
@@ -74,6 +80,7 @@ input CreateLocationInput {
 
   """Possible location representations"""
   instances: [LocationInstanceInput!]!
+  addresses: [AddressInput!]!
 }
 
 input CreateLocationInstanceInput {
@@ -290,7 +297,7 @@ type Location implements Node {
   longitude: Float
 
   """Array of addresses ids"""
-  addresses: [Address]
+  addresses: [Address!]
 
   """Possible location representations"""
   instances: [LocationInstance!]!
@@ -771,6 +778,12 @@ type QuestMutations {
   delete(id: GlobalId!): DeleteQuestPayload!
 }
 
+type Region implements Node {
+  id: ID!
+  code: String!
+  name: MultilingualString!
+}
+
 """Represents relation between person and location"""
 type Relation implements Node {
   """Relation's id"""
@@ -880,9 +893,7 @@ input UpdateLocationInput {
 
   """Location position longitude"""
   longitude: Float
-
-  """Possible location instances id"""
-  instances: [GlobalId!]!
+  addresses: [AddressInput!]
 }
 
 input UpdateLocationInstanceInput {

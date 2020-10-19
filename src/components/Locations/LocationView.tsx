@@ -63,7 +63,7 @@ function LocationView(): React.ReactElement {
 
         return (
           <ContentWrapper>
-            <LocationInfo location={props.entity} viewOnly/>
+            <LocationInfo location={props.entity}/>
             <div>
               <LinkContainer to={`/locations/${id}/edit`}>
                 <Button className='m-1' variant='outline-warning'>Edit</Button>

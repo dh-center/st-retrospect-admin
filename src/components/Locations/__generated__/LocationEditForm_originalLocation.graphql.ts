@@ -4,42 +4,36 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type LocationInfo_location = {
+export type LocationEditForm_originalLocation = {
     readonly id: string;
     readonly latitude: number | null;
     readonly longitude: number | null;
     readonly addresses: ReadonlyArray<{
         readonly address: string | null;
     }> | null;
-    readonly instances: ReadonlyArray<{
-        readonly id: string;
-    }>;
-    readonly " $fragmentRefs": FragmentRefs<"LocationInstancesList_data">;
-    readonly " $refType": "LocationInfo_location";
+    readonly " $refType": "LocationEditForm_originalLocation";
 };
-export type LocationInfo_location$data = LocationInfo_location;
-export type LocationInfo_location$key = {
-    readonly " $data"?: LocationInfo_location$data;
-    readonly " $fragmentRefs": FragmentRefs<"LocationInfo_location">;
+export type LocationEditForm_originalLocation$data = LocationEditForm_originalLocation;
+export type LocationEditForm_originalLocation$key = {
+    readonly " $data"?: LocationEditForm_originalLocation$data;
+    readonly " $fragmentRefs": FragmentRefs<"LocationEditForm_originalLocation">;
 };
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "LocationInfo_location",
+  "name": "LocationEditForm_originalLocation",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -71,28 +65,10 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "LocationInstance",
-      "kind": "LinkedField",
-      "name": "instances",
-      "plural": true,
-      "selections": [
-        (v0/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "LocationInstancesList_data"
     }
   ],
   "type": "Location",
   "abstractKey": null
 };
-})();
-(node as any).hash = '40972b3bc99c0c0936054f6308330ed7';
+(node as any).hash = '0d43ae859d5d93c896b283fe8176ea74';
 export default node;

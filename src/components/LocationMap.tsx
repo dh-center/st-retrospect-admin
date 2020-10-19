@@ -38,7 +38,7 @@ interface Props {
    *
    * @param lngLat - new position
    */
-  onChange(lngLat: LngLat): void;
+  onChange?(lngLat: LngLat): void;
 
   /**
    * Is changing position enabled
@@ -97,7 +97,9 @@ export default function LocationMap(props: Props): React.ReactElement {
       }
 
       map.current.on('click', (e) => {
-        props.viewOnly || props.onChange(e.lngLat);
+        if (props.onChange) {
+          props.viewOnly || props.onChange(e.lngLat);
+        }
       });
     }
   }, []);
