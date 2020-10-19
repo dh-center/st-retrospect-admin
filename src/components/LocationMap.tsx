@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl, { LngLat, LngLatBoundsLike, LngLatLike } from 'mapbox-gl';
+import mapboxgl, { LngLat, LngLatBoundsLike, LngLatLike, MapMouseEvent } from 'mapbox-gl';
 import styles from './LocationMap.module.css';
 import withLabel from './utils/LabeledComponent';
 
@@ -38,7 +38,7 @@ interface Props {
    *
    * @param lngLat - new position
    */
-  onChange(lngLat: LngLat): void;
+  onChange?(lngLat: LngLat): void;
 
   /**
    * Is changing position enabled
@@ -95,12 +95,26 @@ export default function LocationMap(props: Props): React.ReactElement {
           .setLngLat(props.lngLat)
           .addTo(map.current);
       }
-
-      map.current.on('click', (e) => {
-        props.viewOnly || props.onChange(e.lngLat);
-      });
     }
   }, []);
+
+  useEffect(() => {
+    const handler = (e: MapMouseEvent): void => {
+      if (props.onChange) {
+        props.viewOnly || props.onChange(e.lngLat);
+      }
+    };
+
+    if (map.current) {
+      map.current.on('click', handler);
+    }
+
+    return () => {
+      if (map.current) {
+        map.current.off('click', handler);
+      }
+    };
+  }, [ props.onChange ]);
 
   useEffect(() => {
     if (map.current && props.lngLat) {

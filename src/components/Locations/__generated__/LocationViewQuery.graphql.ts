@@ -33,6 +33,9 @@ fragment LocationInfo_location on Location {
   id
   latitude
   longitude
+  addresses {
+    address
+  }
   instances {
     id
   }
@@ -151,6 +154,24 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Address",
+            "kind": "LinkedField",
+            "name": "addresses",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "address",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "LocationInstance",
             "kind": "LinkedField",
             "name": "instances",
@@ -234,12 +255,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e51a8b97d837bae3758bcae262704248",
+    "cacheID": "4a3bf1621bb641cd2fc4189bc206df58",
     "id": null,
     "metadata": {},
     "name": "LocationViewQuery",
     "operationKind": "query",
-    "text": "query LocationViewQuery(\n  $id: GlobalId!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n    id\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  location {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
+    "text": "query LocationViewQuery(\n  $id: GlobalId!\n) {\n  entity: location(id: $id) {\n    ...LocationInfo_location\n    id\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  addresses {\n    address\n  }\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  location {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();
