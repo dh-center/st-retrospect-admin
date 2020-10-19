@@ -35,7 +35,7 @@ function LocationInfo({ location }: LocationInfoProps): React.ReactElement {
     <div>
       <div className={styles.positionRow}>
         <div>
-          <h3>{firstAddress.address}</h3>
+          <h3>{firstAddress?.address}</h3>
           <LabeledText
             content={location.latitude}
             label='Latitude'

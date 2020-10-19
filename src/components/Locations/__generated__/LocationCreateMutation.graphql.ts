@@ -7,7 +7,7 @@ export type CreateLocationInput = {
     latitude: number;
     longitude: number;
     instances: Array<LocationInstanceInput>;
-    addresses: Array<AddressInput>;
+    addresses: Array<CreateAddressInput>;
 };
 export type LocationInstanceInput = {
     name: string;
@@ -20,12 +20,12 @@ export type LocationInstanceInput = {
     startDate?: string | null;
     endDate?: string | null;
 };
-export type AddressInput = {
-    countryCode?: string | null;
-    regionCode?: string | null;
+export type CreateAddressInput = {
+    countryCode: string;
+    regionCode: string;
     place?: string | null;
     locality?: string | null;
-    address?: string | null;
+    address: string;
     address2?: string | null;
     postcode?: string | null;
 };

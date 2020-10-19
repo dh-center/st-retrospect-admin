@@ -7,9 +7,9 @@ export type UpdateLocationInput = {
     id: string;
     latitude?: number | null;
     longitude?: number | null;
-    addresses?: Array<AddressInput> | null;
+    addresses?: Array<UpdateAddressInput> | null;
 };
-export type AddressInput = {
+export type UpdateAddressInput = {
     countryCode?: string | null;
     regionCode?: string | null;
     place?: string | null;

@@ -50,16 +50,6 @@ type Address {
   postcode: MultilingualString
 }
 
-input AddressInput {
-  countryCode: String
-  regionCode: String
-  place: MultilingualString
-  locality: MultilingualString
-  address: MultilingualString
-  address2: MultilingualString
-  postcode: MultilingualString
-}
-
 input Coordinates {
   longitude: Float!
   latitude: Float!
@@ -71,6 +61,16 @@ type Country implements Node {
   name: MultilingualString!
 }
 
+input CreateAddressInput {
+  countryCode: String!
+  regionCode: String!
+  place: MultilingualString
+  locality: MultilingualString
+  address: MultilingualString!
+  address2: MultilingualString
+  postcode: MultilingualString
+}
+
 input CreateLocationInput {
   """Location position latitude"""
   latitude: Float!
@@ -80,7 +80,7 @@ input CreateLocationInput {
 
   """Possible location representations"""
   instances: [LocationInstanceInput!]!
-  addresses: [AddressInput!]!
+  addresses: [CreateAddressInput!]!
 }
 
 input CreateLocationInstanceInput {
@@ -884,6 +884,16 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 """
 scalar Timestamp
 
+input UpdateAddressInput {
+  countryCode: String
+  regionCode: String
+  place: MultilingualString
+  locality: MultilingualString
+  address: MultilingualString
+  address2: MultilingualString
+  postcode: MultilingualString
+}
+
 input UpdateLocationInput {
   """Location id to update"""
   id: GlobalId!
@@ -893,7 +903,7 @@ input UpdateLocationInput {
 
   """Location position longitude"""
   longitude: Float
-  addresses: [AddressInput!]
+  addresses: [UpdateAddressInput!]
 }
 
 input UpdateLocationInstanceInput {
