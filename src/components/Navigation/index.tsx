@@ -50,6 +50,11 @@ export function Navigation(props: NavigationProps): ReactElement {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
+          <Nav.Link as={Link} to='/relationTypes'>
+            Relation types
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
           <Nav.Link as={Link} to='/visualization'>
             Visualization
           </Nav.Link>
