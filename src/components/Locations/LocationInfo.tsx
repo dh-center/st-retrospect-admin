@@ -55,7 +55,6 @@ function LocationInfo({ location }: LocationInfoProps): React.ReactElement {
       </div>
       <LocationInstancesTabs
         data={location}
-        viewOnly
       />
     </div>
   );
