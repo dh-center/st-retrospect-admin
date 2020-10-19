@@ -13,6 +13,7 @@ import ContentWrapper from '../ContentWrapper';
 import { Form, Spinner } from 'react-bootstrap';
 import Input from '../utils/Input';
 import Button from 'react-bootstrap/Button';
+import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
 
 /**
  * Generates input data for creating new relation type
@@ -93,7 +94,15 @@ export default function RelationTypeCreate(): React.ReactElement {
             name: value,
           })}
           required
-          value={input.name || ''}
+          value={input.name}
+        />
+        <LabeledArrayOfInputs
+          label='Synonyms'
+          onChange={value => setInput({
+            ...input,
+            synonyms: value,
+          })}
+          value={input.synonyms}
         />
         <Button
           className='m-1'

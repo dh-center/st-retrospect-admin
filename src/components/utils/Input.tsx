@@ -2,21 +2,23 @@ import Form from 'react-bootstrap/Form';
 import React from 'react';
 import useUniqueId from '../../utils/useUniqueId';
 import styles from './Input.module.css';
+import classNames from 'classnames';
+import WithClassName from '../../types/withClassName';
 
 interface InputProps<T extends number | string> {
   onChange(value: T): void;
   value: T | null;
-  label: string;
+  label?: string;
   type?: string;
   required?: boolean;
   disabled?: boolean;
 }
 
-export default function Input<T extends number | string>(props: InputProps<T>): React.ReactElement {
+export default function Input<T extends number | string>(props: InputProps<T> & WithClassName): React.ReactElement {
   const id = useUniqueId('app-input');
 
   return (
-    <Form.Group className={styles.container}>
+    <Form.Group className={classNames(styles.container, props.className)}>
       {props.label && <Form.Label className={styles.label} htmlFor={id`input`}>
         {props.label}:
       </Form.Label>}
