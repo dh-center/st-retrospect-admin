@@ -220,7 +220,7 @@ input CreateRelationTypeInput {
   name: MultilingualString!
 
   """Relation type synonyms"""
-  synonyms: [MultilingualString!]!
+  synonyms: [MultilingualString]!
 }
 
 type CreateRelationTypePayload {

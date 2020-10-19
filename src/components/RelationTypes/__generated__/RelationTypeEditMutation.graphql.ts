@@ -3,33 +3,34 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type CreateRelationTypeInput = {
-    name: string;
-    synonyms: Array<string | null>;
+export type UpdateRelationTypeInput = {
+    id: string;
+    name?: string | null;
+    synonyms?: Array<string | null> | null;
 };
-export type RelationTypeCreateMutationVariables = {
-    input: CreateRelationTypeInput;
+export type RelationTypeEditMutationVariables = {
+    input: UpdateRelationTypeInput;
 };
-export type RelationTypeCreateMutationResponse = {
+export type RelationTypeEditMutationResponse = {
     readonly relationType: {
-        readonly create: {
+        readonly update: {
             readonly recordId: string;
         };
     };
 };
-export type RelationTypeCreateMutation = {
-    readonly response: RelationTypeCreateMutationResponse;
-    readonly variables: RelationTypeCreateMutationVariables;
+export type RelationTypeEditMutation = {
+    readonly response: RelationTypeEditMutationResponse;
+    readonly variables: RelationTypeEditMutationVariables;
 };
 
 
 
 /*
-mutation RelationTypeCreateMutation(
-  $input: CreateRelationTypeInput!
+mutation RelationTypeEditMutation(
+  $input: UpdateRelationTypeInput!
 ) {
   relationType {
-    create(input: $input) {
+    update(input: $input) {
       recordId
     }
   }
@@ -62,9 +63,9 @@ v1 = [
             "variableName": "input"
           }
         ],
-        "concreteType": "CreateRelationTypePayload",
+        "concreteType": "UpdateRelationTypePayload",
         "kind": "LinkedField",
-        "name": "create",
+        "name": "update",
         "plural": false,
         "selections": [
           {
@@ -86,7 +87,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "RelationTypeCreateMutation",
+    "name": "RelationTypeEditMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -95,18 +96,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "RelationTypeCreateMutation",
+    "name": "RelationTypeEditMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "1896d15e5a356f5ae864a10dd88956d1",
+    "cacheID": "d3739d5f796f38cee545cf4aa16b8d83",
     "id": null,
     "metadata": {},
-    "name": "RelationTypeCreateMutation",
+    "name": "RelationTypeEditMutation",
     "operationKind": "mutation",
-    "text": "mutation RelationTypeCreateMutation(\n  $input: CreateRelationTypeInput!\n) {\n  relationType {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation RelationTypeEditMutation(\n  $input: UpdateRelationTypeInput!\n) {\n  relationType {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '99bc61a872b4e2dfabe3abf067afcdf9';
+(node as any).hash = '8030f89d70048fe17a99f40d0ceb2f84';
 export default node;

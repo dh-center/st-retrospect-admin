@@ -4,6 +4,7 @@ import PrivateRoute from '../PrivateRoute';
 import RelationTypesPage from './RelationTypesPage';
 import RelationTypeView from './RelationTypeView';
 import RelationTypeCreate from './RelationTypeCreate';
+import RelationTypeEdit from './RelationTypeEdit';
 
 /**
  * Page for displaying relation types pages
@@ -13,6 +14,9 @@ export default function RelationTypesRouter(): ReactElement {
     <Switch>
       <PrivateRoute path='/relationTypes/create'>
         <RelationTypeCreate/>
+      </PrivateRoute>
+      <PrivateRoute path='/relationTypes/:id/edit'>
+        <RelationTypeEdit/>
       </PrivateRoute>
       <PrivateRoute path='/relationTypes/:id'>
         <RelationTypeView/>

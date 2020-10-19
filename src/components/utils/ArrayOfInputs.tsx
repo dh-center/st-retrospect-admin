@@ -13,14 +13,19 @@ interface ArrayOfInputsProps {
    *
    * @param value - value for changing
    */
-  onChange(value: string[]): void;
+  onChange(value: (string | null)[]): void;
 
   /**
    * Default value
    */
-  value: string[] | null;
+  value?: (string | null)[];
 }
 
+/**
+ * Displays array of inputs in one component
+ *
+ * @param props - props with data for displaying
+ */
 export default function ArrayOfInputs(props: ArrayOfInputsProps): ReactElement {
   const [dataArray, setDataArray] = useState(props.value || []);
 
