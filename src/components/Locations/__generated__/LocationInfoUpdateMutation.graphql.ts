@@ -7,7 +7,16 @@ export type UpdateLocationInput = {
     id: string;
     latitude?: number | null;
     longitude?: number | null;
-    instances: Array<string>;
+    addresses?: Array<UpdateAddressInput> | null;
+};
+export type UpdateAddressInput = {
+    countryCode?: string | null;
+    regionCode?: string | null;
+    place?: string | null;
+    locality?: string | null;
+    address?: string | null;
+    address2?: string | null;
+    postcode?: string | null;
 };
 export type LocationInfoUpdateMutationVariables = {
     input: UpdateLocationInput;

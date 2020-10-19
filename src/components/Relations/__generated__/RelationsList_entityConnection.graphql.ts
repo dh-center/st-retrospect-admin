@@ -19,7 +19,7 @@ export type RelationsList_entityConnection = {
                     readonly name: string | null;
                 } | null;
                 readonly relationType: {
-                    readonly name: string | null;
+                    readonly name: string;
                 } | null;
             };
         }>;

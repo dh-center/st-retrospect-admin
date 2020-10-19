@@ -40,29 +40,35 @@ directive @specifiedBy(
 ) on SCALAR
 
 """Location address representation"""
-type Address implements Node {
-  """Address's ID"""
-  id: ID!
-
-  """Street on which the location is located"""
-  street: String
-
-  """Build name"""
-  build: String
-
-  """House number on the street"""
-  homeNumber: String
-
-  """Corps of home"""
-  housing: String
-
-  """Link for location info"""
-  link: String
+type Address {
+  country: Country
+  region: Region
+  place: MultilingualString
+  locality: MultilingualString
+  address: MultilingualString
+  address2: MultilingualString
+  postcode: MultilingualString
 }
 
 input Coordinates {
   longitude: Float!
   latitude: Float!
+}
+
+type Country implements Node {
+  id: ID!
+  code: String!
+  name: MultilingualString!
+}
+
+input CreateAddressInput {
+  countryCode: String!
+  regionCode: String!
+  place: MultilingualString
+  locality: MultilingualString
+  address: MultilingualString!
+  address2: MultilingualString
+  postcode: MultilingualString
 }
 
 input CreateLocationInput {
@@ -74,6 +80,7 @@ input CreateLocationInput {
 
   """Possible location representations"""
   instances: [LocationInstanceInput!]!
+  addresses: [CreateAddressInput!]!
 }
 
 input CreateLocationInstanceInput {
@@ -208,6 +215,22 @@ type CreateRelationPayload {
   record: Relation!
 }
 
+input CreateRelationTypeInput {
+  """Relation type name"""
+  name: MultilingualString!
+
+  """Relation type synonyms"""
+  synonyms: [MultilingualString!]!
+}
+
+type CreateRelationTypePayload {
+  """Created relation type id"""
+  recordId: GlobalId!
+
+  """Created relation type"""
+  record: RelationType!
+}
+
 scalar Cursor
 
 type DeleteLocationInstancePayload {
@@ -232,6 +255,11 @@ type DeleteQuestPayload {
 
 type DeleteRelationPayload {
   """Deleted relation id"""
+  recordId: GlobalId!
+}
+
+type DeleteRelationTypePayload {
+  """Deleted relation type id"""
   recordId: GlobalId!
 }
 
@@ -290,7 +318,7 @@ type Location implements Node {
   longitude: Float
 
   """Array of addresses ids"""
-  addresses: [Address]
+  addresses: [Address!]
 
   """Possible location representations"""
   instances: [LocationInstance!]!
@@ -444,6 +472,7 @@ type Mutation {
   location: LocationMutations!
   locationInstances: LocationInstanceMutations!
   relation: RelationMutations!
+  relationType: RelationTypeMutations!
 
   """Save route to user"""
   saveRoute(routeId: String!): User!
@@ -657,8 +686,30 @@ type Query {
     last: Int
   ): RelationConnection!
 
+  """Get specific relation type"""
+  relationType(
+    """Relation type id"""
+    id: GlobalId!
+  ): RelationType
+
   """List of available relation types"""
-  relationTypes: [RelationType!]!
+  relationTypes(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): RelationTypeConnection!
 
   """Get all routes"""
   routes(
@@ -771,6 +822,12 @@ type QuestMutations {
   delete(id: GlobalId!): DeleteQuestPayload!
 }
 
+type Region implements Node {
+  id: ID!
+  code: String!
+  name: MultilingualString!
+}
+
 """Represents relation between person and location"""
 type Relation implements Node {
   """Relation's id"""
@@ -827,10 +884,42 @@ type RelationType implements Node {
   id: ID!
 
   """Relation type name"""
-  name: String
+  name: MultilingualString!
 
   """Relation type synonyms"""
-  synonyms: [String]
+  synonyms: [MultilingualString]!
+}
+
+"""Model for representing list of relation types"""
+type RelationTypeConnection {
+  """List of relation types edges"""
+  edges: [RelationTypeEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific relation type in connection"""
+type RelationTypeEdge {
+  """Cursor of this relation type"""
+  cursor: Cursor!
+
+  """Relation type info"""
+  node: RelationType!
+}
+
+type RelationTypeMutations {
+  """Creates relation type"""
+  create(input: CreateRelationTypeInput!): CreateRelationTypePayload!
+
+  """Update relation type"""
+  update(input: UpdateRelationTypeInput!): UpdateRelationTypePayload!
+
+  """Delete relation type"""
+  delete(id: GlobalId!): DeleteRelationTypePayload!
 }
 
 """Route between locations"""
@@ -871,6 +960,16 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 """
 scalar Timestamp
 
+input UpdateAddressInput {
+  countryCode: String
+  regionCode: String
+  place: MultilingualString
+  locality: MultilingualString
+  address: MultilingualString
+  address2: MultilingualString
+  postcode: MultilingualString
+}
+
 input UpdateLocationInput {
   """Location id to update"""
   id: GlobalId!
@@ -880,9 +979,7 @@ input UpdateLocationInput {
 
   """Location position longitude"""
   longitude: Float
-
-  """Possible location instances id"""
-  instances: [GlobalId!]!
+  addresses: [UpdateAddressInput!]
 }
 
 input UpdateLocationInstanceInput {
@@ -1024,6 +1121,25 @@ type UpdateRelationPayload {
 
   """Updated relation"""
   record: Relation!
+}
+
+input UpdateRelationTypeInput {
+  """ID of relation type for updating"""
+  id: GlobalId!
+
+  """Relation type name"""
+  name: MultilingualString
+
+  """Relation type synonyms"""
+  synonyms: [MultilingualString]
+}
+
+type UpdateRelationTypePayload {
+  """Updated relation type id"""
+  recordId: GlobalId!
+
+  """Updated relation type"""
+  record: RelationType!
 }
 
 type User implements Node {

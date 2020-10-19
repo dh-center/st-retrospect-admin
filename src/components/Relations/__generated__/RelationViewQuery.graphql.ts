@@ -22,7 +22,7 @@ export type RelationViewQueryResponse = {
             readonly name: string | null;
         } | null;
         readonly relationType: {
-            readonly name: string | null;
+            readonly name: string;
         } | null;
     } | null;
 };
