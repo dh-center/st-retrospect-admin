@@ -41,12 +41,25 @@ directive @specifiedBy(
 
 """Location address representation"""
 type Address {
+  """Country data"""
   country: Country
+
+  """Country region data"""
   region: Region
+
+  """City name, e.g. Saint-Petersburg"""
   place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
   locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
   address: MultilingualString
+
+  """An optional second line of an address"""
   address2: MultilingualString
+
+  """Address postcode"""
   postcode: MultilingualString
 }
 
@@ -55,22 +68,43 @@ input Coordinates {
   latitude: Float!
 }
 
+"""Country data in address of location"""
 type Country implements Node {
+  """Country identifier"""
   id: ID!
+
+  """ISO 3166 country code"""
   code: String!
+
+  """Country name"""
   name: MultilingualString!
 }
 
+"""Input type for specifying address in new location"""
 input CreateAddressInput {
+  """Unique country code from ISO 3166"""
   countryCode: String!
+
+  """Unique region code from ISO 3166"""
   regionCode: String!
+
+  """City name, e.g. Saint-Petersburg"""
   place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
   locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
   address: MultilingualString!
+
+  """An optional second line of an address"""
   address2: MultilingualString
+
+  """Address postcode"""
   postcode: MultilingualString
 }
 
+"""Input for creating new location"""
 input CreateLocationInput {
   """Location position latitude"""
   latitude: Float!
@@ -80,6 +114,8 @@ input CreateLocationInput {
 
   """Possible location representations"""
   instances: [LocationInstanceInput!]!
+
+  """Address to bind to new location"""
   addresses: [CreateAddressInput!]!
 }
 
@@ -778,9 +814,18 @@ type QuestMutations {
   delete(id: GlobalId!): DeleteQuestPayload!
 }
 
+"""Region data in address of location"""
 type Region implements Node {
+  """Region identifier"""
   id: ID!
+
+  """
+  ISO 3166 country code
+  see https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+  """
   code: String!
+
+  """Region name"""
   name: MultilingualString!
 }
 
@@ -884,13 +929,27 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 """
 scalar Timestamp
 
+"""Input type for updating address in location"""
 input UpdateAddressInput {
+  """Unique country code from ISO 3166"""
   countryCode: String
+
+  """Unique region code from ISO 3166"""
   regionCode: String
+
+  """City name, e.g. Saint-Petersburg"""
   place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
   locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
   address: MultilingualString
+
+  """An optional second line of an address"""
   address2: MultilingualString
+
+  """Address postcode"""
   postcode: MultilingualString
 }
 
@@ -903,6 +962,8 @@ input UpdateLocationInput {
 
   """Location position longitude"""
   longitude: Float
+
+  """Updated location address"""
   addresses: [UpdateAddressInput!]
 }
 
