@@ -40,10 +40,21 @@ export function updateInfo(input: UpdateLocationInput): Promise<LocationEditForm
   });
 }
 
+/**
+ * Props for LocationEditForm
+ */
 interface Props {
+  /**
+   * Location to edit
+   */
   originalLocation: LocationEditForm_originalLocation;
 }
 
+/**
+ * Form for updating location information
+ *
+ * @param props - props for component rendering
+ */
 function LocationEditForm(props: Props): React.ReactElement {
   const [input, setInput] = useState<UpdateLocationInput>({
     ...props.originalLocation,
