@@ -65,7 +65,7 @@ function LocationEditForm(props: Props): React.ReactElement {
   const history = useHistory();
 
   /**
-   * Saves updated person to API
+   * Saves updated location to API
    *
    * @param e - form submit event
    */
