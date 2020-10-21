@@ -40,24 +40,27 @@ directive @specifiedBy(
 ) on SCALAR
 
 """Location address representation"""
-type Address implements Node {
-  """Address's ID"""
-  id: ID!
+type Address {
+  """Country data"""
+  country: Country
 
-  """Street on which the location is located"""
-  street: String
+  """Country region data"""
+  region: Region
 
-  """Build name"""
-  build: String
+  """City name, e.g. Saint-Petersburg"""
+  place: MultilingualString
 
-  """House number on the street"""
-  homeNumber: String
+  """City district e.g. Адмиралтейский округ"""
+  locality: MultilingualString
 
-  """Corps of home"""
-  housing: String
+  """The first line of an address e.g. Пл. Никольская 1"""
+  address: MultilingualString
 
-  """Link for location info"""
-  link: String
+  """An optional second line of an address"""
+  address2: MultilingualString
+
+  """Address postcode"""
+  postcode: MultilingualString
 }
 
 input Coordinates {
@@ -65,6 +68,43 @@ input Coordinates {
   latitude: Float!
 }
 
+"""Country data in address of location"""
+type Country implements Node {
+  """Country identifier"""
+  id: ID!
+
+  """ISO 3166 country code"""
+  code: String!
+
+  """Country name"""
+  name: MultilingualString!
+}
+
+"""Input type for specifying address in new location"""
+input CreateAddressInput {
+  """Unique country code from ISO 3166"""
+  countryCode: String!
+
+  """Unique region code from ISO 3166"""
+  regionCode: String!
+
+  """City name, e.g. Saint-Petersburg"""
+  place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
+  locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
+  address: MultilingualString!
+
+  """An optional second line of an address"""
+  address2: MultilingualString
+
+  """Address postcode"""
+  postcode: MultilingualString
+}
+
+"""Input for creating new location"""
 input CreateLocationInput {
   """Location position latitude"""
   latitude: Float!
@@ -74,6 +114,9 @@ input CreateLocationInput {
 
   """Possible location representations"""
   instances: [LocationInstanceInput!]!
+
+  """Address to bind to new location"""
+  addresses: [CreateAddressInput!]!
 }
 
 input CreateLocationInstanceInput {
@@ -290,7 +333,7 @@ type Location implements Node {
   longitude: Float
 
   """Array of addresses ids"""
-  addresses: [Address]
+  addresses: [Address!]
 
   """Possible location representations"""
   instances: [LocationInstance!]!
@@ -771,6 +814,21 @@ type QuestMutations {
   delete(id: GlobalId!): DeleteQuestPayload!
 }
 
+"""Region data in address of location"""
+type Region implements Node {
+  """Region identifier"""
+  id: ID!
+
+  """
+  ISO 3166 country code
+  see https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+  """
+  code: String!
+
+  """Region name"""
+  name: MultilingualString!
+}
+
 """Represents relation between person and location"""
 type Relation implements Node {
   """Relation's id"""
@@ -871,6 +929,30 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 """
 scalar Timestamp
 
+"""Input type for updating address in location"""
+input UpdateAddressInput {
+  """Unique country code from ISO 3166"""
+  countryCode: String
+
+  """Unique region code from ISO 3166"""
+  regionCode: String
+
+  """City name, e.g. Saint-Petersburg"""
+  place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
+  locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
+  address: MultilingualString
+
+  """An optional second line of an address"""
+  address2: MultilingualString
+
+  """Address postcode"""
+  postcode: MultilingualString
+}
+
 input UpdateLocationInput {
   """Location id to update"""
   id: GlobalId!
@@ -881,8 +963,8 @@ input UpdateLocationInput {
   """Location position longitude"""
   longitude: Float
 
-  """Possible location instances id"""
-  instances: [GlobalId!]!
+  """Updated location address"""
+  addresses: [UpdateAddressInput!]
 }
 
 input UpdateLocationInstanceInput {

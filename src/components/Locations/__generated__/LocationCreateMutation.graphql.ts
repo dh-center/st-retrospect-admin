@@ -7,6 +7,7 @@ export type CreateLocationInput = {
     latitude: number;
     longitude: number;
     instances: Array<LocationInstanceInput>;
+    addresses: Array<CreateAddressInput>;
 };
 export type LocationInstanceInput = {
     name: string;
@@ -18,6 +19,15 @@ export type LocationInstanceInput = {
     demolitionDate?: string | null;
     startDate?: string | null;
     endDate?: string | null;
+};
+export type CreateAddressInput = {
+    countryCode: string;
+    regionCode: string;
+    place?: string | null;
+    locality?: string | null;
+    address: string;
+    address2?: string | null;
+    postcode?: string | null;
 };
 export type LocationCreateMutationVariables = {
     input: CreateLocationInput;
