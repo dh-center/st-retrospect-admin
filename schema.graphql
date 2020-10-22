@@ -41,12 +41,25 @@ directive @specifiedBy(
 
 """Location address representation"""
 type Address {
+  """Country data"""
   country: Country
+
+  """Country region data"""
   region: Region
+
+  """City name, e.g. Saint-Petersburg"""
   place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
   locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
   address: MultilingualString
+
+  """An optional second line of an address"""
   address2: MultilingualString
+
+  """Address postcode"""
   postcode: MultilingualString
 }
 
@@ -55,22 +68,43 @@ input Coordinates {
   latitude: Float!
 }
 
+"""Country data in address of location"""
 type Country implements Node {
+  """Country identifier"""
   id: ID!
+
+  """ISO 3166 country code"""
   code: String!
+
+  """Country name"""
   name: MultilingualString!
 }
 
+"""Input type for specifying address in new location"""
 input CreateAddressInput {
+  """Unique country code from ISO 3166"""
   countryCode: String!
+
+  """Unique region code from ISO 3166"""
   regionCode: String!
+
+  """City name, e.g. Saint-Petersburg"""
   place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
   locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
   address: MultilingualString!
+
+  """An optional second line of an address"""
   address2: MultilingualString
+
+  """Address postcode"""
   postcode: MultilingualString
 }
 
+"""Input for creating new location"""
 input CreateLocationInput {
   """Location position latitude"""
   latitude: Float!
@@ -80,6 +114,8 @@ input CreateLocationInput {
 
   """Possible location representations"""
   instances: [LocationInstanceInput!]!
+
+  """Address to bind to new location"""
   addresses: [CreateAddressInput!]!
 }
 
@@ -215,22 +251,6 @@ type CreateRelationPayload {
   record: Relation!
 }
 
-input CreateRelationTypeInput {
-  """Relation type name"""
-  name: MultilingualString!
-
-  """Relation type synonyms"""
-  synonyms: [MultilingualString]!
-}
-
-type CreateRelationTypePayload {
-  """Created relation type id"""
-  recordId: GlobalId!
-
-  """Created relation type"""
-  record: RelationType!
-}
-
 scalar Cursor
 
 type DeleteLocationInstancePayload {
@@ -255,11 +275,6 @@ type DeleteQuestPayload {
 
 type DeleteRelationPayload {
   """Deleted relation id"""
-  recordId: GlobalId!
-}
-
-type DeleteRelationTypePayload {
-  """Deleted relation type id"""
   recordId: GlobalId!
 }
 
@@ -472,7 +487,6 @@ type Mutation {
   location: LocationMutations!
   locationInstances: LocationInstanceMutations!
   relation: RelationMutations!
-  relationType: RelationTypeMutations!
 
   """Save route to user"""
   saveRoute(routeId: String!): User!
@@ -686,30 +700,8 @@ type Query {
     last: Int
   ): RelationConnection!
 
-  """Get specific relation type"""
-  relationType(
-    """Relation type id"""
-    id: GlobalId!
-  ): RelationType
-
   """List of available relation types"""
-  relationTypes(
-    """The cursor after which we take the data"""
-    after: Cursor
-
-    """The cursor after before we take the data"""
-    before: Cursor
-
-    """
-    Number of requested nodes after a node with a cursor in the after argument
-    """
-    first: Int
-
-    """
-    Number of requested nodes before a node with a cursor in the before argument
-    """
-    last: Int
-  ): RelationTypeConnection!
+  relationTypes: [RelationType!]!
 
   """Get all routes"""
   routes(
@@ -822,9 +814,18 @@ type QuestMutations {
   delete(id: GlobalId!): DeleteQuestPayload!
 }
 
+"""Region data in address of location"""
 type Region implements Node {
+  """Region identifier"""
   id: ID!
+
+  """
+  ISO 3166 country code
+  see https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+  """
   code: String!
+
+  """Region name"""
   name: MultilingualString!
 }
 
@@ -884,42 +885,10 @@ type RelationType implements Node {
   id: ID!
 
   """Relation type name"""
-  name: MultilingualString!
+  name: String
 
   """Relation type synonyms"""
-  synonyms: [MultilingualString]!
-}
-
-"""Model for representing list of relation types"""
-type RelationTypeConnection {
-  """List of relation types edges"""
-  edges: [RelationTypeEdge!]!
-
-  """Information about this page"""
-  pageInfo: PageInfo!
-
-  """Number of available edges"""
-  totalCount: Int!
-}
-
-"""Information about specific relation type in connection"""
-type RelationTypeEdge {
-  """Cursor of this relation type"""
-  cursor: Cursor!
-
-  """Relation type info"""
-  node: RelationType!
-}
-
-type RelationTypeMutations {
-  """Creates relation type"""
-  create(input: CreateRelationTypeInput!): CreateRelationTypePayload!
-
-  """Update relation type"""
-  update(input: UpdateRelationTypeInput!): UpdateRelationTypePayload!
-
-  """Delete relation type"""
-  delete(id: GlobalId!): DeleteRelationTypePayload!
+  synonyms: [String]
 }
 
 """Route between locations"""
@@ -960,13 +929,27 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 """
 scalar Timestamp
 
+"""Input type for updating address in location"""
 input UpdateAddressInput {
+  """Unique country code from ISO 3166"""
   countryCode: String
+
+  """Unique region code from ISO 3166"""
   regionCode: String
+
+  """City name, e.g. Saint-Petersburg"""
   place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
   locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
   address: MultilingualString
+
+  """An optional second line of an address"""
   address2: MultilingualString
+
+  """Address postcode"""
   postcode: MultilingualString
 }
 
@@ -979,6 +962,8 @@ input UpdateLocationInput {
 
   """Location position longitude"""
   longitude: Float
+
+  """Updated location address"""
   addresses: [UpdateAddressInput!]
 }
 
@@ -1121,25 +1106,6 @@ type UpdateRelationPayload {
 
   """Updated relation"""
   record: Relation!
-}
-
-input UpdateRelationTypeInput {
-  """ID of relation type for updating"""
-  id: GlobalId!
-
-  """Relation type name"""
-  name: MultilingualString
-
-  """Relation type synonyms"""
-  synonyms: [MultilingualString]
-}
-
-type UpdateRelationTypePayload {
-  """Updated relation type id"""
-  recordId: GlobalId!
-
-  """Updated relation type"""
-  record: RelationType!
 }
 
 type User implements Node {
