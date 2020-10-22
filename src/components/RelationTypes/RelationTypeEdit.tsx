@@ -138,12 +138,14 @@ export default function RelationTypeEdit(): ReactElement {
               value={input?.name || props.relationType.name}
             />
             <LabeledArrayOfInputs
+              addButtonText='Add synonym...'
               label='Synonyms'
               onChange={value => setInput({
                 ...input,
                 id,
                 synonyms: value,
               })}
+              removeButtonText='Remove synonym'
               /**
                * Converts ReadonlyArray to simple array
                */

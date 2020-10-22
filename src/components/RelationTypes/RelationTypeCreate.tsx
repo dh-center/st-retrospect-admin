@@ -97,11 +97,13 @@ export default function RelationTypeCreate(): React.ReactElement {
           value={input.name}
         />
         <LabeledArrayOfInputs
+          addButtonText='Add synonym...'
           label='Synonyms'
           onChange={value => setInput({
             ...input,
             synonyms: value,
           })}
+          removeButtonText='Remove synonym'
           value={input.synonyms}
         />
         <Button

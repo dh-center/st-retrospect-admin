@@ -19,6 +19,16 @@ interface ArrayOfInputsProps {
    * Default value
    */
   value?: (string | null)[];
+
+  /**
+   * Text on adding button
+   */
+  addButtonText?: string;
+
+  /**
+   * Text on removing button
+   */
+  removeButtonText?: string;
 }
 
 /**
@@ -81,7 +91,7 @@ export default function ArrayOfInputs(props: ArrayOfInputsProps): ReactElement {
           onClick={() => removeElement(index)}
           variant='outline-danger'
         >
-          Remove synonym
+          {props.removeButtonText || '-'}
         </Button>
       </Form.Row>
     );
@@ -95,7 +105,7 @@ export default function ArrayOfInputs(props: ArrayOfInputsProps): ReactElement {
         onClick={addEmptyElement}
         variant='success'
       >
-        Add synonym...
+        {props.addButtonText || '+'}
       </Button>
     </>
   );
