@@ -122,7 +122,7 @@ export default function RelationTypeEdit(): ReactElement {
             time: 5000,
           });
 
-          return <Redirect to='/relationTypes'/>;
+          return <Redirect to='/relation-types'/>;
         }
 
         return (

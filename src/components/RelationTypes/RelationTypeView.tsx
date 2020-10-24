@@ -60,7 +60,7 @@ function RelationTypeView(): React.ReactElement {
         try {
           await remove(id);
           setDeletingStatus(false);
-          history.push('/relationTypes');
+          history.push('/relation-types');
         } catch {
           setDeletingStatus(false);
           notifier.show({
@@ -103,7 +103,7 @@ function RelationTypeView(): React.ReactElement {
             time: 5000,
           });
 
-          return <Redirect to='/relationTypes'/>;
+          return <Redirect to='/relation-types'/>;
         }
 
         return (
@@ -121,7 +121,7 @@ function RelationTypeView(): React.ReactElement {
               />
             </div>
             <div>
-              <LinkContainer to={`/relationTypes/${id}/edit`}>
+              <LinkContainer to={`/relation-types/${id}/edit`}>
                 <Button className='m-1' variant='outline-warning'>Edit</Button>
               </LinkContainer>
               <Button className='m-1' onClick={removeRelationType} variant='outline-danger'>

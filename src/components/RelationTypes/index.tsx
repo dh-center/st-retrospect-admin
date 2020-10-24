@@ -12,16 +12,16 @@ import RelationTypeEdit from './RelationTypeEdit';
 export default function RelationTypesRouter(): ReactElement {
   return (
     <Switch>
-      <PrivateRoute path='/relationTypes/create'>
+      <PrivateRoute path='/relation-types/create'>
         <RelationTypeCreate/>
       </PrivateRoute>
-      <PrivateRoute path='/relationTypes/:id/edit'>
+      <PrivateRoute path='/relation-types/:id/edit'>
         <RelationTypeEdit/>
       </PrivateRoute>
-      <PrivateRoute path='/relationTypes/:id'>
+      <PrivateRoute path='/relation-types/:id'>
         <RelationTypeView/>
       </PrivateRoute>
-      <PrivateRoute path='/relationTypes'>
+      <PrivateRoute path='/relation-types'>
         <RelationTypesPage/>
       </PrivateRoute>
     </Switch>

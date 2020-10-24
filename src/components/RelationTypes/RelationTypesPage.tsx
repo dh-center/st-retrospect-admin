@@ -33,7 +33,7 @@ export default function RelationTypesPage(): ReactElement {
           />;
         }
 
-        return <RelationTypesList entityConnection={props} entityName='relationTypes'/>;
+        return <RelationTypesList entityConnection={props} entityName='relation-types'/>;
       }}
       variables={{
         first: ENTITIES_PER_PAGE,

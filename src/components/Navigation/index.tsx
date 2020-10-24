@@ -50,7 +50,7 @@ export function Navigation(props: NavigationProps): ReactElement {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link as={Link} to='/relationTypes'>
+          <Nav.Link as={Link} to='/relation-types'>
             Relation types
           </Nav.Link>
         </Nav.Item>

@@ -49,7 +49,7 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
           <RelationsPage/>
         </PrivateRoute>
 
-        <PrivateRoute path='/relationTypes'>
+        <PrivateRoute path='/relation-types'>
           <RelationTypesPage/>
         </PrivateRoute>
 

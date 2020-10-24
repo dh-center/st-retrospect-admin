@@ -73,7 +73,7 @@ export default function RelationTypeCreate(): React.ReactElement {
         time: 5000,
       });
       setLoadingStatus(false);
-      history.push('/relationTypes');
+      history.push('/relation-types');
     } catch {
       setLoadingStatus(false);
       notifier.show({
