@@ -39,8 +39,12 @@ export default function RelationTypesCustomSelect(componentProps: RelationTypesC
       query={graphql`
         query RelationTypesCustomSelect_relationTypesQuery {
           relationTypes {
-            value: id
-            name
+            edges {
+              node {
+                value: id
+                name
+              }
+            }
           }
         }
       `}
@@ -60,7 +64,9 @@ export default function RelationTypesCustomSelect(componentProps: RelationTypesC
           );
         }
 
-        const relationTypesWithNames = props.relationTypes.filter((relationType) => {
+        const edges = props.relationTypes.edges;
+        const relationTypes = edges.map((edge) => edge.node);
+        const relationTypesWithNames = relationTypes.filter((relationType) => {
           return relationType && relationType.name;
         }) as {readonly value: string; readonly name: string}[];
 

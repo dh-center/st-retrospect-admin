@@ -4,47 +4,27 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type RelationsList_entityConnection = {
+export type RelationTypesList_entityConnection = {
     readonly entities: {
         readonly totalCount: number;
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly person: {
-                    readonly lastName: string | null;
-                    readonly firstName: string | null;
-                    readonly patronymic: string | null;
-                } | null;
-                readonly locationInstance: {
-                    readonly name: string | null;
-                } | null;
-                readonly relationType: {
-                    readonly name: string;
-                } | null;
+                readonly name: string;
             };
         }>;
     };
-    readonly " $refType": "RelationsList_entityConnection";
+    readonly " $refType": "RelationTypesList_entityConnection";
 };
-export type RelationsList_entityConnection$data = RelationsList_entityConnection;
-export type RelationsList_entityConnection$key = {
-    readonly " $data"?: RelationsList_entityConnection$data;
-    readonly " $fragmentRefs": FragmentRefs<"RelationsList_entityConnection">;
+export type RelationTypesList_entityConnection$data = RelationTypesList_entityConnection;
+export type RelationTypesList_entityConnection$key = {
+    readonly " $data"?: RelationTypesList_entityConnection$data;
+    readonly " $fragmentRefs": FragmentRefs<"RelationTypesList_entityConnection">;
 };
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "name",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -70,14 +50,14 @@ return {
       }
     ]
   },
-  "name": "RelationsList_entityConnection",
+  "name": "RelationTypesList_entityConnection",
   "selections": [
     {
       "alias": "entities",
       "args": null,
-      "concreteType": "RelationConnection",
+      "concreteType": "RelationTypeConnection",
       "kind": "LinkedField",
-      "name": "__RelationsPage_entities_connection",
+      "name": "__RelationTypesPage_entities_connection",
       "plural": false,
       "selections": [
         {
@@ -90,7 +70,7 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "RelationEdge",
+          "concreteType": "RelationTypeEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -98,7 +78,7 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": "Relation",
+              "concreteType": "RelationType",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -113,53 +93,8 @@ return {
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "Person",
-                  "kind": "LinkedField",
-                  "name": "person",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "lastName",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "firstName",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "patronymic",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "LocationInstance",
-                  "kind": "LinkedField",
-                  "name": "locationInstance",
-                  "plural": false,
-                  "selections": (v0/*: any*/),
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "RelationType",
-                  "kind": "LinkedField",
-                  "name": "relationType",
-                  "plural": false,
-                  "selections": (v0/*: any*/),
+                  "kind": "ScalarField",
+                  "name": "name",
                   "storageKey": null
                 },
                 {
@@ -214,6 +149,5 @@ return {
   "type": "Query",
   "abstractKey": null
 };
-})();
-(node as any).hash = '2b1e618332a60d38b3d1a42effa0201d';
+(node as any).hash = '6b960f5849a0ab0724305b1eecf05277';
 export default node;
