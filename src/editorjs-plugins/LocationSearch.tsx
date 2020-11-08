@@ -2,12 +2,8 @@
 import EditorJS from '@editorjs/editorjs';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CustomSelect from '../components/utils/CustomSelect';
-import { QueryRenderer } from 'react-relay';
-import environment from '../relay-env';
-import graphql from 'babel-plugin-relay/macro';
-import { LocationSearch_locationsQuery as LocationSearchLocationsQuery } from './__generated__/LocationSearch_locationsQuery.graphql';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
+import { LabeledLocationInstancesCustomSelect } from '../components/CustomSelects/LocationInstancesCustomSelect';
 
 /**
  * LocationSearch plugin data
@@ -58,52 +54,12 @@ export default class LocationSearch {
     const element = document.createElement('div');
 
     element.className = 'location-search-container';
-    ReactDOM.render(<QueryRenderer<LocationSearchLocationsQuery>
-      environment={environment}
-      query={graphql`
-        query LocationSearch_locationsQuery {
-          locations {
-            edges {
-              node {
-                instances {
-                  value: id
-                  name
-                }
-              }
-            }
-          }
-        }
-      `}
-      render={({ error, props }): React.ReactNode => {
-        if (error) {
-          return <div>Error!</div>;
-        }
-        if (!props) {
-          return <div>Loading locations...</div>;
-        }
-
-        /**
-         * Get list of locations from response
-         */
-        const edges = props.locations.edges;
-        const instances = edges.map((edge) => edge.node.instances);
-        const locations = instances.flat(1);
-
-        const locationsWithNames = locations.filter((location) => {
-          if (location.name !== null) {
-            return location;
-          }
-        }) as {readonly value: string; readonly name: string}[];
-
-        return <CustomSelect onChange={(selected): void => {
-          this.selectedLocationInstanceId = selected;
-        }}
-        options={locationsWithNames}
-        placeholder='Select a location...'
-        value={this.selectedLocationInstanceId}
-        />;
+    ReactDOM.render(<LabeledLocationInstancesCustomSelect
+      label='Пользователь подходит к'
+      onChange={(selected): void => {
+        this.selectedLocationInstanceId = selected;
       }}
-      variables={{}}
+      value={this.selectedLocationInstanceId}
     />, element);
 
     return element;

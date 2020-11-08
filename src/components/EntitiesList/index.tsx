@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 import { RelayPaginationProp } from 'react-relay';
-import { ENTITIES_PER_PAGE } from '../../../constants';
+import { ENTITIES_PER_PAGE } from '../../constants';
 import PaginationControl from 'rc-pagination';
 import './index.css';
 import 'rc-pagination/assets/index.css';
 import locale from 'rc-pagination/lib/locale/ru_RU';
 import EntitiesListSection, { EntityRowProps } from './EntitiesListSection';
-import { Entity, EntityConnection } from '../../../types/entities';
+import { Entity, EntityConnection } from '../../types/entities';
 import { Table, Button, Spinner } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -113,7 +113,7 @@ export default class EntitiesList<T extends EntityConnection> extends React.Comp
                 <tr>
                   <th>№</th>
                   {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
-                    if (key === '__typename') {
+                    if (key === '__typename' || key === 'id') {
                       return undefined;
                     }
 

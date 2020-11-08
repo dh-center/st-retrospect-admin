@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { EntityRowProps } from '../Entities/EntitiesList/EntitiesListSection';
+import { EntityRowProps } from '../EntitiesList/EntitiesListSection';
 import { RelationsList_entityConnection } from './__generated__/RelationsList_entityConnection.graphql';
 import { Entity } from '../../types/entities';
 import { useHistory } from 'react-router';

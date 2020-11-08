@@ -1,5 +1,5 @@
 import { createPaginationContainer } from 'react-relay';
-import EntitiesList, { EntitiesListProps } from '../Entities/EntitiesList';
+import EntitiesList, { EntitiesListProps } from '../EntitiesList';
 import graphql from 'babel-plugin-relay/macro';
 import { RelationTypesList_entityConnection } from './__generated__/RelationTypesList_entityConnection.graphql';
 

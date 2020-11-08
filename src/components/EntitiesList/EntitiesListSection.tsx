@@ -1,6 +1,6 @@
 import React from 'react';
-import { ENTITIES_PER_PAGE } from '../../../constants';
-import { Entity, EntityConnection } from '../../../types/entities';
+import { ENTITIES_PER_PAGE } from '../../constants';
+import { Entity, EntityConnection } from '../../types/entities';
 import { withRouter, useHistory } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
@@ -32,7 +32,7 @@ export interface EntityRowProps<T extends Entity> {
 export function DefaultEntityRow<T extends Entity>(props: EntityRowProps<T>): React.ReactElement {
   const history = useHistory();
   const cells = Object.keys(props.entity).map((key) => {
-    if (key === '__typename') {
+    if (key === '__typename' || key === 'id') {
       return undefined;
     }
 
