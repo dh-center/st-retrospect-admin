@@ -28,6 +28,11 @@ interface QuestionData {
 }
 
 export default class Question implements BlockTool {
+  /**
+   * Previously saved data
+   *
+   * @private
+   */
   private data: QuestionData;
 
   /**
@@ -78,7 +83,7 @@ export default class Question implements BlockTool {
     const questionLabel = document.createElement('label');
     const questionInput = document.createElement('input');
 
-    questionInput.value = this.data?.question || '';
+    questionInput.value = this.data.question || '';
     questionInput.className = 'form-control';
     questionLabel.innerText = 'Вопрос:';
     questionLabel.className = styles.label;
@@ -94,7 +99,7 @@ export default class Question implements BlockTool {
     const answerLabel = document.createElement('label');
     const answerInput = document.createElement('input');
 
-    answerInput.value = this.data?.answer || '';
+    answerInput.value = this.data.answer || '';
     answerInput.className = 'form-control';
     answerLabel.innerText = 'Ответ:';
     answerLabel.className = styles.label;
@@ -110,7 +115,7 @@ export default class Question implements BlockTool {
     const rightAnswerMessageLabel = document.createElement('label');
     const rightAnswerMessageInput = document.createElement('input');
 
-    rightAnswerMessageInput.value = this.data?.rightAnswerMessage || '';
+    rightAnswerMessageInput.value = this.data.rightAnswerMessage || '';
     rightAnswerMessageInput.className = 'form-control';
     rightAnswerMessageLabel.innerText = 'Сообщение для правильного ответа:';
     rightAnswerMessageLabel.className = styles.label;
@@ -126,7 +131,7 @@ export default class Question implements BlockTool {
     const wrongAnswerMessageLabel = document.createElement('label');
     const wrongAnswerMessageInput = document.createElement('input');
 
-    wrongAnswerMessageInput.value = this.data?.wrongAnswerMessage || '';
+    wrongAnswerMessageInput.value = this.data.wrongAnswerMessage || '';
     wrongAnswerMessageInput.className = 'form-control';
     wrongAnswerMessageLabel.innerText = 'Сообщение для неправильного ответа:';
     wrongAnswerMessageLabel.className = styles.label;
