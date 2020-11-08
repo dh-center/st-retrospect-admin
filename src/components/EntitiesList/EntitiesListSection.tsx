@@ -1,6 +1,6 @@
 import React from 'react';
-import { ENTITIES_PER_PAGE } from '../../../constants';
-import { Entity, EntityConnection } from '../../../types/entities';
+import { ENTITIES_PER_PAGE } from '../../constants';
+import { Entity, EntityConnection } from '../../types/entities';
 import { withRouter, useHistory } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 

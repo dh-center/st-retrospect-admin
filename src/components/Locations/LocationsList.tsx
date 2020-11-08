@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import { createPaginationContainer, RelayPaginationProp } from 'react-relay';
-import EntitiesList, { EntitiesListProps } from '../Entities/EntitiesList';
+import EntitiesList, { EntitiesListProps } from '../EntitiesList';
 import { LocationsList_entityConnection as LocationsPageEntityConnection } from './__generated__/LocationsList_entityConnection.graphql';
 import graphql from 'babel-plugin-relay/macro';
-import { EntityRowProps } from '../Entities/EntitiesList/EntitiesListSection';
+import { EntityRowProps } from '../EntitiesList/EntitiesListSection';
 import { Entity } from '../../types/entities';
 
 /**
