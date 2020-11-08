@@ -6,7 +6,7 @@ import {
   QuestCreateMutation,
   QuestCreateMutationResponse
 } from './__generated__/QuestCreateMutation.graphql';
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import notifier from 'codex-notifier';
 import ContentWrapper from '../ContentWrapper';
@@ -14,14 +14,9 @@ import { Form, Spinner } from 'react-bootstrap';
 import Input from '../utils/Input';
 import Button from 'react-bootstrap/Button';
 import Textarea from '../utils/Textarea';
-import EditorJS, { BlockToolConstructable, OutputBlockData, OutputData } from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import Image from '@editorjs/image';
-import Delimiter from '@editorjs/delimiter';
-import Quote from '@editorjs/quote';
-import Marker from '@editorjs/marker';
-import LocationSearch from '../../editorjs-plugins/LocationSearch';
+import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
+import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
+import EditorJs from 'react-editor-js';
 
 /**
  * Generates input data for creating new quest
@@ -66,56 +61,6 @@ export default function QuestCreate(): React.ReactElement {
   const [input, setInput] = useState<CreateQuestInput>(generateQuestInput);
   const [isLoading, setLoadingStatus] = useState(false);
   const history = useHistory();
-
-  const editorRef = useRef<EditorJS>();
-  const editorElementRef = useRef<HTMLDivElement>(null);
-  const onEditorChangeCallback = useRef<(data: OutputData) => Promise<void>>();
-
-  useEffect(() => {
-    onEditorChangeCallback.current = async (editorData: OutputData) => {
-      setInput({
-        ...input,
-        data: {
-          time: null,
-          version: '',
-          ...editorData,
-        },
-      });
-    };
-  }, [ input ]);
-
-  useEffect(() => {
-    if (editorElementRef.current) {
-      editorRef.current = new EditorJS({
-        holder: editorElementRef.current,
-        placeholder: 'Click here to write an awesome route!',
-        data: {
-          blocks: (input.data?.blocks || []) as OutputBlockData[],
-          time: input.data?.time || undefined,
-          version: input.data?.version || undefined,
-        },
-        tools: {
-          header: Header,
-          list: List,
-          image: {
-            class: Image,
-            config: {
-              endpoints: {
-                byFile: process.env.REACT_APP_API_ENDPOINT + 'upload/route', // Your backend file uploader endpoint
-              },
-            },
-          },
-          delimiter: Delimiter,
-          quote: Quote,
-          marker: Marker,
-          locationInstance: LocationSearch as unknown as BlockToolConstructable,
-        },
-        async onChange(api): Promise<void> {
-          onEditorChangeCallback.current && onEditorChangeCallback.current(await api.saver.save());
-        },
-      });
-    }
-  }, []);
 
   /**
    * Saves created quest to API
@@ -220,8 +165,26 @@ export default function QuestCreate(): React.ReactElement {
             borderRadius: '8px',
             boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
           }}>
-            <div
-              ref={editorElementRef}
+            <EditorJs
+              data={{
+                blocks: (input.data?.blocks || []) as OutputBlockData[],
+                time: input.data?.time || undefined,
+                version: input.data?.version || undefined,
+              }}
+              onChange={(api: API, editorData?: OutputData) => {
+                if (editorData) {
+                  setInput({
+                    ...input,
+                    data: {
+                      time: null,
+                      version: '',
+                      ...editorData,
+                    },
+                  });
+                }
+              }}
+              placeholder='Click here to write an awesome route!'
+              tools={EDITOR_JS_TOOLS}
             />
           </div>
         </Form.Group>

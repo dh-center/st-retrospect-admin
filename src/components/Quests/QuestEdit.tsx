@@ -6,7 +6,7 @@ import {
   QuestEditMutationResponse,
   UpdateQuestInput
 } from './__generated__/QuestEditMutation.graphql';
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useParams } from 'react-router';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import notifier from 'codex-notifier';
@@ -17,14 +17,9 @@ import Input from '../utils/Input';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import { QuestEditQuery } from './__generated__/QuestEditQuery.graphql';
 import Textarea from '../utils/Textarea';
-import EditorJS, { BlockToolConstructable, OutputBlockData, OutputData } from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import Image from '@editorjs/image';
-import Delimiter from '@editorjs/delimiter';
-import Quote from '@editorjs/quote';
-import Marker from '@editorjs/marker';
-import LocationSearch from '../../editorjs-plugins/LocationSearch';
+import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
+import EditorJs from 'react-editor-js';
+import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 
 /**
  * Mutation for save edited quest
@@ -57,57 +52,6 @@ export default function QuestEdit(): ReactElement {
 
   const history = useHistory();
   const location = useLocation();
-
-  const editorRef = useRef<EditorJS>();
-  const editorElementRef = useRef<HTMLDivElement>(null);
-  const onEditorChangeCallback = useRef<(data: OutputData) => Promise<void>>();
-
-  useEffect(() => {
-    onEditorChangeCallback.current = async (editorData: OutputData) => {
-      setInput({
-        ...input,
-        id,
-        data: {
-          time: null,
-          version: '',
-          ...editorData,
-        },
-      });
-    };
-  }, [ input ]);
-
-  useEffect(() => {
-    if (editorElementRef.current) {
-      editorRef.current = new EditorJS({
-        holder: editorElementRef.current,
-        placeholder: 'Click here to write an awesome route!',
-        data: {
-          blocks: (input?.data?.blocks || []) as OutputBlockData[],
-          time: input?.data?.time || undefined,
-          version: input?.data?.version || undefined,
-        },
-        tools: {
-          header: Header,
-          list: List,
-          image: {
-            class: Image,
-            config: {
-              endpoints: {
-                byFile: process.env.REACT_APP_API_ENDPOINT + 'upload/route', // Your backend file uploader endpoint
-              },
-            },
-          },
-          delimiter: Delimiter,
-          quote: Quote,
-          marker: Marker,
-          locationInstance: LocationSearch as unknown as BlockToolConstructable,
-        },
-        async onChange(api): Promise<void> {
-          onEditorChangeCallback.current && onEditorChangeCallback.current(await api.saver.save());
-        },
-      });
-    }
-  }, []);
 
   /**
    * Push location back to entity view page
@@ -225,7 +169,7 @@ export default function QuestEdit(): ReactElement {
               <Form.Label htmlFor=''>Type</Form.Label>
               <div>
                 <Form.Check
-                  checked={input ? input.type === 'QUIZ' : props.quest.type === 'QUIZ'}
+                  checked={input?.type === 'QUIZ' || props.quest.type === 'QUIZ'}
                   id='quiz'
                   inline
                   label='Quiz'
@@ -242,7 +186,7 @@ export default function QuestEdit(): ReactElement {
                   value='QUIZ'
                 />
                 <Form.Check
-                  checked={input ? input.type === 'ROUTE' : props.quest.type === 'ROUTE'}
+                  checked={input?.type === 'ROUTE' || props.quest.type === 'ROUTE'}
                   id='route'
                   inline
                   label='Route'
@@ -266,8 +210,27 @@ export default function QuestEdit(): ReactElement {
                 borderRadius: '8px',
                 boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
               }}>
-                <div
-                  ref={editorElementRef}
+                <EditorJs
+                  data={{
+                    blocks: (input?.data?.blocks || props.quest.data?.blocks.concat() || []) as OutputBlockData[],
+                    time: input?.data?.time || props.quest.data?.time || undefined,
+                    version: input?.data?.version || props.quest.data?.version || undefined,
+                  }}
+                  onChange={(api: API, editorData?: OutputData) => {
+                    if (editorData) {
+                      setInput({
+                        ...input,
+                        id,
+                        data: {
+                          time: null,
+                          version: '',
+                          ...editorData,
+                        },
+                      });
+                    }
+                  }}
+                  placeholder='Click here to write an awesome route!'
+                  tools={EDITOR_JS_TOOLS}
                 />
               </div>
             </Form.Group>
