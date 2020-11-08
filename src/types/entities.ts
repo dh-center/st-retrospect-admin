@@ -1,4 +1,3 @@
-import { QuestViewQuery } from '../components/Quests/__generated__/QuestViewQuery.graphql';
 import { LocationViewQuery } from '../components/Locations/__generated__/LocationViewQuery.graphql';
 
 /**
