@@ -6,6 +6,7 @@ import Quote from '@editorjs/quote';
 import Marker from '@editorjs/marker';
 import LocationSearch from './LocationSearch';
 import { BlockToolConstructable } from '@editorjs/editorjs';
+import Question from './Question';
 
 export const EDITOR_JS_TOOLS = {
   list: List,
@@ -22,4 +23,5 @@ export const EDITOR_JS_TOOLS = {
   marker: Marker,
   delimiter: Delimiter,
   locationInstance: LocationSearch as unknown as BlockToolConstructable,
+  question: Question as unknown as BlockToolConstructable,
 };
