@@ -4,6 +4,7 @@ import PrivateRoute from '../PrivateRoute';
 import QuestCreate from './QuestCreate';
 import QuestView from './QuestView';
 import QuestPage from './QuestsPage';
+import QuestEdit from './QuestEdit';
 
 /**
  * Functional component for quests view
@@ -13,6 +14,9 @@ export default function QuestsRouter(): ReactElement {
     <Switch>
       <PrivateRoute path='/quests/create'>
         <QuestCreate/>
+      </PrivateRoute>
+      <PrivateRoute path='/quests/:id/edit'>
+        <QuestEdit/>
       </PrivateRoute>
       <PrivateRoute path='/quests/:id'>
         <QuestView/>
