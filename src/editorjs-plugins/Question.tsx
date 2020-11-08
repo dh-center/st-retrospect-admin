@@ -9,22 +9,22 @@ interface QuestionData {
   /**
    * Question to answer
    */
-  question: string | undefined;
+  question: string;
 
   /**
    * Right answer
    */
-  answer: string | undefined;
+  answer: string;
 
   /**
    * Message for displaying on right answer
    */
-  rightAnswerMessage: string | undefined;
+  rightAnswerMessage: string;
 
   /**
    * Message for displaying on wrong answer
    */
-  wrongAnswerMessage: string | undefined;
+  wrongAnswerMessage: string;
 }
 
 export default class Question implements BlockTool {
