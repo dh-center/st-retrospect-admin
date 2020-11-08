@@ -209,6 +209,7 @@ export default function QuestEdit(): ReactElement {
               <div style={{
                 borderRadius: '8px',
                 boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
+                padding: '.5em 0',
               }}>
                 <EditorJs
                   data={{

@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
-import EditorJS from '@editorjs/editorjs';
+import { BlockTool, ToolboxConfig } from '@editorjs/editorjs';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
@@ -18,7 +17,7 @@ interface LocationSearchData {
 /**
  * Location search plugin for EditorJS
  */
-export default class LocationSearch {
+export default class LocationSearch implements BlockTool {
   /**
    * Selected location instance ID
    */
@@ -36,7 +35,7 @@ export default class LocationSearch {
   /**
    * Getter for information about plugin in toolbox
    */
-  public static get toolbox(): EditorJS.ToolboxConfig {
+  public static get toolbox(): ToolboxConfig {
     return {
       icon: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                <path d="M11 4a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
