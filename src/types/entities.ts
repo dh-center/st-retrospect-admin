@@ -19,11 +19,6 @@ export interface EntityConnection {
 }
 
 /**
- * Full quest info
- */
-export type Quest = NonNullable<QuestViewQuery['response']['entity']>;
-
-/**
  * Full location info
  */
 export type Location = NonNullable<LocationViewQuery['response']['entity']>;
@@ -37,10 +32,6 @@ export type Entity<T extends EntityConnection = EntityConnection> = T['entities'
  * Removes id field from type
  */
 export type OmitId<T> = Omit<T, 'id'>;
-
-export enum EntityTypes {
-  QUEST = 'QUEST'
-}
 
 export interface EntityInfoComponentProps<T> {
   /**

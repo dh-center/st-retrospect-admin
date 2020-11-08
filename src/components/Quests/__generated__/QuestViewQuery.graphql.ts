@@ -3,21 +3,14 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
 export type QuestViewQueryVariables = {
     id: string;
 };
 export type QuestViewQueryResponse = {
-    readonly entity: {
+    readonly quest: {
         readonly id: string;
         readonly name: string;
         readonly description: string | null;
-        readonly type: TaskTypes;
-        readonly data: {
-            readonly time: number | null;
-            readonly version: string | null;
-            readonly blocks: ReadonlyArray<unknown>;
-        } | null;
     } | null;
 };
 export type QuestViewQuery = {
@@ -31,16 +24,10 @@ export type QuestViewQuery = {
 query QuestViewQuery(
   $id: GlobalId!
 ) {
-  entity: quest(id: $id) {
+  quest(id: $id) {
     id
     name
     description
-    type
-    data {
-      time
-      version
-      blocks
-    }
   }
 }
 */
@@ -55,7 +42,7 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": "entity",
+    "alias": null,
     "args": [
       {
         "kind": "Variable",
@@ -88,45 +75,6 @@ v1 = [
         "kind": "ScalarField",
         "name": "description",
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "type",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "EditorData",
-        "kind": "LinkedField",
-        "name": "data",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "time",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "version",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "blocks",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
       }
     ],
     "storageKey": null
@@ -150,14 +98,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "3ac1a3a4c449e53c670dee500315bef2",
+    "cacheID": "b984e62f4d019a22db89280b975dd69b",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  entity: quest(id: $id) {\n    id\n    name\n    description\n    type\n    data {\n      time\n      version\n      blocks\n    }\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3e72f9903c09f95f5773a23be0961c1a';
+(node as any).hash = 'fe98b62c06ad91302161b712e04518c0';
 export default node;

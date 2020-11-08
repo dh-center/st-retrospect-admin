@@ -113,7 +113,7 @@ export default class EntitiesList<T extends EntityConnection> extends React.Comp
                 <tr>
                   <th>№</th>
                   {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
-                    if (key === '__typename') {
+                    if (key === '__typename' || key === 'id') {
                       return undefined;
                     }
 
