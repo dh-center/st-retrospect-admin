@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
 import EditorJS from '@editorjs/editorjs';
-import React from 'react';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import styles from './Question.module.css';
 
