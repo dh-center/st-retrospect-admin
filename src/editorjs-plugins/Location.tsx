@@ -3,9 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import { LabeledLocationInstancesCustomSelect } from '../components/CustomSelects/LocationInstancesCustomSelect';
+import pluginBlockStyles from './PluginBlock.module.css';
+import styles from './Location.module.css';
 
 /**
- * LocationSearch plugin data
+ * Location plugin data
  */
 interface LocationSearchData {
   /**
@@ -17,7 +19,7 @@ interface LocationSearchData {
 /**
  * Location search plugin for EditorJS
  */
-export default class LocationSearch implements BlockTool {
+export default class Location implements BlockTool {
   /**
    * Selected location instance ID
    */
@@ -53,13 +55,18 @@ export default class LocationSearch implements BlockTool {
     const element = document.createElement('div');
 
     element.className = 'location-search-container';
-    ReactDOM.render(<LabeledLocationInstancesCustomSelect
-      label='Пользователь подходит к'
-      onChange={(selected): void => {
-        this.selectedLocationInstanceId = selected;
-      }}
-      value={this.selectedLocationInstanceId}
-    />, element);
+    ReactDOM.render(
+      <div className={pluginBlockStyles.wrapper}>
+        <LabeledLocationInstancesCustomSelect
+          className={styles.container}
+          label='Пользователь подходит к'
+          onChange={(selected): void => {
+            this.selectedLocationInstanceId = selected;
+          }}
+          strong
+          value={this.selectedLocationInstanceId}
+        />
+      </div>, element);
 
     return element;
   }

@@ -1,6 +1,7 @@
 import { ToolboxConfig } from '@editorjs/editorjs';
 import { BlockTool, BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import styles from './Question.module.css';
+import pluginBlockStyles from './PluginBlock.module.css';
 
 /**
  * Question plugin data
@@ -62,7 +63,7 @@ export default class Question implements BlockTool {
   public render(): HTMLElement {
     const wrapper = document.createElement('div');
 
-    wrapper.className = styles.wrapper;
+    wrapper.className = pluginBlockStyles.wrapper;
 
     /**
      * Plugin label
@@ -70,10 +71,7 @@ export default class Question implements BlockTool {
     const pluginLabel = document.createElement('label');
 
     pluginLabel.innerText = 'Пользователь должен ответить на вопрос:';
-    pluginLabel.className = styles.label;
-    const strongWrapper = document.createElement('strong');
-
-    strongWrapper.appendChild(pluginLabel);
+    pluginLabel.classList.add(styles.label, styles.labelStrong);
 
     /**
      * Question block
@@ -140,7 +138,7 @@ export default class Question implements BlockTool {
     wrongAnswerMessageWrapper.append(wrongAnswerMessageLabel, wrongAnswerMessageInput);
 
     wrapper.append(
-      strongWrapper,
+      pluginLabel,
       questionWrapper,
       answerWrapper,
       rightAnswerMessageWrapper,
