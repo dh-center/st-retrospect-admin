@@ -6,6 +6,7 @@ import Quote from '@editorjs/quote';
 import Marker from '@editorjs/marker';
 import LocationSearch from './LocationSearch';
 import TestConstructor from './TestConstructor';
+import Location from './Location';
 import { BlockToolConstructable } from '@editorjs/editorjs';
 import Question from './Question';
 
@@ -25,5 +26,6 @@ export const EDITOR_JS_TOOLS = {
   delimiter: Delimiter,
   locationInstance: LocationSearch as unknown as BlockToolConstructable,
   test: TestConstructor as unknown as BlockToolConstructable,
+  locationInstance: Location as unknown as BlockToolConstructable,
   question: Question as unknown as BlockToolConstructable,
 };
