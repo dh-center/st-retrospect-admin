@@ -1,16 +1,23 @@
 import React, { ComponentType, FC, ReactElement } from 'react';
 import styles from './LabeledComponent.module.css';
+import classNames from 'classnames';
 import { Form } from 'react-bootstrap';
 import useUniqueId from '../../utils/useUniqueId';
+import WithClassName from '../../types/withClassName';
 
 /**
  * Interface of LabeledComponent props
  */
-interface LabeledComponentProps {
+interface LabeledComponentProps extends WithClassName {
   /**
    * Label for displaying
    */
   label: string;
+
+  /**
+   * Is label bold
+   */
+  strong?: boolean;
 }
 
 /**
@@ -28,8 +35,15 @@ export default function withLabel<T extends object>(WrappedComponent: ComponentT
     const id = useUniqueId('app-labeled-component');
 
     return (
-      <Form.Group className={styles.container}>
-        <Form.Label className={styles.label} htmlFor={id`labeled-component`}>{props.label}:</Form.Label>
+      <Form.Group className={classNames(styles.container, props.className)}>
+        <Form.Label className={
+          classNames(
+            styles.label,
+            {
+              [styles.labelStrong]: props.strong,
+            }
+          )}
+        htmlFor={id`labeled-component`}>{props.label}:</Form.Label>
         <div className={styles.content}>
           <WrappedComponent {...props} id={id`labeled-component`}/>
         </div>
