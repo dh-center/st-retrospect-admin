@@ -12,6 +12,9 @@ export type LocationsList_entityConnection = {
                 readonly id: string;
                 readonly latitude: number | null;
                 readonly longitude: number | null;
+                readonly addresses: ReadonlyArray<{
+                    readonly address: string | null;
+                }> | null;
                 readonly instances: ReadonlyArray<{
                     readonly id: string;
                     readonly name: string | null;
@@ -115,6 +118,24 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "concreteType": "Address",
+                  "kind": "LinkedField",
+                  "name": "addresses",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "address",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "LocationInstance",
                   "kind": "LinkedField",
                   "name": "instances",
@@ -191,5 +212,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'dd126f3d22d065dff59d358f5ae4e540';
+(node as any).hash = '48ebfadd0ec2234ef9153db1d707caed';
 export default node;

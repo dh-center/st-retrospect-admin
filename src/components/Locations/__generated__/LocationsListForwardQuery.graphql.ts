@@ -34,6 +34,9 @@ fragment LocationsList_entityConnection_2HEEH6 on Query {
         id
         latitude
         longitude
+        addresses {
+          address
+        }
         instances {
           id
           name
@@ -158,6 +161,24 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "concreteType": "Address",
+                    "kind": "LinkedField",
+                    "name": "addresses",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "address",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "LocationInstance",
                     "kind": "LinkedField",
                     "name": "instances",
@@ -241,12 +262,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d41e5a6a3450bdc0ba890ebfd4339ec1",
+    "cacheID": "5d85b519ce3d03dc42ff6f2efcb4c65d",
     "id": null,
     "metadata": {},
     "name": "LocationsListForwardQuery",
     "operationKind": "query",
-    "text": "query LocationsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...LocationsList_entityConnection_2HEEH6\n}\n\nfragment LocationsList_entityConnection_2HEEH6 on Query {\n  entities: locations(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        latitude\n        longitude\n        instances {\n          id\n          name\n          description\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query LocationsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...LocationsList_entityConnection_2HEEH6\n}\n\nfragment LocationsList_entityConnection_2HEEH6 on Query {\n  entities: locations(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        latitude\n        longitude\n        addresses {\n          address\n        }\n        instances {\n          id\n          name\n          description\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
