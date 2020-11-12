@@ -48,6 +48,27 @@ class AuthController {
   }
 
   /**
+   * Creates new user and returns response from api
+   *
+   * @param username - username of new account
+   * @param password - password of new account
+   */
+  public async signUp(username: string, password: string): Promise<Response> {
+    return window.fetch(
+      `${process.env.REACT_APP_API_ENDPOINT}sign-up`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      }
+    );
+  }
+
+  /**
    * Returns true if user is authenticated
    */
   public isAuthenticated(): boolean {

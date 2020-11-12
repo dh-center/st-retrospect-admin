@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import Navigation from '../components/Navigation';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Login from '../components/Login';
+import Login from '../components/Authentication/Login';
 import PrivateRoute from '../components/PrivateRoute';
 import PersonsPage from '../components/Persons';
 import QuestsPage from '../components/Quests';
@@ -14,6 +14,7 @@ import graphql from 'babel-plugin-relay/macro';
 import { AppQuery, AppQueryResponse } from './__generated__/AppQuery.graphql';
 import VisualizationPage from '../components/Visualization';
 import LocationsPage from '../components/Locations';
+import Registration from '../components/Authentication/Registration';
 
 const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryResponse | null }): React.ReactNode => {
   if (error) {
@@ -75,6 +76,10 @@ function App(): ReactElement {
 
         <Route path='/login'>
           <Login/>
+        </Route>
+
+        <Route path='/sign-up'>
+          <Registration/>
         </Route>
 
         <Route path='/visualization/:chartName?'>
