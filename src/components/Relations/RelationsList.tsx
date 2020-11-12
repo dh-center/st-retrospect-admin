@@ -33,7 +33,6 @@ function CustomRelationsList(props: RelationsListProps): ReactElement {
       header={(
         <tr>
           <th>№</th>
-          <th>id</th>
           <th>person</th>
           <th>relationType</th>
           <th>locationInstance</th>

@@ -20,7 +20,6 @@ export default function RelationsRow(props: EntityRowProps<Entity<RelationsList_
   return (
     <tr onClick={onClick}>
       <td>{props.index + 1}</td>
-      <td>{props.entity.id}</td>
       <td>{props.entity.person ? personsFullName(props.entity.person) : '—'}</td>
       <td>{props.entity.relationType ? props.entity.relationType.name : '—'}</td>
       <td>{props.entity.locationInstance ? props.entity.locationInstance.name : '—'}</td>
