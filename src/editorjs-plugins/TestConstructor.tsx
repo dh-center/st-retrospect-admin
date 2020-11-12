@@ -123,7 +123,7 @@ export default class TestConstructor implements BlockTool {
         answerInput.className = 'form-control';
 
         deleteButton.type = 'button';
-        deleteButton.classList.add(styles.button, 'ArrayOfInputs_removeButton__2xjOy', 'btn', 'btn-outline-danger');
+        deleteButton.classList.add(styles.button, 'btn', 'btn-outline-danger');
         deleteButton.textContent = 'Удалить этот вариант';
 
         inputWrapper.append(answerInput, deleteButton);
@@ -137,7 +137,7 @@ export default class TestConstructor implements BlockTool {
     }
 
     addButton.type = 'button';
-    addButton.classList.add(styles.button, 'ArrayOfInputs_addButton__3WmO7', 'btn', 'btn-success');
+    addButton.classList.add(styles.button, 'btn', 'btn-success');
     addButton.textContent = 'Добавить вариант ответа';
 
     blockWrapper.className = styles.container;
@@ -155,7 +155,7 @@ export default class TestConstructor implements BlockTool {
       answerInput.className = 'form-control';
 
       deleteButton.type = 'button';
-      deleteButton.classList.add(styles.button, 'ArrayOfInputs_removeButton__2xjOy', 'btn', 'btn-outline-danger');
+      deleteButton.classList.add(styles.button, 'btn', 'btn-outline-danger');
       deleteButton.textContent = 'Удалить этот вариант';
 
       inputWrapper.append(answerInput, deleteButton);
