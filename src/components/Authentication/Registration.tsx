@@ -50,6 +50,11 @@ function Registration(props: RouteComponentProps): ReactElement {
 
       return;
     }
+    notifier.show({
+      message: 'Account successfully created',
+      style: 'success',
+      time: 5000,
+    });
     props.history.push('/login');
   };
 
