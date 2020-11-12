@@ -2,6 +2,7 @@
 import EditorJS from '@editorjs/editorjs';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import styles from './Question.module.css';
+import pluginBlockStyles from './PluginBlock.module.css';
 
 /**
  * TestConstructor plugin data
@@ -60,7 +61,7 @@ export default class TestConstructor {
   public render(): HTMLElement {
     const wrapper = document.createElement('div');
 
-    wrapper.className = styles.wrapper;
+    wrapper.className = pluginBlockStyles.wrapper;
 
     /**
      * Plugin's label
@@ -69,9 +70,7 @@ export default class TestConstructor {
     const pluginLabel = document.createElement('label');
 
     pluginLabel.innerText = 'Пользователь должен ответить на вопрос, выбрав правильный вариант ответа:';
-    pluginLabel.className = styles.label;
-
-    strongWrapper.appendChild(pluginLabel);
+    pluginLabel.classList.add(styles.label, styles.labelStrong);
 
     /**
      * Question block
@@ -167,6 +166,7 @@ export default class TestConstructor {
     rightAnswerNumberLabel.innerText = 'Номер правильного ответа:';
     rightAnswerNumberLabel.className = styles.label;
 
+    rightAnswerNumberInput.type = 'number';
     rightAnswerNumberInput.value = this.currentCorrectAnswerIndex ? (this.currentCorrectAnswerIndex + 1).toString() : '';
     rightAnswerNumberInput.className = 'form-control';
 
