@@ -55,6 +55,7 @@ function Registration(props: RouteComponentProps): ReactElement {
         <h1>Please, register</h1>
         <Form.Group>
           <Form.Control
+            autoComplete='username'
             onChange={(e): void => setEmail(e.target.value)}
             placeholder='Username'
             type='text'
@@ -63,6 +64,7 @@ function Registration(props: RouteComponentProps): ReactElement {
         </Form.Group>
         <Form.Group>
           <Form.Control
+            autoComplete='new-password'
             onChange={(e): void => setFirstPassword(e.target.value)}
             placeholder='Password'
             type='password'
@@ -71,6 +73,7 @@ function Registration(props: RouteComponentProps): ReactElement {
         </Form.Group>
         <Form.Group>
           <Form.Control
+            autoComplete='new-password'
             onChange={(e): void => setSecondPassword(e.target.value)}
             placeholder='Repeat password'
             type='password'

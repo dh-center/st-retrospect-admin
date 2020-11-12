@@ -34,6 +34,7 @@ function Login(props: RouteComponentProps): ReactElement {
         <h1 className='login-page__header'>Please, login</h1>
         <Form.Group>
           <Form.Control
+            autoComplete='username'
             className='login-page__input'
             onChange={(e): void => setEmail(e.target.value)}
             placeholder='Username'
@@ -43,6 +44,7 @@ function Login(props: RouteComponentProps): ReactElement {
         </Form.Group>
         <Form.Group>
           <Form.Control
+            autoComplete='current-password'
             className='login-page__input'
             onChange={(e): void => setPassword(e.target.value)}
             placeholder='Password'
