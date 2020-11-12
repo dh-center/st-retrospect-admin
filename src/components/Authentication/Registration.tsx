@@ -35,13 +35,18 @@ function Registration(props: RouteComponentProps): ReactElement {
 
     if (response.status !== 201) {
       notifier.show({
-        message: 'A user with the same username already exists',
+        message: response.status === 409 ? 'A user with the same username already exists' : 'Something went wrong',
         style: 'error',
         time: 5000,
       });
 
       return;
     }
+    notifier.show({
+      message: 'Account successfully created',
+      style: 'success',
+      time: 5000,
+    });
     props.history.push('/login');
   };
 
