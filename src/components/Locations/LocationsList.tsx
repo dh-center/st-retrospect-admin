@@ -44,12 +44,28 @@ function LocationRow(props: EntityRowProps<Entity<LocationsPageEntityConnection>
     history.push(`/locations/${props.entity.id}`);
   };
 
+  /**
+   * Returns address from addresses array or '—' if it isn't
+   *
+   * @param addresses - array of addresses
+   */
+  const getAddress = (addresses: readonly {
+    address: string | null;
+  }[] | null): string => {
+    return (
+      addresses &&
+      addresses[0] &&
+      addresses[0].address &&
+      addresses[0].address.length !== 0
+    ) ? addresses[0].address : '—';
+  };
+
   const rowSpan = instancesRows.length;
 
   return <>
     <tr onClick={onClick}>
       <td rowSpan={rowSpan}>{props.index + 1}</td>
-      <td rowSpan={rowSpan}>{props.entity.id}</td>
+      <td rowSpan={rowSpan}>{getAddress(props.entity.addresses)}</td>
       <td rowSpan={rowSpan}>{props.entity.latitude}</td>
       <td rowSpan={rowSpan}>{props.entity.longitude}</td>
       {instancesRows.shift()}
@@ -71,7 +87,7 @@ function UpdatedLocationsList(props: LocationsListProps): React.ReactElement {
       header={<>
         <tr>
           <th rowSpan={2}>№</th>
-          <th rowSpan={2}>id</th>
+          <th rowSpan={2}>address</th>
           <th rowSpan={2}>latitude</th>
           <th rowSpan={2}>longitude</th>
           <th colSpan={2}>instances</th>
@@ -105,6 +121,9 @@ const LocationsList = createPaginationContainer<EntitiesListProps<LocationsPageE
               id
               latitude
               longitude
+              addresses {
+                address
+              }
               instances {
                 id
                 name
