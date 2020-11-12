@@ -81,7 +81,6 @@ export default class TestConstructor implements BlockTool {
     /**
      * Plugin's label
      */
-    const strongWrapper = document.createElement('strong');
     const pluginLabel = document.createElement('label');
 
     pluginLabel.innerText = 'Пользователь должен ответить на вопрос, выбрав правильный вариант ответа:';
@@ -222,7 +221,7 @@ export default class TestConstructor implements BlockTool {
     wrongAnswerMessageWrapper.append(wrongAnswerMessageLabel, wrongAnswerMessageInput);
 
     wrapper.append(
-      strongWrapper,
+      pluginLabel,
       questionWrapper,
       blockWrapper,
       rightAnswerNumberWrapper,
@@ -238,15 +237,16 @@ export default class TestConstructor implements BlockTool {
    * @param blockContent - HTML content of plugin block
    */
   public save(blockContent: HTMLElement): TestConstructorData {
-    const n = blockContent.querySelectorAll('input').length;
-    const question = blockContent.querySelectorAll('input')[0].value;
+    const blockData = blockContent.querySelectorAll('input');
+    const n = blockData.length;
+    const question = blockData[0].value;
     const answers = [];
-    const correctAnswerIndex = blockContent.querySelectorAll('input')[n - 3].value;
-    const rightAnswerMessage = blockContent.querySelectorAll('input')[n - 2].value;
-    const wrongAnswerMessage = blockContent.querySelectorAll('input')[n - 1].value;
+    const correctAnswerIndex = blockData[n - 3].value;
+    const rightAnswerMessage = blockData[n - 2].value;
+    const wrongAnswerMessage = blockData[n - 1].value;
 
     for (let i = 1; i < n - 3; i++) {
-      answers.push(blockContent.querySelectorAll('input')[i].value);
+      answers.push(blockData[i].value);
     }
 
     return {
