@@ -97,7 +97,7 @@ function PersonsTreeMap(props: {
       const birthYear = person.birthDate && extractYear(person.birthDate);
       const period = birthYear ? yearPeriods.getPeriodFromYear(birthYear) : 'unknown';
 
-      if (!person.profession) {
+      if (!person.professions || !person.professions[0]) {
         dataByProfession['другие'].value++;
         const periodToInc = dataByProfession['другие'].children?.find(ch => ch.name === period);
 
@@ -111,10 +111,10 @@ function PersonsTreeMap(props: {
       let finded = false;
 
       Object.entries(professionsKeywords).forEach(([profession, regexp]) => {
-        if (!person.profession) {
+        if (!person.professions || !person.professions[0]) {
           return;
         }
-        person.profession.split(',').forEach(prof => {
+        person.professions[0].split(',').forEach(prof => {
           if (regexp.test(prof.toLowerCase())) {
             finded = true;
             dataByProfession[profession].value++;
@@ -236,7 +236,7 @@ export default createFragmentContainer(PersonsTreeMap, {
       persons {
         edges {
           node {
-            profession
+            professions
             birthDate
           }
         }

@@ -25,7 +25,6 @@ const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntit
               pseudonym
               birthDate
               deathDate
-              profession
             }
           }
         }

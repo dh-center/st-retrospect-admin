@@ -13,7 +13,7 @@ export type PersonEditQueryResponse = {
         readonly firstName: string | null;
         readonly patronymic: string | null;
         readonly pseudonym: string | null;
-        readonly profession: string | null;
+        readonly professions: ReadonlyArray<string | null>;
         readonly description: string | null;
         readonly birthDate: string | null;
         readonly deathDate: string | null;
@@ -37,7 +37,7 @@ query PersonEditQuery(
     firstName
     patronymic
     pseudonym
-    profession
+    professions
     description
     birthDate
     deathDate
@@ -108,7 +108,7 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "profession",
+        "name": "professions",
         "storageKey": null
       },
       {
@@ -161,14 +161,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "f524510bba9caeabffcd3c7aa21243d7",
+    "cacheID": "94716474d3afd6c8af2088abef9fc895",
     "id": null,
     "metadata": {},
     "name": "PersonEditQuery",
     "operationKind": "query",
-    "text": "query PersonEditQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    profession\n    description\n    birthDate\n    deathDate\n    wikiLink\n  }\n}\n"
+    "text": "query PersonEditQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    professions\n    description\n    birthDate\n    deathDate\n    wikiLink\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '23cd9ce52734d7138329152260d022b9';
+(node as any).hash = 'e6a3a6f23071673120d1c11afe6da6fc';
 export default node;

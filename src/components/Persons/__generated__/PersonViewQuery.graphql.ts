@@ -13,7 +13,7 @@ export type PersonViewQueryResponse = {
         readonly firstName: string | null;
         readonly patronymic: string | null;
         readonly pseudonym: string | null;
-        readonly profession: string | null;
+        readonly professions: ReadonlyArray<string | null>;
         readonly description: string | null;
         readonly birthDate: string | null;
         readonly deathDate: string | null;
@@ -37,7 +37,7 @@ query PersonViewQuery(
     firstName
     patronymic
     pseudonym
-    profession
+    professions
     description
     birthDate
     deathDate
@@ -108,7 +108,7 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "profession",
+        "name": "professions",
         "storageKey": null
       },
       {
@@ -161,14 +161,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "e76232479dc4c3b9e09bf947121adb2f",
+    "cacheID": "0f5e927cd47fadf5e01a84b839e882d6",
     "id": null,
     "metadata": {},
     "name": "PersonViewQuery",
     "operationKind": "query",
-    "text": "query PersonViewQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    profession\n    description\n    birthDate\n    deathDate\n    wikiLink\n  }\n}\n"
+    "text": "query PersonViewQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    professions\n    description\n    birthDate\n    deathDate\n    wikiLink\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3fae57f416b36d850e0f61b9801dd2b6';
+(node as any).hash = '5bf99dc99e0bfd0eb60080815e369cc8';
 export default node;

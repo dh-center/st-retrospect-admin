@@ -16,6 +16,7 @@ import {
 import Input from '../utils/Input';
 import Textarea from '../utils/Textarea';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
+import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
 
 /**
  * Executes update mutation for person
@@ -108,7 +109,7 @@ export default function PersonEdit(): ReactElement {
             firstName
             patronymic
             pseudonym
-            profession
+            professions
             description
             birthDate
             deathDate
@@ -178,14 +179,19 @@ export default function PersonEdit(): ReactElement {
                 })}
                 value={input?.pseudonym || props.person.pseudonym}
               />
-              <Input
-                label='Profession'
+              <LabeledArrayOfInputs
+                addButtonText='Add profession...'
+                label='Professions'
                 onChange={value => setInput({
                   ...input,
                   id,
-                  profession: value,
+                  professions: value,
                 })}
-                value={input?.profession || props.person.profession}
+                removeButtonText='Remove profession'
+                /**
+                 * Converts ReadonlyArray to simple array
+                 */
+                value={input?.professions || props.person.professions.concat()}
               />
               <Textarea
                 label='Description'

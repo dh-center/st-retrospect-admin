@@ -180,8 +180,8 @@ input CreatePersonInput {
   """Person's pseudonym"""
   pseudonym: String
 
-  """Person's profession"""
-  profession: String
+  """Person's professions"""
+  professions: [MultilingualString]!
 
   """Person's description"""
   description: String
@@ -568,8 +568,8 @@ type Person implements Node {
   """Person's pseudonym"""
   pseudonym: String
 
-  """Person's profession"""
-  profession: String
+  """Person's professions"""
+  professions: [MultilingualString]!
 
   """Person's description"""
   description: String
@@ -1107,8 +1107,8 @@ input UpdatePersonInput {
   """Person's pseudonym"""
   pseudonym: String
 
-  """Person's profession"""
-  profession: String
+  """Person's professions"""
+  professions: [MultilingualString]
 
   """Person's description"""
   description: String

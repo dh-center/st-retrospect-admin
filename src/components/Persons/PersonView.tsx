@@ -80,7 +80,7 @@ function PersonView(): React.ReactElement {
             firstName
             patronymic
             pseudonym
-            profession
+            professions
             description
             birthDate
             deathDate
@@ -129,8 +129,10 @@ function PersonView(): React.ReactElement {
                 label='Pseudonym'
               />
               <LabeledText
-                content={props.person.profession}
-                label='Profession'
+                content={props.person.professions
+                  .filter(profession => profession !== null)
+                  .join('; ')}
+                label='Professions'
               />
               <LabeledText
                 content={props.person.description}
