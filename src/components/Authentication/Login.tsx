@@ -51,8 +51,15 @@ function Login(props: RouteComponentProps): ReactElement {
           />
 
         </Form.Group>
-        <Button className='login-page__submit-button' type='submit'>
+        <Button type='submit' variant='primary'>
           Enter
+        </Button>
+        <Button
+          className='float-right'
+          onClick={() => props.history.push('/sign-up')}
+          variant='outline-secondary'
+        >
+          Registration
         </Button>
       </Form>
       <NavLink className='' to='/visualization/1'>Go to visualization</NavLink>
