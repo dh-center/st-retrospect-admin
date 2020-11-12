@@ -8,10 +8,29 @@ import pluginBlockStyles from './PluginBlock.module.css';
  * TestConstructor plugin data
  */
 interface TestConstructorData {
+  /**
+   * Question to answer
+   */
   question: string | undefined;
+
+  /**
+   * Array of answers to choose from
+   */
   answers: string[] | [] | undefined;
+
+  /**
+   * Index of right answer
+   */
   correctAnswerIndex: number | undefined;
+
+  /**
+   * Message for displaying on right answer
+   */
   rightAnswerMessage: string | undefined;
+
+  /**
+   * Message for displaying on wrong answer
+   */
   wrongAnswerMessage: string | undefined;
 }
 
