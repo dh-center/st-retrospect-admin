@@ -3,6 +3,7 @@ import authController from '../../controllers/authController';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Form, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import notifier from 'codex-notifier';
 
 /**
  * Component for authentication
@@ -20,7 +21,17 @@ function Login(props: RouteComponentProps): ReactElement {
    */
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    await authController.login(email, password);
+    const response = await authController.login(email, password);
+
+    if (response.status !== 200) {
+      notifier.show({
+        message: 'Invalid username or password',
+        style: 'error',
+        time: 5000,
+      });
+
+      return;
+    }
     props.history.push('/persons');
   };
 

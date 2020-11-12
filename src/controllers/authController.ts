@@ -38,13 +38,17 @@ class AuthController {
    * @param username - username to login with
    * @param password - user password
    */
-  public async login(username: string, password: string): Promise<void> {
+  public async login(username: string, password: string): Promise<Response> {
     const response = await window.fetch(
       `${process.env.REACT_APP_API_ENDPOINT}login?username=${username}&password=${password}`
     );
 
-    this.accessToken = (await response.json() as AuthServerResponse).data.accessToken;
-    window.localStorage.setItem(AuthController.LC_ACCESS_TOKEN_KEY, this.accessToken);
+    if (response.status === 200) {
+      this.accessToken = (await response.json() as AuthServerResponse).data.accessToken;
+      window.localStorage.setItem(AuthController.LC_ACCESS_TOKEN_KEY, this.accessToken);
+    }
+
+    return response;
   }
 
   /**
