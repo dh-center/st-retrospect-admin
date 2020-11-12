@@ -30,6 +30,7 @@ function generateLocationInput(): CreateLocationInput {
       description: '',
       wikiLink: '',
       constructionDate: '',
+      demolitionDate: '',
       startDate: '',
       endDate: '',
     } ],
@@ -183,6 +184,11 @@ export default function LocationCreate(): React.ReactElement {
           label='Construction date of location'
           onChange={(v) => updateLocationInstance('constructionDate', v)}
           value={instance.constructionDate || ''}
+        />
+        <Input
+          label='Demolition date of location'
+          onChange={(v) => updateLocationInstance('demolitionDate', v)}
+          value={instance.demolitionDate || ''}
         />
         <Input
           label='Start date of the period of this location instance'
