@@ -4,6 +4,7 @@ import Image from '@editorjs/image';
 import Delimiter from '@editorjs/delimiter';
 import Quote from '@editorjs/quote';
 import Marker from '@editorjs/marker';
+import TestConstructor from './TestConstructor';
 import Location from './Location';
 import { BlockToolConstructable } from '@editorjs/editorjs';
 import Question from './Question';
@@ -22,6 +23,7 @@ export const EDITOR_JS_TOOLS = {
   quote: Quote,
   marker: Marker,
   delimiter: Delimiter,
+  test: TestConstructor as unknown as BlockToolConstructable,
   locationInstance: Location as unknown as BlockToolConstructable,
   question: Question as unknown as BlockToolConstructable,
 };
