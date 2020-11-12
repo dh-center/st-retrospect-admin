@@ -23,9 +23,17 @@ function Login(props: RouteComponentProps): ReactElement {
     e.preventDefault();
     const response = await authController.login(email, password);
 
-    if (response.status !== 200) {
+    if (response.status === 401) {
       notifier.show({
         message: 'Invalid username or password',
+        style: 'error',
+        time: 5000,
+      });
+
+      return;
+    } else if (response.status !== 200) {
+      notifier.show({
+        message: 'Something went wrong',
         style: 'error',
         time: 5000,
       });
