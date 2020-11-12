@@ -38,7 +38,6 @@ fragment PersonsList_entityConnection_2HEEH6 on Query {
         pseudonym
         birthDate
         deathDate
-        profession
         __typename
       }
       cursor
@@ -186,13 +185,6 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "profession",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "__typename",
                     "storageKey": null
                   }
@@ -249,12 +241,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b6e53f5c697879883ab959f2d28538e0",
+    "cacheID": "7a1efceedd634a9db529edf353e27a46",
     "id": null,
     "metadata": {},
     "name": "PersonsListForwardQuery",
     "operationKind": "query",
-    "text": "query PersonsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_entityConnection_2HEEH6\n}\n\nfragment PersonsList_entityConnection_2HEEH6 on Query {\n  entities: persons(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        lastName\n        firstName\n        patronymic\n        pseudonym\n        birthDate\n        deathDate\n        profession\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PersonsListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...PersonsList_entityConnection_2HEEH6\n}\n\nfragment PersonsList_entityConnection_2HEEH6 on Query {\n  entities: persons(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        lastName\n        firstName\n        patronymic\n        pseudonym\n        birthDate\n        deathDate\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

@@ -16,7 +16,6 @@ export type PersonsList_entityConnection = {
                 readonly pseudonym: string | null;
                 readonly birthDate: string | null;
                 readonly deathDate: string | null;
-                readonly profession: string | null;
             };
         }>;
     };
@@ -142,13 +141,6 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "profession",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 }
@@ -197,5 +189,5 @@ const node: ReaderFragment = {
   "type": "Query",
   "abstractKey": null
 };
-(node as any).hash = '519d344be3f259a0ed3cb2bee5b5e600';
+(node as any).hash = 'f7f8ba667c53520b6bb98ecc84057887';
 export default node;

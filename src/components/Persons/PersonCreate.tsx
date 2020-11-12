@@ -14,6 +14,7 @@ import {
 import graphql from 'babel-plugin-relay/macro';
 import Input from '../utils/Input';
 import Textarea from '../utils/Textarea';
+import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
 
 /**
  * Generates input data for creating new person
@@ -24,7 +25,7 @@ function generatePersonInput(): CreatePersonInput {
     lastName: '',
     patronymic: '',
     pseudonym: '',
-    profession: '',
+    professions: [],
     description: '',
     birthDate: '',
     deathDate: '',
@@ -128,13 +129,15 @@ export default function PersonCreate(): React.ReactElement {
           })}
           value={input.pseudonym || ''}
         />
-        <Input
-          label='Profession'
+        <LabeledArrayOfInputs
+          addButtonText='Add profession...'
+          label='Professions'
           onChange={value => setInput({
             ...input,
-            profession: value,
+            professions: value,
           })}
-          value={input.profession || ''}
+          removeButtonText='Remove profession'
+          value={input.professions}
         />
         <Textarea
           label='Description'

@@ -9,7 +9,7 @@ export type UpdatePersonInput = {
     lastName?: string | null;
     patronymic?: string | null;
     pseudonym?: string | null;
-    profession?: string | null;
+    professions?: Array<string | null> | null;
     description?: string | null;
     birthDate?: string | null;
     deathDate?: string | null;

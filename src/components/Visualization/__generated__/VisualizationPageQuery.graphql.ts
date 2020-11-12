@@ -48,7 +48,7 @@ fragment PersonsTreeMap_data on Query {
   persons {
     edges {
       node {
-        profession
+        professions
         birthDate
         id
       }
@@ -233,7 +233,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "profession",
+                    "name": "professions",
                     "storageKey": null
                   }
                 ],
@@ -335,12 +335,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a8a72e40bf5ea074a0b3c3b70a2c90c2",
+    "cacheID": "4893e8e8fa11146cc5420d5a9ed28b6a",
     "id": null,
     "metadata": {},
     "name": "VisualizationPageQuery",
     "operationKind": "query",
-    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        lastName\n        firstName\n        patronymic\n        id\n      }\n    }\n  }\n  ...RelationsGraph_data\n  ...PersonsTreeMap_data\n}\n\nfragment PersonsTreeMap_data on Query {\n  persons {\n    edges {\n      node {\n        profession\n        birthDate\n        id\n      }\n    }\n  }\n}\n\nfragment RelationsGraph_data on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n          locationTypes {\n            id\n          }\n        }\n      }\n    }\n  }\n  locationTypes {\n    id\n    name\n  }\n}\n"
+    "text": "query VisualizationPageQuery {\n  persons {\n    edges {\n      node {\n        birthDate\n        deathDate\n        lastName\n        firstName\n        patronymic\n        id\n      }\n    }\n  }\n  ...RelationsGraph_data\n  ...PersonsTreeMap_data\n}\n\nfragment PersonsTreeMap_data on Query {\n  persons {\n    edges {\n      node {\n        professions\n        birthDate\n        id\n      }\n    }\n  }\n}\n\nfragment RelationsGraph_data on Query {\n  relations {\n    edges {\n      node {\n        id\n        person {\n          id\n          lastName\n          firstName\n          patronymic\n        }\n        locationInstance {\n          id\n          name\n          locationTypes {\n            id\n          }\n        }\n      }\n    }\n  }\n  locationTypes {\n    id\n    name\n  }\n}\n"
   }
 };
 })();
