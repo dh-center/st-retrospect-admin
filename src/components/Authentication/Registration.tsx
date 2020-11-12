@@ -33,17 +33,9 @@ function Registration(props: RouteComponentProps): ReactElement {
     }
     const response = await authController.signUp(email, firstPassword);
 
-    if (response.status === 409) {
+    if (response.status !== 201) {
       notifier.show({
-        message: 'A user with the same username already exists',
-        style: 'error',
-        time: 5000,
-      });
-
-      return;
-    } else if (response.status !== 201) {
-      notifier.show({
-        message: 'Something went wrong',
+        message: response.status === 409 ? 'A user with the same username already exists' : 'Something went wrong',
         style: 'error',
         time: 5000,
       });
