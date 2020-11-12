@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
-import EditorJS from '@editorjs/editorjs';
-import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
+import { ToolboxConfig } from '@editorjs/editorjs';
+import { BlockTool, BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import styles from './Question.module.css';
 import pluginBlockStyles from './PluginBlock.module.css';
 
@@ -16,7 +16,7 @@ interface TestConstructorData {
   /**
    * Array of answers to choose from
    */
-  answers: string[] | [] | undefined;
+  answers: string[] | undefined;
 
   /**
    * Index of right answer
@@ -37,12 +37,13 @@ interface TestConstructorData {
 /**
  * Test constructor plugin for EditorJS
  */
-export default class TestConstructor {
-  private currentQuestion: string | undefined;
-  private currentAnswers: string[] | [] | undefined;
-  private currentCorrectAnswerIndex: number | undefined;
-  private currentRightAnswerMessage: string | undefined;
-  private currentWrongAnswerMessage: string | undefined;
+export default class TestConstructor implements BlockTool {
+  /**
+   * Previously saved data
+   *
+   * @private
+   */
+  private data: TestConstructorData;
 
   /**
    * Plugin constructor
@@ -50,17 +51,13 @@ export default class TestConstructor {
    * @param data - previously saved data
    */
   constructor({ data }: BlockToolConstructorOptions<TestConstructorData>) {
-    this.currentQuestion = data.question;
-    this.currentAnswers = data.answers;
-    this.currentCorrectAnswerIndex = data.correctAnswerIndex;
-    this.currentRightAnswerMessage = data.rightAnswerMessage;
-    this.currentWrongAnswerMessage = data.wrongAnswerMessage;
+    this.data = data;
   }
 
   /**
    * Getter for information about plugin in toolbox
    */
-  public static get toolbox(): EditorJS.ToolboxConfig {
+  public static get toolbox(): ToolboxConfig {
     return {
       icon: `<svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                <path fill-rule="evenodd" clip-rule="evenodd" d="M3 3C3 4.10457 3.89543 5 5 5C6.10457 5 7 4.10457 7 3C7 1.89543 6.10457 1 5 1C3.89543 1 3 1.89543 3 3ZM6.11111 3C6.11111 3.61365 5.61365 4.11111 5 4.11111C4.38635 4.11111 3.88889 3.61365 3.88889 3C3.88889 2.38635 4.38635 1.88889 5 1.88889C5.61365 1.88889 6.11111 2.38635 6.11111 3Z"/>
@@ -103,7 +100,7 @@ export default class TestConstructor {
     questionLabel.innerText = 'Вопрос:';
     questionLabel.className = styles.label;
 
-    questionInput.value = this.currentQuestion || '';
+    questionInput.value = this.data.question || '';
     questionInput.className = 'form-control';
 
     questionWrapper.append(questionLabel, questionInput);
@@ -115,7 +112,7 @@ export default class TestConstructor {
     const answersWrapper = document.createElement('div');
     const answerLabel = document.createElement('label');
     const addButton = document.createElement('button');
-    const answers = this.currentAnswers || [];
+    const answers = this.data.answers || [];
 
     if (answers.length) {
       for (let i = 0; i < answers.length; i++) {
@@ -186,7 +183,7 @@ export default class TestConstructor {
     rightAnswerNumberLabel.className = styles.label;
 
     rightAnswerNumberInput.type = 'number';
-    rightAnswerNumberInput.value = this.currentCorrectAnswerIndex ? (this.currentCorrectAnswerIndex + 1).toString() : '';
+    rightAnswerNumberInput.value = this.data.correctAnswerIndex ? (this.data.correctAnswerIndex + 1).toString() : '';
     rightAnswerNumberInput.className = 'form-control';
 
     rightAnswerNumberWrapper.append(rightAnswerNumberLabel, rightAnswerNumberInput);
@@ -203,7 +200,7 @@ export default class TestConstructor {
     rightAnswerMessageLabel.innerText = 'Сообщение для правильного ответа:';
     rightAnswerMessageLabel.className = styles.label;
 
-    rightAnswerMessageInput.value = this.currentRightAnswerMessage || '';
+    rightAnswerMessageInput.value = this.data.rightAnswerMessage || '';
     rightAnswerMessageInput.className = 'form-control';
 
     rightAnswerMessageWrapper.append(rightAnswerMessageLabel, rightAnswerMessageInput);
@@ -220,7 +217,7 @@ export default class TestConstructor {
     wrongAnswerMessageLabel.innerText = 'Сообщение для неправильного ответа:';
     wrongAnswerMessageLabel.className = styles.label;
 
-    wrongAnswerMessageInput.value = this.currentWrongAnswerMessage || '';
+    wrongAnswerMessageInput.value = this.data.wrongAnswerMessage || '';
     wrongAnswerMessageInput.className = 'form-control';
 
     wrongAnswerMessageWrapper.append(wrongAnswerMessageLabel, wrongAnswerMessageInput);
