@@ -1,11 +1,11 @@
 .visualization-page {
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: space-evenly;
   min-height: 100%;
   background: #222226;
   color: #ffffff;
+  overflow: auto;
 }
 
 .visualization-page__link-back,
@@ -71,6 +71,7 @@ html:fullscreen .visualization-page__next-link {
 .visualization-block {
   padding: 20px;
   min-width: 70%;
+  margin: auto 0;
 }
 
 html:fullscreen .visualization-block{
