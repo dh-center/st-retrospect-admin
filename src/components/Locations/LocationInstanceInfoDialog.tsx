@@ -305,6 +305,66 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             />
           </Form.Group>
           <Form.Group>
+            <Form.Label htmlFor={id`constructionDate`}>Construction date of location</Form.Label>
+            <Form.Control
+              disabled={!isEditing}
+              id={id`constructionDate`}
+              onChange={(e) => {
+                setInput({
+                  ...input,
+                  constructionDate: e.target.value,
+                });
+              }}
+              type='text'
+              value={input.constructionDate || ''}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor={id`demolitionDate`}>Demolition date of location</Form.Label>
+            <Form.Control
+              disabled={!isEditing}
+              id={id`demolitionDate`}
+              onChange={(e) => {
+                setInput({
+                  ...input,
+                  demolitionDate: e.target.value,
+                });
+              }}
+              type='text'
+              value={input.demolitionDate || ''}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor={id`startDate`}>Start date of the period of this location instance</Form.Label>
+            <Form.Control
+              disabled={!isEditing}
+              id={id`startDate`}
+              onChange={(e) => {
+                setInput({
+                  ...input,
+                  startDate: e.target.value,
+                });
+              }}
+              type='text'
+              value={input.startDate || ''}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor={id`endDate`}>End date of the period of this location instance</Form.Label>
+            <Form.Control
+              disabled={!isEditing}
+              id={id`endDate`}
+              onChange={(e) => {
+                setInput({
+                  ...input,
+                  endDate: e.target.value,
+                });
+              }}
+              type='text'
+              value={input.endDate || ''}
+            />
+          </Form.Group>
+          <Form.Group>
             <Form.Label>Main photo</Form.Label>
             <ImageGallery
               className={styles.mainPhoto}
