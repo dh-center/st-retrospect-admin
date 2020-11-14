@@ -84,6 +84,7 @@ export default function ArrayOfCustomSelects(props: ArrayOfCustomSelectsProps): 
     newArray.push('');
     setDataArray(() => {
       props.onChange(newArray);
+      console.log(newArray);
 
       return newArray;
     });

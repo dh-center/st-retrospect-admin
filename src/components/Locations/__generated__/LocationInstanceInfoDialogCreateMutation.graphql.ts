@@ -22,6 +22,7 @@ export type LocationInstanceInfoDialogCreateMutationVariables = {
 export type LocationInstanceInfoDialogCreateMutationResponse = {
     readonly locationInstances: {
         readonly create: {
+            readonly recordId: string;
             readonly record: {
                 readonly id: string;
                 readonly location: {
@@ -44,6 +45,7 @@ mutation LocationInstanceInfoDialogCreateMutation(
 ) {
   locationInstances {
     create(input: $input) {
+      recordId
       record {
         id
         location {
@@ -121,11 +123,18 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "recordId",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = [
-  (v2/*: any*/)
+v4 = [
+  (v3/*: any*/)
 ];
 return {
   "fragment": {
@@ -150,6 +159,7 @@ return {
             "name": "create",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -158,7 +168,7 @@ return {
                 "name": "record",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -210,6 +220,7 @@ return {
             "name": "create",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -218,7 +229,7 @@ return {
                 "name": "record",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -227,7 +238,7 @@ return {
                     "name": "location",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -268,7 +279,7 @@ return {
                         "name": "instances",
                         "plural": true,
                         "selections": [
-                          (v2/*: any*/),
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -332,7 +343,7 @@ return {
                             "kind": "LinkedField",
                             "name": "architects",
                             "plural": true,
-                            "selections": (v3/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": null
                           },
                           {
@@ -342,7 +353,7 @@ return {
                             "kind": "LinkedField",
                             "name": "location",
                             "plural": false,
-                            "selections": (v3/*: any*/),
+                            "selections": (v4/*: any*/),
                             "storageKey": null
                           }
                         ],
@@ -363,14 +374,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "84ebac3ce49a54b2da481c4299124479",
+    "cacheID": "54b6af625e5296a5bb7c6ab3c655c77b",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      record {\n        id\n        location {\n          ...LocationInfo_location\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  addresses {\n    address\n  }\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  architects {\n    id\n  }\n  location {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
+    "text": "mutation LocationInstanceInfoDialogCreateMutation(\n  $input: CreateLocationInstanceInput!\n) {\n  locationInstances {\n    create(input: $input) {\n      recordId\n      record {\n        id\n        location {\n          ...LocationInfo_location\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  addresses {\n    address\n  }\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  architects {\n    id\n  }\n  location {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6776c68d8a519076fcd8daf136515df3';
+(node as any).hash = '5f135c8b9c4ae71a878aad8d881d05c5';
 export default node;

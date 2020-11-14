@@ -29,6 +29,14 @@ import ImageGallery from '../utils/ImageGallery';
 import ImageUploader from '../utils/ImageUploader';
 import styles from './LocationInstanceInfoDialog.module.css';
 import ArrayOfCustomSelects, { CustomSelects } from '../utils/ArrayOfCustomSelects';
+import {
+  AddArchitectInput, LocationInstanceInfoDialogAddArchitectMutation,
+  LocationInstanceInfoDialogAddArchitectMutationResponse
+} from './__generated__/LocationInstanceInfoDialogAddArchitectMutation.graphql';
+import {
+  LocationInstanceInfoDialogRemoveArchitectMutation, LocationInstanceInfoDialogRemoveArchitectMutationResponse,
+  RemoveArchitectInput
+} from './__generated__/LocationInstanceInfoDialogRemoveArchitectMutation.graphql';
 
 /**
  * Union type for inputs for creating and updating location instances
@@ -129,12 +137,45 @@ export function create(input: CreateLocationInstanceInput): Promise<LocationInst
       mutation LocationInstanceInfoDialogCreateMutation($input: CreateLocationInstanceInput!) {
         locationInstances {
           create(input: $input) {
+            recordId
             record {
               id
               location {
                 ...LocationInfo_location
               }
             }
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
+}
+
+function createArchitect(input: AddArchitectInput): Promise<LocationInstanceInfoDialogAddArchitectMutationResponse> {
+  return commitMutation<LocationInstanceInfoDialogAddArchitectMutation>(environment, {
+    mutation: graphql`
+      mutation LocationInstanceInfoDialogAddArchitectMutation($input: AddArchitectInput!) {
+        locationInstances {
+          addArchitect(input: $input) {
+            recordId
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
+}
+
+function removeArchitect(input: RemoveArchitectInput): Promise<LocationInstanceInfoDialogRemoveArchitectMutationResponse> {
+  console.log(input);
+
+  return commitMutation<LocationInstanceInfoDialogRemoveArchitectMutation>(environment, {
+    mutation: graphql`
+      mutation LocationInstanceInfoDialogRemoveArchitectMutation($input: RemoveArchitectInput!) {
+        locationInstances {
+          removeArchitect(input: $input) {
+            recordId
           }
         }
       }
@@ -244,7 +285,16 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
       }
     } else {
       try {
-        await create(input);
+        const locationInstance = await create(input);
+
+        architectsInput.map(async architectId => {
+          if (architectId) {
+            await createArchitect({
+              locationInstanceId: locationInstance.locationInstances.create.recordId,
+              architectId,
+            });
+          }
+        });
         notifier.show({
           message: `Successfully created`,
           style: 'success',
@@ -265,7 +315,18 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   const removeInstance = async (): Promise<void> => {
     if (props.locationInstance) {
       try {
-        await remove(props.locationInstance);
+        const response = await remove(props.locationInstance);
+
+        if (props.locationInstance.architects) {
+          props.locationInstance.architects.map(async architect => {
+            if (architect?.id) {
+              await removeArchitect({
+                locationInstanceId: response.locationInstances.delete.recordId,
+                architectId: architect.id,
+              });
+            }
+          });
+        }
         notifier.show({
           message: `Successfully deleted`,
           style: 'success',
