@@ -39,6 +39,9 @@ fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
   endDate
   mainPhotoLink
   photoLinks
+  architects {
+    id
+  }
   location {
     id
   }
@@ -66,7 +69,10 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v3 = [
+  (v2/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -168,13 +174,21 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Person",
+            "kind": "LinkedField",
+            "name": "architects",
+            "plural": true,
+            "selections": (v3/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Location",
             "kind": "LinkedField",
             "name": "location",
             "plural": false,
-            "selections": [
-              (v2/*: any*/)
-            ],
+            "selections": (v3/*: any*/),
             "storageKey": null
           }
         ],
@@ -183,12 +197,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c239e421da5a997ca0dce47fbed6ac42",
+    "cacheID": "116ef285a0fbdff9de3f00b5940438ad",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogRefetchQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: GlobalId!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  location {\n    id\n  }\n}\n"
+    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: GlobalId!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  architects {\n    id\n  }\n  location {\n    id\n  }\n}\n"
   }
 };
 })();

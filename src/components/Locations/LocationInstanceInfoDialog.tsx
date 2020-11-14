@@ -28,6 +28,7 @@ import notifier from 'codex-notifier';
 import ImageGallery from '../utils/ImageGallery';
 import ImageUploader from '../utils/ImageUploader';
 import styles from './LocationInstanceInfoDialog.module.css';
+import ArrayOfCustomSelects, { CustomSelects } from '../utils/ArrayOfCustomSelects';
 
 /**
  * Union type for inputs for creating and updating location instances
@@ -81,6 +82,10 @@ function generateLocationInstanceInput(locationId: string): CreateLocationInstan
   };
 }
 
+function generateArchitects(): string[] {
+  return [];
+}
+
 /**
  * Converts provided instance to input type
  *
@@ -103,6 +108,14 @@ function instanceToInput(instance: LocationInstanceInfoDialog_locationInstance |
     startDate: instance.startDate,
     id: instance.id,
   };
+}
+
+function architectsToInput(instance: LocationInstanceInfoDialog_locationInstance | null): (string | null)[] {
+  if (!instance) {
+    return generateArchitects();
+  }
+
+  return instance.architects?.map(architect => architect?.id || null) || [];
 }
 
 /**
@@ -204,6 +217,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   const id = useUniqueId('location-instance-info-dialog');
   const [isEditing, setIsEditing] = useState(!props.locationInstance);
   const [input, setInput] = useState<LocationInstanceInputs>(instanceToInput(props.locationInstance, locationId));
+  const [architectsInput, setArchitectsInput] = useState<(string | null)[]>(architectsToInput(props.locationInstance));
 
   useEffect(() => {
     setInput(instanceToInput(props.locationInstance, locationId));
@@ -302,6 +316,19 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
               rows={20}
               value={input.description || ''}
 
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor={id`architects`}>Architects</Form.Label>
+            <ArrayOfCustomSelects
+              addButtonText='Add architect...'
+              customSelect={CustomSelects.PERSONS}
+              disabled={!isEditing}
+              onChange={value => {
+                setArchitectsInput(value);
+              }}
+              removeButtonText='Remove architect'
+              value={architectsInput}
             />
           </Form.Group>
           <Form.Group>
@@ -404,6 +431,9 @@ export default createRefetchContainer(
         endDate
         mainPhotoLink
         photoLinks
+        architects {
+          id
+        }
         location {
           id
         }

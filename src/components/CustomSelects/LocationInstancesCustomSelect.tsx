@@ -7,30 +7,14 @@ import { LocationInstancesCustomSelect_locationInstancesQuery } from './__genera
 import withLabel from '../utils/LabeledComponent';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 import styles from './CustomSelects.module.css';
-
-/**
- * Interface of props for LocationInstancesCustomSelect component
- */
-interface LocationInstancesCustomSelectProps {
-  /**
-   * onChange event handler
-   *
-   * @param selected - selected value id
-   */
-  onChange: (selected: string) => void;
-
-  /**
-   * Default location instance id for displaying
-   */
-  value?: string;
-}
+import { CustomSelectProps } from './CustomSelectProps';
 
 /**
  * Displays custom select for location instances
  *
  * @param componentProps - props with onChange event handler
  */
-export default function LocationInstancesCustomSelect(componentProps: LocationInstancesCustomSelectProps): ReactElement {
+export default function LocationInstancesCustomSelect(componentProps: CustomSelectProps): ReactElement {
   const onChange = componentProps.onChange;
 
   return (
@@ -65,6 +49,7 @@ export default function LocationInstancesCustomSelect(componentProps: LocationIn
         }) as {readonly value: string; readonly name: string}[];
 
         return <CustomSelect
+          disabled={componentProps.disabled}
           onChange={(selected) => {
             onChange(selected);
           }}

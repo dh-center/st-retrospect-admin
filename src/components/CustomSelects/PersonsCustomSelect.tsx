@@ -8,30 +8,14 @@ import { PersonsCustomSelect_personsQuery } from './__generated__/PersonsCustomS
 import withLabel from '../utils/LabeledComponent';
 import styles from './CustomSelects.module.css';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
-
-/**
- * Interface of props for PersonsCustomSelect component
- */
-interface PersonsCustomSelectProps {
-  /**
-   * onChange event handler
-   *
-   * @param selected - selected value id
-   */
-  onChange: (selected: string) => void;
-
-  /**
-   * Default person id for displaying
-   */
-  value?: string;
-}
+import { CustomSelectProps } from './CustomSelectProps';
 
 /**
  * Displays custom select for persons
  *
  * @param componentProps - props with onChange event handler
  */
-export default function PersonsCustomSelect(componentProps: PersonsCustomSelectProps): ReactElement {
+export default function PersonsCustomSelect(componentProps: CustomSelectProps): ReactElement {
   const onChange = componentProps.onChange;
 
   return (
@@ -80,6 +64,7 @@ export default function PersonsCustomSelect(componentProps: PersonsCustomSelectP
         });
 
         return <CustomSelect
+          disabled={componentProps.disabled}
           onChange={(selected) => {
             onChange(selected);
           }}
