@@ -60,7 +60,7 @@ function LocationRow(props: EntityRowProps<Entity<LocationsPageEntityConnection>
     ) ? addresses[0].address : '—';
   };
 
-  const rowSpan = instancesRows.length;
+  const rowSpan = instancesRows.length || 1;
 
   return <>
     <tr onClick={onClick}>
