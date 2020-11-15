@@ -2,19 +2,7 @@ import React, { ReactElement } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import withLabel from './LabeledComponent';
 import styles from './ArrayOfInputs.module.css';
-import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
-import LocationInstancesCustomSelect from '../CustomSelects/LocationInstancesCustomSelect';
-import RelationTypesCustomSelect from '../CustomSelects/RelationTypesCustomSelect';
 import { CustomSelectProps } from '../CustomSelects/CustomSelectProps';
-
-/**
- * Enabled custom selects
- */
-export enum CustomSelects {
-  PERSONS = 'PERSONS',
-  LOCATION_INSTANCES = 'LOCATION_INSTANCES',
-  RELATION_TYPES = 'RELATION_TYPES'
-}
 
 /**
  * ArrayOfInputs component props interface
@@ -28,9 +16,9 @@ interface ArrayOfCustomSelectsProps {
   onChange(value: (string | null)[]): void;
 
   /**
-   * Type of custom select
+   * Custom select component
    */
-  customSelect: CustomSelects;
+  CustomSelect: (props: CustomSelectProps) => ReactElement;
 
   /**
    * Default value
@@ -59,20 +47,6 @@ interface ArrayOfCustomSelectsProps {
  * @param props - props with data for displaying
  */
 export default function ArrayOfCustomSelects(props: ArrayOfCustomSelectsProps): ReactElement {
-  let CustomSelect: (props: CustomSelectProps) => ReactElement;
-
-  switch (props.customSelect) {
-    case CustomSelects.PERSONS:
-      CustomSelect = PersonsCustomSelect;
-      break;
-    case CustomSelects.LOCATION_INSTANCES:
-      CustomSelect = LocationInstancesCustomSelect;
-      break;
-    default:
-      CustomSelect = RelationTypesCustomSelect;
-      break;
-  }
-
   /**
    * Adds empty element to array
    */
@@ -97,7 +71,7 @@ export default function ArrayOfCustomSelects(props: ArrayOfCustomSelectsProps): 
   const inputList = props.value.map((dataItem, index) => {
     return (
       <Form.Row className={styles.inputLineItemWrapper} key={index}>
-        <CustomSelect
+        <props.CustomSelect
           disabled={props.disabled}
           onChange={(value) => {
             const newArray = [ ...props.value ];
