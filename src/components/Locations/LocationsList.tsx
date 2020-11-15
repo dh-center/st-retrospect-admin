@@ -60,7 +60,7 @@ function LocationRow(props: EntityRowProps<Entity<LocationsPageEntityConnection>
     ) ? addresses[0].address : '—';
   };
 
-  const rowSpan = instancesRows.length;
+  const rowSpan = instancesRows.length || 1;
 
   return <>
     <tr onClick={onClick}>
@@ -68,7 +68,7 @@ function LocationRow(props: EntityRowProps<Entity<LocationsPageEntityConnection>
       <td rowSpan={rowSpan}>{getAddress(props.entity.addresses)}</td>
       <td rowSpan={rowSpan}>{props.entity.latitude}</td>
       <td rowSpan={rowSpan}>{props.entity.longitude}</td>
-      {instancesRows.shift()}
+      {instancesRows.shift() || <><td/><td/></>}
     </tr>
     {instancesRows.map((row, index) => <tr key={index} onClick={onClick}>{row}</tr>)}
   </>;
