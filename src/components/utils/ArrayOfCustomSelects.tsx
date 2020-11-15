@@ -35,7 +35,7 @@ interface ArrayOfCustomSelectsProps {
   /**
    * Default value
    */
-  value?: (string | null)[];
+  value: (string | null)[];
 
   /**
    * Text on adding button
@@ -59,8 +59,6 @@ interface ArrayOfCustomSelectsProps {
  * @param props - props with data for displaying
  */
 export default function ArrayOfCustomSelects(props: ArrayOfCustomSelectsProps): ReactElement {
-  const [dataArray, setDataArray] = useState(props.value || []);
-
   let CustomSelect: (props: CustomSelectProps) => ReactElement;
 
   switch (props.customSelect) {
@@ -79,15 +77,9 @@ export default function ArrayOfCustomSelects(props: ArrayOfCustomSelectsProps): 
    * Adds empty element to array
    */
   const addEmptyElement = (): void => {
-    const newArray = dataArray;
+    const newArray = [...props.value, ''];
 
-    newArray.push('');
-    setDataArray(() => {
-      props.onChange(newArray);
-      console.log(newArray);
-
-      return newArray;
-    });
+    props.onChange(newArray);
   };
 
   /**
@@ -96,30 +88,22 @@ export default function ArrayOfCustomSelects(props: ArrayOfCustomSelectsProps): 
    * @param index - index of element for removing
    */
   const removeElement = (index: number): void => {
-    const newArray = dataArray;
+    const newArray = [ ...props.value ];
 
     newArray.splice(index, 1);
-    setDataArray(() => {
-      props.onChange(newArray);
-
-      return newArray;
-    });
+    props.onChange(newArray);
   };
 
-  const inputList = dataArray.map((dataItem, index) => {
+  const inputList = props.value.map((dataItem, index) => {
     return (
       <Form.Row className={styles.inputLineItemWrapper} key={index}>
         <CustomSelect
           disabled={props.disabled}
           onChange={(value) => {
-            const newArray = dataArray;
+            const newArray = [ ...props.value ];
 
             newArray[index] = value;
-            setDataArray(() => {
-              props.onChange(newArray);
-
-              return newArray;
-            });
+            props.onChange(newArray);
           }}
           value={dataItem || undefined}
         />
@@ -151,6 +135,6 @@ export default function ArrayOfCustomSelects(props: ArrayOfCustomSelectsProps): 
 }
 
 /**
- * Returns labeled ArrayOfInputs component
+ * Returns labeled ArrayOfSelects component
  */
-export const LabeledArrayOfInputs = withLabel(ArrayOfCustomSelects);
+export const LabeledArrayOfSelects = withLabel(ArrayOfCustomSelects);

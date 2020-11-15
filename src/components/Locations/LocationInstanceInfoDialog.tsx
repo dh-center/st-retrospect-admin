@@ -262,6 +262,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
 
   useEffect(() => {
     setInput(instanceToInput(props.locationInstance, locationId));
+    setArchitectsInput(architectsToInput(props.locationInstance));
     setIsEditing(!props.locationInstance);
   }, [props.locationInstance, locationId]);
 
@@ -270,7 +271,34 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
     e.stopPropagation();
     if (isUpdateInput(input)) {
       try {
-        await update(input);
+        const response = await update(input);
+
+        /**
+         * Update architects in database
+         */
+        const updatedArchitectsSet = new Set(architectsInput);
+        const oldArchitectsSet = new Set(props.locationInstance?.architects?.map(architect => architect?.id || null));
+        const architectsForDeleting = Array.from(oldArchitectsSet).filter(architect => !updatedArchitectsSet.has(architect));
+        const architectsForCreating = Array.from(updatedArchitectsSet).filter(architect => !oldArchitectsSet.has(architect));
+
+        architectsForDeleting.forEach(architect => {
+          if (architect) {
+            removeArchitect({
+              architectId: architect,
+              locationInstanceId: response.locationInstances.update.recordId,
+            });
+          }
+        });
+
+        architectsForCreating.forEach(architect => {
+          if (architect) {
+            createArchitect({
+              architectId: architect,
+              locationInstanceId: response.locationInstances.update.recordId,
+            });
+          }
+        });
+
         notifier.show({
           message: `Successfully updated`,
           style: 'success',
@@ -315,18 +343,8 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   const removeInstance = async (): Promise<void> => {
     if (props.locationInstance) {
       try {
-        const response = await remove(props.locationInstance);
+        await remove(props.locationInstance);
 
-        if (props.locationInstance.architects) {
-          props.locationInstance.architects.map(async architect => {
-            if (architect?.id) {
-              await removeArchitect({
-                locationInstanceId: response.locationInstances.delete.recordId,
-                architectId: architect.id,
-              });
-            }
-          });
-        }
         notifier.show({
           message: `Successfully deleted`,
           style: 'success',
