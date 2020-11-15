@@ -90,6 +90,9 @@ function generateLocationInstanceInput(locationId: string): CreateLocationInstan
   };
 }
 
+/**
+ * Generates empty array of architects
+ */
 function generateArchitects(): string[] {
   return [];
 }
@@ -118,6 +121,11 @@ function instanceToInput(instance: LocationInstanceInfoDialog_locationInstance |
   };
 }
 
+/**
+ * Generates array of architects
+ *
+ * @param instance - current location instance
+ */
 function architectsToInput(instance: LocationInstanceInfoDialog_locationInstance | null): (string | null)[] {
   if (!instance) {
     return generateArchitects();
