@@ -39,6 +39,22 @@ directive @specifiedBy(
   url: String!
 ) on SCALAR
 
+input AddArchitectInput {
+  """Location instance id"""
+  locationInstanceId: GlobalId!
+
+  """Architect for adding"""
+  architectId: GlobalId!
+}
+
+type AddArchitectPayload {
+  """New relation id"""
+  recordId: GlobalId!
+
+  """New relation"""
+  record: Relation!
+}
+
 """Location address representation"""
 type Address {
   """Country data"""
@@ -460,6 +476,12 @@ input LocationInstanceInput {
 type LocationInstanceMutations {
   """Create location instance"""
   create(input: CreateLocationInstanceInput!): CreateLocationInstancePayload!
+
+  """Add architect to location instance"""
+  addArchitect(input: AddArchitectInput!): AddArchitectPayload!
+
+  """Remove architects from location instance"""
+  removeArchitect(input: RemoveArchitectInput!): RemoveArchitectPayload!
 
   """Update location instance"""
   update(input: UpdateLocationInstanceInput!): UpdateLocationInstancePayload!
@@ -965,6 +987,19 @@ type RelationTypeMutations {
 
   """Delete relation type"""
   delete(id: GlobalId!): DeleteRelationTypePayload!
+}
+
+input RemoveArchitectInput {
+  """Location instance id"""
+  locationInstanceId: GlobalId!
+
+  """Architect for removing"""
+  architectId: GlobalId!
+}
+
+type RemoveArchitectPayload {
+  """Deleted relation id"""
+  recordId: GlobalId!
 }
 
 """Route between locations"""

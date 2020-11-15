@@ -27,6 +27,11 @@ interface ComponentProps {
    * Placeholder in input field
    */
   placeholder: string;
+
+  /**
+   * Is component disabled
+   */
+  disabled?: boolean;
 }
 
 /**
@@ -39,6 +44,7 @@ export default function CustomSelect(props: ComponentProps): React.ReactElement 
 
   return (
     <SelectSearch
+      disabled={props.disabled}
       onChange={(selected): void => {
         onChange(selected.toString());
       }}

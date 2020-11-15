@@ -7,30 +7,14 @@ import { RelationTypesCustomSelect_relationTypesQuery } from './__generated__/Re
 import withLabel from '../utils/LabeledComponent';
 import styles from './CustomSelects.module.css';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
-
-/**
- * Interface of props for RelationTypesCustomSelect component
- */
-interface RelationTypesCustomSelectProps {
-  /**
-   * onChange event handler
-   *
-   * @param selected - selected value id
-   */
-  onChange: (selected: string) => void;
-
-  /**
-   * Default relation type id for displaying
-   */
-  value?: string;
-}
+import { CustomSelectProps } from './CustomSelectProps';
 
 /**
  * Displays custom select for relation types
  *
  * @param componentProps - props with onChange event handler
  */
-export default function RelationTypesCustomSelect(componentProps: RelationTypesCustomSelectProps): ReactElement {
+export default function RelationTypesCustomSelect(componentProps: CustomSelectProps): ReactElement {
   const onChange = componentProps.onChange;
 
   return (
@@ -71,6 +55,7 @@ export default function RelationTypesCustomSelect(componentProps: RelationTypesC
         }) as {readonly value: string; readonly name: string}[];
 
         return <CustomSelect
+          disabled={componentProps.disabled}
           onChange={(selected) => {
             onChange(selected);
           }}

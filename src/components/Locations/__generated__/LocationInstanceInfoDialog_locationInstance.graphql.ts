@@ -14,6 +14,9 @@ export type LocationInstanceInfoDialog_locationInstance = {
     readonly endDate: string | null;
     readonly mainPhotoLink: string | null;
     readonly photoLinks: ReadonlyArray<string> | null;
+    readonly architects: ReadonlyArray<{
+        readonly id: string;
+    } | null> | null;
     readonly location: {
         readonly id: string;
     };
@@ -34,7 +37,10 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v1 = [
+  (v0/*: any*/)
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -101,13 +107,21 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Person",
+      "kind": "LinkedField",
+      "name": "architects",
+      "plural": true,
+      "selections": (v1/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Location",
       "kind": "LinkedField",
       "name": "location",
       "plural": false,
-      "selections": [
-        (v0/*: any*/)
-      ],
+      "selections": (v1/*: any*/),
       "storageKey": null
     }
   ],
@@ -115,5 +129,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '49d3244712ed0286caa0252ea57024ec';
+(node as any).hash = '90f17ab987ca1252095ff051b3b37e95';
 export default node;

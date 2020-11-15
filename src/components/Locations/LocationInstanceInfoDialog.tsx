@@ -28,6 +28,16 @@ import notifier from 'codex-notifier';
 import ImageGallery from '../utils/ImageGallery';
 import ImageUploader from '../utils/ImageUploader';
 import styles from './LocationInstanceInfoDialog.module.css';
+import ArrayOfCustomSelects from '../utils/ArrayOfCustomSelects';
+import {
+  AddArchitectInput, LocationInstanceInfoDialogAddArchitectMutation,
+  LocationInstanceInfoDialogAddArchitectMutationResponse
+} from './__generated__/LocationInstanceInfoDialogAddArchitectMutation.graphql';
+import {
+  LocationInstanceInfoDialogRemoveArchitectMutation, LocationInstanceInfoDialogRemoveArchitectMutationResponse,
+  RemoveArchitectInput
+} from './__generated__/LocationInstanceInfoDialogRemoveArchitectMutation.graphql';
+import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
 
 /**
  * Union type for inputs for creating and updating location instances
@@ -82,6 +92,13 @@ function generateLocationInstanceInput(locationId: string): CreateLocationInstan
 }
 
 /**
+ * Generates empty array of architects
+ */
+function generateArchitects(): string[] {
+  return [];
+}
+
+/**
  * Converts provided instance to input type
  *
  * @param instance - instance to convert. Null for instance creating
@@ -106,6 +123,19 @@ function instanceToInput(instance: LocationInstanceInfoDialog_locationInstance |
 }
 
 /**
+ * Generates array of architects
+ *
+ * @param instance - current location instance
+ */
+function architectsToInput(instance: LocationInstanceInfoDialog_locationInstance | null): (string | null)[] {
+  if (!instance) {
+    return generateArchitects();
+  }
+
+  return instance.architects?.map(architect => architect?.id || null) || [];
+}
+
+/**
  * Mutation for creating LocationInstance
  *
  * @param input - input data for creating
@@ -116,12 +146,53 @@ export function create(input: CreateLocationInstanceInput): Promise<LocationInst
       mutation LocationInstanceInfoDialogCreateMutation($input: CreateLocationInstanceInput!) {
         locationInstances {
           create(input: $input) {
+            recordId
             record {
               id
               location {
                 ...LocationInfo_location
               }
             }
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
+}
+
+/**
+ * Creates architect in api
+ *
+ * @param input - mutation input
+ */
+function createArchitect(input: AddArchitectInput): Promise<LocationInstanceInfoDialogAddArchitectMutationResponse> {
+  return commitMutation<LocationInstanceInfoDialogAddArchitectMutation>(environment, {
+    mutation: graphql`
+      mutation LocationInstanceInfoDialogAddArchitectMutation($input: AddArchitectInput!) {
+        locationInstances {
+          addArchitect(input: $input) {
+            recordId
+          }
+        }
+      }
+    `,
+    variables: { input },
+  });
+}
+
+/**
+ * Removes architect from api
+ *
+ * @param input - mutation input
+ */
+function removeArchitect(input: RemoveArchitectInput): Promise<LocationInstanceInfoDialogRemoveArchitectMutationResponse> {
+  return commitMutation<LocationInstanceInfoDialogRemoveArchitectMutation>(environment, {
+    mutation: graphql`
+      mutation LocationInstanceInfoDialogRemoveArchitectMutation($input: RemoveArchitectInput!) {
+        locationInstances {
+          removeArchitect(input: $input) {
+            recordId
           }
         }
       }
@@ -204,18 +275,62 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   const id = useUniqueId('location-instance-info-dialog');
   const [isEditing, setIsEditing] = useState(!props.locationInstance);
   const [input, setInput] = useState<LocationInstanceInputs>(instanceToInput(props.locationInstance, locationId));
+  const [architectsInput, setArchitectsInput] = useState<(string | null)[]>(architectsToInput(props.locationInstance));
 
   useEffect(() => {
     setInput(instanceToInput(props.locationInstance, locationId));
+    setArchitectsInput(architectsToInput(props.locationInstance));
     setIsEditing(!props.locationInstance);
   }, [props.locationInstance, locationId]);
+
+  /**
+   * Updates architects in API
+   *
+   * @param oldArchitects - array of old architects
+   * @param updatedArchitects - array of updated architects
+   * @param locationInstanceId - location instance id for creating new relations
+   */
+  const updateArchitects = async (oldArchitects: (string | null)[] = [], updatedArchitects: (string | null)[] = [], locationInstanceId: string): Promise<void> => {
+    const updatedArchitectsSet = new Set(updatedArchitects);
+    const oldArchitectsSet = new Set(oldArchitects);
+    const architectsForDeleting = Array.from(oldArchitectsSet).filter(architect => !updatedArchitectsSet.has(architect));
+    const architectsForCreating = Array.from(updatedArchitectsSet).filter(architect => !oldArchitectsSet.has(architect));
+
+    await Promise.all(architectsForDeleting.map(async architect => {
+      if (architect) {
+        await removeArchitect({
+          architectId: architect,
+          locationInstanceId: locationInstanceId,
+        });
+      }
+    }));
+
+    await Promise.all(architectsForCreating.map(async architect => {
+      if (architect) {
+        await createArchitect({
+          architectId: architect,
+          locationInstanceId: locationInstanceId,
+        });
+      }
+    }));
+  };
 
   const submit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     e.stopPropagation();
     if (isUpdateInput(input)) {
       try {
-        await update(input);
+        const response = await update(input);
+
+        /**
+         * Update architects in database
+         */
+        await updateArchitects(
+          props.locationInstance?.architects?.map(architect => architect?.id || null),
+          architectsInput,
+          response.locationInstances.update.recordId
+        );
+
         notifier.show({
           message: `Successfully updated`,
           style: 'success',
@@ -230,7 +345,13 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
       }
     } else {
       try {
-        await create(input);
+        const locationInstance = await create(input);
+
+        /**
+         * Add architects to API
+         */
+        await updateArchitects([], architectsInput, locationInstance.locationInstances.create.recordId);
+
         notifier.show({
           message: `Successfully created`,
           style: 'success',
@@ -252,6 +373,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
     if (props.locationInstance) {
       try {
         await remove(props.locationInstance);
+
         notifier.show({
           message: `Successfully deleted`,
           style: 'success',
@@ -302,6 +424,19 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
               rows={20}
               value={input.description || ''}
 
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor={id`architects`}>Architects</Form.Label>
+            <ArrayOfCustomSelects
+              CustomSelect={PersonsCustomSelect}
+              addButtonText='Add architect...'
+              disabled={!isEditing}
+              onChange={value => {
+                setArchitectsInput(value);
+              }}
+              removeButtonText='Remove architect'
+              value={architectsInput}
             />
           </Form.Group>
           <Form.Group>
@@ -464,6 +599,9 @@ export default createRefetchContainer(
         endDate
         mainPhotoLink
         photoLinks
+        architects {
+          id
+        }
         location {
           id
         }
