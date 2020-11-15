@@ -296,23 +296,23 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
     const architectsForDeleting = Array.from(oldArchitectsSet).filter(architect => !updatedArchitectsSet.has(architect));
     const architectsForCreating = Array.from(updatedArchitectsSet).filter(architect => !oldArchitectsSet.has(architect));
 
-    await architectsForDeleting.map(async architect => {
+    await Promise.all(architectsForDeleting.map(async architect => {
       if (architect) {
         await removeArchitect({
           architectId: architect,
           locationInstanceId: locationInstanceId,
         });
       }
-    });
+    }));
 
-    await architectsForCreating.map(async architect => {
+    await Promise.all(architectsForCreating.map(async architect => {
       if (architect) {
         await createArchitect({
           architectId: architect,
           locationInstanceId: locationInstanceId,
         });
       }
-    });
+    }));
   };
 
   const submit = async (e: FormEvent): Promise<void> => {
