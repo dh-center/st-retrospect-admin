@@ -12,8 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - name: Set branch name to environment variable
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
+      - uses: nelonoel/branch-name@v1.0.1
 
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1
@@ -30,7 +29,7 @@ jobs:
         run: docker build . -t $DOCKER_IMAGE_NAME
 
       - name: Set deploy command to env variable
-        run: echo "::set-env name=DEPLOY_COMMAND::$(echo "cd ~/st-retrospect/${BRANCH_NAME}/admin && ./deploy.sh")"
+        run: echo "DEPLOY_COMMAND=$(echo "cd ~/st-retrospect/${BRANCH_NAME}/admin && ./deploy.sh")" >> $GITHUB_ENV
 
       - name: Push to Docker Hub
         if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
