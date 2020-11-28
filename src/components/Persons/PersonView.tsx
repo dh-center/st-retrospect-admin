@@ -130,7 +130,7 @@ function PersonView(): React.ReactElement {
               />
               <LabeledText
                 content={props.person.professions
-                  .filter(profession => profession !== null)
+                  ?.filter(profession => profession !== null)
                   .join('; ')}
                 label='Professions'
               />

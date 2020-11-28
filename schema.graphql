@@ -184,11 +184,11 @@ type CreateLocationPayload {
 }
 
 input CreatePersonInput {
-  """Person's first name"""
-  firstName: String
-
   """Person's last name"""
   lastName: String
+
+  """Person's first name"""
+  firstName: String
 
   """Person's patronymic"""
   patronymic: String
@@ -197,7 +197,7 @@ input CreatePersonInput {
   pseudonym: String
 
   """Person's professions"""
-  professions: [MultilingualString]!
+  professions: [MultilingualString]
 
   """Person's description"""
   description: String
@@ -591,7 +591,7 @@ type Person implements Node {
   pseudonym: String
 
   """Person's professions"""
-  professions: [MultilingualString]!
+  professions: [MultilingualString]
 
   """Person's description"""
   description: String
@@ -1130,11 +1130,11 @@ input UpdatePersonInput {
   """ID of person for updating"""
   id: GlobalId!
 
-  """Person's first name"""
-  firstName: String
-
   """Person's last name"""
   lastName: String
+
+  """Person's first name"""
+  firstName: String
 
   """Person's patronymic"""
   patronymic: String

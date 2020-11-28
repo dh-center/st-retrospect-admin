@@ -13,7 +13,7 @@ export type PersonViewQueryResponse = {
         readonly firstName: string | null;
         readonly patronymic: string | null;
         readonly pseudonym: string | null;
-        readonly professions: ReadonlyArray<string | null>;
+        readonly professions: ReadonlyArray<string | null> | null;
         readonly description: string | null;
         readonly birthDate: string | null;
         readonly deathDate: string | null;
