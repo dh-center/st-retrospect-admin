@@ -4,11 +4,11 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreatePersonInput = {
-    firstName?: string | null;
     lastName?: string | null;
+    firstName?: string | null;
     patronymic?: string | null;
     pseudonym?: string | null;
-    professions: Array<string | null>;
+    professions?: Array<string | null> | null;
     description?: string | null;
     birthDate?: string | null;
     deathDate?: string | null;

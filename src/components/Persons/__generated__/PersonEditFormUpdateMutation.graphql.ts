@@ -5,8 +5,8 @@
 import { ConcreteRequest } from "relay-runtime";
 export type UpdatePersonInput = {
     id: string;
-    firstName?: string | null;
     lastName?: string | null;
+    firstName?: string | null;
     patronymic?: string | null;
     pseudonym?: string | null;
     professions?: Array<string | null> | null;
@@ -15,25 +15,25 @@ export type UpdatePersonInput = {
     deathDate?: string | null;
     wikiLink?: string | null;
 };
-export type PersonEditUpdateMutationVariables = {
+export type PersonEditFormUpdateMutationVariables = {
     input: UpdatePersonInput;
 };
-export type PersonEditUpdateMutationResponse = {
+export type PersonEditFormUpdateMutationResponse = {
     readonly person: {
         readonly update: {
             readonly recordId: string;
         };
     } | null;
 };
-export type PersonEditUpdateMutation = {
-    readonly response: PersonEditUpdateMutationResponse;
-    readonly variables: PersonEditUpdateMutationVariables;
+export type PersonEditFormUpdateMutation = {
+    readonly response: PersonEditFormUpdateMutationResponse;
+    readonly variables: PersonEditFormUpdateMutationVariables;
 };
 
 
 
 /*
-mutation PersonEditUpdateMutation(
+mutation PersonEditFormUpdateMutation(
   $input: UpdatePersonInput!
 ) {
   person {
@@ -94,7 +94,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PersonEditUpdateMutation",
+    "name": "PersonEditFormUpdateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -103,18 +103,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PersonEditUpdateMutation",
+    "name": "PersonEditFormUpdateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "446c5f73b1dff5b9ebbe2d1d18bc1c72",
+    "cacheID": "0efb1f2908cc8a2a91076536442d52f6",
     "id": null,
     "metadata": {},
-    "name": "PersonEditUpdateMutation",
+    "name": "PersonEditFormUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonEditUpdateMutation(\n  $input: UpdatePersonInput!\n) {\n  person {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation PersonEditFormUpdateMutation(\n  $input: UpdatePersonInput!\n) {\n  person {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'bc499b1b7578825d8bbb85dbd1f11085';
+(node as any).hash = '920608c6b494cf5f415d353ea31f3424';
 export default node;

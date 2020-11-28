@@ -137,7 +137,7 @@ export default function PersonCreate(): React.ReactElement {
             professions: value,
           })}
           removeButtonText='Remove profession'
-          value={input.professions}
+          value={input.professions || []}
         />
         <Textarea
           label='Description'
