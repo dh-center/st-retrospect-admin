@@ -8,25 +8,25 @@ export type UpdateRelationTypeInput = {
     name?: string | null;
     synonyms?: Array<string | null> | null;
 };
-export type RelationTypeEditMutationVariables = {
+export type RelationTypeEditFormMutationVariables = {
     input: UpdateRelationTypeInput;
 };
-export type RelationTypeEditMutationResponse = {
+export type RelationTypeEditFormMutationResponse = {
     readonly relationType: {
         readonly update: {
             readonly recordId: string;
         };
     };
 };
-export type RelationTypeEditMutation = {
-    readonly response: RelationTypeEditMutationResponse;
-    readonly variables: RelationTypeEditMutationVariables;
+export type RelationTypeEditFormMutation = {
+    readonly response: RelationTypeEditFormMutationResponse;
+    readonly variables: RelationTypeEditFormMutationVariables;
 };
 
 
 
 /*
-mutation RelationTypeEditMutation(
+mutation RelationTypeEditFormMutation(
   $input: UpdateRelationTypeInput!
 ) {
   relationType {
@@ -87,7 +87,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "RelationTypeEditMutation",
+    "name": "RelationTypeEditFormMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -96,18 +96,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "RelationTypeEditMutation",
+    "name": "RelationTypeEditFormMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "d3739d5f796f38cee545cf4aa16b8d83",
+    "cacheID": "01ea6ffb3de2cee5b14bf053e7a877cb",
     "id": null,
     "metadata": {},
-    "name": "RelationTypeEditMutation",
+    "name": "RelationTypeEditFormMutation",
     "operationKind": "mutation",
-    "text": "mutation RelationTypeEditMutation(\n  $input: UpdateRelationTypeInput!\n) {\n  relationType {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation RelationTypeEditFormMutation(\n  $input: UpdateRelationTypeInput!\n) {\n  relationType {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8030f89d70048fe17a99f40d0ceb2f84';
+(node as any).hash = 'cd11a8bc87a11002b10060270edcbb56';
 export default node;

@@ -3,14 +3,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type RelationTypeEditQueryVariables = {
     id: string;
 };
 export type RelationTypeEditQueryResponse = {
     readonly relationType: {
-        readonly id: string;
-        readonly name: string;
-        readonly synonyms: ReadonlyArray<string | null>;
+        readonly " $fragmentRefs": FragmentRefs<"RelationTypeEditForm_originalRelationType">;
     } | null;
 };
 export type RelationTypeEditQuery = {
@@ -25,10 +24,15 @@ query RelationTypeEditQuery(
   $id: GlobalId!
 ) {
   relationType(id: $id) {
+    ...RelationTypeEditForm_originalRelationType
     id
-    name
-    synonyms
   }
+}
+
+fragment RelationTypeEditForm_originalRelationType on RelationType {
+  id
+  name
+  synonyms
 }
 */
 
@@ -42,42 +46,9 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "id",
-        "variableName": "id"
-      }
-    ],
-    "concreteType": "RelationType",
-    "kind": "LinkedField",
-    "name": "relationType",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "name",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "synonyms",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
   }
 ];
 return {
@@ -86,7 +57,24 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "RelationTypeEditQuery",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "RelationType",
+        "kind": "LinkedField",
+        "name": "relationType",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "RelationTypeEditForm_originalRelationType"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -95,17 +83,50 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "RelationTypeEditQuery",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "RelationType",
+        "kind": "LinkedField",
+        "name": "relationType",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "synonyms",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "6b684df824518d97ebd5032318448fd0",
+    "cacheID": "9c1ed2011c7937976611787c0109ec20",
     "id": null,
     "metadata": {},
     "name": "RelationTypeEditQuery",
     "operationKind": "query",
-    "text": "query RelationTypeEditQuery(\n  $id: GlobalId!\n) {\n  relationType(id: $id) {\n    id\n    name\n    synonyms\n  }\n}\n"
+    "text": "query RelationTypeEditQuery(\n  $id: GlobalId!\n) {\n  relationType(id: $id) {\n    ...RelationTypeEditForm_originalRelationType\n    id\n  }\n}\n\nfragment RelationTypeEditForm_originalRelationType on RelationType {\n  id\n  name\n  synonyms\n}\n"
   }
 };
 })();
-(node as any).hash = '7a6bc058e11deb7de3e44a98bd9000ea';
+(node as any).hash = '0c006ff334aa5551c9c53125bc3ff969';
 export default node;
