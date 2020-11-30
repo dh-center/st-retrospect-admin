@@ -13,7 +13,7 @@ import RelationTypeEditForm from './RelationTypeEditForm';
  * Displays edit component for relation type
  */
 export default function RelationTypeEdit(): ReactElement {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
 
   return (
     <QueryRenderer<RelationTypeEditQuery>
