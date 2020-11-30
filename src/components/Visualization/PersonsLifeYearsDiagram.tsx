@@ -187,10 +187,6 @@ export default function PersonLifeYearsDiagram(props: {
       .style('fill-opacity', baseOpacity)
       .attr('class', 'chord');
 
-    // svg.selectAll<SVGGElement>('.group')
-    //   .on('mouseover', fade(svg, 0.02))
-    //   .on('mouseout', fade(svg, baseOpacity));
-
     /**
      * Initiate tics
      */

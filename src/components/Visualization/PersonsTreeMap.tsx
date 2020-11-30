@@ -155,7 +155,6 @@ function PersonsTreeMap(props: {
 
     data.value = data.children.reduce((acc, val) => acc + val.value, 0);
 
-    console.log(data);
     const hierarchy = d3.hierarchy(data);
 
     const root = d3.treemap<typeof data>()
@@ -174,11 +173,7 @@ function PersonsTreeMap(props: {
       .enter()
       .append('rect')
       .attr('x', d => d.x0)
-      .attr('y', d => {
-        console.log(d);
-
-        return d.y0;
-      })
+      .attr('y', d => d.y0)
       .attr('width', d => d.x1 - d.x0)
       .attr('height', d => d.y1 - d.y0)
       .style('stroke', 'black')
