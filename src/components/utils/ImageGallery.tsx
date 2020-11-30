@@ -36,12 +36,14 @@ export default function ImageGallery(props: ImageGalleryProps & WithClassName): 
     return <div>There is no images</div>;
   }
 
-  const onDelete = !props.viewOnly ? (image: string) => () => {
-    if (!props.images) {
-      return;
+  const onDelete = !props.viewOnly
+    ? (image: string) => () => {
+      if (!props.images) {
+        return;
+      }
+      props.onChange(props.images.filter(im => im !== image));
     }
-    props.onChange(props.images.filter(im => im !== image));
-  } : undefined;
+    : undefined;
 
   return (
     <div className={classNames(styles.container, props.className)}>

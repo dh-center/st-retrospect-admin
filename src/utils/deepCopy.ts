@@ -5,6 +5,6 @@ import DeepWriteable from '../types/writeable';
  *
  * @param value - value to clone
  */
-export default function deepCopy<T extends object>(value: T): DeepWriteable<T> {
+export default function deepCopy<T>(value: T): DeepWriteable<T> {
   return JSON.parse(JSON.stringify(value));
 }

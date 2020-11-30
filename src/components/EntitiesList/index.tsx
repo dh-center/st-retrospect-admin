@@ -106,27 +106,29 @@ export default class EntitiesList<T extends EntityConnection> extends React.Comp
 
     return (
       <div className='entities-page'>
-        {this.props.entityConnection.entities.edges.length > 0 ? (
-          <Table bordered className='m-0' hover responsive size='sm' striped>
-            <thead>
-              {this.props.header || (
-                <tr>
-                  <th>№</th>
-                  {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
-                    if (key === '__typename' || key === 'id') {
-                      return undefined;
+        {this.props.entityConnection.entities.edges.length > 0
+          ? (
+            <Table bordered className='m-0' hover responsive size='sm' striped>
+              <thead>
+                {this.props.header || (
+                  <tr>
+                    <th>№</th>
+                    {Object.keys(this.props.entityConnection.entities.edges[0].node).map((key) => {
+                      if (key === '__typename' || key === 'id') {
+                        return undefined;
+                      }
+
+                      return <th key={key}>{key}</th>;
                     }
+                    )}
+                  </tr>
 
-                    return <th key={key}>{key}</th>;
-                  }
-                  )}
-                </tr>
-
-              )}
-            </thead>
-            {sectionsList}
-          </Table>
-        ) : (<div>There is no entities in DataBase</div>)
+                )}
+              </thead>
+              {sectionsList}
+            </Table>
+          )
+          : (<div>There is no entities in DataBase</div>)
         }
         <div className='entities-page__page-control p-0 pb-2'>
           <div>
@@ -134,15 +136,17 @@ export default class EntitiesList<T extends EntityConnection> extends React.Comp
               <Button className='m-1' variant='outline-success'>Create</Button>
             </LinkContainer>
             <Button disabled={!this.props.relay.hasMore()} onClick={this.loadMore} variant='outline-info'>
-              {this.props.relay.isLoading() ? (
-                <Spinner
-                  animation='border'
-                  aria-hidden='true'
-                  as='span'
-                  role='status'
-                  size='sm'
-                />
-              ) : ('Load more')
+              {this.props.relay.isLoading()
+                ? (
+                  <Spinner
+                    animation='border'
+                    aria-hidden='true'
+                    as='span'
+                    role='status'
+                    size='sm'
+                  />
+                )
+                : ('Load more')
               }
 
             </Button>

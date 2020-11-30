@@ -7,7 +7,6 @@ import PersonsPage from '../components/Persons';
 import QuestsPage from '../components/Quests';
 import RelationsPage from '../components/Relations';
 import RelationTypesPage from '../components/RelationTypes';
-import Quiz from '../components/Quiz';
 import { QueryRenderer } from 'react-relay';
 import environment from '../relay-env';
 import graphql from 'babel-plugin-relay/macro';
@@ -52,10 +51,6 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
 
         <PrivateRoute path='/relation-types'>
           <RelationTypesPage/>
-        </PrivateRoute>
-
-        <PrivateRoute path='/quiz'>
-          <Quiz/>
         </PrivateRoute>
 
         <PrivateRoute path='/'>

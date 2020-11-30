@@ -6,7 +6,7 @@
  * @param func - function to debounce
  * @param wait - delay in ms
  */
-export function debounce<F extends Function>(func: F, wait = 300): F {
+export function debounce<F extends(...params: unknown[]) => void>(func: F, wait = 300): F {
   let timeoutID: number;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/consistent-type-assertions

@@ -181,15 +181,17 @@ function PersonEditForm(props: Props): React.ReactElement {
             className='m-1'
             type='submit'
           >
-            {isLoading ? (
-              <Spinner
-                animation='border'
-                aria-hidden='true'
-                as='span'
-                role='status'
-                size='sm'
-              />
-            ) : ('Save')}
+            {isLoading
+              ? (
+                <Spinner
+                  animation='border'
+                  aria-hidden='true'
+                  as='span'
+                  role='status'
+                  size='sm'
+                />
+              )
+              : ('Save')}
           </Button>
           <Button
             className='m-1'

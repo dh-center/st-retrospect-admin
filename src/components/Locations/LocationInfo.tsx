@@ -27,6 +27,7 @@ interface LocationInfoProps {
  * Displays information about location
  *
  * @param props - props for component rendering
+ * @param props.location - location data to display
  */
 function LocationInfo({ location }: LocationInfoProps): React.ReactElement {
   const [ firstAddress ] = (location.addresses || []);

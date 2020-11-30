@@ -27,6 +27,7 @@ const professionsKeywords = {
  * Displays barplot with count of persons by birth date
  *
  * @param props - component props for rendering
+ * @param props.data - data for plotting diagram
  */
 function PersonsTreeMap(props: {
  data: PersonsTreeMapData;

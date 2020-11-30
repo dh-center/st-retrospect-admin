@@ -8,6 +8,7 @@ import { GenderStrT } from 'lvovich/lib/gender';
  * Displays pie chart with distribution of persons sex
  *
  * @param props - component props for rendering
+ * @param props.persons - persons data to plot diagram
  */
 export default function GenderDistribution(props: {
   readonly persons: {readonly firstName: string | null; readonly lastName: string | null; readonly patronymic: string | null }[];
@@ -46,7 +47,7 @@ export default function GenderDistribution(props: {
 
     const labelRadius = radius * 0.7;
 
-    const arcLabel = d3.arc<d3.PieArcDatum<{ key: string; value: number }>>().innerRadius(labelRadius)
+    const arcLabel = d3.arc<d3.PieArcDatum<[string, number]>>().innerRadius(labelRadius)
       .outerRadius(labelRadius);
 
     /**
@@ -62,11 +63,11 @@ export default function GenderDistribution(props: {
       .domain(Object.keys(data))
       .range(d3.schemeCategory10);
 
-    const pie = d3.pie<{key: string; value: number}>()
+    const pie = d3.pie<[string, number]>()
       .value(function (d) {
-        return d.value;
+        return d[1];
       });
-    const arcs = pie(d3.entries(data));
+    const arcs = pie(Object.entries(data));
 
     svg
       .selectAll()
@@ -82,7 +83,7 @@ export default function GenderDistribution(props: {
         })
       )
       .attr('fill', function (d) {
-        return color(d.data.key);
+        return color(d.data[0]);
       })
       .attr('stroke', 'black')
       .style('stroke-width', '0px');
@@ -100,13 +101,13 @@ export default function GenderDistribution(props: {
       .call(text => text.append('tspan')
         .attr('y', '-0.2em')
         // .attr('font-weight', 'bold')
-        .text(d => d.data.key)
+        .text(d => d.data[0])
       )
       .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append('tspan')
         .attr('x', 0)
         .attr('y', '0.7em')
         .attr('fill-opacity', 0.7)
-        .text(d => d.data.value.toLocaleString()));
+        .text(d => d.data[1].toLocaleString()));
 
     // eslint-disable-next-line
   }, []);

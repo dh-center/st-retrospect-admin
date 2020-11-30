@@ -8,6 +8,8 @@ import { RelationsGraph_data as GraphData } from './__generated__/RelationsGraph
 import { Accordion, Button, Card } from 'react-bootstrap';
 type NodeTypes = 'location' | 'person';
 
+type SimulationNode = PersonNode | LocationNode;
+
 interface SimulationLink extends d3.SimulationLinkDatum<SimulationNode>{
   source: SimulationNode | string;
   target: SimulationNode | string;
@@ -38,8 +40,6 @@ interface LocationNode extends AbstractSimulationNode{
   type: 'location';
 }
 
-type SimulationNode = PersonNode | LocationNode;
-
 interface LocationTypeToggleInfo {
   enabled: boolean;
   name: string;
@@ -53,8 +53,9 @@ interface LocationTypesTogglesState {
  * Graph for visualization relations between persons and locations
  *
  * @param props - props for component rendering
+ * @param props.data - data for graph plotting
  */
-function Index(props: {
+function RelationsGraph(props: {
   data: GraphData;
 }): React.ReactElement {
   const plotRef = useRef<HTMLDivElement>(null);
@@ -80,14 +81,15 @@ function Index(props: {
    *
    * @param sim - force simulation that calculates nodes position
    */
-  const drag = (sim: d3.Simulation<SimulationNode, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => {
+  const drag = (sim: d3.Simulation<SimulationNode, undefined>): d3.DragBehavior<SVGCircleElement, SimulationNode, SimulationNode | d3.SubjectPosition> => { /* eslint-disable @typescript-eslint/no-explicit-any */
     /**
      * Handler for started drag event
      *
+     * @param event - event to handle
      * @param d - node data
      */
-    function dragstarted(d: d3.SimulationNodeDatum): void {
-      if (!d3.event.active) {
+    function dragstarted(event: any, d: d3.SimulationNodeDatum): void {
+      if (!event.active) {
         sim.alphaTarget(0.3).restart();
       }
       d.fx = d.x;
@@ -97,20 +99,22 @@ function Index(props: {
     /**
      * Handler for started dragging
      *
+     * @param event - event to handle
      * @param d - node data
      */
-    function dragged(d: d3.SimulationNodeDatum): void {
-      d.fx = d3.event.x;
-      d.fy = d3.event.y;
+    function dragged(event: any, d: d3.SimulationNodeDatum): void {
+      d.fx = event.x;
+      d.fy = event.y;
     }
 
     /**
      * Handler for ending drag event
      *
+     * @param event - event to handle
      * @param d - node data
      */
-    function dragended(d: d3.SimulationNodeDatum): void {
-      if (!d3.event.active) {
+    function dragended(event: any, d: d3.SimulationNodeDatum): void {
+      if (!event.active) {
         sim.alphaTarget(0);
       }
       d.fx = null;
@@ -134,7 +138,7 @@ function Index(props: {
     svg.call(d3.zoom<SVGSVGElement, unknown>()
       .extent([ [0, 0], [width, height] ])
       .scaleExtent([0, 8])
-      .on('zoom', () => g.attr('transform', d3.event.transform)));
+      .on('zoom', event => g.attr('transform', event.transform)));
 
     linkForce.current = d3.forceLink<SimulationNode, SimulationLink>()
       .id((d) => d.id)
@@ -258,23 +262,23 @@ function Index(props: {
           .style('stroke', '#424242')
           .style('stroke-width', '1px')
           .style('cursor', 'pointer')
-          .on('mouseover', d => {
+          .on('mouseover', (event, d) => {
             tooltip.current!
               .style('visibility', 'visible')
               .text(d.type === 'location' ? d.name || '' : `${d.lastName} ${d.firstName} ${d.patronymic}`)
-              .style('left', (d3.event.pageX + 10) + 'px')
-              .style('top', (d3.event.pageY - 28) + 'px');
+              .style('left', (event.pageX + 10) + 'px')
+              .style('top', (event.pageY - 28) + 'px');
           })
-          .on('mousemove', () => {
+          .on('mousemove', (event) => {
             tooltip.current!
-              .style('left', (d3.event.pageX + 10) + 'px')
-              .style('top', (d3.event.pageY - 28) + 'px');
+              .style('left', (event.pageX + 10) + 'px')
+              .style('top', (event.pageY - 28) + 'px');
           })
           .on('mouseout', () => {
             tooltip.current!
               .style('visibility', 'hidden');
           })
-          .on('click', function (d) {
+          .on('click', function (event, d) {
             const currentDatum = d.id;
 
             link.current!.style('stroke', (_d) =>
@@ -339,7 +343,7 @@ function Index(props: {
   );
 }
 
-export default createFragmentContainer(Index, {
+export default createFragmentContainer(RelationsGraph, {
   data: graphql`
     fragment RelationsGraph_data on Query {
       relations {

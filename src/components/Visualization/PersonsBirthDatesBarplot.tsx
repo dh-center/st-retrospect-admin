@@ -8,6 +8,7 @@ import './index.css';
  * Displays barplot with count of persons by birth date
  *
  * @param props - component props for rendering
+ * @param props.dates - dates data for plotting diagram
  */
 export default function PersonsBirthDatesBarplot(props: {
   readonly dates: (string|null)[];

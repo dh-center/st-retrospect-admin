@@ -45,7 +45,7 @@ function update(input: UpdateQuestInput): Promise<QuestEditMutationResponse> {
  * Displays edit component for quest
  */
 export default function QuestEdit(): ReactElement {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
 
   const [input, setInput] = useState<UpdateQuestInput | null>(null);
   const [isLoading, setLoadingStatus] = useState(false);
@@ -241,15 +241,17 @@ export default function QuestEdit(): ReactElement {
                 onClick={() => saveQuestToApi()}
                 type='submit'
               >
-                {isLoading ? (
-                  <Spinner
-                    animation='border'
-                    aria-hidden='true'
-                    as='span'
-                    role='status'
-                    size='sm'
-                  />
-                ) : ('Save')}
+                {isLoading
+                  ? (
+                    <Spinner
+                      animation='border'
+                      aria-hidden='true'
+                      as='span'
+                      role='status'
+                      size='sm'
+                    />
+                  )
+                  : ('Save')}
               </Button>
               <Button
                 className='m-1'

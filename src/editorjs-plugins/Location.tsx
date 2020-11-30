@@ -28,7 +28,8 @@ export default class Location implements BlockTool {
   /**
    * Plugin constructor
    *
-   * @param data - previously saved data
+   * @param options - plugin options
+   * @param options.data - previously saved data
    */
   constructor({ data }: BlockToolConstructorOptions<LocationSearchData>) {
     this.selectedLocationInstanceId = data.locationInstanceId;

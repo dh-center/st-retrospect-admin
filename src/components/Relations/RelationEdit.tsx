@@ -43,7 +43,7 @@ function update(input: UpdateRelationInput): Promise<RelationEditMutationRespons
  * Displays edit component for relations
  */
 export default function RelationEdit(): ReactElement {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
 
   const [input, setInput] = useState<UpdateRelationInput | null>(null);
   const [isLoading, setLoadingStatus] = useState(false);
@@ -175,15 +175,17 @@ export default function RelationEdit(): ReactElement {
                 onClick={() => saveRelationToApi()}
                 type='submit'
               >
-                {isLoading ? (
-                  <Spinner
-                    animation='border'
-                    aria-hidden='true'
-                    as='span'
-                    role='status'
-                    size='sm'
-                  />
-                ) : ('Save')}
+                {isLoading
+                  ? (
+                    <Spinner
+                      animation='border'
+                      aria-hidden='true'
+                      as='span'
+                      role='status'
+                      size='sm'
+                    />
+                  )
+                  : ('Save')}
               </Button>
               <Button
                 className='m-1'

@@ -15,7 +15,7 @@ import LoadingPlaceholder from '../utils/LoadingPlaceholder';
  * Page with location info to view
  */
 function LocationView(): React.ReactElement {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const history = useHistory();
 
   const removeLocation = async (): Promise<void> => {
