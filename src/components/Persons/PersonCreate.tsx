@@ -175,15 +175,17 @@ export default function PersonCreate(): React.ReactElement {
           className='m-1'
           type='submit'
         >
-          {isLoading ? (
-            <Spinner
-              animation='border'
-              aria-hidden='true'
-              as='span'
-              role='status'
-              size='sm'
-            />
-          ) : 'Create'}
+          {isLoading
+            ? (
+              <Spinner
+                animation='border'
+                aria-hidden='true'
+                as='span'
+                role='status'
+                size='sm'
+              />
+            )
+            : 'Create'}
         </Button>
       </Form>
     </ContentWrapper>

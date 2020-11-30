@@ -271,7 +271,7 @@ export function remove(locationInstance: LocationInstanceInfoDialog_locationInst
  * @param props - props for component rendering
  */
 function LocationInstanceInfoDialog(props: Props): React.ReactElement {
-  const { id: locationId } = useParams();
+  const { id: locationId } = useParams<{id: string}>();
   const id = useUniqueId('location-instance-info-dialog');
   const [isEditing, setIsEditing] = useState(!props.locationInstance);
   const [input, setInput] = useState<LocationInstanceInputs>(instanceToInput(props.locationInstance, locationId));
@@ -286,11 +286,11 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   /**
    * Updates architects in API
    *
+   * @param locationInstanceId - location instance id for creating new relations
    * @param oldArchitects - array of old architects
    * @param updatedArchitects - array of updated architects
-   * @param locationInstanceId - location instance id for creating new relations
    */
-  const updateArchitects = async (oldArchitects: (string | null)[] = [], updatedArchitects: (string | null)[] = [], locationInstanceId: string): Promise<void> => {
+  const updateArchitects = async (locationInstanceId: string, oldArchitects: (string | null)[] = [], updatedArchitects: (string | null)[] = []): Promise<void> => {
     const updatedArchitectsSet = new Set(updatedArchitects);
     const oldArchitectsSet = new Set(oldArchitects);
     const architectsForDeleting = Array.from(oldArchitectsSet).filter(architect => !updatedArchitectsSet.has(architect));
@@ -326,9 +326,9 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
          * Update architects in database
          */
         await updateArchitects(
+          response.locationInstances.update.recordId,
           props.locationInstance?.architects?.map(architect => architect?.id || null),
-          architectsInput,
-          response.locationInstances.update.recordId
+          architectsInput
         );
 
         notifier.show({
@@ -350,7 +350,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
         /**
          * Add architects to API
          */
-        await updateArchitects([], architectsInput, locationInstance.locationInstances.create.recordId);
+        await updateArchitects(locationInstance.locationInstances.create.recordId, [], architectsInput);
 
         notifier.show({
           message: `Successfully created`,

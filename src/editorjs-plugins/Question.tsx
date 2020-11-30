@@ -39,7 +39,8 @@ export default class Question implements BlockTool {
   /**
    * Plugin constructor
    *
-   * @param data - previously saved data
+   * @param options - plugin options
+   * @param options.data - previously saved data
    */
   constructor({ data }: BlockToolConstructorOptions<QuestionData>) {
     this.data = data;

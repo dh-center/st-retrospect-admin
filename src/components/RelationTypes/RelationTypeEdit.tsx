@@ -41,7 +41,7 @@ function update(input: UpdateRelationTypeInput): Promise<RelationTypeEditMutatio
  * Displays edit component for relation type
  */
 export default function RelationTypeEdit(): ReactElement {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
 
   const [input, setInput] = useState<UpdateRelationTypeInput | null>(null);
   const [isLoading, setLoadingStatus] = useState(false);
@@ -157,15 +157,17 @@ export default function RelationTypeEdit(): ReactElement {
                 onClick={() => saveRelationTypeToApi()}
                 type='submit'
               >
-                {isLoading ? (
-                  <Spinner
-                    animation='border'
-                    aria-hidden='true'
-                    as='span'
-                    role='status'
-                    size='sm'
-                  />
-                ) : ('Save')}
+                {isLoading
+                  ? (
+                    <Spinner
+                      animation='border'
+                      aria-hidden='true'
+                      as='span'
+                      role='status'
+                      size='sm'
+                    />
+                  )
+                  : ('Save')}
               </Button>
               <Button
                 className='m-1'

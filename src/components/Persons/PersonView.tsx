@@ -38,7 +38,7 @@ function remove(id: string): Promise<PersonViewDeleteMutationResponse> {
 }
 
 function PersonView(): React.ReactElement {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const [isDeleting, setDeletingStatus] = useState(false);
   const history = useHistory();
 
@@ -156,15 +156,17 @@ function PersonView(): React.ReactElement {
                 <Button className='m-1' variant='outline-warning'>Edit</Button>
               </LinkContainer>
               <Button className='m-1' onClick={() => removePerson()} variant='outline-danger'>
-                {isDeleting ? (
-                  <Spinner
-                    animation='border'
-                    aria-hidden='true'
-                    as='span'
-                    role='status'
-                    size='sm'
-                  />
-                ) : ('Delete')}
+                {isDeleting
+                  ? (
+                    <Spinner
+                      animation='border'
+                      aria-hidden='true'
+                      as='span'
+                      role='status'
+                      size='sm'
+                    />
+                  )
+                  : ('Delete')}
               </Button>
             </div>
           </ContentWrapper>

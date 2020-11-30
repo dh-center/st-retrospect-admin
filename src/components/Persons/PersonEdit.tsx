@@ -13,7 +13,7 @@ import notifier from 'codex-notifier';
  * Page with form for person editing
  */
 export default function PersonEdit(): ReactElement {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
 
   return (
     <QueryRenderer<PersonEditQuery>

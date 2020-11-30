@@ -57,7 +57,9 @@ function LocationRow(props: EntityRowProps<Entity<LocationsPageEntityConnection>
       addresses[0] &&
       addresses[0].address &&
       addresses[0].address.length !== 0
-    ) ? addresses[0].address : '—';
+    )
+      ? addresses[0].address
+      : '—';
   };
 
   const rowSpan = instancesRows.length || 1;

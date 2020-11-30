@@ -7,6 +7,7 @@ import colors from './colors';
 
 /**
  * @param props - props for component rendering
+ * @param props.persons - array of persons for plotting diagram
  */
 export default function PersonLifeYearsDiagram(props: {
   persons: {
@@ -22,8 +23,16 @@ export default function PersonLifeYearsDiagram(props: {
    * @param svg - svg element with plot
    * @param opacity - opacity to set
    */
-  const fade = (svg: d3.Selection<SVGGElement, unknown, null, undefined>, opacity: number): d3.ValueFn<d3.BaseType, unknown, void> => {
-    return function (_d: unknown, index: number): void {
+  const fade = (svg: d3.Selection<SVGGElement, unknown, null, undefined>, opacity: number) => {
+    return function (this: SVGGElement): void {
+      if (!this) {
+        return;
+      }
+      const index = svg
+        .selectAll('.group')
+        .nodes()
+        .indexOf(this);
+
       (svg.selectAll('path.chord') as d3.Selection<SVGPathElement, d3.Chord, SVGElement, d3.Chords>)
         .filter((d) => d.source.index !== index && d.target.index !== index)
         .transition()
@@ -114,7 +123,9 @@ export default function PersonLifeYearsDiagram(props: {
       .data(res.groups)
       .enter()
       .append('g')
-      .attr('class', 'group');
+      .attr('class', 'group')
+      .on('mouseover', fade(svg, 0.02))
+      .on('mouseout', fade(svg, baseOpacity));
 
     g.append('path')
       .attr('d', (d) =>
@@ -176,9 +187,9 @@ export default function PersonLifeYearsDiagram(props: {
       .style('fill-opacity', baseOpacity)
       .attr('class', 'chord');
 
-    d3.selectAll('.group')
-      .on('mouseover', fade(svg, 0.02))
-      .on('mouseout', fade(svg, baseOpacity));
+    // svg.selectAll<SVGGElement>('.group')
+    //   .on('mouseover', fade(svg, 0.02))
+    //   .on('mouseout', fade(svg, baseOpacity));
 
     /**
      * Initiate tics

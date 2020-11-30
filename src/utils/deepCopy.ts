@@ -3,6 +3,6 @@
  *
  * @param value - value to clone
  */
-export default function deepCopy<T extends object>(value: T): T {
+export default function deepCopy<T>(value: T): T {
   return JSON.parse(JSON.stringify(value));
 }

@@ -47,7 +47,8 @@ export default class TestConstructor implements BlockTool {
   /**
    * Plugin constructor
    *
-   * @param data - previously saved data
+   * @param options - plugin options
+   * @param options.data - previously saved data
    */
   constructor({ data }: BlockToolConstructorOptions<TestConstructorData>) {
     this.data = data;

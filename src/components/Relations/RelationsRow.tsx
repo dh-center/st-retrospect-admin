@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { EntityRowProps } from '../EntitiesList/EntitiesListSection';
 import { RelationsList_entityConnection } from './__generated__/RelationsList_entityConnection.graphql';
 import { Entity } from '../../types/entities';
@@ -10,7 +10,7 @@ import personsFullName from '../../utils/personsFullname';
  *
  * @param props - props with information about relation for displaying
  */
-export default function RelationsRow(props: EntityRowProps<Entity<RelationsList_entityConnection>>): ReactElement {
+export default function RelationsRow(props: EntityRowProps<Entity<RelationsList_entityConnection>>): React.ReactElement {
   const history = useHistory();
 
   const onClick = (): void => {

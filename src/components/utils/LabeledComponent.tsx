@@ -25,7 +25,7 @@ interface LabeledComponentProps extends WithClassName {
  *
  * @param WrappedComponent - component for adding label
  */
-export default function withLabel<T extends object>(WrappedComponent: ComponentType<T>): FC<LabeledComponentProps & T> {
+export default function withLabel<T extends unknown>(WrappedComponent: ComponentType<T>): FC<LabeledComponentProps & T> {
   /**
    * New component with label and WrappedComponent
    *

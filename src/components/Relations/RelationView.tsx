@@ -44,7 +44,7 @@ function remove(id: string): Promise<RelationViewDeleteMutationResponse> {
 function RelationView(): React.ReactElement {
   const [isDeleting, setDeletingStatus] = useState(false);
 
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const history = useHistory();
 
   /**
@@ -143,15 +143,17 @@ function RelationView(): React.ReactElement {
                 <Button className='m-1' variant='outline-warning'>Edit</Button>
               </LinkContainer>
               <Button className='m-1' onClick={removeRelation} variant='outline-danger'>
-                {isDeleting ? (
-                  <Spinner
-                    animation='border'
-                    aria-hidden='true'
-                    as='span'
-                    role='status'
-                    size='sm'
-                  />
-                ) : ('Delete')}
+                {isDeleting
+                  ? (
+                    <Spinner
+                      animation='border'
+                      aria-hidden='true'
+                      as='span'
+                      role='status'
+                      size='sm'
+                    />
+                  )
+                  : ('Delete')}
               </Button>
             </div>
           </ContentWrapper>

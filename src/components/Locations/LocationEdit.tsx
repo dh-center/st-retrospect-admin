@@ -11,7 +11,7 @@ import LocationEditForm from './LocationEditForm';
  * Page with form for location editing
  */
 function LocationEdit(): React.ReactElement {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
 
   return (
     <QueryRenderer<LocationEditQuery>
