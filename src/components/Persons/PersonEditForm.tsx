@@ -19,7 +19,6 @@ import {
 } from './__generated__/PersonEditFormUpdateMutation.graphql';
 import notifier from 'codex-notifier';
 import Textarea from '../utils/Textarea';
-import DeepWriteable from '../../types/writeable';
 
 /**
  * Executes update mutation for person
