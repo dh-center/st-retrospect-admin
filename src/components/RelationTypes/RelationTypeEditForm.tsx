@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import {
   RelationTypeEditFormMutation, RelationTypeEditFormMutationResponse,
   UpdateRelationTypeInput
@@ -16,6 +16,7 @@ import Button from 'react-bootstrap/cjs/Button';
 import Spinner from 'react-bootstrap/cjs/Spinner';
 import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
 import { RelationTypeEditForm_originalRelationType } from './__generated__/RelationTypeEditForm_originalRelationType.graphql';
+import { Form } from 'react-bootstrap';
 
 /**
  * Mutation for save edited relation type
@@ -70,10 +71,13 @@ export function RelationTypeEditForm(props: Props): React.ReactElement {
 
   /**
    * Saves updated relation type to API
+   *
+   * @param e - submit form event
    */
-  const saveRelationTypeToApi = async (): Promise<void> => {
-    setLoadingStatus(true);
+  const saveRelationTypeToApi = async (e: FormEvent): Promise<void> => {
+    e.preventDefault();
     try {
+      setLoadingStatus(true);
       await update(input);
       notifier.show({
         message: `Relation type successfully saved`,
@@ -94,51 +98,52 @@ export function RelationTypeEditForm(props: Props): React.ReactElement {
 
   return (
     <ContentWrapper>
-      <Input
-        label='Name'
-        onChange={value => setInput({
-          ...input,
-          name: value,
-        })}
-        required
-        value={input.name || ''}
-      />
-      <LabeledArrayOfInputs
-        addButtonText='Add synonym...'
-        label='Synonyms'
-        onChange={value => setInput({
-          ...input,
-          synonyms: value,
-        })}
-        removeButtonText='Remove synonym'
-        value={input.synonyms || []}
-      />
-      <div>
-        <Button
-          className='m-1'
-          onClick={() => saveRelationTypeToApi()}
-          type='submit'
-        >
-          {isLoading
-            ? (
-              <Spinner
-                animation='border'
-                aria-hidden='true'
-                as='span'
-                role='status'
-                size='sm'
-              />
-            )
-            : ('Save')}
-        </Button>
-        <Button
-          className='m-1'
-          onClick={() => pushLocationBack()}
-          variant='outline-danger'
-        >
-          Cancel
-        </Button>
-      </div>
+      <Form onSubmit={saveRelationTypeToApi}>
+        <Input
+          label='Name'
+          onChange={value => setInput({
+            ...input,
+            name: value,
+          })}
+          required
+          value={input.name || ''}
+        />
+        <LabeledArrayOfInputs
+          addButtonText='Add synonym...'
+          label='Synonyms'
+          onChange={value => setInput({
+            ...input,
+            synonyms: value,
+          })}
+          removeButtonText='Remove synonym'
+          value={input.synonyms || []}
+        />
+        <div>
+          <Button
+            className='m-1'
+            type='submit'
+          >
+            {isLoading
+              ? (
+                <Spinner
+                  animation='border'
+                  aria-hidden='true'
+                  as='span'
+                  role='status'
+                  size='sm'
+                />
+              )
+              : ('Save')}
+          </Button>
+          <Button
+            className='m-1'
+            onClick={() => pushLocationBack()}
+            variant='outline-danger'
+          >
+            Cancel
+          </Button>
+        </div>
+      </Form>
     </ContentWrapper>
   );
 }
