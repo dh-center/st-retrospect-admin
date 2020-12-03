@@ -24,6 +24,7 @@ export type RelationViewQueryResponse = {
         readonly relationType: {
             readonly name: string;
         } | null;
+        readonly quote: string | null;
     } | null;
 };
 export type RelationViewQuery = {
@@ -56,6 +57,7 @@ query RelationViewQuery(
       name
       id
     }
+    quote
   }
 }
 */
@@ -133,6 +135,13 @@ v5 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "quote",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -175,7 +184,8 @@ return {
               (v5/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -225,21 +235,22 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "ca26c5630349aa7dc7d8629cf94ad0a3",
+    "cacheID": "9dd228260f4536a658f42d7caa83ad3b",
     "id": null,
     "metadata": {},
     "name": "RelationViewQuery",
     "operationKind": "query",
-    "text": "query RelationViewQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    locationInstance {\n      location {\n        id\n      }\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query RelationViewQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    locationInstance {\n      location {\n        id\n      }\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n    quote\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8a4827c632619caf026f20e3d58040d1';
+(node as any).hash = '664f40949dbc4c570b53e078dd857b89';
 export default node;
