@@ -15,6 +15,7 @@ import Button from 'react-bootstrap/Button';
 import { LabeledPersonsCustomSelect } from '../CustomSelects/PersonsCustomSelect';
 import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypesCustomSelect';
 import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
+import Textarea from '../utils/Textarea';
 
 /**
  * Generates input data for creating new relation
@@ -116,6 +117,16 @@ export default function RelationCreate(): ReactElement {
               locationInstanceId: selected,
             });
           }}
+        />
+        <Textarea
+          label='Quote'
+          onChange={(value) => {
+            setInput({
+              ...input,
+              quote: value,
+            });
+          }}
+          value={input.quote}
         />
         <Button
           className='m-1'

@@ -3,21 +3,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type RelationEditQueryVariables = {
     id: string;
 };
 export type RelationEditQueryResponse = {
     readonly relation: {
-        readonly id: string;
-        readonly person: {
-            readonly id: string;
-        } | null;
-        readonly relationType: {
-            readonly id: string;
-        } | null;
-        readonly locationInstance: {
-            readonly id: string;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"RelationEditForm_originalRelation">;
     } | null;
 };
 export type RelationEditQuery = {
@@ -32,17 +24,23 @@ query RelationEditQuery(
   $id: GlobalId!
 ) {
   relation(id: $id) {
+    ...RelationEditForm_originalRelation
     id
-    person {
-      id
-    }
-    relationType {
-      id
-    }
-    locationInstance {
-      id
-    }
   }
+}
+
+fragment RelationEditForm_originalRelation on Relation {
+  id
+  person {
+    id
+  }
+  relationType {
+    id
+  }
+  locationInstance {
+    id
+  }
+  quote
 }
 */
 
@@ -54,65 +52,22 @@ var v0 = [
     "name": "id"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
-  (v1/*: any*/)
-],
 v3 = [
-  {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "id",
-        "variableName": "id"
-      }
-    ],
-    "concreteType": "Relation",
-    "kind": "LinkedField",
-    "name": "relation",
-    "plural": false,
-    "selections": [
-      (v1/*: any*/),
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Person",
-        "kind": "LinkedField",
-        "name": "person",
-        "plural": false,
-        "selections": (v2/*: any*/),
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "RelationType",
-        "kind": "LinkedField",
-        "name": "relationType",
-        "plural": false,
-        "selections": (v2/*: any*/),
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "LocationInstance",
-        "kind": "LinkedField",
-        "name": "locationInstance",
-        "plural": false,
-        "selections": (v2/*: any*/),
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
-  }
+  (v2/*: any*/)
 ];
 return {
   "fragment": {
@@ -120,7 +75,24 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "RelationEditQuery",
-    "selections": (v3/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Relation",
+        "kind": "LinkedField",
+        "name": "relation",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "RelationEditForm_originalRelation"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -129,17 +101,67 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "RelationEditQuery",
-    "selections": (v3/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Relation",
+        "kind": "LinkedField",
+        "name": "relation",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Person",
+            "kind": "LinkedField",
+            "name": "person",
+            "plural": false,
+            "selections": (v3/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "RelationType",
+            "kind": "LinkedField",
+            "name": "relationType",
+            "plural": false,
+            "selections": (v3/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "LocationInstance",
+            "kind": "LinkedField",
+            "name": "locationInstance",
+            "plural": false,
+            "selections": (v3/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "quote",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "39b053dd41ecaf6d9b12373e0674253b",
+    "cacheID": "d297a990647c75133da17beaacafd384",
     "id": null,
     "metadata": {},
     "name": "RelationEditQuery",
     "operationKind": "query",
-    "text": "query RelationEditQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      id\n    }\n    relationType {\n      id\n    }\n    locationInstance {\n      id\n    }\n  }\n}\n"
+    "text": "query RelationEditQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    ...RelationEditForm_originalRelation\n    id\n  }\n}\n\nfragment RelationEditForm_originalRelation on Relation {\n  id\n  person {\n    id\n  }\n  relationType {\n    id\n  }\n  locationInstance {\n    id\n  }\n  quote\n}\n"
   }
 };
 })();
-(node as any).hash = '2286b803cacc7af5673c45dabaa7752b';
+(node as any).hash = 'efb4234b043c953451361a3f9e5176b9';
 export default node;

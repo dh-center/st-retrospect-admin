@@ -10,25 +10,25 @@ export type UpdateRelationInput = {
     relationId?: string | null;
     quote?: string | null;
 };
-export type RelationEditMutationVariables = {
+export type RelationEditFormUpdateMutationVariables = {
     input: UpdateRelationInput;
 };
-export type RelationEditMutationResponse = {
+export type RelationEditFormUpdateMutationResponse = {
     readonly relation: {
         readonly update: {
             readonly recordId: string;
         };
     };
 };
-export type RelationEditMutation = {
-    readonly response: RelationEditMutationResponse;
-    readonly variables: RelationEditMutationVariables;
+export type RelationEditFormUpdateMutation = {
+    readonly response: RelationEditFormUpdateMutationResponse;
+    readonly variables: RelationEditFormUpdateMutationVariables;
 };
 
 
 
 /*
-mutation RelationEditMutation(
+mutation RelationEditFormUpdateMutation(
   $input: UpdateRelationInput!
 ) {
   relation {
@@ -89,7 +89,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "RelationEditMutation",
+    "name": "RelationEditFormUpdateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -98,18 +98,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "RelationEditMutation",
+    "name": "RelationEditFormUpdateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "6be7c7331fe2c8aebf5b7d1c37055d56",
+    "cacheID": "26d8aaf883c7ad110c19e1b26650f94f",
     "id": null,
     "metadata": {},
-    "name": "RelationEditMutation",
+    "name": "RelationEditFormUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation RelationEditMutation(\n  $input: UpdateRelationInput!\n) {\n  relation {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation RelationEditFormUpdateMutation(\n  $input: UpdateRelationInput!\n) {\n  relation {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3c5ef8882cac6abc8d74b86aeb578209';
+(node as any).hash = '2960c3bb960c425e973c8bd400c972bf';
 export default node;

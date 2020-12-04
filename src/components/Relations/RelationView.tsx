@@ -96,6 +96,7 @@ function RelationView(): React.ReactElement {
             relationType {
               name
             }
+            quote
          }
         }
       `}
@@ -136,6 +137,10 @@ function RelationView(): React.ReactElement {
                 content={props.relation.locationInstance?.name}
                 label='Location instance'
                 link={props.relation.locationInstance ? `/locations/${props.relation.locationInstance.location.id}` : null}
+              />
+              <LabeledText
+                content={props.relation.quote}
+                label='Quote'
               />
             </div>
             <div>
