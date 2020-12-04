@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { createFragmentContainer } from 'react-relay';
 import Button from 'react-bootstrap/cjs/Button';
 import Spinner from 'react-bootstrap/cjs/Spinner';
@@ -73,10 +73,13 @@ function PersonEditForm(props: Props): React.ReactElement {
 
   /**
    * Saves updated person to API
+   *
+   * @param e - submit form event
    */
-  const updatePerson = async (): Promise<void> => {
-    setLoadingStatus(true);
+  const updatePerson = async (e: FormEvent): Promise<void> => {
+    e.preventDefault();
     if ('id' in input) {
+      setLoadingStatus(true);
       try {
         await update(input);
         notifier.show({
