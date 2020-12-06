@@ -19,6 +19,7 @@ import { LabeledPersonsCustomSelect } from '../CustomSelects/PersonsCustomSelect
 import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypesCustomSelect';
 import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
 import { RelationEditForm_originalRelation } from './__generated__/RelationEditForm_originalRelation.graphql';
+import Input from '../utils/Input';
 
 /**
  * Mutation for save edited relation
@@ -151,6 +152,16 @@ function RelationEditForm(props: Props): React.ReactElement {
           }}
           value={input.quote || ''}
         />
+        <Input
+          label='Link'
+          onChange={(value) => {
+            setInput({
+              ...input,
+              link: value,
+            });
+          }}
+          value={input.link || ''}
+        />
         <div>
           <Button
             className='m-1'
@@ -197,6 +208,7 @@ export default createFragmentContainer(
           id
         }
         quote
+        link
       }
     `,
   }

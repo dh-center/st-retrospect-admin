@@ -97,6 +97,7 @@ function RelationView(): React.ReactElement {
               name
             }
             quote
+            link
          }
         }
       `}
@@ -141,6 +142,10 @@ function RelationView(): React.ReactElement {
               <LabeledText
                 content={props.relation.quote}
                 label='Quote'
+              />
+              <LabeledText
+                content={props.relation.link}
+                label='Link'
               />
             </div>
             <div>
