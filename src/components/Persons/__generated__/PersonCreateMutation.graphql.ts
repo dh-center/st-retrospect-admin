@@ -8,7 +8,7 @@ export type CreatePersonInput = {
     firstName?: string | null;
     patronymic?: string | null;
     pseudonym?: string | null;
-    professions?: Array<string | null> | null;
+    professions?: Array<string> | null;
     description?: string | null;
     birthDate?: string | null;
     deathDate?: string | null;

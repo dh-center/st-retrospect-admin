@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type RelationTypeEditForm_originalRelationType = {
     readonly id: string;
     readonly name: string;
-    readonly synonyms: ReadonlyArray<string | null>;
+    readonly synonyms: ReadonlyArray<string>;
     readonly " $refType": "RelationTypeEditForm_originalRelationType";
 };
 export type RelationTypeEditForm_originalRelationType$data = RelationTypeEditForm_originalRelationType;

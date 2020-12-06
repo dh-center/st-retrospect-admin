@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CreateRelationTypeInput = {
     name: string;
-    synonyms: Array<string | null>;
+    synonyms?: Array<string> | null;
 };
 export type RelationTypeCreateMutationVariables = {
     input: CreateRelationTypeInput;

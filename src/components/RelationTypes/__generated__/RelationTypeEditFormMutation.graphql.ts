@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 export type UpdateRelationTypeInput = {
     id: string;
     name?: string | null;
-    synonyms?: Array<string | null> | null;
+    synonyms?: Array<string> | null;
 };
 export type RelationTypeEditFormMutationVariables = {
     input: UpdateRelationTypeInput;

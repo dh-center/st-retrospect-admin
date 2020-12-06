@@ -9,6 +9,7 @@ export type UpdateRelationInput = {
     locationInstanceId?: string | null;
     relationId?: string | null;
     quote?: string | null;
+    link?: string | null;
 };
 export type RelationEditFormUpdateMutationVariables = {
     input: UpdateRelationInput;
