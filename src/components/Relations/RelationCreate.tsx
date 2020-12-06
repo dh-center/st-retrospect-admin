@@ -16,6 +16,7 @@ import { LabeledPersonsCustomSelect } from '../CustomSelects/PersonsCustomSelect
 import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypesCustomSelect';
 import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
 import Textarea from '../utils/Textarea';
+import Input from '../utils/Input';
 
 /**
  * Generates input data for creating new relation
@@ -128,6 +129,16 @@ export default function RelationCreate(): ReactElement {
             });
           }}
           value={input.quote}
+        />
+        <Input
+          label='Link'
+          onChange={(value) => {
+            setInput({
+              ...input,
+              link: value,
+            });
+          }}
+          value={input.link}
         />
         <Button
           className='m-1'

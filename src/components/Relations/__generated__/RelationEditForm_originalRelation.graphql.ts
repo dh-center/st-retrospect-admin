@@ -16,6 +16,7 @@ export type RelationEditForm_originalRelation = {
         readonly id: string;
     } | null;
     readonly quote: string | null;
+    readonly link: string | null;
     readonly " $refType": "RelationEditForm_originalRelation";
 };
 export type RelationEditForm_originalRelation$data = RelationEditForm_originalRelation;
@@ -80,11 +81,18 @@ return {
       "kind": "ScalarField",
       "name": "quote",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "link",
+      "storageKey": null
     }
   ],
   "type": "Relation",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a61555a07f89d37998e3d618c73f33d8';
+(node as any).hash = 'b5e3eaf0d0a9aef39b0963ebca648cc8';
 export default node;

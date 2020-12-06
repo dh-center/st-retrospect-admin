@@ -25,6 +25,7 @@ export type RelationViewQueryResponse = {
             readonly name: string;
         } | null;
         readonly quote: string | null;
+        readonly link: string | null;
     } | null;
 };
 export type RelationViewQuery = {
@@ -58,6 +59,7 @@ query RelationViewQuery(
       id
     }
     quote
+    link
   }
 }
 */
@@ -142,6 +144,13 @@ v6 = {
   "kind": "ScalarField",
   "name": "quote",
   "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "link",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -185,7 +194,8 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v6/*: any*/),
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -236,21 +246,22 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v6/*: any*/),
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "9dd228260f4536a658f42d7caa83ad3b",
+    "cacheID": "a2d75a53db4fbc079dfbeaacd12a3d9d",
     "id": null,
     "metadata": {},
     "name": "RelationViewQuery",
     "operationKind": "query",
-    "text": "query RelationViewQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    locationInstance {\n      location {\n        id\n      }\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n    quote\n  }\n}\n"
+    "text": "query RelationViewQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    locationInstance {\n      location {\n        id\n      }\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n    quote\n    link\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '664f40949dbc4c570b53e078dd857b89';
+(node as any).hash = '8e4d0341e1a0f096debea18f9b15f831';
 export default node;
