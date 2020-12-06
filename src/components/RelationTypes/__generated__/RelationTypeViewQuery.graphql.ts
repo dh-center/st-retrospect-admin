@@ -10,7 +10,7 @@ export type RelationTypeViewQueryResponse = {
     readonly relationType: {
         readonly id: string;
         readonly name: string;
-        readonly synonyms: ReadonlyArray<string | null>;
+        readonly synonyms: ReadonlyArray<string>;
     } | null;
 };
 export type RelationTypeViewQuery = {

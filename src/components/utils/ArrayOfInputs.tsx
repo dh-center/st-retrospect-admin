@@ -13,12 +13,12 @@ interface ArrayOfInputsProps {
    *
    * @param value - value for changing
    */
-  onChange(value: (string | null)[]): void;
+  onChange(value: string[]): void;
 
   /**
    * Default value
    */
-  value?: (string | null)[];
+  value?: string[];
 
   /**
    * Text on adding button

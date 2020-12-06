@@ -104,7 +104,7 @@ export default function RelationTypeCreate(): React.ReactElement {
             synonyms: value,
           })}
           removeButtonText='Remove synonym'
-          value={input.synonyms}
+          value={input.synonyms || []}
         />
         <Button
           className='m-1'

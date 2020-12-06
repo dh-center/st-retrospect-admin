@@ -8,6 +8,7 @@ export type CreateRelationInput = {
     locationInstanceId: string;
     relationId: string;
     quote: string;
+    link: string;
 };
 export type RelationCreateMutationVariables = {
     input: CreateRelationInput;
