@@ -64,6 +64,7 @@ function RelationEditForm(props: Props): React.ReactElement {
       locationInstanceId: props.originalRelation.locationInstance?.id,
       personId: props.originalRelation.person?.id,
       relationId: props.originalRelation.relationType?.id,
+      link: props.originalRelation.link,
     } as UpdateRelationInput);
   });
 
