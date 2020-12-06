@@ -13,12 +13,12 @@ interface ArrayOfInputsProps {
    *
    * @param value - value for changing
    */
-  onChange(value: (string | null)[]): void;
+  onChange(value: string[]): void;
 
   /**
    * Default value
    */
-  value?: (string | null)[];
+  value?: string[];
 
   /**
    * Text on adding button
@@ -89,6 +89,7 @@ export default function ArrayOfInputs(props: ArrayOfInputsProps): ReactElement {
         <Button
           className={styles.removeButton}
           onClick={() => removeElement(index)}
+          type='button'
           variant='outline-danger'
         >
           {props.removeButtonText || '-'}
@@ -103,6 +104,7 @@ export default function ArrayOfInputs(props: ArrayOfInputsProps): ReactElement {
       <Button
         className={styles.addButton}
         onClick={addEmptyElement}
+        type='button'
         variant='success'
       >
         {props.addButtonText || '+'}

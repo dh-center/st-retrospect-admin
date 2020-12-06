@@ -26,6 +26,7 @@ function generateRelationInput(): CreateRelationInput {
     relationId: '',
     locationInstanceId: '',
     quote: '',
+    link: '',
   };
 }
 

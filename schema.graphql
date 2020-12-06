@@ -185,22 +185,22 @@ type CreateLocationPayload {
 
 input CreatePersonInput {
   """Person's last name"""
-  lastName: String
+  lastName: MultilingualString
 
   """Person's first name"""
-  firstName: String
+  firstName: MultilingualString
 
   """Person's patronymic"""
-  patronymic: String
+  patronymic: MultilingualString
 
   """Person's pseudonym"""
-  pseudonym: String
+  pseudonym: MultilingualString
 
   """Person's professions"""
-  professions: [MultilingualString]
+  professions: [String!]
 
   """Person's description"""
-  description: String
+  description: MultilingualString
 
   """Person's birth date"""
   birthDate: String
@@ -257,6 +257,9 @@ input CreateRelationInput {
 
   """Quote about relation"""
   quote: MultilingualString!
+
+  """Link to quote"""
+  link: MultilingualString!
 }
 
 type CreateRelationPayload {
@@ -272,7 +275,7 @@ input CreateRelationTypeInput {
   name: MultilingualString!
 
   """Relation type synonyms"""
-  synonyms: [MultilingualString]!
+  synonyms: [String!]
 }
 
 type CreateRelationTypePayload {
@@ -579,22 +582,22 @@ type Person implements Node {
   id: ID!
 
   """Person's first name"""
-  firstName: String
+  firstName: MultilingualString
 
   """Person's last name"""
-  lastName: String
+  lastName: MultilingualString
 
   """Person's patronymic"""
-  patronymic: String
+  patronymic: MultilingualString
 
   """Person's pseudonym"""
-  pseudonym: String
+  pseudonym: MultilingualString
 
   """Person's professions"""
   professions: [MultilingualString]
 
   """Person's description"""
-  description: String
+  description: MultilingualString
 
   """Person's birth date"""
   birthDate: String
@@ -910,7 +913,10 @@ type Relation implements Node {
   relationType: RelationType
 
   """Relation's quote"""
-  quote: String
+  quote: MultilingualString
+
+  """Link to quote source"""
+  link: MultilingualString
 }
 
 """Model for representing list of relations"""
@@ -954,7 +960,7 @@ type RelationType implements Node {
   name: MultilingualString!
 
   """Relation type synonyms"""
-  synonyms: [MultilingualString]!
+  synonyms: [MultilingualString!]!
 }
 
 """Model for representing list of relation types"""
@@ -1143,7 +1149,7 @@ input UpdatePersonInput {
   pseudonym: String
 
   """Person's professions"""
-  professions: [MultilingualString]
+  professions: [String!]
 
   """Person's description"""
   description: String
@@ -1209,6 +1215,9 @@ input UpdateRelationInput {
 
   """Quote about relation"""
   quote: MultilingualString
+
+  """Link to quote"""
+  link: MultilingualString
 }
 
 type UpdateRelationPayload {
@@ -1227,7 +1236,7 @@ input UpdateRelationTypeInput {
   name: MultilingualString
 
   """Relation type synonyms"""
-  synonyms: [MultilingualString]
+  synonyms: [String!]
 }
 
 type UpdateRelationTypePayload {
