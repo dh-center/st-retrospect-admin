@@ -41,6 +41,7 @@ fragment RelationEditForm_originalRelation on Relation {
     id
   }
   quote
+  link
 }
 */
 
@@ -147,6 +148,13 @@ return {
             "kind": "ScalarField",
             "name": "quote",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "link",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -154,12 +162,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d297a990647c75133da17beaacafd384",
+    "cacheID": "87c8ea3b5152b93e8f9e55413e6ef4e0",
     "id": null,
     "metadata": {},
     "name": "RelationEditQuery",
     "operationKind": "query",
-    "text": "query RelationEditQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    ...RelationEditForm_originalRelation\n    id\n  }\n}\n\nfragment RelationEditForm_originalRelation on Relation {\n  id\n  person {\n    id\n  }\n  relationType {\n    id\n  }\n  locationInstance {\n    id\n  }\n  quote\n}\n"
+    "text": "query RelationEditQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    ...RelationEditForm_originalRelation\n    id\n  }\n}\n\nfragment RelationEditForm_originalRelation on Relation {\n  id\n  person {\n    id\n  }\n  relationType {\n    id\n  }\n  locationInstance {\n    id\n  }\n  quote\n  link\n}\n"
   }
 };
 })();
