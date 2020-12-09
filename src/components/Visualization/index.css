@@ -90,6 +90,7 @@ html:fullscreen .visualization-block{
 }
 
 .visualization-block__content {
+  overflow: hidden;
   flex-grow: 1;
   padding: 10px;
   border-radius: 10px;
@@ -98,6 +99,10 @@ html:fullscreen .visualization-block{
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.visualization-block__content--light {
+  background: white;
 }
 
 .visualization-block__plot,

@@ -594,7 +594,7 @@ type Person implements Node {
   pseudonym: MultilingualString
 
   """Person's professions"""
-  professions: [MultilingualString]
+  professions: [String]
 
   """Person's description"""
   description: MultilingualString
@@ -960,7 +960,7 @@ type RelationType implements Node {
   name: MultilingualString!
 
   """Relation type synonyms"""
-  synonyms: [MultilingualString!]!
+  synonyms: [String!]!
 }
 
 """Model for representing list of relation types"""
