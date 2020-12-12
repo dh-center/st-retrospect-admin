@@ -11,6 +11,7 @@ import { Slide } from './Slide';
 import './index.css';
 import GenderDistribution from './GenderDistribution';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
+import LocationsMap from './LocationsMap';
 
 /**
  * Page with plots for visualisation of Database content
@@ -128,16 +129,7 @@ export default function VisualizationPage(): React.ReactElement {
               <GenderDistribution persons={props.persons.edges.map(edge => edge.node)}/>
             ),
             'locations-map': (
-              <div className='visualization-block'>
-                <h2 className='visualization-block__header'>Locations map</h2>
-                <div className='visualization-block__content visualization-block__content--light p-0'>
-                  <iframe
-                    frameBorder='0'
-                    height='500'
-                    src='https://observablehq.com/embed/@nikmel/st-retrospect-locations-map?cell=map'
-                    width='100%'></iframe>
-                </div>
-              </div>
+              <LocationsMap/>
             ),
             // 'persons-tree-map': (
             //   <PersonsTreeMap data={props}/>
