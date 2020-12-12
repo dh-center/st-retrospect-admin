@@ -92,6 +92,7 @@
           "off"
         ],
         "semi": "off",
+        "@typescript-eslint/semi": "warn",
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": [
           "error"
