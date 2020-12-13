@@ -120,6 +120,8 @@ function TestConstructorComponent(props: TestConstructorComponentProps): React.R
       />
       <Input
         label='Номер правильного ответа:'
+        max={data.answers?.length || 0}
+        min={0}
         onChange={(value) => {
           onChange({
             ...data,
