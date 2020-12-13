@@ -7,6 +7,8 @@ import pluginBlockStyles from './PluginBlock.module.css';
 import Input from '../components/utils/Input';
 import { LabeledArrayOfInputs } from '../components/utils/ArrayOfInputs';
 import classNames from 'classnames';
+import ImageUploader from '../components/utils/ImageUploader';
+import ImageGallery from '../components/utils/ImageGallery';
 
 /**
  * TestConstructor plugin data
@@ -16,6 +18,11 @@ interface TestConstructorData {
    * Question to answer
    */
   question: string | undefined;
+
+  /**
+   * Picture attachment for the test
+   */
+  picture: string | undefined;
 
   /**
    * Array of answers to choose from
@@ -82,6 +89,24 @@ function TestConstructorComponent(props: TestConstructorComponentProps): React.R
           });
         }}
         value={data.question || ''}
+      />
+      <ImageGallery
+        className={styles.pictureAttachment}
+        images={data.picture ? [ data.picture ] : undefined}
+        onChange={([ link ]) => onChange({
+          ...data,
+          picture: link,
+        })}
+        viewOnly={false}
+      />
+      <ImageUploader
+        entityName='quest/data'
+        onImageUpload={(url) => {
+          onChange({
+            ...data,
+            picture: url,
+          });
+        }}
       />
       <LabeledArrayOfInputs
         label='Варианты ответов'
