@@ -1,7 +1,14 @@
+import React, { useState } from 'react';
 import { ToolboxConfig } from '@editorjs/editorjs';
 import { BlockTool, BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import styles from './Question.module.css';
+import ReactDOM from 'react-dom';
 import pluginBlockStyles from './PluginBlock.module.css';
+import Input from '../components/utils/Input';
+import { LabeledArrayOfInputs } from '../components/utils/ArrayOfInputs';
+import classNames from 'classnames';
+import ImageUploader from '../components/utils/ImageUploader';
+import ImageGallery from '../components/utils/ImageGallery';
 
 /**
  * TestConstructor plugin data
@@ -11,6 +18,11 @@ interface TestConstructorData {
    * Question to answer
    */
   question: string | undefined;
+
+  /**
+   * Picture attachment for the test
+   */
+  picture: string | undefined;
 
   /**
    * Array of answers to choose from
@@ -34,13 +46,123 @@ interface TestConstructorData {
 }
 
 /**
+ * Props for TestConstructorComponent
+ */
+interface TestConstructorComponentProps {
+  /**
+   * Initial test data
+   */
+  initialData: TestConstructorData;
+
+  /**
+   * Callback to call when data changed
+   *
+   * @param value - new data
+   */
+  onChange(value: TestConstructorData): void;
+}
+
+/**
+ * Component for displaying test constructor
+ *
+ * @param props - props for component rendering
+ */
+function TestConstructorComponent(props: TestConstructorComponentProps): React.ReactElement {
+  const [data, setData] = useState(props.initialData);
+
+  const onChange = (newData: TestConstructorData): void => {
+    setData(newData);
+    props.onChange(newData);
+  };
+
+  return (
+    <div className={pluginBlockStyles.wrapper}>
+      <label className={classNames(styles.label, styles.labelStrong)}>
+        Пользователь должен ответить на вопрос, выбрав правильный вариант ответа:
+      </label>
+      <Input
+        label='Вопрос'
+        onChange={(value) => {
+          onChange({
+            ...data,
+            question: value,
+          });
+        }}
+        value={data.question || ''}
+      />
+      <ImageGallery
+        className={styles.pictureAttachment}
+        images={data.picture ? [ data.picture ] : undefined}
+        onChange={([ link ]) => onChange({
+          ...data,
+          picture: link,
+        })}
+        viewOnly={false}
+      />
+      <ImageUploader
+        entityName='quest/data'
+        onImageUpload={(url) => {
+          onChange({
+            ...data,
+            picture: url,
+          });
+        }}
+      />
+      <LabeledArrayOfInputs
+        label='Варианты ответов'
+        onChange={(value) => {
+          onChange({
+            ...data,
+            answers: value,
+          });
+        }}
+        value={data.answers}
+      />
+      <Input
+        label='Номер правильного ответа:'
+        max={data.answers?.length || 0}
+        min={0}
+        onChange={(value) => {
+          onChange({
+            ...data,
+            correctAnswerIndex: value,
+          });
+        }}
+        type='number'
+        value={data.correctAnswerIndex || 0}
+      />
+      <Input
+        label='Сообщение для правильного ответа:'
+        onChange={(value) => {
+          onChange({
+            ...data,
+            rightAnswerMessage: value,
+          });
+        }}
+
+        value={data.rightAnswerMessage || ''}
+      />
+      <Input
+        label='Сообщение для неправильного ответа:'
+        onChange={(value) => {
+          onChange({
+            ...data,
+            wrongAnswerMessage: value,
+          });
+        }}
+
+        value={data.wrongAnswerMessage || ''}
+      />
+    </div>
+  );
+}
+
+/**
  * Test constructor plugin for EditorJS
  */
 export default class TestConstructor implements BlockTool {
   /**
    * Previously saved data
-   *
-   * @private
    */
   private data: TestConstructorData;
 
@@ -75,187 +197,26 @@ export default class TestConstructor implements BlockTool {
    * Render function for plugin content
    */
   public render(): HTMLElement {
-    const wrapper = document.createElement('div');
+    const element = document.createElement('div');
 
-    wrapper.className = pluginBlockStyles.wrapper;
+    element.className = 'test-constructor';
+    ReactDOM.render(
+      <TestConstructorComponent
+        initialData={this.data}
+        onChange={(data) => {
+          this.data = data;
+        }}
+      />,
+      element
+    );
 
-    /**
-     * Plugin's label
-     */
-    const pluginLabel = document.createElement('label');
-
-    pluginLabel.innerText = 'Пользователь должен ответить на вопрос, выбрав правильный вариант ответа:';
-    pluginLabel.classList.add(styles.label, styles.labelStrong);
-
-    /**
-     * Question block
-     */
-    const questionWrapper = document.createElement('div');
-    const questionLabel = document.createElement('label');
-    const questionInput = document.createElement('input');
-
-    questionWrapper.className = styles.container;
-
-    questionLabel.innerText = 'Вопрос:';
-    questionLabel.className = styles.label;
-
-    questionInput.value = this.data.question || '';
-    questionInput.className = 'form-control';
-
-    questionWrapper.append(questionLabel, questionInput);
-
-    /**
-     * Answers block
-     */
-    const blockWrapper = document.createElement('div');
-    const answersWrapper = document.createElement('div');
-    const answerLabel = document.createElement('label');
-    const addButton = document.createElement('button');
-    const answers = this.data.answers || [];
-
-    if (answers.length) {
-      for (let i = 0; i < answers.length; i++) {
-        const inputWrapper = document.createElement('div');
-        const answerInput = document.createElement('input');
-        const deleteButton = document.createElement('button');
-
-        answerInput.value = answers[i];
-        answerInput.className = 'form-control';
-
-        deleteButton.type = 'button';
-        deleteButton.classList.add(styles.button, 'btn', 'btn-outline-danger');
-        deleteButton.textContent = 'Удалить этот вариант';
-
-        inputWrapper.append(answerInput, deleteButton);
-
-        answersWrapper.appendChild(inputWrapper);
-
-        deleteButton.addEventListener('click', () => {
-          answersWrapper.removeChild(inputWrapper);
-        });
-      }
-    }
-
-    addButton.type = 'button';
-    addButton.classList.add(styles.button, 'btn', 'btn-success');
-    addButton.textContent = 'Добавить вариант ответа';
-
-    blockWrapper.className = styles.container;
-
-    answerLabel.innerText = 'Варианты ответов:';
-    answerLabel.className = styles.label;
-
-    blockWrapper.append(answerLabel);
-
-    addButton.addEventListener('click', () => {
-      const inputWrapper = document.createElement('div');
-      const answerInput = document.createElement('input');
-      const deleteButton = document.createElement('button');
-
-      answerInput.className = 'form-control';
-
-      deleteButton.type = 'button';
-      deleteButton.classList.add(styles.button, 'btn', 'btn-outline-danger');
-      deleteButton.textContent = 'Удалить этот вариант';
-
-      inputWrapper.append(answerInput, deleteButton);
-
-      answersWrapper.appendChild(inputWrapper);
-
-      deleteButton.addEventListener('click', () => {
-        answersWrapper.removeChild(inputWrapper);
-      });
-    });
-
-    blockWrapper.append(answersWrapper, addButton);
-
-    /**
-     * Right answer number block
-     */
-    const rightAnswerNumberWrapper = document.createElement('div');
-    const rightAnswerNumberLabel = document.createElement('label');
-    const rightAnswerNumberInput = document.createElement('input');
-
-    rightAnswerNumberWrapper.className = styles.container;
-
-    rightAnswerNumberLabel.innerText = 'Номер правильного ответа:';
-    rightAnswerNumberLabel.className = styles.label;
-
-    rightAnswerNumberInput.type = 'number';
-    rightAnswerNumberInput.value = this.data.correctAnswerIndex ? (this.data.correctAnswerIndex + 1).toString() : '';
-    rightAnswerNumberInput.className = 'form-control';
-
-    rightAnswerNumberWrapper.append(rightAnswerNumberLabel, rightAnswerNumberInput);
-
-    /**
-     * Right answer message block
-     */
-    const rightAnswerMessageWrapper = document.createElement('div');
-    const rightAnswerMessageLabel = document.createElement('label');
-    const rightAnswerMessageInput = document.createElement('input');
-
-    rightAnswerMessageWrapper.className = styles.container;
-
-    rightAnswerMessageLabel.innerText = 'Сообщение для правильного ответа:';
-    rightAnswerMessageLabel.className = styles.label;
-
-    rightAnswerMessageInput.value = this.data.rightAnswerMessage || '';
-    rightAnswerMessageInput.className = 'form-control';
-
-    rightAnswerMessageWrapper.append(rightAnswerMessageLabel, rightAnswerMessageInput);
-
-    /**
-     * Wrong answer message block
-     */
-    const wrongAnswerMessageWrapper = document.createElement('div');
-    const wrongAnswerMessageLabel = document.createElement('label');
-    const wrongAnswerMessageInput = document.createElement('input');
-
-    wrongAnswerMessageWrapper.className = styles.container;
-
-    wrongAnswerMessageLabel.innerText = 'Сообщение для неправильного ответа:';
-    wrongAnswerMessageLabel.className = styles.label;
-
-    wrongAnswerMessageInput.value = this.data.wrongAnswerMessage || '';
-    wrongAnswerMessageInput.className = 'form-control';
-
-    wrongAnswerMessageWrapper.append(wrongAnswerMessageLabel, wrongAnswerMessageInput);
-
-    wrapper.append(
-      pluginLabel,
-      questionWrapper,
-      blockWrapper,
-      rightAnswerNumberWrapper,
-      rightAnswerMessageWrapper,
-      wrongAnswerMessageWrapper);
-
-    return wrapper;
+    return element;
   }
 
   /**
    * Return information structure after save
-   *
-   * @param blockContent - HTML content of plugin block
    */
-  public save(blockContent: HTMLElement): TestConstructorData {
-    const blockData = blockContent.querySelectorAll('input');
-    const n = blockData.length;
-    const question = blockData[0].value;
-    const answers = [];
-    const correctAnswerIndex = blockData[n - 3].value;
-    const rightAnswerMessage = blockData[n - 2].value;
-    const wrongAnswerMessage = blockData[n - 1].value;
-
-    for (let i = 1; i < n - 3; i++) {
-      answers.push(blockData[i].value);
-    }
-
-    return {
-      question,
-      answers,
-      correctAnswerIndex: +correctAnswerIndex - 1 || undefined,
-      rightAnswerMessage,
-      wrongAnswerMessage,
-    };
+  public save(): TestConstructorData {
+    return this.data;
   }
 }
