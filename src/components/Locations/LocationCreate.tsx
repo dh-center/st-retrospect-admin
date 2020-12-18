@@ -16,7 +16,6 @@ import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 import { LabeledLocationMap } from '../LocationMap';
-import LabeledText from '../utils/LabeledText';
 
 /**
  * Generates input data for creating new location
