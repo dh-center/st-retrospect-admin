@@ -146,6 +146,34 @@ export default function LocationCreate(): React.ReactElement {
             });
           }}
         />
+        <Input
+          label='Latitude'
+          max={90}
+          min={-90}
+          onChange={(value) => {
+            setInput({
+              ...input,
+              latitude: value,
+            });
+          }}
+          step={0.0000001}
+          type='number'
+          value={input.latitude || 0}
+        />
+        <Input
+          label='Longitude'
+          max={90}
+          min={-90}
+          onChange={(value) => {
+            setInput({
+              ...input,
+              longitude: value,
+            });
+          }}
+          step={0.0000001}
+          type='number'
+          value={input.longitude || 0}
+        />
         {
           input.addresses.map((address, index) =>
             <Input
@@ -164,17 +192,6 @@ export default function LocationCreate(): React.ReactElement {
             />
           )
         }
-        <div>
-          <LabeledText
-            content={input.latitude}
-            label='Latitude'
-          />
-          <LabeledText
-            content={input.longitude}
-            label='Longitude'
-          />
-        </div>
-
         <Input
           label='Link to the wiki about this location'
           onChange={(v) => updateLocationInstance('wikiLink', v)}
