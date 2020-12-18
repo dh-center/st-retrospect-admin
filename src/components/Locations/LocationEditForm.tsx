@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { LabeledLocationMap } from '../LocationMap';
 import Input from '../utils/Input';
-import LabeledText from '../utils/LabeledText';
 import Button from 'react-bootstrap/Button';
 import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
@@ -109,6 +108,34 @@ function LocationEditForm(props: Props): React.ReactElement {
             });
           }}
         />
+        <Input
+          label='Latitude'
+          max={90}
+          min={-90}
+          onChange={(value) => {
+            setInput({
+              ...input,
+              latitude: value as number,
+            });
+          }}
+          step={0.0000001}
+          type='number'
+          value={input.latitude || ''}
+        />
+        <Input
+          label='Longitude'
+          max={90}
+          min={-90}
+          onChange={(value) => {
+            setInput({
+              ...input,
+              longitude: value as number,
+            });
+          }}
+          step={0.0000001}
+          type='number'
+          value={input.longitude || ''}
+        />
         {
           (input.addresses || []).map((address, index) =>
             <Input
@@ -127,16 +154,6 @@ function LocationEditForm(props: Props): React.ReactElement {
             />
           )
         }
-        <div>
-          <LabeledText
-            content={input.latitude}
-            label='Latitude'
-          />
-          <LabeledText
-            content={input.longitude}
-            label='Longitude'
-          />
-        </div>
         <Button
           className='m-1'
           type='submit'

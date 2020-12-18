@@ -36,6 +36,11 @@ interface OwnInputProps<T extends number | string> extends WithClassName {
    * Min input value (if type=number)
    */
   min?: number;
+
+  /**
+   * Step value (if type=number)
+   */
+  step?: number;
 }
 
 /**
