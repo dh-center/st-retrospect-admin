@@ -115,12 +115,12 @@ function LocationEditForm(props: Props): React.ReactElement {
           onChange={(value) => {
             setInput({
               ...input,
-              latitude: value as number,
+              latitude: value,
             });
           }}
           step={0.0000001}
           type='number'
-          value={input.latitude || ''}
+          value={input.latitude || 0}
         />
         <Input
           label='Longitude'
@@ -129,12 +129,12 @@ function LocationEditForm(props: Props): React.ReactElement {
           onChange={(value) => {
             setInput({
               ...input,
-              longitude: value as number,
+              longitude: value,
             });
           }}
           step={0.0000001}
           type='number'
-          value={input.longitude || ''}
+          value={input.longitude || 0}
         />
         {
           (input.addresses || []).map((address, index) =>
