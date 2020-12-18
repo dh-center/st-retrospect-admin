@@ -118,7 +118,7 @@ function LocationEditForm(props: Props): React.ReactElement {
               latitude: value,
             });
           }}
-          step={0.0000001}
+          step={0.000000000000001}
           type='number'
           value={input.latitude || 0}
         />
@@ -132,7 +132,7 @@ function LocationEditForm(props: Props): React.ReactElement {
               longitude: value,
             });
           }}
-          step={0.0000001}
+          step={0.000000000000001}
           type='number'
           value={input.longitude || 0}
         />
