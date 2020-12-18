@@ -18,6 +18,7 @@ import {
   UpdateLocationInput
 } from './__generated__/LocationEditFormMutation.graphql';
 import { LinkContainer } from 'react-router-bootstrap';
+import checkCoordinates from '../../utils/checkCoordinates';
 
 /**
  * Updates information about location
@@ -74,6 +75,16 @@ function LocationEditForm(props: Props): React.ReactElement {
       return;
     }
 
+    if (input.latitude && input.longitude && !checkCoordinates(input.latitude, input.longitude)) {
+      notifier.show({
+        message: 'Coordinates isn\'t correct',
+        style: 'error',
+        time: 5000,
+      });
+
+      return;
+    }
+
     setLoadingStatus(true);
     try {
       await updateInfo(input);
@@ -110,30 +121,22 @@ function LocationEditForm(props: Props): React.ReactElement {
         />
         <Input
           label='Latitude'
-          max={90}
-          min={-90}
           onChange={(value) => {
             setInput({
               ...input,
               latitude: value,
             });
           }}
-          step={0.000000000000001}
-          type='number'
           value={input.latitude || 0}
         />
         <Input
           label='Longitude'
-          max={90}
-          min={-90}
           onChange={(value) => {
             setInput({
               ...input,
               longitude: value,
             });
           }}
-          step={0.000000000000001}
-          type='number'
           value={input.longitude || 0}
         />
         {

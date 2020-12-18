@@ -16,6 +16,7 @@ import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 import { LabeledLocationMap } from '../LocationMap';
+import checkCoordinates from '../../utils/checkCoordinates';
 
 /**
  * Generates input data for creating new location
@@ -99,6 +100,16 @@ export default function LocationCreate(): React.ReactElement {
       return;
     }
 
+    if (input.latitude && input.longitude && !checkCoordinates(input.latitude, input.longitude)) {
+      notifier.show({
+        message: 'Coordinates isn\'t correct',
+        style: 'error',
+        time: 5000,
+      });
+
+      return;
+    }
+
     setLoadingStatus(true);
     try {
       await create(input);
@@ -147,30 +158,22 @@ export default function LocationCreate(): React.ReactElement {
         />
         <Input
           label='Latitude'
-          max={90}
-          min={-90}
           onChange={(value) => {
             setInput({
               ...input,
               latitude: value,
             });
           }}
-          step={0.000000000000001}
-          type='number'
           value={input.latitude || 0}
         />
         <Input
           label='Longitude'
-          max={90}
-          min={-90}
           onChange={(value) => {
             setInput({
               ...input,
               longitude: value,
             });
           }}
-          step={0.000000000000001}
-          type='number'
           value={input.longitude || 0}
         />
         {
