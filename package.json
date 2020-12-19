@@ -23,7 +23,7 @@
     "@editorjs/marker": "^1.2.2",
     "@editorjs/paragraph": "^2.8.0",
     "@editorjs/quote": "^2.4.0",
-    "@sentry/react": "^5.27.6",
+    "@sentry/react": "^5.29.2",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.2.2",
