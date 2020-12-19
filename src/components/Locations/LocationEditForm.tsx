@@ -18,7 +18,7 @@ import {
   UpdateLocationInput
 } from './__generated__/LocationEditFormMutation.graphql';
 import { LinkContainer } from 'react-router-bootstrap';
-import checkCoordinates from '../../utils/checkCoordinates';
+import checkCoordinate from '../../utils/checkCoordinate';
 
 /**
  * Updates information about location
@@ -74,16 +74,7 @@ function LocationEditForm(props: Props): React.ReactElement {
     if (!input) {
       return;
     }
-
-    if (input.latitude && input.longitude && !checkCoordinates(input.latitude, input.longitude)) {
-      notifier.show({
-        message: 'Coordinates isn\'t correct',
-        style: 'error',
-        time: 5000,
-      });
-
-      return;
-    }
+    console.log(input);
 
     setLoadingStatus(true);
     try {
@@ -122,9 +113,18 @@ function LocationEditForm(props: Props): React.ReactElement {
         <Input
           label='Latitude'
           onChange={(value) => {
+            if (!checkCoordinate(value)) {
+              notifier.show({
+                message: 'Latitude isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
+                style: 'error',
+                time: 5000,
+              });
+
+              return;
+            }
             setInput({
               ...input,
-              latitude: value,
+              latitude: +value,
             });
           }}
           value={input.latitude || 0}
@@ -132,9 +132,18 @@ function LocationEditForm(props: Props): React.ReactElement {
         <Input
           label='Longitude'
           onChange={(value) => {
+            if (!checkCoordinate(value)) {
+              notifier.show({
+                message: 'Longitude isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
+                style: 'error',
+                time: 5000,
+              });
+
+              return;
+            }
             setInput({
               ...input,
-              longitude: value,
+              longitude: +value,
             });
           }}
           value={input.longitude || 0}
