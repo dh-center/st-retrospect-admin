@@ -74,7 +74,6 @@ function LocationEditForm(props: Props): React.ReactElement {
     if (!input) {
       return;
     }
-    console.log(input);
 
     setLoadingStatus(true);
     try {
