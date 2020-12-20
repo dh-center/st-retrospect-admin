@@ -17,6 +17,7 @@ import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 import { LabeledLocationMap } from '../LocationMap';
 import checkCoordinate from '../../utils/checkCoordinate';
+import throttle from 'lodash.throttle';
 
 /**
  * Generates input data for creating new location
@@ -100,9 +101,27 @@ export default function LocationCreate(): React.ReactElement {
       return;
     }
 
+    let savingData = input;
+
+    /**
+     * Coordinates must be numbers
+     */
+    if (savingData.latitude) {
+      savingData = {
+        ...savingData,
+        latitude: +savingData.latitude,
+      };
+    }
+    if (savingData.longitude) {
+      savingData = {
+        ...savingData,
+        longitude: +savingData.longitude,
+      };
+    }
+
     setLoadingStatus(true);
     try {
-      await create(input);
+      await create(savingData);
       notifier.show({
         message: `Successfully created`,
         style: 'success',
@@ -119,6 +138,15 @@ export default function LocationCreate(): React.ReactElement {
       });
     }
   };
+
+  /**
+   * Error message if coordinates aren't correct
+   */
+  const coordinateErrorMessage = throttle(() => notifier.show({
+    message: 'Coordinate isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
+    style: 'error',
+    time: 5000,
+  }), 1000, { trailing: false });
 
   return (
     <ContentWrapper>
@@ -150,17 +178,13 @@ export default function LocationCreate(): React.ReactElement {
           label='Latitude'
           onChange={(value) => {
             if (!checkCoordinate(value)) {
-              notifier.show({
-                message: 'Latitude isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
-                style: 'error',
-                time: 5000,
-              });
+              coordinateErrorMessage();
 
               return;
             }
             setInput({
               ...input,
-              latitude: +value,
+              latitude: value,
             });
           }}
           value={input.latitude || 0}
@@ -169,17 +193,13 @@ export default function LocationCreate(): React.ReactElement {
           label='Longitude'
           onChange={(value) => {
             if (!checkCoordinate(value)) {
-              notifier.show({
-                message: 'Longitude isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
-                style: 'error',
-                time: 5000,
-              });
+              coordinateErrorMessage();
 
               return;
             }
             setInput({
               ...input,
-              longitude: +value,
+              longitude: value,
             });
           }}
           value={input.longitude || 0}
