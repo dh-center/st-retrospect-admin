@@ -18,7 +18,7 @@ import {
   UpdateLocationInput
 } from './__generated__/LocationEditFormMutation.graphql';
 import { LinkContainer } from 'react-router-bootstrap';
-import checkCoordinate from '../../utils/checkCoordinate';
+import { isLatitudeValid, isLongitudeValid } from '../../utils/checkCoordinate';
 import throttle from 'lodash.throttle';
 
 /**
@@ -115,10 +115,19 @@ function LocationEditForm(props: Props): React.ReactElement {
   };
 
   /**
-   * Error message if coordinates aren't correct
+   * Error message if latitude isn't correct
    */
-  const coordinateErrorMessage = throttle(() => notifier.show({
-    message: 'Coordinate isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
+  const showLatitudeValidationErrorMessage = throttle(() => notifier.show({
+    message: 'Latitude isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
+    style: 'error',
+    time: 5000,
+  }), 1000, { trailing: false });
+
+  /**
+   * Error message if longitude isn't correct
+   */
+  const showLongitudeValidationErrorMessage = throttle(() => notifier.show({
+    message: 'Longitude isn\'t correct. It should be from -180 to 180 and have \'.\' as delimiter.',
     style: 'error',
     time: 5000,
   }), 1000, { trailing: false });
@@ -140,8 +149,8 @@ function LocationEditForm(props: Props): React.ReactElement {
         <Input
           label='Latitude'
           onChange={(value) => {
-            if (!checkCoordinate(value)) {
-              coordinateErrorMessage();
+            if (!isLatitudeValid(value)) {
+              showLatitudeValidationErrorMessage();
 
               return;
             }
@@ -155,8 +164,8 @@ function LocationEditForm(props: Props): React.ReactElement {
         <Input
           label='Longitude'
           onChange={(value) => {
-            if (!checkCoordinate(value)) {
-              coordinateErrorMessage();
+            if (!isLongitudeValid(value)) {
+              showLongitudeValidationErrorMessage();
 
               return;
             }

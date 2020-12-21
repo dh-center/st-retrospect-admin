@@ -1,8 +1,17 @@
 /**
- * Function checks coordinate
+ * Function checks latitude
  *
- * @param coordinate - latitude or longitude
+ * @param latitude - latitude coordinate
  */
-export default function checkCoordinate(coordinate: number): boolean {
-  return coordinate >= -90 && coordinate <= 90;
+export function isLatitudeValid(latitude: number): boolean {
+  return latitude >= -90 && latitude <= 90;
+}
+
+/**
+ * Function checks longitude
+ *
+ * @param longitude - latitude coordinate
+ */
+export function isLongitudeValid(longitude: number): boolean {
+  return longitude >= -180 && longitude <= 180;
 }

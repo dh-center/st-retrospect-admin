@@ -16,7 +16,7 @@ import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 import { LabeledLocationMap } from '../LocationMap';
-import checkCoordinate from '../../utils/checkCoordinate';
+import { isLatitudeValid, isLongitudeValid } from '../../utils/checkCoordinate';
 import throttle from 'lodash.throttle';
 
 /**
@@ -140,10 +140,19 @@ export default function LocationCreate(): React.ReactElement {
   };
 
   /**
-   * Error message if coordinates aren't correct
+   * Error message if latitude isn't correct
    */
-  const coordinateErrorMessage = throttle(() => notifier.show({
-    message: 'Coordinate isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
+  const showLatitudeValidationErrorMessage = throttle(() => notifier.show({
+    message: 'Latitude isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
+    style: 'error',
+    time: 5000,
+  }), 1000, { trailing: false });
+
+  /**
+   * Error message if longitude isn't correct
+   */
+  const showLongitudeValidationErrorMessage = throttle(() => notifier.show({
+    message: 'Longitude isn\'t correct. It should be from -180 to 180 and have \'.\' as delimiter.',
     style: 'error',
     time: 5000,
   }), 1000, { trailing: false });
@@ -177,8 +186,8 @@ export default function LocationCreate(): React.ReactElement {
         <Input
           label='Latitude'
           onChange={(value) => {
-            if (!checkCoordinate(value)) {
-              coordinateErrorMessage();
+            if (!isLatitudeValid(value)) {
+              showLatitudeValidationErrorMessage();
 
               return;
             }
@@ -192,8 +201,8 @@ export default function LocationCreate(): React.ReactElement {
         <Input
           label='Longitude'
           onChange={(value) => {
-            if (!checkCoordinate(value)) {
-              coordinateErrorMessage();
+            if (!isLongitudeValid(value)) {
+              showLongitudeValidationErrorMessage();
 
               return;
             }
