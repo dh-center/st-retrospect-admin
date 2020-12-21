@@ -87,6 +87,7 @@ function generateLocationInstanceInput(locationId: string): CreateLocationInstan
     endDate: '',
     name: '',
     startDate: '',
+    source: '',
     locationId,
   };
 }
@@ -113,6 +114,7 @@ function instanceToInput(instance: LocationInstanceInfoDialog_locationInstance |
     constructionDate: instance.constructionDate,
     demolitionDate: instance.demolitionDate,
     description: instance.description || '',
+    source: instance.source || '',
     mainPhotoLink: instance.mainPhotoLink,
     photoLinks: [ ...instance.photoLinks || [] ],
     endDate: instance.endDate,
@@ -427,6 +429,21 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
             />
           </Form.Group>
           <Form.Group>
+            <Form.Label htmlFor={id`source`}>Source</Form.Label>
+            <Form.Control
+              disabled={!isEditing}
+              id={id`source`}
+              onChange={(e) => {
+                setInput({
+                  ...input,
+                  source: e.target.value,
+                });
+              }}
+              type='text'
+              value={input.source || ''}
+            />
+          </Form.Group>
+          <Form.Group>
             <Form.Label htmlFor={id`architects`}>Architects</Form.Label>
             <ArrayOfCustomSelects
               CustomSelect={PersonsCustomSelect}
@@ -593,6 +610,7 @@ export default createRefetchContainer(
         id
         name
         description
+        source
         constructionDate
         demolitionDate
         startDate

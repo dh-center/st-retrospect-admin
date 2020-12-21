@@ -24,6 +24,8 @@ export type RelationViewQueryResponse = {
         readonly relationType: {
             readonly name: string;
         } | null;
+        readonly startDate: string | null;
+        readonly endDate: string | null;
         readonly quote: string | null;
         readonly link: string | null;
     } | null;
@@ -58,6 +60,8 @@ query RelationViewQuery(
       name
       id
     }
+    startDate
+    endDate
     quote
     link
   }
@@ -142,10 +146,24 @@ v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "quote",
+  "name": "startDate",
   "storageKey": null
 },
 v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endDate",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "quote",
+  "storageKey": null
+},
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -195,7 +213,9 @@ return {
             "storageKey": null
           },
           (v6/*: any*/),
-          (v7/*: any*/)
+          (v7/*: any*/),
+          (v8/*: any*/),
+          (v9/*: any*/)
         ],
         "storageKey": null
       }
@@ -247,21 +267,23 @@ return {
             "storageKey": null
           },
           (v6/*: any*/),
-          (v7/*: any*/)
+          (v7/*: any*/),
+          (v8/*: any*/),
+          (v9/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "a2d75a53db4fbc079dfbeaacd12a3d9d",
+    "cacheID": "69ee06f8f3b21cf3702f4f52e9f87817",
     "id": null,
     "metadata": {},
     "name": "RelationViewQuery",
     "operationKind": "query",
-    "text": "query RelationViewQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    locationInstance {\n      location {\n        id\n      }\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n    quote\n    link\n  }\n}\n"
+    "text": "query RelationViewQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    id\n    person {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    locationInstance {\n      location {\n        id\n      }\n      name\n      id\n    }\n    relationType {\n      name\n      id\n    }\n    startDate\n    endDate\n    quote\n    link\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8e4d0341e1a0f096debea18f9b15f831';
+(node as any).hash = '59b38c75a14637b3ebda0612f25599fa';
 export default node;

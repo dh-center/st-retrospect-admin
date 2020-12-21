@@ -96,6 +96,8 @@ function RelationView(): React.ReactElement {
             relationType {
               name
             }
+            startDate
+            endDate
             quote
             link
          }
@@ -138,6 +140,14 @@ function RelationView(): React.ReactElement {
                 content={props.relation.locationInstance?.name}
                 label='Location instance'
                 link={props.relation.locationInstance ? `/locations/${props.relation.locationInstance.location.id}` : null}
+              />
+              <LabeledText
+                content={props.relation.startDate}
+                label='Start date'
+              />
+              <LabeledText
+                content={props.relation.endDate}
+                label='End date'
               />
               <LabeledText
                 content={props.relation.quote}

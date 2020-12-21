@@ -15,6 +15,8 @@ export type RelationEditForm_originalRelation = {
     readonly locationInstance: {
         readonly id: string;
     } | null;
+    readonly startDate: string | null;
+    readonly endDate: string | null;
     readonly quote: string | null;
     readonly link: string | null;
     readonly " $refType": "RelationEditForm_originalRelation";
@@ -79,6 +81,20 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "startDate",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endDate",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "quote",
       "storageKey": null
     },
@@ -94,5 +110,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'b5e3eaf0d0a9aef39b0963ebca648cc8';
+(node as any).hash = '12f7f64044bcec11877a42412634b4a1';
 export default node;

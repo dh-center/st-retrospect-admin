@@ -65,6 +65,8 @@ function RelationEditForm(props: Props): React.ReactElement {
       personId: props.originalRelation.person?.id,
       relationId: props.originalRelation.relationType?.id,
       link: props.originalRelation.link,
+      startDate: props.originalRelation.startDate,
+      endDate: props.originalRelation.endDate,
     } as UpdateRelationInput);
   });
 
@@ -143,6 +145,26 @@ function RelationEditForm(props: Props): React.ReactElement {
           }}
           value={input.locationInstanceId || undefined}
         />
+        <Input
+          label='Start date'
+          onChange={(value) => {
+            setInput({
+              ...input,
+              startDate: value,
+            });
+          }}
+          value={input.startDate || ''}
+        />
+        <Input
+          label='End date'
+          onChange={(value) => {
+            setInput({
+              ...input,
+              endDate: value,
+            });
+          }}
+          value={input.endDate || ''}
+        />
         <Textarea
           label='Quote'
           onChange={(value) => {
@@ -208,6 +230,8 @@ export default createFragmentContainer(
         locationInstance {
           id
         }
+        startDate
+        endDate
         quote
         link
       }

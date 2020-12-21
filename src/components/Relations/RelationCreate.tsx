@@ -28,6 +28,8 @@ function generateRelationInput(): CreateRelationInput {
     locationInstanceId: '',
     quote: '',
     link: '',
+    startDate: '',
+    endDate: '',
   };
 }
 
@@ -119,6 +121,26 @@ export default function RelationCreate(): ReactElement {
               locationInstanceId: selected,
             });
           }}
+        />
+        <Input
+          label='Start date'
+          onChange={(value) => {
+            setInput({
+              ...input,
+              startDate: value,
+            });
+          }}
+          value={input.startDate}
+        />
+        <Input
+          label='End date'
+          onChange={(value) => {
+            setInput({
+              ...input,
+              endDate: value,
+            });
+          }}
+          value={input.endDate}
         />
         <Textarea
           label='Quote'
