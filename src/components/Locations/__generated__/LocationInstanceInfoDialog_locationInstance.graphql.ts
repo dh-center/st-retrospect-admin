@@ -8,6 +8,7 @@ export type LocationInstanceInfoDialog_locationInstance = {
     readonly id: string;
     readonly name: string | null;
     readonly description: string | null;
+    readonly source: string | null;
     readonly constructionDate: string | null;
     readonly demolitionDate: string | null;
     readonly startDate: string | null;
@@ -60,6 +61,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "description",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
       "storageKey": null
     },
     {
@@ -129,5 +137,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '90f17ab987ca1252095ff051b3b37e95';
+(node as any).hash = 'd3fb6f5f202edb01c801d06719204ec2';
 export default node;
