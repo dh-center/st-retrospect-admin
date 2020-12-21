@@ -15,6 +15,7 @@ export type CreateLocationInstanceInput = {
     startDate?: string | null;
     endDate?: string | null;
     locationId: string;
+    source: string;
 };
 export type LocationInstanceInfoDialogCreateMutationVariables = {
     input: CreateLocationInstanceInput;

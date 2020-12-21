@@ -15,6 +15,7 @@ export type UpdateLocationInstanceInput = {
     demolitionDate?: string | null;
     startDate?: string | null;
     endDate?: string | null;
+    source: string;
 };
 export type LocationInstanceInfoDialogUpdateMutationVariables = {
     input: UpdateLocationInstanceInput;

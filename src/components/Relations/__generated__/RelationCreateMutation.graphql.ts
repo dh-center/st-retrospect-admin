@@ -9,6 +9,8 @@ export type CreateRelationInput = {
     relationId: string;
     quote: string;
     link: string;
+    startDate: string;
+    endDate: string;
 };
 export type RelationCreateMutationVariables = {
     input: CreateRelationInput;

@@ -40,6 +40,8 @@ fragment RelationEditForm_originalRelation on Relation {
   locationInstance {
     id
   }
+  startDate
+  endDate
   quote
   link
 }
@@ -146,6 +148,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "startDate",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "endDate",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "quote",
             "storageKey": null
           },
@@ -162,12 +178,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "87c8ea3b5152b93e8f9e55413e6ef4e0",
+    "cacheID": "329e62149486fd02ff060aa687f4b23e",
     "id": null,
     "metadata": {},
     "name": "RelationEditQuery",
     "operationKind": "query",
-    "text": "query RelationEditQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    ...RelationEditForm_originalRelation\n    id\n  }\n}\n\nfragment RelationEditForm_originalRelation on Relation {\n  id\n  person {\n    id\n  }\n  relationType {\n    id\n  }\n  locationInstance {\n    id\n  }\n  quote\n  link\n}\n"
+    "text": "query RelationEditQuery(\n  $id: GlobalId!\n) {\n  relation(id: $id) {\n    ...RelationEditForm_originalRelation\n    id\n  }\n}\n\nfragment RelationEditForm_originalRelation on Relation {\n  id\n  person {\n    id\n  }\n  relationType {\n    id\n  }\n  locationInstance {\n    id\n  }\n  startDate\n  endDate\n  quote\n  link\n}\n"
   }
 };
 })();

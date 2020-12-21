@@ -165,6 +165,9 @@ input CreateLocationInstanceInput {
 
   """Location id to which this instance below"""
   locationId: GlobalId!
+
+  """Source of information about location instance"""
+  source: MultilingualString!
 }
 
 type CreateLocationInstancePayload {
@@ -260,6 +263,12 @@ input CreateRelationInput {
 
   """Link to quote"""
   link: MultilingualString!
+
+  """Date of relation start"""
+  startDate: String!
+
+  """Date of relation end"""
+  endDate: String!
 }
 
 type CreateRelationPayload {
@@ -445,6 +454,9 @@ type LocationInstance implements Node {
 
   """Array of architects"""
   architects: [Person]
+
+  """Source of information about location instance"""
+  source: MultilingualString
 }
 
 input LocationInstanceInput {
@@ -917,6 +929,12 @@ type Relation implements Node {
 
   """Link to quote source"""
   link: MultilingualString
+
+  """Date of relation start"""
+  startDate: String
+
+  """Date of relation end"""
+  endDate: String
 }
 
 """Model for representing list of relations"""
@@ -1114,6 +1132,9 @@ input UpdateLocationInstanceInput {
 
   """End of period"""
   endDate: String
+
+  """Source of information about location instance"""
+  source: MultilingualString!
 }
 
 type UpdateLocationInstancePayload {
@@ -1218,6 +1239,12 @@ input UpdateRelationInput {
 
   """Link to quote"""
   link: MultilingualString
+
+  """Date of relation start"""
+  startDate: String
+
+  """Date of relation end"""
+  endDate: String
 }
 
 type UpdateRelationPayload {
@@ -1259,5 +1286,14 @@ type User implements Node {
 
   """User liked routes"""
   likedRoutes: [Route!]!
+
+  """User profile photo url"""
+  photo: String
+
+  """User first name"""
+  firstName: String
+
+  """User last name"""
+  lastName: String
 }
 
