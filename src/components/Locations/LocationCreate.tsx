@@ -16,7 +16,8 @@ import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 import { LabeledLocationMap } from '../LocationMap';
-import LabeledText from '../utils/LabeledText';
+import { isLatitudeValid, isLongitudeValid } from '../../utils/checkCoordinate';
+import throttle from 'lodash.throttle';
 
 /**
  * Generates input data for creating new location
@@ -100,9 +101,27 @@ export default function LocationCreate(): React.ReactElement {
       return;
     }
 
+    let savingData = input;
+
+    /**
+     * Coordinates must be numbers
+     */
+    if (savingData.latitude) {
+      savingData = {
+        ...savingData,
+        latitude: +savingData.latitude,
+      };
+    }
+    if (savingData.longitude) {
+      savingData = {
+        ...savingData,
+        longitude: +savingData.longitude,
+      };
+    }
+
     setLoadingStatus(true);
     try {
-      await create(input);
+      await create(savingData);
       notifier.show({
         message: `Successfully created`,
         style: 'success',
@@ -119,6 +138,24 @@ export default function LocationCreate(): React.ReactElement {
       });
     }
   };
+
+  /**
+   * Error message if latitude isn't correct
+   */
+  const showLatitudeValidationErrorMessage = throttle(() => notifier.show({
+    message: 'Latitude isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
+    style: 'error',
+    time: 5000,
+  }), 1000, { trailing: false });
+
+  /**
+   * Error message if longitude isn't correct
+   */
+  const showLongitudeValidationErrorMessage = throttle(() => notifier.show({
+    message: 'Longitude isn\'t correct. It should be from -180 to 180 and have \'.\' as delimiter.',
+    style: 'error',
+    time: 5000,
+  }), 1000, { trailing: false });
 
   return (
     <ContentWrapper>
@@ -146,6 +183,36 @@ export default function LocationCreate(): React.ReactElement {
             });
           }}
         />
+        <Input
+          label='Latitude'
+          onChange={(value) => {
+            if (!isLatitudeValid(value)) {
+              showLatitudeValidationErrorMessage();
+
+              return;
+            }
+            setInput({
+              ...input,
+              latitude: value,
+            });
+          }}
+          value={input.latitude || 0}
+        />
+        <Input
+          label='Longitude'
+          onChange={(value) => {
+            if (!isLongitudeValid(value)) {
+              showLongitudeValidationErrorMessage();
+
+              return;
+            }
+            setInput({
+              ...input,
+              longitude: value,
+            });
+          }}
+          value={input.longitude || 0}
+        />
         {
           input.addresses.map((address, index) =>
             <Input
@@ -164,17 +231,6 @@ export default function LocationCreate(): React.ReactElement {
             />
           )
         }
-        <div>
-          <LabeledText
-            content={input.latitude}
-            label='Latitude'
-          />
-          <LabeledText
-            content={input.longitude}
-            label='Longitude'
-          />
-        </div>
-
         <Input
           label='Link to the wiki about this location'
           onChange={(v) => updateLocationInstance('wikiLink', v)}

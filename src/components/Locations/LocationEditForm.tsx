@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { LabeledLocationMap } from '../LocationMap';
 import Input from '../utils/Input';
-import LabeledText from '../utils/LabeledText';
 import Button from 'react-bootstrap/Button';
 import { Spinner } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
@@ -19,6 +18,8 @@ import {
   UpdateLocationInput
 } from './__generated__/LocationEditFormMutation.graphql';
 import { LinkContainer } from 'react-router-bootstrap';
+import { isLatitudeValid, isLongitudeValid } from '../../utils/checkCoordinate';
+import throttle from 'lodash.throttle';
 
 /**
  * Updates information about location
@@ -75,9 +76,27 @@ function LocationEditForm(props: Props): React.ReactElement {
       return;
     }
 
+    let savingData = input;
+
+    /**
+     * Coordinates must be numbers
+     */
+    if (savingData.latitude) {
+      savingData = {
+        ...savingData,
+        latitude: +savingData.latitude,
+      };
+    }
+    if (savingData.longitude) {
+      savingData = {
+        ...savingData,
+        longitude: +savingData.longitude,
+      };
+    }
+
     setLoadingStatus(true);
     try {
-      await updateInfo(input);
+      await updateInfo(savingData);
       notifier.show({
         message: `Successfully updated`,
         style: 'success',
@@ -95,6 +114,24 @@ function LocationEditForm(props: Props): React.ReactElement {
     }
   };
 
+  /**
+   * Error message if latitude isn't correct
+   */
+  const showLatitudeValidationErrorMessage = throttle(() => notifier.show({
+    message: 'Latitude isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
+    style: 'error',
+    time: 5000,
+  }), 1000, { trailing: false });
+
+  /**
+   * Error message if longitude isn't correct
+   */
+  const showLongitudeValidationErrorMessage = throttle(() => notifier.show({
+    message: 'Longitude isn\'t correct. It should be from -180 to 180 and have \'.\' as delimiter.',
+    style: 'error',
+    time: 5000,
+  }), 1000, { trailing: false });
+
   return (
     <ContentWrapper>
       <Form onSubmit={updateLocation}>
@@ -108,6 +145,36 @@ function LocationEditForm(props: Props): React.ReactElement {
               longitude: lngLat.lng,
             });
           }}
+        />
+        <Input
+          label='Latitude'
+          onChange={(value) => {
+            if (!isLatitudeValid(value)) {
+              showLatitudeValidationErrorMessage();
+
+              return;
+            }
+            setInput({
+              ...input,
+              latitude: value,
+            });
+          }}
+          value={input.latitude || 0}
+        />
+        <Input
+          label='Longitude'
+          onChange={(value) => {
+            if (!isLongitudeValid(value)) {
+              showLongitudeValidationErrorMessage();
+
+              return;
+            }
+            setInput({
+              ...input,
+              longitude: value,
+            });
+          }}
+          value={input.longitude || 0}
         />
         {
           (input.addresses || []).map((address, index) =>
@@ -127,16 +194,6 @@ function LocationEditForm(props: Props): React.ReactElement {
             />
           )
         }
-        <div>
-          <LabeledText
-            content={input.latitude}
-            label='Latitude'
-          />
-          <LabeledText
-            content={input.longitude}
-            label='Longitude'
-          />
-        </div>
         <Button
           className='m-1'
           type='submit'
