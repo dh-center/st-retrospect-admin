@@ -166,7 +166,7 @@ function RelationEditForm(props: Props): React.ReactElement {
           value={input.endDate || ''}
         />
         <Textarea
-          label='Quote'
+          label='Description'
           onChange={(value) => {
             setInput({
               ...input,

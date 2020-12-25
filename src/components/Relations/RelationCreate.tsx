@@ -143,7 +143,7 @@ export default function RelationCreate(): ReactElement {
           value={input.endDate}
         />
         <Textarea
-          label='Quote'
+          label='Description'
           onChange={(value) => {
             setInput({
               ...input,
