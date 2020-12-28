@@ -8,6 +8,7 @@ import TestConstructor from './TestConstructor';
 import Location from './Location';
 import { BlockToolConstructable } from '@editorjs/editorjs';
 import Question from './Question';
+import CurrentQuestTask from './CurrentQuestTask';
 
 export const EDITOR_JS_TOOLS = {
   list: List,
@@ -26,4 +27,5 @@ export const EDITOR_JS_TOOLS = {
   test: TestConstructor as unknown as BlockToolConstructable,
   locationInstance: Location as unknown as BlockToolConstructable,
   question: Question as unknown as BlockToolConstructable,
+  currentQuestTask: CurrentQuestTask as unknown as BlockToolConstructable,
 };

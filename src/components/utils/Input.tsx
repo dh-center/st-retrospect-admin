@@ -28,6 +28,11 @@ interface OwnInputProps<T extends number | string> extends WithClassName {
   label?: string;
 
   /**
+   * Is label strong
+   */
+  strong?: boolean;
+
+  /**
    * Max input value (if type=number)
    */
   max?: number;
@@ -55,7 +60,14 @@ export default function Input<T extends number | string>(props: InputProps<T>): 
   return (
     <Form.Group className={classNames(styles.container, className)}>
       {props.label &&
-      <Form.Label className={styles.label} htmlFor={id`input`}>
+      <Form.Label className={
+        classNames(
+          styles.label,
+          {
+            [styles.labelStrong]: props.strong,
+          }
+        )}
+      htmlFor={id`input`}>
         {label}:
       </Form.Label>
       }
