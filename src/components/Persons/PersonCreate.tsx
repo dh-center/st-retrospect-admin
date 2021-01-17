@@ -15,6 +15,9 @@ import graphql from 'babel-plugin-relay/macro';
 import Input from '../utils/Input';
 import Textarea from '../utils/Textarea';
 import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
+import ImageGallery from '../utils/ImageGallery';
+import styles from './Images.module.css';
+import ImageUploader from '../utils/ImageUploader';
 
 /**
  * Generates input data for creating new person
@@ -25,10 +28,12 @@ function generatePersonInput(): CreatePersonInput {
     lastName: '',
     patronymic: '',
     pseudonym: '',
+    mainPhotoLink: null,
     professions: [],
     description: '',
     birthDate: '',
     deathDate: '',
+    photoLinks: [],
     wikiLink: '',
   };
 }
@@ -129,6 +134,25 @@ export default function PersonCreate(): React.ReactElement {
           })}
           value={input.pseudonym || ''}
         />
+        <ImageGallery
+          className={styles.mainPhoto}
+          images={input.mainPhotoLink ? [ input.mainPhotoLink ] : undefined}
+          label='Main photo'
+          onChange={([ link ]) => setInput({
+            ...input,
+            mainPhotoLink: link,
+          })}
+          viewOnly={false}
+        />
+        <ImageUploader
+          entityName='person'
+          onImageUpload={(url) => {
+            setInput({
+              ...input,
+              mainPhotoLink: url,
+            });
+          }}
+        />
         <LabeledArrayOfInputs
           addButtonText='Add profession...'
           label='Professions'
@@ -162,6 +186,27 @@ export default function PersonCreate(): React.ReactElement {
             deathDate: value,
           })}
           value={input.deathDate || ''}
+        />
+        <ImageGallery
+          className={styles.photosGallery}
+          images={input.photoLinks || undefined}
+          label='Photos'
+          onChange={(urls) => {
+            setInput({
+              ...input,
+              photoLinks: urls,
+            });
+          }}
+          viewOnly={false}
+        />
+        <ImageUploader
+          entityName='person'
+          onImageUpload={(url) => {
+            setInput({
+              ...input,
+              photoLinks: [...(input.photoLinks || []), url],
+            });
+          }}
         />
         <Input
           label='Wiki link'
