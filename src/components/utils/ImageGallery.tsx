@@ -24,6 +24,11 @@ interface ImageGalleryProps {
    * Forbid deleting images
    */
   viewOnly: boolean;
+
+  /**
+   * Label for component
+   */
+  label?: string;
 }
 
 /**
@@ -33,7 +38,14 @@ interface ImageGalleryProps {
  */
 export default function ImageGallery(props: ImageGalleryProps & WithClassName): React.ReactElement {
   if (!props.images || !props.images.length) {
-    return <div>There is no images</div>;
+    return (
+      <div className={styles.container}>
+        {props.label &&
+          <div className={styles.label}>{props.label}:</div>
+        }
+        <div>There is no images</div>
+      </div>
+    );
   }
 
   const onDelete = !props.viewOnly
@@ -46,17 +58,22 @@ export default function ImageGallery(props: ImageGalleryProps & WithClassName): 
     : undefined;
 
   return (
-    <div className={classNames(styles.container, props.className)}>
-      {props.images.map((image, index) =>
-        /**
-         * @todo fix ImageView when changing image src
-         */
-        <div className={styles.imageWrapper}
-          key={index + image} >
-          <ImageView onDelete={onDelete && onDelete(image)}
-            src={image}/>
-        </div>
-      )}
+    <div className={styles.container}>
+      {props.label &&
+        <div className={styles.label}>{props.label}:</div>
+      }
+      <div className={classNames(styles.imagesContainer, props.className)}>
+        {props.images.map((image, index) =>
+          /**
+           * @todo fix ImageView when changing image src
+           */
+          <div className={styles.imageWrapper}
+            key={index + image} >
+            <ImageView onDelete={onDelete && onDelete(image)}
+              src={image}/>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

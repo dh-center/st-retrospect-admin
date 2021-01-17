@@ -9,10 +9,12 @@ export type UpdatePersonInput = {
     firstName?: string | null;
     patronymic?: string | null;
     pseudonym?: string | null;
+    mainPhotoLink?: string | null;
     professions?: Array<string> | null;
     description?: string | null;
     birthDate?: string | null;
     deathDate?: string | null;
+    photoLinks?: Array<string> | null;
     wikiLink?: string | null;
 };
 export type PersonEditFormUpdateMutationVariables = {

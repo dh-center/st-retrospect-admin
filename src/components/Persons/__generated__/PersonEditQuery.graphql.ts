@@ -35,6 +35,7 @@ fragment PersonEditForm_originalPerson on Person {
   firstName
   patronymic
   pseudonym
+  mainPhotoLink
   professions
   description
   birthDate
@@ -138,6 +139,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "mainPhotoLink",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "professions",
             "storageKey": null
           },
@@ -175,12 +183,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "90ddcbfdd1864949def261430eadc823",
+    "cacheID": "bbd9dfb9768f34ff17e13977fc2fb072",
     "id": null,
     "metadata": {},
     "name": "PersonEditQuery",
     "operationKind": "query",
-    "text": "query PersonEditQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    ...PersonEditForm_originalPerson\n    id\n  }\n}\n\nfragment PersonEditForm_originalPerson on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  professions\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
+    "text": "query PersonEditQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    ...PersonEditForm_originalPerson\n    id\n  }\n}\n\nfragment PersonEditForm_originalPerson on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  mainPhotoLink\n  professions\n  description\n  birthDate\n  deathDate\n  wikiLink\n}\n"
   }
 };
 })();

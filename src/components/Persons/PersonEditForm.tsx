@@ -19,6 +19,9 @@ import {
 } from './__generated__/PersonEditFormUpdateMutation.graphql';
 import notifier from 'codex-notifier';
 import Textarea from '../utils/Textarea';
+import ImageGallery from '../utils/ImageGallery';
+import styles from './Images.module.css';
+import ImageUploader from '../utils/ImageUploader';
 
 /**
  * Executes update mutation for person
@@ -137,6 +140,25 @@ function PersonEditForm(props: Props): React.ReactElement {
           })}
           value={input.pseudonym || ''}
         />
+        <ImageGallery
+          className={styles.mainPhoto}
+          images={input.mainPhotoLink ? [ input.mainPhotoLink ] : undefined}
+          label='Main photo'
+          onChange={([ link ]) => setInput({
+            ...input,
+            mainPhotoLink: link,
+          })}
+          viewOnly={false}
+        />
+        <ImageUploader
+          entityName='person'
+          onImageUpload={(url) => {
+            setInput({
+              ...input,
+              mainPhotoLink: url,
+            });
+          }}
+        />
         <LabeledArrayOfInputs
           addButtonText='Add profession...'
           label='Professions'
@@ -170,6 +192,27 @@ function PersonEditForm(props: Props): React.ReactElement {
             deathDate: value,
           })}
           value={input.deathDate || ''}
+        />
+        <ImageGallery
+          className={styles.photosGallery}
+          images={input.photoLinks || undefined}
+          label='Photos'
+          onChange={(urls) => {
+            setInput({
+              ...input,
+              photoLinks: urls,
+            });
+          }}
+          viewOnly={false}
+        />
+        <ImageUploader
+          entityName='person'
+          onImageUpload={(url) => {
+            setInput({
+              ...input,
+              photoLinks: [...(input.photoLinks || []), url],
+            });
+          }}
         />
         <Input
           label='Wiki link'
@@ -219,6 +262,7 @@ export default createFragmentContainer(
         firstName
         patronymic
         pseudonym
+        mainPhotoLink
         professions
         description
         birthDate
