@@ -13,10 +13,12 @@ export type PersonViewQueryResponse = {
         readonly firstName: string | null;
         readonly patronymic: string | null;
         readonly pseudonym: string | null;
+        readonly mainPhotoLink: string | null;
         readonly professions: ReadonlyArray<string | null> | null;
         readonly description: string | null;
         readonly birthDate: string | null;
         readonly deathDate: string | null;
+        readonly photoLinks: ReadonlyArray<string | null> | null;
         readonly wikiLink: string | null;
     } | null;
 };
@@ -37,10 +39,12 @@ query PersonViewQuery(
     firstName
     patronymic
     pseudonym
+    mainPhotoLink
     professions
     description
     birthDate
     deathDate
+    photoLinks
     wikiLink
   }
 }
@@ -108,6 +112,13 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
+        "name": "mainPhotoLink",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
         "name": "professions",
         "storageKey": null
       },
@@ -130,6 +141,13 @@ v1 = [
         "args": null,
         "kind": "ScalarField",
         "name": "deathDate",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "photoLinks",
         "storageKey": null
       },
       {
@@ -161,14 +179,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "0f5e927cd47fadf5e01a84b839e882d6",
+    "cacheID": "1a98956133ac9e75581875acfb3f40de",
     "id": null,
     "metadata": {},
     "name": "PersonViewQuery",
     "operationKind": "query",
-    "text": "query PersonViewQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    professions\n    description\n    birthDate\n    deathDate\n    wikiLink\n  }\n}\n"
+    "text": "query PersonViewQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    mainPhotoLink\n    professions\n    description\n    birthDate\n    deathDate\n    photoLinks\n    wikiLink\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5bf99dc99e0bfd0eb60080815e369cc8';
+(node as any).hash = '8cf1d1d7548d3bb4adc8b5bdc917fcf9';
 export default node;

@@ -16,6 +16,8 @@ import {
 import ContentWrapper from '../ContentWrapper';
 import LabeledText from '../utils/LabeledText';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
+import ImageGallery from '../utils/ImageGallery';
+import styles from './Images.module.css';
 
 /**
  * Removes person by its id
@@ -80,10 +82,12 @@ function PersonView(): React.ReactElement {
             firstName
             patronymic
             pseudonym
+            mainPhotoLink
             professions
             description
             birthDate
             deathDate
+            photoLinks
             wikiLink
           }
         }
@@ -128,6 +132,12 @@ function PersonView(): React.ReactElement {
                 content={props.person.pseudonym}
                 label='Pseudonym'
               />
+              <ImageGallery
+                className={styles.mainPhoto}
+                images={props.person.mainPhotoLink ? [ props.person.mainPhotoLink ] : undefined}
+                label='Main photo'
+                viewOnly
+              />
               <LabeledText
                 content={props.person.professions
                   ?.filter(profession => profession !== null)
@@ -145,6 +155,12 @@ function PersonView(): React.ReactElement {
               <LabeledText
                 content={props.person.deathDate}
                 label='Death date'
+              />
+              <ImageGallery
+                className={styles.photosGallery}
+                images={props.person.photoLinks?.filter(photoLink => photoLink) as string[] || undefined}
+                label='Photos'
+                viewOnly
               />
               <LabeledText
                 content={props.person.wikiLink}

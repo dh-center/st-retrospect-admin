@@ -18,7 +18,7 @@ interface ImageGalleryProps {
    *
    * @param urls - new image url array
    */
-  onChange(urls: string[]): void;
+  onChange?(urls: string[]): void;
 
   /**
    * Forbid deleting images
@@ -53,7 +53,9 @@ export default function ImageGallery(props: ImageGalleryProps & WithClassName): 
       if (!props.images) {
         return;
       }
-      props.onChange(props.images.filter(im => im !== image));
+      if (props.onChange) {
+        props.onChange(props.images.filter(im => im !== image));
+      }
     }
     : undefined;
 
