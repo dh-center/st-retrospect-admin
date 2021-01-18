@@ -15,6 +15,7 @@ export type PersonEditForm_originalPerson = {
     readonly description: string | null;
     readonly birthDate: string | null;
     readonly deathDate: string | null;
+    readonly photoLinks: ReadonlyArray<string | null> | null;
     readonly wikiLink: string | null;
     readonly " $refType": "PersonEditForm_originalPerson";
 };
@@ -106,6 +107,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "photoLinks",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "wikiLink",
       "storageKey": null
     }
@@ -113,5 +121,5 @@ const node: ReaderFragment = {
   "type": "Person",
   "abstractKey": null
 };
-(node as any).hash = '80c5dff917fdd45c26d6c18bfb1a04af';
+(node as any).hash = '2c215c5fe3a369c337da6d19d76990c4';
 export default node;

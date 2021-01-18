@@ -267,6 +267,7 @@ export default createFragmentContainer(
         description
         birthDate
         deathDate
+        photoLinks
         wikiLink
       }
     `,
