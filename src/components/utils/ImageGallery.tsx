@@ -18,12 +18,17 @@ interface ImageGalleryProps {
    *
    * @param urls - new image url array
    */
-  onChange(urls: string[]): void;
+  onChange?(urls: string[]): void;
 
   /**
    * Forbid deleting images
    */
   viewOnly: boolean;
+
+  /**
+   * Label for component
+   */
+  label?: string;
 }
 
 /**
@@ -33,7 +38,14 @@ interface ImageGalleryProps {
  */
 export default function ImageGallery(props: ImageGalleryProps & WithClassName): React.ReactElement {
   if (!props.images || !props.images.length) {
-    return <div>There is no images</div>;
+    return (
+      <div className={styles.container}>
+        {props.label &&
+          <div className={styles.label}>{props.label}:</div>
+        }
+        <div>There is no images</div>
+      </div>
+    );
   }
 
   const onDelete = !props.viewOnly
@@ -41,22 +53,29 @@ export default function ImageGallery(props: ImageGalleryProps & WithClassName): 
       if (!props.images) {
         return;
       }
-      props.onChange(props.images.filter(im => im !== image));
+      if (props.onChange) {
+        props.onChange(props.images.filter(im => im !== image));
+      }
     }
     : undefined;
 
   return (
-    <div className={classNames(styles.container, props.className)}>
-      {props.images.map((image, index) =>
-        /**
-         * @todo fix ImageView when changing image src
-         */
-        <div className={styles.imageWrapper}
-          key={index + image} >
-          <ImageView onDelete={onDelete && onDelete(image)}
-            src={image}/>
-        </div>
-      )}
+    <div className={styles.container}>
+      {props.label &&
+        <div className={styles.label}>{props.label}:</div>
+      }
+      <div className={classNames(styles.imagesContainer, props.className)}>
+        {props.images.map((image, index) =>
+          /**
+           * @todo fix ImageView when changing image src
+           */
+          <div className={styles.imageWrapper}
+            key={index + image} >
+            <ImageView onDelete={onDelete && onDelete(image)}
+              src={image}/>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

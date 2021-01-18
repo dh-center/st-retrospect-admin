@@ -1,4 +1,14 @@
 .container {
+  padding: .25rem;
+  margin-bottom: .25rem;
+}
+
+.label {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.imagesContainer {
   display: flex;
   overflow: auto hidden;
 }

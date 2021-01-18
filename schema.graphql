@@ -199,6 +199,9 @@ input CreatePersonInput {
   """Person's pseudonym"""
   pseudonym: MultilingualString
 
+  """Link with main photo"""
+  mainPhotoLink: String
+
   """Person's professions"""
   professions: [String!]
 
@@ -210,6 +213,9 @@ input CreatePersonInput {
 
   """Person's death date"""
   deathDate: String
+
+  """Contains links with person's photos"""
+  photoLinks: [String!]
 
   """Person's info link"""
   wikiLink: String
@@ -1169,6 +1175,9 @@ input UpdatePersonInput {
   """Person's pseudonym"""
   pseudonym: String
 
+  """Link with main photo"""
+  mainPhotoLink: String
+
   """Person's professions"""
   professions: [String!]
 
@@ -1180,6 +1189,9 @@ input UpdatePersonInput {
 
   """Person's death date"""
   deathDate: String
+
+  """Contains links with person's photos"""
+  photoLinks: [String!]
 
   """Person's info link"""
   wikiLink: String

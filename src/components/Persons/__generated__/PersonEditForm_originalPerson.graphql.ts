@@ -10,10 +10,12 @@ export type PersonEditForm_originalPerson = {
     readonly firstName: string | null;
     readonly patronymic: string | null;
     readonly pseudonym: string | null;
+    readonly mainPhotoLink: string | null;
     readonly professions: ReadonlyArray<string | null> | null;
     readonly description: string | null;
     readonly birthDate: string | null;
     readonly deathDate: string | null;
+    readonly photoLinks: ReadonlyArray<string | null> | null;
     readonly wikiLink: string | null;
     readonly " $refType": "PersonEditForm_originalPerson";
 };
@@ -70,6 +72,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "mainPhotoLink",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "professions",
       "storageKey": null
     },
@@ -98,6 +107,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "photoLinks",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "wikiLink",
       "storageKey": null
     }
@@ -105,5 +121,5 @@ const node: ReaderFragment = {
   "type": "Person",
   "abstractKey": null
 };
-(node as any).hash = 'b10d033f425c93f16d321a2506eb2eb2';
+(node as any).hash = '2c215c5fe3a369c337da6d19d76990c4';
 export default node;
