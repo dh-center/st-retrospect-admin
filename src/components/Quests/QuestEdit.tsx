@@ -215,7 +215,7 @@ export default function QuestEdit(): ReactElement {
               })}
               required
               type='number'
-              value={input ? Number(input?.minLevel).toString() : props.quest.minLevel.toString()}
+              value={input?.minLevel !== undefined ? Number(input?.minLevel).toString() : props.quest.minLevel.toString()}
             />
             <Form.Group>
               <h2>Route content</h2>
