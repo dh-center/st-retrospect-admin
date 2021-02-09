@@ -207,6 +207,7 @@ export default function QuestEdit(): ReactElement {
             </Form.Group>
             <Input
               label='Minimum level'
+              min={0}
               onChange={value => setInput({
                 ...input,
                 id,
@@ -214,7 +215,6 @@ export default function QuestEdit(): ReactElement {
               })}
               required
               type='number'
-              min={0}
               value={input ? Number(input?.minLevel).toString() : props.quest.minLevel.toString()}
             />
             <Form.Group>

@@ -162,13 +162,13 @@ export default function QuestCreate(): React.ReactElement {
         </Form.Group>
         <Input
           label='Minimum level'
+          min={0}
           onChange={value => setInput({
             ...input,
             minLevel: Number(value),
           })}
           required
           type='number'
-          min={0}
           value={input.minLevel.toString()}
         />
         <Form.Group>
