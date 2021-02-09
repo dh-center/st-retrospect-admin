@@ -106,6 +106,7 @@ export default function QuestEdit(): ReactElement {
             name
             description
             type
+            minLevel
             data {
               time
               version
@@ -204,6 +205,18 @@ export default function QuestEdit(): ReactElement {
                 />
               </div>
             </Form.Group>
+            <Input
+              label='Minimum level'
+              onChange={value => setInput({
+                ...input,
+                id,
+                minLevel: Number(value),
+              })}
+              required
+              type='number'
+              min={0}
+              value={input ? Number(input?.minLevel).toString() : props.quest.minLevel.toString()}
+            />
             <Form.Group>
               <h2>Route content</h2>
               <div style={{

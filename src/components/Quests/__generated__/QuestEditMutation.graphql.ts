@@ -10,6 +10,7 @@ export type UpdateQuestInput = {
     description?: string | null;
     photo?: string | null;
     type?: TaskTypes | null;
+    minLevel?: number | null;
     data?: EditorDataInput | null;
 };
 export type EditorDataInput = {
