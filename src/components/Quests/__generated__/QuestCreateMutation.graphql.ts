@@ -9,6 +9,7 @@ export type CreateQuestInput = {
     description?: string | null;
     photo?: string | null;
     type: TaskTypes;
+    minLevel: number;
     data: EditorDataInput;
 };
 export type EditorDataInput = {

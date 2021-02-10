@@ -13,6 +13,7 @@ export type QuestEditQueryResponse = {
         readonly name: string;
         readonly description: string | null;
         readonly type: TaskTypes;
+        readonly minLevel: number;
         readonly data: {
             readonly time: number | null;
             readonly version: string | null;
@@ -36,6 +37,7 @@ query QuestEditQuery(
     name
     description
     type
+    minLevel
     data {
       time
       version
@@ -99,6 +101,13 @@ v1 = [
       {
         "alias": null,
         "args": null,
+        "kind": "ScalarField",
+        "name": "minLevel",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
         "concreteType": "EditorData",
         "kind": "LinkedField",
         "name": "data",
@@ -150,14 +159,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "2c4cfc21743cb4959248df939e749424",
+    "cacheID": "7e3355de8bdbbc908d9a07b8ebf4fcf4",
     "id": null,
     "metadata": {},
     "name": "QuestEditQuery",
     "operationKind": "query",
-    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    type\n    data {\n      time\n      version\n      blocks\n    }\n  }\n}\n"
+    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    type\n    minLevel\n    data {\n      time\n      version\n      blocks\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '90ce2b5bf49b3a12b271c268a4a2ef74';
+(node as any).hash = 'd7f3a54ebcab5ef28667f4fdc1ebe7de';
 export default node;

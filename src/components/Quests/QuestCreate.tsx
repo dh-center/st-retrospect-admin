@@ -26,6 +26,7 @@ export function generateQuestInput(): CreateQuestInput {
     name: '',
     description: '',
     type: 'QUIZ',
+    minLevel: 0,
     data: {
       time: null,
       version: null,
@@ -159,6 +160,17 @@ export default function QuestCreate(): React.ReactElement {
             />
           </div>
         </Form.Group>
+        <Input
+          label='Minimum level'
+          min={0}
+          onChange={value => setInput({
+            ...input,
+            minLevel: Number(value),
+          })}
+          required
+          type='number'
+          value={input.minLevel.toString()}
+        />
         <Form.Group>
           <h2>Route content</h2>
           <div style={{
