@@ -82,6 +82,7 @@ export default function QuestView(): ReactElement {
             id
             name
             description
+            minLevel
           }
         }
       `}
@@ -116,6 +117,10 @@ export default function QuestView(): ReactElement {
               <LabeledText
                 content={props.quest.description}
                 label='Description'
+              />
+              <LabeledText
+                content={props.quest.minLevel.toString()}
+                label='Minimum level'
               />
             </div>
             <div>
