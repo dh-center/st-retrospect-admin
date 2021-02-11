@@ -20,6 +20,7 @@ import Textarea from '../utils/Textarea';
 import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
+import authController from '../../controllers/authController';
 
 /**
  * Mutation for save edited quest
@@ -86,8 +87,24 @@ export default function QuestEdit(): ReactElement {
       });
       setLoadingStatus(false);
       pushLocationBack();
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
+      if (error.extensions.code === 'UNAUTHENTICATED') {
+        notifier.show({
+          message: 'You don\'t have permissions to do this. Please contact administrator.',
+          type: 'confirm',
+          style: 'error',
+          okText: 'Logout',
+          okHandler: () => {
+            authController.logout();
+            history.push(`/login`);
+          },
+          cancelText: 'Ok',
+          time: 5000,
+        });
+
+        return;
+      }
       notifier.show({
         message: 'Something went wrong',
         style: 'error',
