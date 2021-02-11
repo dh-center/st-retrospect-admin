@@ -10,6 +10,7 @@ import { Button } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 import notifier from 'codex-notifier';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
+import authController from '../../controllers/authController';
 
 /**
  * Page with location info to view
@@ -27,7 +28,23 @@ function LocationView(): React.ReactElement {
         time: 5000,
       });
       history.push('/locations');
-    } catch {
+    } catch (error) {
+      if (error.extensions.code === 'UNAUTHENTICATED') {
+        notifier.show({
+          message: 'You don\'t have permissions to do this. Please contact administrator.',
+          type: 'confirm',
+          style: 'error',
+          okText: 'Logout',
+          okHandler: () => {
+            authController.logout();
+            history.push(`/login`);
+          },
+          cancelText: 'Ok',
+          time: 5000,
+        });
+
+        return;
+      }
       notifier.show({
         message: 'Something went wrong',
         style: 'error',

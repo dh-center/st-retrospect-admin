@@ -18,7 +18,7 @@ import LabeledText from '../utils/LabeledText';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
-import authController from "../../controllers/authController";
+import authController from '../../controllers/authController';
 
 /**
  * Removes person by its id

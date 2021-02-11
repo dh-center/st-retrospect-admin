@@ -38,6 +38,8 @@ import {
   RemoveArchitectInput
 } from './__generated__/LocationInstanceInfoDialogRemoveArchitectMutation.graphql';
 import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
+import authController from '../../controllers/authController';
+import { useHistory } from 'react-router';
 
 /**
  * Union type for inputs for creating and updating location instances
@@ -278,6 +280,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   const [isEditing, setIsEditing] = useState(!props.locationInstance);
   const [input, setInput] = useState<LocationInstanceInputs>(instanceToInput(props.locationInstance, locationId));
   const [architectsInput, setArchitectsInput] = useState<(string | null)[]>(architectsToInput(props.locationInstance));
+  const history = useHistory();
 
   useEffect(() => {
     setInput(instanceToInput(props.locationInstance, locationId));
@@ -338,7 +341,23 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           style: 'success',
           time: 5000,
         });
-      } catch {
+      } catch (error) {
+        if (error.extensions.code === 'UNAUTHENTICATED') {
+          notifier.show({
+            message: 'You don\'t have permissions to do this. Please contact administrator.',
+            type: 'confirm',
+            style: 'error',
+            okText: 'Logout',
+            okHandler: () => {
+              authController.logout();
+              history.push(`/login`);
+            },
+            cancelText: 'Ok',
+            time: 5000,
+          });
+
+          return;
+        }
         notifier.show({
           message: 'Something went wrong',
           style: 'error',
@@ -359,7 +378,23 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           style: 'success',
           time: 5000,
         });
-      } catch {
+      } catch (error) {
+        if (error.extensions.code === 'UNAUTHENTICATED') {
+          notifier.show({
+            message: 'You don\'t have permissions to do this. Please contact administrator.',
+            type: 'confirm',
+            style: 'error',
+            okText: 'Logout',
+            okHandler: () => {
+              authController.logout();
+              history.push(`/login`);
+            },
+            cancelText: 'Ok',
+            time: 5000,
+          });
+
+          return;
+        }
         notifier.show({
           message: 'Something went wrong',
           style: 'error',

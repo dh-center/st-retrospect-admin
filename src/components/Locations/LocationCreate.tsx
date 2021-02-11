@@ -18,6 +18,7 @@ import ContentWrapper from '../ContentWrapper';
 import { LabeledLocationMap } from '../LocationMap';
 import { isLatitudeValid, isLongitudeValid } from '../../utils/checkCoordinate';
 import throttle from 'lodash.throttle';
+import authController from '../../controllers/authController';
 
 /**
  * Generates input data for creating new location
@@ -129,8 +130,24 @@ export default function LocationCreate(): React.ReactElement {
       });
       setLoadingStatus(false);
       history.push('/locations');
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
+      if (error.extensions.code === 'UNAUTHENTICATED') {
+        notifier.show({
+          message: 'You don\'t have permissions to do this. Please contact administrator.',
+          type: 'confirm',
+          style: 'error',
+          okText: 'Logout',
+          okHandler: () => {
+            authController.logout();
+            history.push(`/login`);
+          },
+          cancelText: 'Ok',
+          time: 5000,
+        });
+
+        return;
+      }
       notifier.show({
         message: 'Something went wrong',
         style: 'error',

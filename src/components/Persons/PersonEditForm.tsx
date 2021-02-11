@@ -22,7 +22,7 @@ import Textarea from '../utils/Textarea';
 import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
 import ImageUploader from '../utils/ImageUploader';
-import authController from "../../controllers/authController";
+import authController from '../../controllers/authController';
 
 /**
  * Executes update mutation for person

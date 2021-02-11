@@ -20,6 +20,7 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 import { isLatitudeValid, isLongitudeValid } from '../../utils/checkCoordinate';
 import throttle from 'lodash.throttle';
+import authController from '../../controllers/authController';
 
 /**
  * Updates information about location
@@ -104,8 +105,24 @@ function LocationEditForm(props: Props): React.ReactElement {
       });
       setLoadingStatus(false);
       history.push(`/locations/${props.originalLocation.id}`);
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
+      if (error.extensions.code === 'UNAUTHENTICATED') {
+        notifier.show({
+          message: 'You don\'t have permissions to do this. Please contact administrator.',
+          type: 'confirm',
+          style: 'error',
+          okText: 'Logout',
+          okHandler: () => {
+            authController.logout();
+            history.push(`/login`);
+          },
+          cancelText: 'Ok',
+          time: 5000,
+        });
+
+        return;
+      }
       notifier.show({
         message: 'Something went wrong',
         style: 'error',
