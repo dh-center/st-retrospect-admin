@@ -18,6 +18,7 @@ import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
 import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
 import ImageUploader from '../utils/ImageUploader';
+import authController from '../../controllers/authController';
 
 /**
  * Generates input data for creating new person
@@ -87,8 +88,24 @@ export default function PersonCreate(): React.ReactElement {
       });
       setLoadingStatus(false);
       history.push('/persons');
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
+      if (error.extensions.code === 'UNAUTHENTICATED') {
+        notifier.show({
+          message: 'You don\'t have permissions to do this. Please contact administrator.',
+          type: 'confirm',
+          style: 'error',
+          okText: 'Logout',
+          okHandler: () => {
+            authController.logout();
+            history.push(`/login`);
+          },
+          cancelText: 'Ok',
+          time: 5000,
+        });
+
+        return;
+      }
       notifier.show({
         message: 'Something went wrong',
         style: 'error',

@@ -22,6 +22,7 @@ import Textarea from '../utils/Textarea';
 import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
 import ImageUploader from '../utils/ImageUploader';
+import authController from "../../controllers/authController";
 
 /**
  * Executes update mutation for person
@@ -92,8 +93,24 @@ function PersonEditForm(props: Props): React.ReactElement {
         });
         setLoadingStatus(false);
         pushLocationBack();
-      } catch {
+      } catch (error) {
         setLoadingStatus(false);
+        if (error.extensions.code === 'UNAUTHENTICATED') {
+          notifier.show({
+            message: 'You don\'t have permissions to do this. Please contact administrator.',
+            type: 'confirm',
+            style: 'error',
+            okText: 'Logout',
+            okHandler: () => {
+              authController.logout();
+              history.push(`/login`);
+            },
+            cancelText: 'Ok',
+            time: 5000,
+          });
+
+          return;
+        }
         notifier.show({
           message: 'Something went wrong',
           style: 'error',
