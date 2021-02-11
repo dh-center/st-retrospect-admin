@@ -17,6 +17,7 @@ import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypes
 import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
 import Textarea from '../utils/Textarea';
 import Input from '../utils/Input';
+import authController from '../../controllers/authController';
 
 /**
  * Generates input data for creating new relation
@@ -82,8 +83,24 @@ export default function RelationCreate(): ReactElement {
       });
       setLoadingStatus(false);
       history.push('/relations');
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
+      if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
+        notifier.show({
+          message: 'You don\'t have permissions to do this. Please contact administrator.',
+          type: 'confirm',
+          style: 'error',
+          okText: 'Logout',
+          okHandler: () => {
+            authController.logout();
+            history.push(`/login`);
+          },
+          cancelText: 'Ok',
+          time: 5000,
+        });
+
+        return;
+      }
       notifier.show({
         message: 'Something went wrong',
         style: 'error',

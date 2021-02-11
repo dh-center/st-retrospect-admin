@@ -89,7 +89,7 @@ export default function QuestEdit(): ReactElement {
       pushLocationBack();
     } catch (error) {
       setLoadingStatus(false);
-      if (error.extensions.code === 'UNAUTHENTICATED') {
+      if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
         notifier.show({
           message: 'You don\'t have permissions to do this. Please contact administrator.',
           type: 'confirm',

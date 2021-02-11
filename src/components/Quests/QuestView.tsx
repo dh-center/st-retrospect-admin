@@ -64,7 +64,7 @@ export default function QuestView(): ReactElement {
           history.push('/quests');
         } catch (error) {
           setDeletingStatus(false);
-          if (error.extensions.code === 'UNAUTHENTICATED') {
+          if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
             notifier.show({
               message: 'You don\'t have permissions to do this. Please contact administrator.',
               type: 'confirm',

@@ -16,6 +16,7 @@ import LabeledText from '../utils/LabeledText';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Spinner } from 'react-bootstrap';
 import { RelationTypeViewQuery } from './__generated__/RelationTypeViewQuery.graphql';
+import authController from '../../controllers/authController';
 
 /**
  * Removes relation type by its id
@@ -61,8 +62,24 @@ function RelationTypeView(): React.ReactElement {
           await remove(id);
           setDeletingStatus(false);
           history.push('/relation-types');
-        } catch {
+        } catch (error) {
           setDeletingStatus(false);
+          if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
+            notifier.show({
+              message: 'You don\'t have permissions to do this. Please contact administrator.',
+              type: 'confirm',
+              style: 'error',
+              okText: 'Logout',
+              okHandler: () => {
+                authController.logout();
+                history.push(`/login`);
+              },
+              cancelText: 'Ok',
+              time: 5000,
+            });
+
+            return;
+          }
           notifier.show({
             message: 'Something went wrong',
             style: 'error',

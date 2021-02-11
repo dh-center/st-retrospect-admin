@@ -14,6 +14,7 @@ import { Form, Spinner } from 'react-bootstrap';
 import Input from '../utils/Input';
 import Button from 'react-bootstrap/Button';
 import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
+import authController from '../../controllers/authController';
 
 /**
  * Generates input data for creating new relation type
@@ -74,8 +75,24 @@ export default function RelationTypeCreate(): React.ReactElement {
       });
       setLoadingStatus(false);
       history.push('/relation-types');
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
+      if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
+        notifier.show({
+          message: 'You don\'t have permissions to do this. Please contact administrator.',
+          type: 'confirm',
+          style: 'error',
+          okText: 'Logout',
+          okHandler: () => {
+            authController.logout();
+            history.push(`/login`);
+          },
+          cancelText: 'Ok',
+          time: 5000,
+        });
+
+        return;
+      }
       notifier.show({
         message: 'Something went wrong',
         style: 'error',

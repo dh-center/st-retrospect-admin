@@ -342,7 +342,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           time: 5000,
         });
       } catch (error) {
-        if (error.extensions.code === 'UNAUTHENTICATED') {
+        if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
           notifier.show({
             message: 'You don\'t have permissions to do this. Please contact administrator.',
             type: 'confirm',
@@ -379,7 +379,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           time: 5000,
         });
       } catch (error) {
-        if (error.extensions.code === 'UNAUTHENTICATED') {
+        if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
           notifier.show({
             message: 'You don\'t have permissions to do this. Please contact administrator.',
             type: 'confirm',

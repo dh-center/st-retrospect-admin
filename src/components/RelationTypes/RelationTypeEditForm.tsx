@@ -17,6 +17,7 @@ import Spinner from 'react-bootstrap/cjs/Spinner';
 import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
 import { RelationTypeEditForm_originalRelationType } from './__generated__/RelationTypeEditForm_originalRelationType.graphql';
 import { Form } from 'react-bootstrap';
+import authController from '../../controllers/authController';
 
 /**
  * Mutation for save edited relation type
@@ -86,8 +87,24 @@ export function RelationTypeEditForm(props: Props): React.ReactElement {
       });
       setLoadingStatus(false);
       pushLocationBack();
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
+      if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
+        notifier.show({
+          message: 'You don\'t have permissions to do this. Please contact administrator.',
+          type: 'confirm',
+          style: 'error',
+          okText: 'Logout',
+          okHandler: () => {
+            authController.logout();
+            history.push(`/login`);
+          },
+          cancelText: 'Ok',
+          time: 5000,
+        });
+
+        return;
+      }
       notifier.show({
         message: 'Something went wrong',
         style: 'error',

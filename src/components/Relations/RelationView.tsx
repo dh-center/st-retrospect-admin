@@ -17,6 +17,7 @@ import personsFullName from '../../utils/personsFullname';
 import LabeledText from '../utils/LabeledText';
 import { Redirect } from 'react-router-dom';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
+import authController from '../../controllers/authController';
 
 /**
  * Removes relation by its id
@@ -62,8 +63,24 @@ function RelationView(): React.ReactElement {
           await remove(id);
           setDeletingStatus(false);
           history.push('/relations');
-        } catch {
+        } catch (error) {
           setDeletingStatus(false);
+          if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
+            notifier.show({
+              message: 'You don\'t have permissions to do this. Please contact administrator.',
+              type: 'confirm',
+              style: 'error',
+              okText: 'Logout',
+              okHandler: () => {
+                authController.logout();
+                history.push(`/login`);
+              },
+              cancelText: 'Ok',
+              time: 5000,
+            });
+
+            return;
+          }
           notifier.show({
             message: 'Something went wrong',
             style: 'error',
