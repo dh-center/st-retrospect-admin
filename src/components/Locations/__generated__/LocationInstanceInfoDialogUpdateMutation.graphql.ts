@@ -8,6 +8,7 @@ export type UpdateLocationInstanceInput = {
     id: string;
     name: string;
     description: string;
+    locationStyleId?: string | null;
     wikiLink?: string | null;
     photoLinks?: Array<string> | null;
     mainPhotoLink?: string | null;

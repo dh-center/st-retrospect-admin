@@ -11,6 +11,7 @@ export type UpdateQuestInput = {
     photo?: string | null;
     type?: TaskTypes | null;
     minLevel?: number | null;
+    earnedExp?: number | null;
     data?: EditorDataInput | null;
 };
 export type EditorDataInput = {

@@ -28,6 +28,7 @@ export function generateQuestInput(): CreateQuestInput {
     description: '',
     type: 'QUIZ',
     minLevel: 0,
+    earnedExp: 0,
     data: {
       time: null,
       version: null,
@@ -167,6 +168,17 @@ export default function QuestCreate(): React.ReactElement {
           required
           type='number'
           value={input.minLevel.toString()}
+        />
+        <Input
+          label='Earned experience'
+          min={0}
+          onChange={value => setInput({
+            ...input,
+            earnedExp: Number(value),
+          })}
+          required
+          type='number'
+          value={input.earnedExp.toString()}
         />
         <Form.Group>
           <h2>Route content</h2>

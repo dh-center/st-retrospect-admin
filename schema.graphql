@@ -257,6 +257,9 @@ input CreateQuestInput {
   """The minimum level required by the user to complete this quest"""
   minLevel: Int!
 
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int!
+
   """Quest data"""
   data: EditorDataInput!
 }
@@ -884,6 +887,9 @@ type Quest implements Node {
   """The minimum level required by the user to complete this quest"""
   minLevel: Int!
 
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int!
+
   """Quest progress states (passed, available, blocked)"""
   questProgressState: QuestUserProgressStates!
 }
@@ -1251,6 +1257,9 @@ input UpdateQuestInput {
 
   """The minimum level required by the user to complete this quest"""
   minLevel: Int
+
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int
 
   """Quest data"""
   data: EditorDataInput
