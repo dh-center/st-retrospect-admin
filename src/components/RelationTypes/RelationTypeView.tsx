@@ -16,6 +16,7 @@ import LabeledText from '../utils/LabeledText';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Spinner } from 'react-bootstrap';
 import { RelationTypeViewQuery } from './__generated__/RelationTypeViewQuery.graphql';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Removes relation type by its id
@@ -61,13 +62,9 @@ function RelationTypeView(): React.ReactElement {
           await remove(id);
           setDeletingStatus(false);
           history.push('/relation-types');
-        } catch {
+        } catch (error) {
           setDeletingStatus(false);
-          notifier.show({
-            message: 'Something went wrong',
-            style: 'error',
-            time: 5000,
-          });
+          handleApiError(error);
         }
       },
     });

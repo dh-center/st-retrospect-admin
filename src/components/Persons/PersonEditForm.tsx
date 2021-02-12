@@ -22,6 +22,7 @@ import Textarea from '../utils/Textarea';
 import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
 import ImageUploader from '../utils/ImageUploader';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Executes update mutation for person
@@ -92,13 +93,9 @@ function PersonEditForm(props: Props): React.ReactElement {
         });
         setLoadingStatus(false);
         pushLocationBack();
-      } catch {
+      } catch (error) {
         setLoadingStatus(false);
-        notifier.show({
-          message: 'Something went wrong',
-          style: 'error',
-          time: 5000,
-        });
+        handleApiError(error);
       }
     }
   };

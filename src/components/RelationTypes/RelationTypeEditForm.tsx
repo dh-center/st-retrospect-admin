@@ -17,6 +17,7 @@ import Spinner from 'react-bootstrap/cjs/Spinner';
 import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
 import { RelationTypeEditForm_originalRelationType } from './__generated__/RelationTypeEditForm_originalRelationType.graphql';
 import { Form } from 'react-bootstrap';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Mutation for save edited relation type
@@ -86,13 +87,9 @@ export function RelationTypeEditForm(props: Props): React.ReactElement {
       });
       setLoadingStatus(false);
       pushLocationBack();
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+      handleApiError(error);
     }
   };
 

@@ -18,6 +18,7 @@ import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
 import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
 import ImageUploader from '../utils/ImageUploader';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Generates input data for creating new person
@@ -87,13 +88,9 @@ export default function PersonCreate(): React.ReactElement {
       });
       setLoadingStatus(false);
       history.push('/persons');
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+      handleApiError(error);
     }
   };
 

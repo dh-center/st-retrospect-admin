@@ -20,6 +20,7 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 import { isLatitudeValid, isLongitudeValid } from '../../utils/checkCoordinate';
 import throttle from 'lodash.throttle';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Updates information about location
@@ -104,13 +105,9 @@ function LocationEditForm(props: Props): React.ReactElement {
       });
       setLoadingStatus(false);
       history.push(`/locations/${props.originalLocation.id}`);
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+      handleApiError(error);
     }
   };
 

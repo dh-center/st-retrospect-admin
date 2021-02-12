@@ -20,6 +20,7 @@ import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypes
 import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
 import { RelationEditForm_originalRelation } from './__generated__/RelationEditForm_originalRelation.graphql';
 import Input from '../utils/Input';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Mutation for save edited relation
@@ -101,13 +102,9 @@ function RelationEditForm(props: Props): React.ReactElement {
         });
         setLoadingStatus(false);
         pushLocationBack();
-      } catch {
+      } catch (error) {
         setLoadingStatus(false);
-        notifier.show({
-          message: 'Something went wrong',
-          style: 'error',
-          time: 5000,
-        });
+        handleApiError(error);
       }
     }
   };

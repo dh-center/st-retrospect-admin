@@ -16,6 +16,7 @@ import LabeledText from '../utils/LabeledText';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Spinner } from 'react-bootstrap';
 import { QuestViewQuery } from './__generated__/QuestViewQuery.graphql';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Removes quest by its id
@@ -61,13 +62,9 @@ export default function QuestView(): ReactElement {
           await remove(id);
           setDeletingStatus(false);
           history.push('/quests');
-        } catch {
+        } catch (error) {
           setDeletingStatus(false);
-          notifier.show({
-            message: 'Something went wrong',
-            style: 'error',
-            time: 5000,
-          });
+          handleApiError(error);
         }
       },
     });

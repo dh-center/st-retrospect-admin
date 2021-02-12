@@ -14,6 +14,7 @@ import { Form, Spinner } from 'react-bootstrap';
 import Input from '../utils/Input';
 import Button from 'react-bootstrap/Button';
 import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Generates input data for creating new relation type
@@ -74,13 +75,9 @@ export default function RelationTypeCreate(): React.ReactElement {
       });
       setLoadingStatus(false);
       history.push('/relation-types');
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+      handleApiError(error);
     }
   };
 

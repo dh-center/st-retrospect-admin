@@ -17,6 +17,7 @@ import Textarea from '../utils/Textarea';
 import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 import EditorJs from 'react-editor-js';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Generates input data for creating new quest
@@ -84,13 +85,9 @@ export default function QuestCreate(): React.ReactElement {
       });
       setLoadingStatus(false);
       history.push('/quests');
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+      handleApiError(error);
     }
   };
 

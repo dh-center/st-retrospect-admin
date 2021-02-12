@@ -38,6 +38,7 @@ import {
   RemoveArchitectInput
 } from './__generated__/LocationInstanceInfoDialogRemoveArchitectMutation.graphql';
 import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Union type for inputs for creating and updating location instances
@@ -338,12 +339,8 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           style: 'success',
           time: 5000,
         });
-      } catch {
-        notifier.show({
-          message: 'Something went wrong',
-          style: 'error',
-          time: 5000,
-        });
+      } catch (error) {
+        handleApiError(error);
       }
     } else {
       try {
@@ -359,12 +356,8 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           style: 'success',
           time: 5000,
         });
-      } catch {
-        notifier.show({
-          message: 'Something went wrong',
-          style: 'error',
-          time: 5000,
-        });
+      } catch (error) {
+        handleApiError(error);
       }
     }
 

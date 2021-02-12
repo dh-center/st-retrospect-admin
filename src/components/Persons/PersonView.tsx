@@ -18,6 +18,7 @@ import LabeledText from '../utils/LabeledText';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Removes person by its id
@@ -59,13 +60,9 @@ function PersonView(): React.ReactElement {
           await remove(id);
           setDeletingStatus(false);
           history.push('/persons');
-        } catch {
+        } catch (error) {
           setDeletingStatus(false);
-          notifier.show({
-            message: 'Something went wrong',
-            style: 'error',
-            time: 5000,
-          });
+          handleApiError(error);
         }
       },
     });

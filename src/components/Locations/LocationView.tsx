@@ -10,6 +10,7 @@ import { Button } from 'react-bootstrap';
 import ContentWrapper from '../ContentWrapper';
 import notifier from 'codex-notifier';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Page with location info to view
@@ -27,12 +28,8 @@ function LocationView(): React.ReactElement {
         time: 5000,
       });
       history.push('/locations');
-    } catch {
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+    } catch (error) {
+      handleApiError(error);
     }
   };
 

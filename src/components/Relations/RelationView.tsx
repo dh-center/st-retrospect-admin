@@ -17,6 +17,7 @@ import personsFullName from '../../utils/personsFullname';
 import LabeledText from '../utils/LabeledText';
 import { Redirect } from 'react-router-dom';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Removes relation by its id
@@ -62,13 +63,9 @@ function RelationView(): React.ReactElement {
           await remove(id);
           setDeletingStatus(false);
           history.push('/relations');
-        } catch {
+        } catch (error) {
           setDeletingStatus(false);
-          notifier.show({
-            message: 'Something went wrong',
-            style: 'error',
-            time: 5000,
-          });
+          handleApiError(error);
         }
       },
     });

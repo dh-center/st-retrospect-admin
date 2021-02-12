@@ -20,6 +20,7 @@ import Textarea from '../utils/Textarea';
 import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Mutation for save edited quest
@@ -86,13 +87,9 @@ export default function QuestEdit(): ReactElement {
       });
       setLoadingStatus(false);
       pushLocationBack();
-    } catch {
+    } catch (error) {
       setLoadingStatus(false);
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+      handleApiError(error);
     }
   };
 
