@@ -38,8 +38,7 @@ import {
   RemoveArchitectInput
 } from './__generated__/LocationInstanceInfoDialogRemoveArchitectMutation.graphql';
 import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
-import authController from '../../controllers/authController';
-import { useHistory } from 'react-router';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Union type for inputs for creating and updating location instances
@@ -280,7 +279,6 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
   const [isEditing, setIsEditing] = useState(!props.locationInstance);
   const [input, setInput] = useState<LocationInstanceInputs>(instanceToInput(props.locationInstance, locationId));
   const [architectsInput, setArchitectsInput] = useState<(string | null)[]>(architectsToInput(props.locationInstance));
-  const history = useHistory();
 
   useEffect(() => {
     setInput(instanceToInput(props.locationInstance, locationId));
@@ -342,27 +340,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           time: 5000,
         });
       } catch (error) {
-        if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
-          notifier.show({
-            message: 'You don\'t have permissions to do this. Please contact administrator.',
-            type: 'confirm',
-            style: 'error',
-            okText: 'Logout',
-            okHandler: () => {
-              authController.logout();
-              history.push(`/login`);
-            },
-            cancelText: 'Ok',
-            time: 5000,
-          });
-
-          return;
-        }
-        notifier.show({
-          message: 'Something went wrong',
-          style: 'error',
-          time: 5000,
-        });
+        handleApiError(error);
       }
     } else {
       try {
@@ -379,27 +357,7 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
           time: 5000,
         });
       } catch (error) {
-        if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
-          notifier.show({
-            message: 'You don\'t have permissions to do this. Please contact administrator.',
-            type: 'confirm',
-            style: 'error',
-            okText: 'Logout',
-            okHandler: () => {
-              authController.logout();
-              history.push(`/login`);
-            },
-            cancelText: 'Ok',
-            time: 5000,
-          });
-
-          return;
-        }
-        notifier.show({
-          message: 'Something went wrong',
-          style: 'error',
-          time: 5000,
-        });
+        handleApiError(error);
       }
     }
 

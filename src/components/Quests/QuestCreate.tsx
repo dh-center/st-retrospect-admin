@@ -17,7 +17,7 @@ import Textarea from '../utils/Textarea';
 import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 import EditorJs from 'react-editor-js';
-import authController from '../../controllers/authController';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Generates input data for creating new quest
@@ -87,27 +87,7 @@ export default function QuestCreate(): React.ReactElement {
       history.push('/quests');
     } catch (error) {
       setLoadingStatus(false);
-      if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
-        notifier.show({
-          message: 'You don\'t have permissions to do this. Please contact administrator.',
-          type: 'confirm',
-          style: 'error',
-          okText: 'Logout',
-          okHandler: () => {
-            authController.logout();
-            history.push(`/login`);
-          },
-          cancelText: 'Ok',
-          time: 5000,
-        });
-
-        return;
-      }
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+      handleApiError(error);
     }
   };
 

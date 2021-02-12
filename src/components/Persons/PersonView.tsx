@@ -18,7 +18,7 @@ import LabeledText from '../utils/LabeledText';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
-import authController from '../../controllers/authController';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Removes person by its id
@@ -62,27 +62,7 @@ function PersonView(): React.ReactElement {
           history.push('/persons');
         } catch (error) {
           setDeletingStatus(false);
-          if (error.extensions.code === 'UNAUTHENTICATED') {
-            notifier.show({
-              message: 'You don\'t have permissions to do this. Please contact administrator.',
-              type: 'confirm',
-              style: 'error',
-              okText: 'Logout',
-              okHandler: () => {
-                authController.logout();
-                history.push(`/login`);
-              },
-              cancelText: 'Ok',
-              time: 5000,
-            });
-
-            return;
-          }
-          notifier.show({
-            message: 'Something went wrong',
-            style: 'error',
-            time: 5000,
-          });
+          handleApiError(error);
         }
       },
     });

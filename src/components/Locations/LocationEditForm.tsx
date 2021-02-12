@@ -20,7 +20,7 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 import { isLatitudeValid, isLongitudeValid } from '../../utils/checkCoordinate';
 import throttle from 'lodash.throttle';
-import authController from '../../controllers/authController';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Updates information about location
@@ -107,27 +107,7 @@ function LocationEditForm(props: Props): React.ReactElement {
       history.push(`/locations/${props.originalLocation.id}`);
     } catch (error) {
       setLoadingStatus(false);
-      if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
-        notifier.show({
-          message: 'You don\'t have permissions to do this. Please contact administrator.',
-          type: 'confirm',
-          style: 'error',
-          okText: 'Logout',
-          okHandler: () => {
-            authController.logout();
-            history.push(`/login`);
-          },
-          cancelText: 'Ok',
-          time: 5000,
-        });
-
-        return;
-      }
-      notifier.show({
-        message: 'Something went wrong',
-        style: 'error',
-        time: 5000,
-      });
+      handleApiError(error);
     }
   };
 

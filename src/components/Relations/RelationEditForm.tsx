@@ -20,7 +20,7 @@ import { LabeledRelationTypesCustomSelect } from '../CustomSelects/RelationTypes
 import { LabeledLocationInstancesCustomSelect } from '../CustomSelects/LocationInstancesCustomSelect';
 import { RelationEditForm_originalRelation } from './__generated__/RelationEditForm_originalRelation.graphql';
 import Input from '../utils/Input';
-import authController from '../../controllers/authController';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Mutation for save edited relation
@@ -104,27 +104,7 @@ function RelationEditForm(props: Props): React.ReactElement {
         pushLocationBack();
       } catch (error) {
         setLoadingStatus(false);
-        if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
-          notifier.show({
-            message: 'You don\'t have permissions to do this. Please contact administrator.',
-            type: 'confirm',
-            style: 'error',
-            okText: 'Logout',
-            okHandler: () => {
-              authController.logout();
-              history.push(`/login`);
-            },
-            cancelText: 'Ok',
-            time: 5000,
-          });
-
-          return;
-        }
-        notifier.show({
-          message: 'Something went wrong',
-          style: 'error',
-          time: 5000,
-        });
+        handleApiError(error);
       }
     }
   };

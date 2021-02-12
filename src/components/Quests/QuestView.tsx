@@ -16,7 +16,7 @@ import LabeledText from '../utils/LabeledText';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Spinner } from 'react-bootstrap';
 import { QuestViewQuery } from './__generated__/QuestViewQuery.graphql';
-import authController from '../../controllers/authController';
+import handleApiError from '../../utils/handleApiError';
 
 /**
  * Removes quest by its id
@@ -64,27 +64,7 @@ export default function QuestView(): ReactElement {
           history.push('/quests');
         } catch (error) {
           setDeletingStatus(false);
-          if (error.source.errors[0].extensions.code === 'UNAUTHENTICATED') {
-            notifier.show({
-              message: 'You don\'t have permissions to do this. Please contact administrator.',
-              type: 'confirm',
-              style: 'error',
-              okText: 'Logout',
-              okHandler: () => {
-                authController.logout();
-                history.push(`/login`);
-              },
-              cancelText: 'Ok',
-              time: 5000,
-            });
-
-            return;
-          }
-          notifier.show({
-            message: 'Something went wrong',
-            style: 'error',
-            time: 5000,
-          });
+          handleApiError(error);
         }
       },
     });
