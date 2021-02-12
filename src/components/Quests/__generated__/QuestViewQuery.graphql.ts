@@ -12,6 +12,7 @@ export type QuestViewQueryResponse = {
         readonly name: string;
         readonly description: string | null;
         readonly minLevel: number;
+        readonly earnedExp: number;
     } | null;
 };
 export type QuestViewQuery = {
@@ -30,6 +31,7 @@ query QuestViewQuery(
     name
     description
     minLevel
+    earnedExp
   }
 }
 */
@@ -84,6 +86,13 @@ v1 = [
         "kind": "ScalarField",
         "name": "minLevel",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "earnedExp",
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -107,14 +116,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "c844ce4740d2da9c9e243d7e728611c6",
+    "cacheID": "b2a4599921e361b2f1d9bc3f234f4dec",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    minLevel\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    minLevel\n    earnedExp\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '710fb30becfeb8030ef15ddd9a5d81b8';
+(node as any).hash = '9c6140b057e2954e86f8643f769c324d';
 export default node;

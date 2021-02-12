@@ -10,6 +10,7 @@ export type CreateQuestInput = {
     photo?: string | null;
     type: TaskTypes;
     minLevel: number;
+    earnedExp: number;
     data: EditorDataInput;
 };
 export type EditorDataInput = {

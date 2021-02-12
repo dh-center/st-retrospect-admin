@@ -104,6 +104,7 @@ export default function QuestEdit(): ReactElement {
             description
             type
             minLevel
+            earnedExp
             data {
               time
               version
@@ -213,6 +214,18 @@ export default function QuestEdit(): ReactElement {
               required
               type='number'
               value={input?.minLevel !== undefined ? Number(input?.minLevel).toString() : props.quest.minLevel.toString()}
+            />
+            <Input
+              label='Earned experience'
+              min={0}
+              onChange={value => setInput({
+                ...input,
+                id,
+                earnedExp: Number(value),
+              })}
+              required
+              type='number'
+              value={input?.earnedExp !== undefined ? Number(input?.earnedExp).toString() : props.quest.earnedExp.toString()}
             />
             <Form.Group>
               <h2>Route content</h2>

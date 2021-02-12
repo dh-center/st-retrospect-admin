@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CreateLocationInstanceInput = {
     name: string;
     description: string;
+    locationStyleId?: string | null;
     wikiLink?: string | null;
     photoLinks?: Array<string> | null;
     mainPhotoLink?: string | null;
