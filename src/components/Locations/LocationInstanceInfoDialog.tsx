@@ -175,7 +175,14 @@ function createArchitect(input: AddArchitectInput): Promise<LocationInstanceInfo
       mutation LocationInstanceInfoDialogAddArchitectMutation($input: AddArchitectInput!) {
         locationInstances {
           addArchitect(input: $input) {
-            recordId
+            record {
+              locationInstance {
+                id
+                architects {
+                  id
+                }
+              }
+            }
           }
         }
       }
