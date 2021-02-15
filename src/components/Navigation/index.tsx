@@ -30,6 +30,11 @@ export function Navigation(props: NavigationProps): ReactElement {
     <Navbar className='flex-shrink-0'>
       <Nav>
         <Nav.Item>
+          <Nav.Link as={Link} to='/users'>
+            Users
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
           <Nav.Link as={Link} to='/persons'>
             Persons
           </Nav.Link>

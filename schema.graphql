@@ -1,3 +1,6 @@
+"""Directive for applying default values to nullable fields"""
+directive @default(value: String!) on FIELD_DEFINITION
+
 """Converts MongoDB ObjectId value to the Global Unique ID"""
 directive @toGlobalId(type: String!) on FIELD_DEFINITION
 
@@ -602,6 +605,7 @@ type Mutation {
   relation: RelationMutations!
   relationType: RelationTypeMutations!
   quest: QuestMutations!
+  user: UserMutations!
 }
 
 """An object with a Globally Unique ID"""
@@ -832,6 +836,25 @@ type Query {
 
   """Get info about user"""
   me: User!
+
+  """Returns connection with all users"""
+  users(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): UserConnection!
 
   """Get specific Quest"""
   quest(
@@ -1341,5 +1364,48 @@ type User implements Node {
 
   """User last name"""
   lastName: String
+
+  """Quests that user complete"""
+  completedQuests: [Quest!]!
+
+  """User experience"""
+  exp: Int!
+
+  """User level"""
+  level: Int!
+}
+
+type UserCompleteQuestPayload {
+  """User id"""
+  recordId: GlobalId!
+
+  """User completed quest"""
+  record: User!
+}
+
+"""Model for representing list of persons"""
+type UserConnection {
+  """List of persons edges"""
+  edges: [UserEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific person in connection"""
+type UserEdge {
+  """Cursor of this person"""
+  cursor: Cursor!
+
+  """Person info"""
+  node: User!
+}
+
+type UserMutations {
+  """Complete quest"""
+  completeQuest(questId: GlobalId!): UserCompleteQuestPayload!
 }
 

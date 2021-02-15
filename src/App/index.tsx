@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../components/Authentication/Login';
 import PrivateRoute from '../components/PrivateRoute';
 import PersonsPage from '../components/Persons';
+import UsersPage from '../components/Users';
 import QuestsPage from '../components/Quests';
 import RelationsPage from '../components/Relations';
 import RelationTypesPage from '../components/RelationTypes';
@@ -32,6 +33,9 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
       <Navigation user={props}/>
 
       <Switch>
+        <PrivateRoute path='/users'>
+          <UsersPage/>
+        </PrivateRoute>
 
         <PrivateRoute path='/persons'>
           <PersonsPage/>
