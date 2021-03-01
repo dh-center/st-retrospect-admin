@@ -99,7 +99,6 @@ function App(): ReactElement {
 
       </Switch>
     </div>
-
   );
 }
 

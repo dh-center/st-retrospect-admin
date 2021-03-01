@@ -1,9 +1,9 @@
 import React, { FormEvent, ReactElement, useState } from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
-import authController from '../../controllers/authController';
 import notifier from 'codex-notifier';
 import { Button, Form } from 'react-bootstrap';
 import { NavLink, withRouter } from 'react-router-dom';
+import { useAuthContext } from '../../controllers/authController';
 
 /**
  * Registration page
@@ -14,6 +14,7 @@ function Registration(props: RouteComponentProps): ReactElement {
   const [email, setEmail] = useState('');
   const [firstPassword, setFirstPassword] = useState('');
   const [secondPassword, setSecondPassword] = useState('');
+  const authContext = useAuthContext();
 
   /**
    * Performs user registration
@@ -31,7 +32,7 @@ function Registration(props: RouteComponentProps): ReactElement {
 
       return;
     }
-    const response = await authController.signUp(email, firstPassword);
+    const response = await authContext.signUp(email, firstPassword);
 
     if (response.status !== 201) {
       notifier.show({
@@ -52,7 +53,7 @@ function Registration(props: RouteComponentProps): ReactElement {
 
   return (
     <div className='d-flex justify-content-center flex-column align-items-center h-100'>
-      {authController.isAuthenticated() && <Redirect to='/'/>}
+      {authContext.isAuthenticated() && <Redirect to='/'/>}
       <Form
         className='mb-2'
         onSubmit={handleSignUp}

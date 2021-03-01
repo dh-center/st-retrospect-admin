@@ -1,5 +1,5 @@
 import React, { FormEvent, ReactElement, useState } from 'react';
-import authController from '../../controllers/authController';
+import { useAuthContext } from '../../controllers/authController';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Form, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
@@ -13,6 +13,7 @@ import notifier from 'codex-notifier';
 function Login(props: RouteComponentProps): ReactElement {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const authContext = useAuthContext();
 
   /**
    * Performs user login
@@ -21,7 +22,7 @@ function Login(props: RouteComponentProps): ReactElement {
    */
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const response = await authController.login(email, password);
+    const response = await authContext.login(email, password);
 
     if (response.status !== 200) {
       notifier.show({
@@ -37,7 +38,7 @@ function Login(props: RouteComponentProps): ReactElement {
 
   return (
     <div className='d-flex justify-content-center flex-column align-items-center h-100'>
-      {authController.isAuthenticated() && <Redirect to='/'/>}
+      {authContext.isAuthenticated() && <Redirect to='/'/>}
       <Form
         className='mb-2'
         onSubmit={handleLogin}

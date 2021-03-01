@@ -1373,6 +1373,9 @@ type User implements Node {
 
   """User level"""
   level: Int!
+
+  """Array of user permission"""
+  permissions: [String!]!
 }
 
 type UserCompleteQuestPayload {
