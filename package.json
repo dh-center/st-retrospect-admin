@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@editorjs/delimiter": "^1.2.0",
-    "@editorjs/editorjs": "^2.19.0",
+    "@editorjs/editorjs": "2.19.2-rc.1",
     "@editorjs/header": "^2.6.1",
     "@editorjs/image": "^2.6.0",
     "@editorjs/list": "^1.6.1",
@@ -52,7 +52,7 @@
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.2.4",
-    "react-editor-js": "^1.7.0",
+    "react-editor-js": "^1.9.0",
     "react-image": "^4.0.3",
     "react-relay": "^10.1.0",
     "react-router-bootstrap": "^0.25.0",

@@ -1,3 +1,6 @@
+"""Directive for applying default values to nullable fields"""
+directive @default(value: String!) on FIELD_DEFINITION
+
 """Converts MongoDB ObjectId value to the Global Unique ID"""
 directive @toGlobalId(type: String!) on FIELD_DEFINITION
 
@@ -262,6 +265,9 @@ input CreateQuestInput {
 
   """Quest data"""
   data: EditorDataInput!
+
+  """Information about quest authors"""
+  credits: EditorDataInput!
 }
 
 type CreateQuestPayload {
@@ -602,6 +608,7 @@ type Mutation {
   relation: RelationMutations!
   relationType: RelationTypeMutations!
   quest: QuestMutations!
+  user: UserMutations!
 }
 
 """An object with a Globally Unique ID"""
@@ -880,6 +887,9 @@ type Quest implements Node {
 
   """Quest data"""
   data: EditorData
+
+  """Information about quest authors"""
+  credits: EditorData
 
   """Quest rewards"""
   rewards: [JSON!]!
@@ -1263,6 +1273,9 @@ input UpdateQuestInput {
 
   """Quest data"""
   data: EditorDataInput
+
+  """Information about quest authors"""
+  credits: EditorDataInput
 }
 
 type UpdateQuestPayload {
@@ -1341,5 +1354,27 @@ type User implements Node {
 
   """User last name"""
   lastName: String
+
+  """Quests that user complete"""
+  completedQuests: [Quest!]!
+
+  """User experience"""
+  exp: Int!
+
+  """User level"""
+  level: Int!
+}
+
+type UserCompleteQuestPayload {
+  """User id"""
+  recordId: GlobalId!
+
+  """User completed quest"""
+  record: User!
+}
+
+type UserMutations {
+  """Complete quest"""
+  completeQuest(questId: GlobalId!): UserCompleteQuestPayload!
 }
 

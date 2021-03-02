@@ -21,6 +21,7 @@ import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 import handleApiError from '../../utils/handleApiError';
+import editorjsStyles from '../../editorjs-plugins/EditorJs.module.css';
 
 /**
  * Mutation for save edited quest
@@ -106,6 +107,11 @@ export default function QuestEdit(): ReactElement {
             minLevel
             earnedExp
             data {
+              time
+              version
+              blocks
+            }
+            credits {
               time
               version
               blocks
@@ -229,11 +235,7 @@ export default function QuestEdit(): ReactElement {
             />
             <Form.Group>
               <h2>Route content</h2>
-              <div style={{
-                borderRadius: '8px',
-                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
-                padding: '.5em 0',
-              }}>
+              <div className={editorjsStyles.editorjsWrapper}>
                 <EditorJs
                   data={{
                     blocks: (input?.data?.blocks || props.quest.data?.blocks.concat() || []) as OutputBlockData[],
@@ -254,6 +256,33 @@ export default function QuestEdit(): ReactElement {
                     }
                   }}
                   placeholder='Click here to write an awesome route!'
+                  tools={EDITOR_JS_TOOLS}
+                />
+              </div>
+            </Form.Group>
+            <Form.Group>
+              <h2>Credits</h2>
+              <div className={editorjsStyles.editorjsWrapper}>
+                <EditorJs
+                  data={{
+                    blocks: (input?.credits?.blocks || props.quest.credits?.blocks.concat() || []) as OutputBlockData[],
+                    time: input?.credits?.time || props.quest.credits?.time || undefined,
+                    version: input?.credits?.version || props.quest.credits?.version || undefined,
+                  }}
+                  onChange={(api: API, editorData?: OutputData) => {
+                    if (editorData) {
+                      setInput({
+                        ...input,
+                        id,
+                        credits: {
+                          time: null,
+                          version: '',
+                          ...editorData,
+                        },
+                      });
+                    }
+                  }}
+                  placeholder='Click here to write information about quest authors!'
                   tools={EDITOR_JS_TOOLS}
                 />
               </div>
