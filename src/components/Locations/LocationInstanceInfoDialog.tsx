@@ -7,7 +7,7 @@ import graphql from 'babel-plugin-relay/macro';
 import { LocationInstanceInfoDialog_locationInstance } from './__generated__/LocationInstanceInfoDialog_locationInstance.graphql';
 import ContentWrapper from '../ContentWrapper';
 import commitMutation from 'relay-commit-mutation-promise';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import type {
   LocationInstanceInfoDialogUpdateMutation,
   LocationInstanceInfoDialogUpdateMutationResponse,

@@ -11,7 +11,7 @@ import { LocationEditForm_originalLocation } from './__generated__/LocationEditF
 import { useHistory } from 'react-router-dom';
 import notifier from 'codex-notifier';
 import commitMutation from 'relay-commit-mutation-promise';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import {
   LocationEditFormMutation,
   LocationEditFormMutationResponse,

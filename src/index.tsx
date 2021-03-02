@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { AuthContextProvider } from './controllers/authController';
 
 if (process.env.REACT_APP_MAPBOX_ACCESS_TOKEN) {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -25,7 +26,9 @@ if (process.env.REACT_APP_SENTRY_DNS) {
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <AuthContextProvider>
+      <App />
+    </AuthContextProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );

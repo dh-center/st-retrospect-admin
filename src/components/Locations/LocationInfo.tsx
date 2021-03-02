@@ -3,7 +3,7 @@ import { createFragmentContainer } from 'react-relay';
 import commitMutation from 'relay-commit-mutation-promise';
 import graphql from 'babel-plugin-relay/macro';
 import { LocationInfo_location } from './__generated__/LocationInfo_location.graphql';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import LocationInstancesTabs from './LocationInstancesList';
 import {
   LocationInfoDeleteMutation,

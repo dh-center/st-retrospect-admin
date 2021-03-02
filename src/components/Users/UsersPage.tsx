@@ -1,38 +1,38 @@
 import React, { ReactElement } from 'react';
 import { QueryRenderer } from 'react-relay';
-import graphql from 'babel-plugin-relay/macro';
-import { LocationsPageQuery } from './__generated__/LocationsPageQuery.graphql';
+import { UsersPageQuery } from './__generated__/UsersPageQuery.graphql';
 import environment from '../../appEnv';
+import graphql from 'babel-plugin-relay/macro';
 import { ENTITIES_PER_PAGE } from '../../constants';
-import LocationsList from './LocationsList';
+import UsersList from './UsersList';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
- * Functional component for Locations view
+ * Page for displaying Users
  */
-export default function LocationsPage(): ReactElement {
+export default function UsersPage(): ReactElement {
   return (
-    <QueryRenderer<LocationsPageQuery>
+    <QueryRenderer<UsersPageQuery>
       environment={environment}
       query={graphql`
-        query LocationsPageQuery (
+        query UsersPageQuery (
           $first: Int,
           $after: Cursor
         ) {
-          ...LocationsList_entityConnection @arguments(first: $first, after: $after)
+          ...UsersList_entityConnection @arguments(first: $first, after: $after)
         }
-            `}
+        `}
       render={({ error, props }): React.ReactNode => {
         if (error) {
           return <div>Error!</div>;
         }
         if (!props) {
           return <LoadingPlaceholder
-            alt='Loading locations...'
+            alt='Loading users...'
           />;
         }
 
-        return <LocationsList entityConnection={props} entityName='locations' />;
+        return <UsersList entityConnection={props} entityName='Users'/>;
       }}
       variables={{
         first: ENTITIES_PER_PAGE,

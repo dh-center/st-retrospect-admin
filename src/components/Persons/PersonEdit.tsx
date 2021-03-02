@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useParams } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import { PersonEditQuery } from './__generated__/PersonEditQuery.graphql';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';

@@ -5,7 +5,7 @@ import ContentWrapper from '../ContentWrapper';
 import Button from 'react-bootstrap/Button';
 import { Form, Spinner } from 'react-bootstrap';
 import commitMutation from 'relay-commit-mutation-promise';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import {
   CreatePersonInput,
   PersonCreateMutation,

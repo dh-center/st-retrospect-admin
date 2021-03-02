@@ -23,6 +23,7 @@ query AppQuery {
 fragment Navigation_user on Query {
   me {
     username
+    permissions
     id
   }
 }
@@ -69,21 +70,40 @@ const node: ConcreteRequest = {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "permissions",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
         ],
         "storageKey": null
+      },
+      {
+        "kind": "ClientExtension",
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "accessToken",
+            "storageKey": null
+          }
+        ]
       }
     ]
   },
   "params": {
-    "cacheID": "ea893be5a0f437352570af5747f93ebd",
+    "cacheID": "361b15bf290f570a348812314099525c",
     "id": null,
     "metadata": {},
     "name": "AppQuery",
     "operationKind": "query",
-    "text": "query AppQuery {\n  ...Navigation_user\n}\n\nfragment Navigation_user on Query {\n  me {\n    username\n    id\n  }\n}\n"
+    "text": "query AppQuery {\n  ...Navigation_user\n}\n\nfragment Navigation_user on Query {\n  me {\n    username\n    permissions\n    id\n  }\n}\n"
   }
 };
 (node as any).hash = '91831da7863f3f1020fb36d468f1e00d';

@@ -4,16 +4,18 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../components/Authentication/Login';
 import PrivateRoute from '../components/PrivateRoute';
 import PersonsPage from '../components/Persons';
+import UsersPage from '../components/Users';
 import QuestsPage from '../components/Quests';
 import RelationsPage from '../components/Relations';
 import RelationTypesPage from '../components/RelationTypes';
 import { QueryRenderer } from 'react-relay';
-import environment from '../relay-env';
+import relayEnv, { appEnv } from '../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import { AppQuery, AppQueryResponse } from './__generated__/AppQuery.graphql';
 import VisualizationPage from '../components/Visualization';
 import LocationsPage from '../components/Locations';
 import Registration from '../components/Authentication/Registration';
+import { useAuthContext } from '../controllers/authController';
 
 const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryResponse | null }): React.ReactNode => {
   if (error) {
@@ -32,6 +34,9 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
       <Navigation user={props}/>
 
       <Switch>
+        <PrivateRoute path='/users'>
+          <UsersPage/>
+        </PrivateRoute>
 
         <PrivateRoute path='/persons'>
           <PersonsPage/>
@@ -65,6 +70,10 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
  * Main component of the application
  */
 function App(): ReactElement {
+  const authContext = useAuthContext();
+
+  appEnv.bindAuthController(authContext);
+
   return (
     <div className='h-100 d-flex flex-column'>
       <Switch>
@@ -83,7 +92,7 @@ function App(): ReactElement {
 
         <PrivateRoute path='/'>
           <QueryRenderer<AppQuery>
-            environment={environment}
+            environment={relayEnv}
             query={graphql`
                 query AppQuery {
                     ...Navigation_user
@@ -95,7 +104,6 @@ function App(): ReactElement {
 
       </Switch>
     </div>
-
   );
 }
 

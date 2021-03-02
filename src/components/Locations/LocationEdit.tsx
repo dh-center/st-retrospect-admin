@@ -1,7 +1,7 @@
 import React from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import { QueryRenderer } from 'react-relay';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import { useParams } from 'react-router';
 import { LocationEditQuery } from './__generated__/LocationEditQuery.graphql';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';

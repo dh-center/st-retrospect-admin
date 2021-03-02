@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Switch, Route, Redirect } from 'react-router-dom';
 import { QueryRenderer } from 'react-relay';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import { VisualizationPageQuery, VisualizationPageQueryResponse } from './__generated__/VisualizationPageQuery.graphql';
 import PersonsBirthDatesBarplot from './PersonsBirthDatesBarplot';
