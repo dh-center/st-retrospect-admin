@@ -1,10 +1,8 @@
+import React, { PropsWithChildren, useState } from 'react';
+
 /**
  * Represents response of the auth server in case of success
  */
-import React, { PropsWithChildren, useEffect, useState } from 'react';
-import {commitLocalUpdate} from "react-relay";
-import environment from "../relay-env";
-
 interface AuthServerResponse {
   data: {
     /**
@@ -19,24 +17,34 @@ interface AuthServerResponse {
   };
 }
 
+/**
+ * State of the user's auth
+ */
 interface AuthState {
+  /**
+   * Access token to accessing API
+   */
   accessToken?: string | null;
-  refreshToken?: string | null;
-}
 
-function getInitialAuthState(): AuthState {
-  return {
-    accessToken: window.localStorage.getItem('access-token'),
-    refreshToken: window.localStorage.getItem('refresh-token'),
-  };
+  /**
+   * Refresh token for updating token pair
+   */
+  refreshToken?: string | null;
 }
 
 /**
  * Controller for auth actions
  */
-class AuthController {
+export class AuthController {
+  /**
+   * Auth state with tokens
+   */
   public state: AuthState;
-  public updateState: React.Dispatch<AuthState>;
+
+  /**
+   * Function for updating state
+   */
+  public setState: React.Dispatch<AuthState>;
 
   /**
    * LocalStorage key for storing access token
@@ -50,11 +58,23 @@ class AuthController {
 
   /**
    * Auth controller constructor
-   * Restores last authed user
+   *
+   * @param state - auth state with tokens
+   * @param setState - function for updating state
    */
-  constructor() {
-    this.state = {};
-    this.updateState = () => ({});
+  constructor(state: AuthState, setState: React.Dispatch<AuthState>) {
+    this.state = state;
+    this.setState = setState;
+  }
+
+  /**
+   * Returns auth data from storage
+   */
+  public static getAuthStateFromStorage(): AuthState {
+    return {
+      accessToken: window.localStorage.getItem(AuthController.LC_ACCESS_TOKEN_KEY),
+      refreshToken: window.localStorage.getItem(AuthController.LC_REFRESH_TOKEN_KEY),
+    };
   }
 
   /**
@@ -99,9 +119,9 @@ class AuthController {
   }
 
   /**
-   *
+   * Refreshes token pair
    */
-  public async refreshTokens(): Promise<void> {
+  public async refreshTokens(): Promise<AuthState> {
     const response = await window.fetch(
       `${process.env.REACT_APP_API_ENDPOINT}refresh`, {
         method: 'POST',
@@ -118,7 +138,10 @@ class AuthController {
       const responseJson = await response.json() as AuthServerResponse;
 
       this.setTokensFromResponse(responseJson);
+
+      return responseJson.data;
     }
+    throw new Error(`Can't refresh tokens`);
   }
 
   /**
@@ -132,23 +155,20 @@ class AuthController {
    * Logouts user
    */
   public logout(): void {
-    this.updateState({});
+    this.setState({});
     window.localStorage.removeItem(AuthController.LC_ACCESS_TOKEN_KEY);
     window.localStorage.removeItem(AuthController.LC_REFRESH_TOKEN_KEY);
   }
 
-  public setState(state: AuthState): void {
-    this.state = state;
-  }
-
-  public setStateUpdater(stateUpdater: React.Dispatch<AuthState>): void {
-    this.updateState = stateUpdater;
-  }
-
+  /**
+   * Helper for saving token pair from API response
+   *
+   * @param response - response data
+   */
   private setTokensFromResponse(response: AuthServerResponse): void {
     const { accessToken, refreshToken } = response.data;
 
-    this.updateState({
+    this.setState({
       accessToken,
       refreshToken,
     });
@@ -157,23 +177,24 @@ class AuthController {
   }
 }
 
-export const authController = new AuthController();
-
 const AuthContext = React.createContext<AuthController | undefined>(undefined);
 
+/**
+ * Provider for auth context
+ *
+ * @param props - props for component rendering
+ */
 export function AuthContextProvider(props: PropsWithChildren<unknown>): React.ReactElement {
-  const [authState, setAuthState] = useState<AuthState>(getInitialAuthState);
+  const [authState, setAuthState] = useState<AuthState>(() => AuthController.getAuthStateFromStorage());
 
-  console.log('render context');
-
-  useEffect(() => {
-    authController.setState(authState);
-    authController.setStateUpdater(setAuthState);
-  }, [ authState ]);
+  const authController = new AuthController(authState, setAuthState);
 
   return <AuthContext.Provider value={authController} {...props}/>;
 }
 
+/**
+ * Hook for accessing auth context
+ */
 export function useAuthContext(): AuthController {
   const context = React.useContext(AuthContext);
 
@@ -182,29 +203,4 @@ export function useAuthContext(): AuthController {
   }
 
   return context;
-}
-
-function setTokens(authTokens: AuthState) {
-  commitLocalUpdate(environment, store => {
-    const user = store.getRoot().getValue('accessToken');
-
-    store.getRoot().setValue('kek', 'accessToken')
-
-    console.log(user)
-  })
-}
-
-
-export async function login(username: string, password: string) {
-  const response = await window.fetch(
-    `${process.env.REACT_APP_API_ENDPOINT}login?username=${username}&password=${password}`
-  );
-
-  if (response.status === 200) {
-    const responseJson = await response.json() as AuthServerResponse;
-
-    setTokens(responseJson.data);
-  }
-
-  return response;
 }

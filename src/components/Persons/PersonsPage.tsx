@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { QueryRenderer } from 'react-relay';
 import { PersonsPageQuery } from './__generated__/PersonsPageQuery.graphql';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import { ENTITIES_PER_PAGE } from '../../constants';
 import PersonsList from './PersonsList';

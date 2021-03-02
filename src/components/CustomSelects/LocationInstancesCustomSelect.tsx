@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import CustomSelect from '../utils/CustomSelect';
 import { QueryRenderer } from 'react-relay';

@@ -6,7 +6,7 @@ import {
   LocationCreateMutation,
   LocationCreateMutationResponse
 } from './__generated__/LocationCreateMutation.graphql';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import Input from '../utils/Input';
 import Button from 'react-bootstrap/Button';

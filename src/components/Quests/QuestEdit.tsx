@@ -1,5 +1,5 @@
 import commitMutation from 'relay-commit-mutation-promise';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import {
   QuestEditMutation,

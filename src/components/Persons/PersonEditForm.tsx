@@ -11,7 +11,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import ContentWrapper from '../ContentWrapper';
 import { Form } from 'react-bootstrap';
 import commitMutation from 'relay-commit-mutation-promise';
-import environment from '../../relay-env';
+import environment from '../../appEnv';
 import {
   PersonEditFormUpdateMutation,
   PersonEditFormUpdateMutationResponse,
