@@ -110,6 +110,11 @@ export default function QuestEdit(): ReactElement {
               version
               blocks
             }
+            credits {
+              time
+              version
+              blocks
+            }
           }
         }
       `}
@@ -254,6 +259,37 @@ export default function QuestEdit(): ReactElement {
                     }
                   }}
                   placeholder='Click here to write an awesome route!'
+                  tools={EDITOR_JS_TOOLS}
+                />
+              </div>
+            </Form.Group>
+            <Form.Group>
+              <h2>Credits</h2>
+              <div style={{
+                borderRadius: '8px',
+                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
+                padding: '.5em 0',
+              }}>
+                <EditorJs
+                  data={{
+                    blocks: (input?.credits?.blocks || props.quest.credits?.blocks.concat() || []) as OutputBlockData[],
+                    time: input?.credits?.time || props.quest.credits?.time || undefined,
+                    version: input?.credits?.version || props.quest.credits?.version || undefined,
+                  }}
+                  onChange={(api: API, editorData?: OutputData) => {
+                    if (editorData) {
+                      setInput({
+                        ...input,
+                        id,
+                        credits: {
+                          time: null,
+                          version: '',
+                          ...editorData,
+                        },
+                      });
+                    }
+                  }}
+                  placeholder='Click here to write information about quest authors!'
                   tools={EDITOR_JS_TOOLS}
                 />
               </div>
