@@ -13,6 +13,7 @@ export type UpdateQuestInput = {
     minLevel?: number | null;
     earnedExp?: number | null;
     data?: EditorDataInput | null;
+    credits?: EditorDataInput | null;
 };
 export type EditorDataInput = {
     time?: number | null;
