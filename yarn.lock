@@ -1165,10 +1165,10 @@
   resolved "https://registry.yarnpkg.com/@editorjs/delimiter/-/delimiter-1.2.0.tgz#5075f1a3e68765cfb6aec8694b316d81e2b41607"
   integrity sha512-GKsCFPk85vH5FuCuVQ48NTLc9hk0T3DsBH9zABaicTYIJayFcUa8N4/Y+L3i4tduzDqqyvoxkv+5n43GmC5gEA==
 
-"@editorjs/editorjs@^2.19.1":
-  version "2.19.1"
-  resolved "https://registry.yarnpkg.com/@editorjs/editorjs/-/editorjs-2.19.1.tgz#081daf80dc4f524d457e415f07eb73d0ca6d86ce"
-  integrity sha512-5lN7r5B2NCE8VJdsS3poX3Qg9rNwzpxZ+6Jjif3hAVZTYpQwg5wXEpAHFNbuavS0T5Ji+0ID31DQFotVI4PosA==
+"@editorjs/editorjs@2.19.2-rc.1":
+  version "2.19.2-rc.1"
+  resolved "https://registry.yarnpkg.com/@editorjs/editorjs/-/editorjs-2.19.2-rc.1.tgz#b0e24c81702c643e96755034ae62c57d3b85ee10"
+  integrity sha512-SwtMJ/el2fEMChPKCOAiRfkPsSO2YGhKbpyw5hrduiFZNhXMu556HBtNCFQjPRT6Esh+OA04LEzAmO6ctloDLg==
   dependencies:
     codex-notifier "^1.1.2"
     codex-tooltip "^1.0.1"
@@ -10153,10 +10153,10 @@ react-dropzone@^11.2.4:
     file-selector "^0.2.2"
     prop-types "^15.7.2"
 
-react-editor-js@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/react-editor-js/-/react-editor-js-1.7.0.tgz#60a3192b97d1ffd8d438dd1230ca75adbf7aa7de"
-  integrity sha512-lyLc4G3vbPx5IdPNC19HhRBFvrdlYERJiCwOP0KJteoRcabKZkegQONK+AiQiFl/7cBGWxPM2wCbnr+dUkEBbw==
+react-editor-js@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/react-editor-js/-/react-editor-js-1.9.0.tgz#cfe80e3bf01fe0b0f06939826c7778c2ae3b96f3"
+  integrity sha512-Frg7cTO5cM6oFJF+cb3y/qhMc6e6ipEJi+EkiER2ajn19CmYxg+c+vttuGJIxXc5TE/ZzTTuTM5PqP1MjmCR3A==
 
 react-error-overlay@^6.0.8:
   version "6.0.8"
