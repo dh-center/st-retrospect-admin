@@ -38,7 +38,7 @@ export function Navigation(props: NavigationProps): ReactElement {
         </Nav.Item>}
         <Nav.Item>
           <Nav.Link as={Link} to='/persons'>
-            Persons {props.user?.accessToken}
+            Persons
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
@@ -95,7 +95,6 @@ export default createFragmentContainer(
           username
           permissions
         }
-        accessToken
       }
     `,
   }
