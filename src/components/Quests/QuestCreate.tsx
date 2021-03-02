@@ -18,6 +18,7 @@ import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 import EditorJs from 'react-editor-js';
 import handleApiError from '../../utils/handleApiError';
+import editorjsStyles from '../../editorjs-plugins/EditorJs.module.css';
 
 /**
  * Generates input data for creating new quest
@@ -187,11 +188,7 @@ export default function QuestCreate(): React.ReactElement {
         />
         <Form.Group>
           <h2>Route content</h2>
-          <div style={{
-            borderRadius: '8px',
-            boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
-            padding: '.5em 0',
-          }}>
+          <div className={editorjsStyles.editorjsWrapper}>
             <EditorJs
               data={{
                 blocks: (input.data?.blocks || []) as OutputBlockData[],
@@ -217,11 +214,7 @@ export default function QuestCreate(): React.ReactElement {
         </Form.Group>
         <Form.Group>
           <h2>Credits</h2>
-          <div style={{
-            borderRadius: '8px',
-            boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
-            padding: '.5em 0',
-          }}>
+          <div className={editorjsStyles.editorjsWrapper}>
             <EditorJs
               data={{
                 blocks: (input.credits?.blocks || []) as OutputBlockData[],

@@ -21,6 +21,7 @@ import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 import handleApiError from '../../utils/handleApiError';
+import editorjsStyles from '../../editorjs-plugins/EditorJs.module.css';
 
 /**
  * Mutation for save edited quest
@@ -234,11 +235,7 @@ export default function QuestEdit(): ReactElement {
             />
             <Form.Group>
               <h2>Route content</h2>
-              <div style={{
-                borderRadius: '8px',
-                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
-                padding: '.5em 0',
-              }}>
+              <div className={editorjsStyles.editorjsWrapper}>
                 <EditorJs
                   data={{
                     blocks: (input?.data?.blocks || props.quest.data?.blocks.concat() || []) as OutputBlockData[],
@@ -265,11 +262,7 @@ export default function QuestEdit(): ReactElement {
             </Form.Group>
             <Form.Group>
               <h2>Credits</h2>
-              <div style={{
-                borderRadius: '8px',
-                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0px 36px 0px',
-                padding: '.5em 0',
-              }}>
+              <div className={editorjsStyles.editorjsWrapper}>
                 <EditorJs
                   data={{
                     blocks: (input?.credits?.blocks || props.quest.credits?.blocks.concat() || []) as OutputBlockData[],
