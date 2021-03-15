@@ -9,7 +9,6 @@ export type Navigation_user = {
         readonly username: string;
         readonly permissions: ReadonlyArray<string>;
     };
-    readonly accessToken: string | null;
     readonly " $refType": "Navigation_user";
 };
 export type Navigation_user$data = Navigation_user;
@@ -50,22 +49,10 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "kind": "ClientExtension",
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "accessToken",
-          "storageKey": null
-        }
-      ]
     }
   ],
   "type": "Query",
   "abstractKey": null
 };
-(node as any).hash = 'd047d16e56310b060024b40b813db71a';
+(node as any).hash = 'd3127d3a375db0ffa9ee255977ebba17';
 export default node;
