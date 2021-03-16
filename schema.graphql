@@ -325,6 +325,19 @@ type CreateRelationTypePayload {
   record: RelationType!
 }
 
+input CreateTagInput {
+  """Value of tag"""
+  value: MultilingualString!
+}
+
+type CreateTagPayload {
+  """Created tag id"""
+  recordId: GlobalId!
+
+  """Created tag object"""
+  record: Tag!
+}
+
 scalar Cursor
 
 type DeleteLocationInstancePayload {
@@ -360,6 +373,11 @@ type DeleteRelationPayload {
 
 type DeleteRelationTypePayload {
   """Deleted relation type id"""
+  recordId: GlobalId!
+}
+
+type DeleteTagPayload {
+  """Deleted tag id"""
   recordId: GlobalId!
 }
 
@@ -609,6 +627,7 @@ type Mutation {
   relationType: RelationTypeMutations!
   quest: QuestMutations!
   user: UserMutations!
+  tag: TagMutations!
 }
 
 """An object with a Globally Unique ID"""
@@ -883,6 +902,31 @@ type Query {
     """
     last: Int
   ): QuestConnection!
+
+  """Get specific tag"""
+  tag(
+    """Tag id"""
+    id: GlobalId!
+  ): Tag
+
+  """List of available tags"""
+  tags(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): TagConnection!
 }
 
 type Quest implements Node {
@@ -1096,6 +1140,50 @@ input RemoveArchitectInput {
 type RemoveArchitectPayload {
   """Deleted relation id"""
   recordId: GlobalId!
+}
+
+"""Tag of person or location instance"""
+type Tag implements Node {
+  """Tag id"""
+  id: ID!
+
+  """
+  Tag value
+  Can be multilingual
+  """
+  value: MultilingualString!
+}
+
+"""Model for representing page of tags"""
+type TagConnection {
+  """List of tags on current page"""
+  edges: [TagEdge!]!
+
+  """Information about current page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges on current page"""
+  totalCount: Int!
+}
+
+"""Information about specific tag in connection"""
+type TagEdge {
+  """Cursor of current tag"""
+  cursor: Cursor!
+
+  """Tag object"""
+  node: Tag!
+}
+
+type TagMutations {
+  """Creates tag"""
+  create(input: CreateTagInput!): CreateTagPayload!
+
+  """Updates existing tag"""
+  update(input: UpdateTagInput!): UpdateTagPayload!
+
+  """Deletes existing tag"""
+  delete(id: GlobalId!): DeleteTagPayload!
 }
 
 """Possible task types"""
@@ -1356,6 +1444,22 @@ type UpdateRelationTypePayload {
 
   """Updated relation type"""
   record: RelationType!
+}
+
+input UpdateTagInput {
+  """Tag id for updating"""
+  id: GlobalId!
+
+  """New tag value"""
+  value: MultilingualString!
+}
+
+type UpdateTagPayload {
+  """Updated tag id"""
+  recordId: GlobalId!
+
+  """Updated tag object"""
+  record: Tag!
 }
 
 type User implements Node {

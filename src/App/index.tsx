@@ -8,6 +8,7 @@ import UsersPage from '../components/Users';
 import QuestsPage from '../components/Quests';
 import RelationsPage from '../components/Relations';
 import RelationTypesPage from '../components/RelationTypes';
+import TagsPage from '../components/Tags';
 import { QueryRenderer } from 'react-relay';
 import relayEnv, { appEnv } from '../appEnv';
 import graphql from 'babel-plugin-relay/macro';
@@ -56,6 +57,10 @@ const renderQuery = ({ error, props }: { error: Error | null; props: AppQueryRes
 
         <PrivateRoute path='/relation-types'>
           <RelationTypesPage/>
+        </PrivateRoute>
+
+        <PrivateRoute path='/tags'>
+          <TagsPage/>
         </PrivateRoute>
 
         <PrivateRoute path='/'>

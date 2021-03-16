@@ -82,18 +82,6 @@ const node: ConcreteRequest = {
           }
         ],
         "storageKey": null
-      },
-      {
-        "kind": "ClientExtension",
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "accessToken",
-            "storageKey": null
-          }
-        ]
       }
     ]
   },
