@@ -3,10 +3,14 @@ import { Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import TagsPage from './TagsPage';
 import TagView from './TagView';
+import TagEdit from './TagEdit';
 
 export default function TagsRouter(): ReactElement {
   return (
     <Switch>
+      <PrivateRoute path='/tags/:id/edit'>
+        <TagEdit/>
+      </PrivateRoute>
       <PrivateRoute path='/tags/:id'>
         <TagView/>
       </PrivateRoute>
