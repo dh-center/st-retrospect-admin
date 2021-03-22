@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Sentry from '@sentry/react';
 import 'bootstrap/dist/css/bootstrap.min.css';

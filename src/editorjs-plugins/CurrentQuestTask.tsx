@@ -1,5 +1,5 @@
 import { BlockTool, ToolboxConfig } from '@editorjs/editorjs';
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import pluginBlockStyles from './PluginBlock.module.css';

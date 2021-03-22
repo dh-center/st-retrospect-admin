@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import { useParams } from 'react-router';

@@ -5,7 +5,7 @@ import {
   QuestViewDeleteMutation,
   QuestViewDeleteMutationResponse
 } from './__generated__/QuestViewDeleteMutation.graphql';
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import notifier from 'codex-notifier';
 import { QueryRenderer } from 'react-relay';

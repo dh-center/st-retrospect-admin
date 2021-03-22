@@ -1,5 +1,4 @@
 import { BlockTool, ToolboxConfig } from '@editorjs/editorjs';
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import { LabeledLocationInstancesCustomSelect } from '../components/CustomSelects/LocationInstancesCustomSelect';

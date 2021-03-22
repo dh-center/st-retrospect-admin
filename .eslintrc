@@ -6,12 +6,15 @@
       "jsx": true
     }
   },
+  "env": {
+    "browser": true
+  },
   "plugins": [
     "@typescript-eslint"
   ],
   "extends": [
     "plugin:react/recommended",
-    "codex"
+    "codex/ts"
   ],
   "settings": {
     "react": {
@@ -119,7 +122,9 @@
         ],
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
-        "@typescript-eslint/no-magic-numbers": "off"
+        "@typescript-eslint/no-magic-numbers": "off",
+        "react/jsx-uses-react": "off",
+        "react/react-in-jsx-scope": "off"
       }
     }
   ]

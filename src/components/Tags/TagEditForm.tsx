@@ -6,7 +6,7 @@ import {
   TagEditFormMutationResponse,
   UpdateTagInput
 } from './__generated__/TagEditFormMutation.graphql';
-import React, { FormEvent, ReactElement, useState } from 'react';
+import { FormEvent, ReactElement, useState } from 'react';
 import deepCopy from '../../utils/deepCopy';
 import { useHistory, useLocation } from 'react-router-dom';
 import notifier from 'codex-notifier';

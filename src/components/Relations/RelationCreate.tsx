@@ -1,4 +1,4 @@
-import React, { FormEvent, ReactElement, useState } from 'react';
+import { FormEvent, ReactElement, useState } from 'react';
 import commitMutation from 'relay-commit-mutation-promise';
 import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';

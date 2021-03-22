@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import CustomSelect from '../utils/CustomSelect';

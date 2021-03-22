@@ -1,4 +1,4 @@
-import React, { ComponentType, FC, ReactElement } from 'react';
+import { ComponentType, FC, ReactElement } from 'react';
 import styles from './LabeledComponent.module.css';
 import classNames from 'classnames';
 import { Form } from 'react-bootstrap';

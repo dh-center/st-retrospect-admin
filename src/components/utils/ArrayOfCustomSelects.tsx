@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import withLabel from './LabeledComponent';
 import styles from './ArrayOfInputs.module.css';
