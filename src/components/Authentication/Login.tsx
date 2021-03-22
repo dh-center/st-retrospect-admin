@@ -1,4 +1,4 @@
-import React, { FormEvent, ReactElement, useState } from 'react';
+import { FormEvent, ReactElement, useState } from 'react';
 import { useAuthContext } from '../../controllers/authController';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Form, Button } from 'react-bootstrap';

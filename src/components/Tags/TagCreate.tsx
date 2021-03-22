@@ -2,7 +2,7 @@ import commitMutation from 'relay-commit-mutation-promise';
 import environment from '../../appEnv';
 import graphql from 'babel-plugin-relay/macro';
 import { CreateTagInput, TagCreateMutation, TagCreateMutationResponse } from './__generated__/TagCreateMutation.graphql';
-import React, { FormEvent, ReactElement, useState } from 'react';
+import { FormEvent, ReactElement, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import notifier from 'codex-notifier';
 import handleApiError from '../../utils/handleApiError';

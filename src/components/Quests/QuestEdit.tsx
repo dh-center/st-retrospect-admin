@@ -6,7 +6,7 @@ import {
   QuestEditMutationResponse,
   UpdateQuestInput
 } from './__generated__/QuestEditMutation.graphql';
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useParams } from 'react-router';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import notifier from 'codex-notifier';

@@ -1,4 +1,4 @@
-import React, { FormEvent, ReactElement, useState } from 'react';
+import { FormEvent, ReactElement, useState } from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
 import notifier from 'codex-notifier';
 import { Button, Form } from 'react-bootstrap';

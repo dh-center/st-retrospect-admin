@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import PrivateRoute from '../PrivateRoute';
 import { Switch } from 'react-router-dom';
 import PersonView from './PersonView';
