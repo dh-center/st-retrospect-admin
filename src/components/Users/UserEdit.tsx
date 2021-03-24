@@ -5,11 +5,11 @@ import LabeledText from '../utils/LabeledText';
 import ContentWrapper from '../ContentWrapper';
 import Form from 'react-bootstrap/Form';
 import { useLazyLoadQuery, useMutation } from 'react-relay';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { UserEditQuery } from './__generated__/UserEditQuery.graphql';
 import { UserEditMutation } from './__generated__/UserEditMutation.graphql';
-import Spinner from 'react-bootstrap/Spinner';
-import { useLocation } from 'react-router-dom';
+import ButtonWithLoader from '../utils/ButtonWithLoader';
+import useLeaveEditPage from '../../utils/useLeaveEditPage';
 
 const userEditQuery = graphql`
   query UserEditQuery ($id: GlobalId!) {
@@ -55,17 +55,7 @@ export default function UserEdit(): ReactElement {
     }
   }, [ user ]);
 
-  const history = useHistory();
-  const location = useLocation();
-
-  /**
-   * Push location back to entity view page
-   */
-  const pushLocationBack = (): void => {
-    const entityPath = location.pathname.replace('/edit', '');
-
-    history.push(entityPath);
-  };
+  const leaveEditPage = useLeaveEditPage();
 
   if (!user) {
     return <div>No user was found</div>;
@@ -95,8 +85,8 @@ export default function UserEdit(): ReactElement {
           />
         </div>
         <div>
-          <Button
-            className='m-1'
+          <ButtonWithLoader
+            isLoading={isInFlight}
             onClick={() => commit({
               variables: {
                 input: {
@@ -107,21 +97,11 @@ export default function UserEdit(): ReactElement {
             })}
             type='submit'
           >
-            {isInFlight
-              ? (
-                <Spinner
-                  animation='border'
-                  aria-hidden='true'
-                  as='span'
-                  role='status'
-                  size='sm'
-                />
-              )
-              : ('Save')}
-          </Button>
+            Save
+          </ButtonWithLoader>
           <Button
             className='m-1'
-            onClick={() => pushLocationBack()}
+            onClick={leaveEditPage}
             variant='outline-danger'
           >
             Cancel

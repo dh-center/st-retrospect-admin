@@ -22,6 +22,9 @@ const userViewQuery = graphql`
     }
 `;
 
+/**
+ * Page for viewing user data
+ */
 export default function UserView(): ReactElement {
   const { id } = useParams<{id: string}>();
 
