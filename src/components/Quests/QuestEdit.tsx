@@ -8,13 +8,13 @@ import {
 } from './__generated__/QuestEditMutation.graphql';
 import { ReactElement, useState } from 'react';
 import { useParams } from 'react-router';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import notifier from 'codex-notifier';
 import { QueryRenderer } from 'react-relay';
 import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 import ContentWrapper from '../ContentWrapper';
 import Input from '../utils/Input';
-import { Button, Form, Spinner } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { QuestEditQuery } from './__generated__/QuestEditQuery.graphql';
 import Textarea from '../utils/Textarea';
 import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
@@ -22,6 +22,9 @@ import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 import handleApiError from '../../utils/handleApiError';
 import editorjsStyles from '../../editorjs-plugins/EditorJs.module.css';
+import notifications from '../../controllers/notificationsController';
+import useLeaveEditPage from '../../utils/useLeaveEditPage';
+import ButtonWithLoader from '../utils/ButtonWithLoader';
 
 /**
  * Mutation for save edited quest
@@ -51,29 +54,14 @@ export default function QuestEdit(): ReactElement {
 
   const [input, setInput] = useState<UpdateQuestInput | null>(null);
   const [isLoading, setLoadingStatus] = useState(false);
-
-  const history = useHistory();
-  const location = useLocation();
-
-  /**
-   * Push location back to entity view page
-   */
-  const pushLocationBack = (): void => {
-    const entityPath = location.pathname.replace('/edit', '');
-
-    history.push(entityPath);
-  };
+  const pushLocationBack = useLeaveEditPage();
 
   /**
    * Saves updated quest to API
    */
   const saveQuestToApi = async (): Promise<void> => {
     if (!input) {
-      notifier.show({
-        message: 'Please make changes in quest',
-        style: 'error',
-        time: 5000,
-      });
+      notifications.error('Please make changes in quest');
 
       return;
     }
@@ -81,11 +69,8 @@ export default function QuestEdit(): ReactElement {
     setLoadingStatus(true);
     try {
       await update(input);
-      notifier.show({
-        message: 'Quest successfully saved',
-        style: 'success',
-        time: 5000,
-      });
+
+      notifications.success('Quest successfully saved');
       setLoadingStatus(false);
       pushLocationBack();
     } catch (error) {
@@ -288,23 +273,13 @@ export default function QuestEdit(): ReactElement {
               </div>
             </Form.Group>
             <div>
-              <Button
-                className='m-1'
+              <ButtonWithLoader
+                isLoading={isLoading}
                 onClick={() => saveQuestToApi()}
                 type='submit'
               >
-                {isLoading
-                  ? (
-                    <Spinner
-                      animation='border'
-                      aria-hidden='true'
-                      as='span'
-                      role='status'
-                      size='sm'
-                    />
-                  )
-                  : ('Save')}
-              </Button>
+                Save
+              </ButtonWithLoader>
               <Button
                 className='m-1'
                 onClick={() => pushLocationBack()}

@@ -37,6 +37,7 @@ fragment UsersList_entityConnection_2HEEH6 on Query {
         lastName
         exp
         level
+        permissions
         __typename
       }
       cursor
@@ -177,6 +178,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "permissions",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "__typename",
                     "storageKey": null
                   }
@@ -233,12 +241,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f651a0c0c4bbff873835fb9ae09e988",
+    "cacheID": "be5611787fe33665765c7a31f8f4b9ab",
     "id": null,
     "metadata": {},
     "name": "UsersListForwardQuery",
     "operationKind": "query",
-    "text": "query UsersListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...UsersList_entityConnection_2HEEH6\n}\n\nfragment UsersList_entityConnection_2HEEH6 on Query {\n  entities: users(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        username\n        firstName\n        lastName\n        exp\n        level\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query UsersListForwardQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...UsersList_entityConnection_2HEEH6\n}\n\nfragment UsersList_entityConnection_2HEEH6 on Query {\n  entities: users(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        username\n        firstName\n        lastName\n        exp\n        level\n        permissions\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

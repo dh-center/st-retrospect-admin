@@ -24,6 +24,7 @@ const UsersList = createPaginationContainer<EntitiesListProps<UsersList_entityCo
               lastName
               exp
               level
+              permissions
             }
           }
         }
