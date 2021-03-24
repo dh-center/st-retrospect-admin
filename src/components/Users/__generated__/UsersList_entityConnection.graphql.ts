@@ -15,6 +15,7 @@ export type UsersList_entityConnection = {
                 readonly lastName: string | null;
                 readonly exp: number;
                 readonly level: number;
+                readonly permissions: ReadonlyArray<string>;
             };
         }>;
     };
@@ -133,6 +134,13 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "permissions",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 }
@@ -181,5 +189,5 @@ const node: ReaderFragment = {
   "type": "Query",
   "abstractKey": null
 };
-(node as any).hash = '0d69f45643388ac3e8d4f6d5e3b0bdbd';
+(node as any).hash = '8f52f82f5ffc6a3b8d5c5983fa73de6a';
 export default node;
