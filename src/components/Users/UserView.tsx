@@ -8,6 +8,7 @@ import LabeledText from '../utils/LabeledText';
 import Form from 'react-bootstrap/Form';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
+import hasPermission from '../../utils/hasPermission';
 
 const userViewQuery = graphql`
     query UserViewQuery ($id: GlobalId!) {
@@ -35,6 +36,9 @@ export default function UserView(): ReactElement {
     return <div>No user was found</div>;
   }
 
+  const isAdmin = hasPermission('admin', user.permissions);
+  const isEditor = isAdmin || hasPermission('editor', user.permissions);
+
   return (
     <div>
       <ContentWrapper>
@@ -52,9 +56,16 @@ export default function UserView(): ReactElement {
             label='Last name'
           />
           <Form.Check
-            checked={user.permissions.some(per => per === 'admin')}
+            checked={isAdmin}
             disabled
             label='Admin'
+            type='checkbox'
+          />
+
+          <Form.Check
+            checked={isEditor}
+            disabled
+            label='Editor'
             type='checkbox'
           />
         </div>
