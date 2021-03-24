@@ -102,7 +102,7 @@ export default function UserEdit(): ReactElement {
               variables: {
                 input: {
                   id,
-                  permissions: isAdmin? [ 'admin' ]: [],
+                  permissions: isAdmin ? [ 'admin' ] : [],
                 },
               },
             })}
