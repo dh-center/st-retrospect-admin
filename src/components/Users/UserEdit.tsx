@@ -10,6 +10,7 @@ import { UserEditQuery } from './__generated__/UserEditQuery.graphql';
 import { UserEditMutation } from './__generated__/UserEditMutation.graphql';
 import ButtonWithLoader from '../utils/ButtonWithLoader';
 import useLeaveEditPage from '../../utils/useLeaveEditPage';
+import notifications from '../../controllers/notificationsController';
 
 const userEditQuery = graphql`
   query UserEditQuery ($id: GlobalId!) {
@@ -37,6 +38,9 @@ const userEditMutation = graphql`
   }
 `;
 
+/**
+ * Page for editing user data
+ */
 export default function UserEdit(): ReactElement {
   const { id } = useParams<{ id: string }>();
 
@@ -88,6 +92,13 @@ export default function UserEdit(): ReactElement {
           <ButtonWithLoader
             isLoading={isInFlight}
             onClick={() => commit({
+              onCompleted() {
+                notifications.success('User successfully updated');
+                leaveEditPage();
+              },
+              onError() {
+                notifications.error('Error during user updating');
+              },
               variables: {
                 input: {
                   id,
