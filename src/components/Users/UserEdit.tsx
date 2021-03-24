@@ -11,6 +11,7 @@ import { UserEditMutation } from './__generated__/UserEditMutation.graphql';
 import ButtonWithLoader from '../utils/ButtonWithLoader';
 import useLeaveEditPage from '../../utils/useLeaveEditPage';
 import notifications from '../../controllers/notificationsController';
+import hasPermission from '../../utils/hasPermission';
 
 const userEditQuery = graphql`
   query UserEditQuery ($id: GlobalId!) {
@@ -46,16 +47,52 @@ export default function UserEdit(): ReactElement {
 
   const [commit, isInFlight] = useMutation<UserEditMutation>(userEditMutation);
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [permissions, setPermissions] = useState<string[]>([]);
+
+  /**
+   * Set or remove permission from user
+   *
+   * @param name - permission name
+   * @param state - set or remove
+   */
+  const applyPermission = (name: string, state: boolean): void => {
+    /**
+     * If 'admin' permission is set, it is not necessary to set other permissions
+     */
+    if (hasPermission('admin', permissions) && state) {
+      return;
+    }
+
+    /**
+     * If admin permissions are set, then all others are not needed
+     */
+    if (name === 'admin' && state) {
+      setPermissions([ 'admin' ]);
+
+      return;
+    }
+
+    if (!state) {
+      setPermissions(permissions.filter(per => per !==name));
+
+      return;
+    }
+
+    if (hasPermission(name, permissions)) {
+      return;
+    }
+
+    setPermissions([...permissions, name]);
+  };
 
   const data = useLazyLoadQuery<UserEditQuery>(userEditQuery, { id });
   const user = data.user;
 
   useEffect(() => {
     if (user) {
-      setIsAdmin(user.permissions.some(per => per === 'admin'));
+      setPermissions([ ...user.permissions ]);
     } else {
-      setIsAdmin(false);
+      setPermissions([]);
     }
   }, [ user ]);
 
@@ -64,6 +101,9 @@ export default function UserEdit(): ReactElement {
   if (!user) {
     return <div>No user was found</div>;
   }
+
+  const isAdmin = hasPermission('admin', permissions);
+  const isEditor = isAdmin || hasPermission('editor', permissions);
 
   return (
     <div>
@@ -84,7 +124,14 @@ export default function UserEdit(): ReactElement {
           <Form.Check
             checked={isAdmin}
             label='Admin'
-            onChange={(e) => setIsAdmin(e.target.checked)}
+            onChange={(e) => applyPermission('admin', e.target.checked)}
+            type='checkbox'
+          />
+          <Form.Check
+            checked={isEditor}
+            disabled={isAdmin}
+            label='Editor'
+            onChange={e => applyPermission('editor', e.target.checked)}
             type='checkbox'
           />
         </div>
@@ -102,7 +149,7 @@ export default function UserEdit(): ReactElement {
               variables: {
                 input: {
                   id,
-                  permissions: isAdmin? [ 'admin' ]: [],
+                  permissions,
                 },
               },
             })}
