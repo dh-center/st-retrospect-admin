@@ -32,7 +32,7 @@ export default function UsersPage(): ReactElement {
           />;
         }
 
-        return <UsersList entityConnection={props} entityName='Users'/>;
+        return <UsersList entityConnection={props} entityName='users'/>;
       }}
       variables={{
         first: ENTITIES_PER_PAGE,

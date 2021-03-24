@@ -626,6 +626,8 @@ type Mutation {
   relation: RelationMutations!
   relationType: RelationTypeMutations!
   quest: QuestMutations!
+
+  """Mutations for users"""
   user: UserMutations!
   tag: TagMutations!
 }
@@ -858,6 +860,12 @@ type Query {
 
   """Get info about user"""
   me: User!
+
+  """Get specific User"""
+  user(
+    """User id"""
+    id: GlobalId!
+  ): User
 
   """Returns connection with all users"""
   users(
@@ -1462,6 +1470,22 @@ type UpdateTagPayload {
   record: Tag!
 }
 
+input UpdateUserInput {
+  """Id of the user to update"""
+  id: GlobalId!
+
+  """New persmissions"""
+  permissions: [String!]!
+}
+
+type UpdateUserPayload {
+  """Updated user id"""
+  recordId: GlobalId!
+
+  """Updated user"""
+  record: User!
+}
+
 type User implements Node {
   """User's ID"""
   id: ID!
@@ -1520,8 +1544,12 @@ type UserEdge {
   node: User!
 }
 
+"""Mutations for users"""
 type UserMutations {
   """Complete quest"""
   completeQuest(questId: GlobalId!): UserCompleteQuestPayload!
+
+  """Updates user data"""
+  update(input: UpdateUserInput!): UpdateUserPayload!
 }
 
