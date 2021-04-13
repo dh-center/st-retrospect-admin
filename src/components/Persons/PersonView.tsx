@@ -86,6 +86,9 @@ function PersonView(): React.ReactElement {
             deathDate
             photoLinks
             wikiLink
+            tags {
+              value
+            }
           }
         }
       `}
@@ -158,6 +161,12 @@ function PersonView(): React.ReactElement {
                 images={props.person.photoLinks?.filter(photoLink => photoLink) as string[] || undefined}
                 label='Photos'
                 viewOnly
+              />
+              <LabeledText
+                content={props.person.tags
+                  .map(tag => tag.value)
+                  .join('; ')}
+                label='Tags'
               />
               <LabeledText
                 content={props.person.wikiLink}
