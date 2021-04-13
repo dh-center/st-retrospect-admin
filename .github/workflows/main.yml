@@ -29,7 +29,7 @@ jobs:
         run: docker build . -t $DOCKER_IMAGE_NAME
 
       - name: Set deploy command to env variable
-        run: echo "DEPLOY_COMMAND=$(echo "cd ~/st-retrospect/${BRANCH_NAME}/admin && ./deploy.sh")" >> $GITHUB_ENV
+        run: echo "DEPLOY_COMMAND=$(echo "cd ~/retrospect/${BRANCH_NAME}/admin && ./deploy.sh")" >> $GITHUB_ENV
 
       - name: Push to Docker Hub
         if: endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod')
