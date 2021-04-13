@@ -24,6 +24,7 @@ import styles from './Images.module.css';
 import ImageUploader from '../utils/ImageUploader';
 import handleApiError from '../../utils/handleApiError';
 import { LabeledTagsInput } from '../utils/TagsInput';
+import useLeaveEditPage from "../../utils/useLeaveEditPage";
 
 /**
  * Executes update mutation for person
@@ -69,17 +70,8 @@ function PersonEditForm(props: Props): React.ReactElement {
   const [input, setInput] = useState(() => deepCopy(originalPerson as UpdatePersonInput));
 
   const [isLoading, setLoadingStatus] = useState(false);
-  const history = useHistory();
-  const location = useLocation();
 
-  /**
-   * Push location back to entity view page
-   */
-  const pushLocationBack = (): void => {
-    const entityListPath = location.pathname.replace('/edit', '');
-
-    history.push(entityListPath);
-  };
+  const leaveEditPage = useLeaveEditPage();
 
   /**
    * Saves updated person to API
@@ -98,7 +90,7 @@ function PersonEditForm(props: Props): React.ReactElement {
           time: 5000,
         });
         setLoadingStatus(false);
-        pushLocationBack();
+        leaveEditPage();
       } catch (error) {
         setLoadingStatus(false);
         handleApiError(error);
@@ -256,7 +248,7 @@ function PersonEditForm(props: Props): React.ReactElement {
           </Button>
           <Button
             className='m-1'
-            onClick={() => pushLocationBack()}
+            onClick={() => leaveEditPage()}
             variant='outline-danger'
           >
             Cancel

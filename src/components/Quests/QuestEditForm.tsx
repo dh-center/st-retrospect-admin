@@ -9,7 +9,6 @@ import graphql from 'babel-plugin-relay/macro';
 import { QuestEditForm_originalQuest } from './__generated__/QuestEditForm_originalQuest.graphql';
 import React, { FormEvent, Suspense, useState } from 'react';
 import deepCopy from '../../utils/deepCopy';
-import { useHistory, useLocation } from 'react-router-dom';
 import notifier from 'codex-notifier';
 import handleApiError from '../../utils/handleApiError';
 import ContentWrapper from '../ContentWrapper';
@@ -24,6 +23,7 @@ import EditorJs from 'react-editor-js';
 import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 import ButtonWithLoader from '../utils/ButtonWithLoader';
+import useLeaveEditPage from '../../utils/useLeaveEditPage';
 
 /**
  * Executes update mutation for quest
@@ -69,17 +69,8 @@ function QuestEditForm(props: Props): React.ReactElement {
   const [input, setInput] = useState(() => deepCopy(originalQuest as UpdateQuestInput));
 
   const [isLoading, setLoadingStatus] = useState(false);
-  const history = useHistory();
-  const location = useLocation();
 
-  /**
-   * Push location back to entity view page
-   */
-  const pushLocationBack = (): void => {
-    const entityListPath = location.pathname.replace('/edit', '');
-
-    history.push(entityListPath);
-  };
+  const leaveEditPage = useLeaveEditPage();
 
   /**
    * Saves updated quest to API
@@ -98,7 +89,7 @@ function QuestEditForm(props: Props): React.ReactElement {
           time: 5000,
         });
         setLoadingStatus(false);
-        pushLocationBack();
+        leaveEditPage();
       } catch (error) {
         setLoadingStatus(false);
         handleApiError(error);
@@ -267,7 +258,7 @@ function QuestEditForm(props: Props): React.ReactElement {
           </ButtonWithLoader>
           <Button
             className='m-1'
-            onClick={() => pushLocationBack()}
+            onClick={() => leaveEditPage()}
             variant='outline-danger'
           >
             Cancel
