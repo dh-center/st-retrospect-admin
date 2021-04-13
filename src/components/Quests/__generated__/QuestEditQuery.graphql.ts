@@ -3,28 +3,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type QuestEditQueryVariables = {
     id: string;
 };
 export type QuestEditQueryResponse = {
     readonly quest: {
-        readonly id: string;
-        readonly name: string;
-        readonly description: string | null;
-        readonly type: TaskTypes;
-        readonly minLevel: number;
-        readonly earnedExp: number;
-        readonly data: {
-            readonly time: number | null;
-            readonly version: string | null;
-            readonly blocks: ReadonlyArray<unknown>;
-        } | null;
-        readonly credits: {
-            readonly time: number | null;
-            readonly version: string | null;
-            readonly blocks: ReadonlyArray<unknown>;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"QuestEditForm_originalQuest">;
     } | null;
 };
 export type QuestEditQuery = {
@@ -39,22 +24,30 @@ query QuestEditQuery(
   $id: GlobalId!
 ) {
   quest(id: $id) {
+    ...QuestEditForm_originalQuest
     id
-    name
-    description
-    type
-    minLevel
-    earnedExp
-    data {
-      time
-      version
-      blocks
-    }
-    credits {
-      time
-      version
-      blocks
-    }
+  }
+}
+
+fragment QuestEditForm_originalQuest on Quest {
+  id
+  name
+  description
+  type
+  minLevel
+  earnedExp
+  data {
+    time
+    version
+    blocks
+  }
+  credits {
+    time
+    version
+    blocks
+  }
+  tags {
+    id
   }
 }
 */
@@ -68,6 +61,20 @@ var v0 = [
   }
 ],
 v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -89,87 +96,6 @@ v1 = [
     "name": "blocks",
     "storageKey": null
   }
-],
-v2 = [
-  {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "id",
-        "variableName": "id"
-      }
-    ],
-    "concreteType": "Quest",
-    "kind": "LinkedField",
-    "name": "quest",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "name",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "description",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "type",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "minLevel",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "earnedExp",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "EditorData",
-        "kind": "LinkedField",
-        "name": "data",
-        "plural": false,
-        "selections": (v1/*: any*/),
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "EditorData",
-        "kind": "LinkedField",
-        "name": "credits",
-        "plural": false,
-        "selections": (v1/*: any*/),
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
-  }
 ];
 return {
   "fragment": {
@@ -177,7 +103,24 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "QuestEditQuery",
-    "selections": (v2/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Quest",
+        "kind": "LinkedField",
+        "name": "quest",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "QuestEditForm_originalQuest"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -186,17 +129,97 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "QuestEditQuery",
-    "selections": (v2/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Quest",
+        "kind": "LinkedField",
+        "name": "quest",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "description",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "type",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "minLevel",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "earnedExp",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "EditorData",
+            "kind": "LinkedField",
+            "name": "data",
+            "plural": false,
+            "selections": (v3/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "EditorData",
+            "kind": "LinkedField",
+            "name": "credits",
+            "plural": false,
+            "selections": (v3/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Tag",
+            "kind": "LinkedField",
+            "name": "tags",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "09e5dc7b0b4563d12c075d869155169f",
+    "cacheID": "e398494db16e97d984133a9f5ca4c0c8",
     "id": null,
     "metadata": {},
     "name": "QuestEditQuery",
     "operationKind": "query",
-    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    type\n    minLevel\n    earnedExp\n    data {\n      time\n      version\n      blocks\n    }\n    credits {\n      time\n      version\n      blocks\n    }\n  }\n}\n"
+    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    ...QuestEditForm_originalQuest\n    id\n  }\n}\n\nfragment QuestEditForm_originalQuest on Quest {\n  id\n  name\n  description\n  type\n  minLevel\n  earnedExp\n  data {\n    time\n    version\n    blocks\n  }\n  credits {\n    time\n    version\n    blocks\n  }\n  tags {\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3c43625569e78a94bd6013f4140666f7';
+(node as any).hash = '19d40f097236e0dda377f00b211c5cb7';
 export default node;

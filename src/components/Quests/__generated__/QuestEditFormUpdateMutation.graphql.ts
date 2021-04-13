@@ -21,25 +21,25 @@ export type EditorDataInput = {
     blocks: Array<unknown>;
     version?: string | null;
 };
-export type QuestEditMutationVariables = {
+export type QuestEditFormUpdateMutationVariables = {
     input: UpdateQuestInput;
 };
-export type QuestEditMutationResponse = {
+export type QuestEditFormUpdateMutationResponse = {
     readonly quest: {
         readonly update: {
             readonly recordId: string;
         };
     };
 };
-export type QuestEditMutation = {
-    readonly response: QuestEditMutationResponse;
-    readonly variables: QuestEditMutationVariables;
+export type QuestEditFormUpdateMutation = {
+    readonly response: QuestEditFormUpdateMutationResponse;
+    readonly variables: QuestEditFormUpdateMutationVariables;
 };
 
 
 
 /*
-mutation QuestEditMutation(
+mutation QuestEditFormUpdateMutation(
   $input: UpdateQuestInput!
 ) {
   quest {
@@ -100,7 +100,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "QuestEditMutation",
+    "name": "QuestEditFormUpdateMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -109,18 +109,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "QuestEditMutation",
+    "name": "QuestEditFormUpdateMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "4534a6c865c0c2ad8de69cc55be318f1",
+    "cacheID": "e8c419d4c3398aef715ee2f6611f346f",
     "id": null,
     "metadata": {},
-    "name": "QuestEditMutation",
+    "name": "QuestEditFormUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestEditMutation(\n  $input: UpdateQuestInput!\n) {\n  quest {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation QuestEditFormUpdateMutation(\n  $input: UpdateQuestInput!\n) {\n  quest {\n    update(input: $input) {\n      recordId\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '883d390bec4a1e7ba0546197b4877ddf';
+(node as any).hash = '671f1e7d0c1a3173ccb04b5a51a8bcac';
 export default node;

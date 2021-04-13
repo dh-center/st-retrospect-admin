@@ -172,6 +172,9 @@ input CreateLocationInstanceInput {
 
   """Source of information about location instance"""
   source: MultilingualString!
+
+  """Location instance tags"""
+  tagIds: [GlobalId!]!
 }
 
 type CreateLocationInstancePayload {
@@ -1318,6 +1321,9 @@ input UpdateLocationInstanceInput {
 
   """Source of information about location instance"""
   source: MultilingualString!
+
+  """Location instance tags"""
+  tagIds: [GlobalId!]!
 }
 
 type UpdateLocationInstancePayload {
