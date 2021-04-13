@@ -21,6 +21,9 @@ export type LocationInstanceInfoDialog_locationInstance = {
     readonly location: {
         readonly id: string;
     };
+    readonly tags: ReadonlyArray<{
+        readonly id: string;
+    }>;
     readonly " $refType": "LocationInstanceInfoDialog_locationInstance";
 };
 export type LocationInstanceInfoDialog_locationInstance$data = LocationInstanceInfoDialog_locationInstance;
@@ -131,11 +134,21 @@ return {
       "plural": false,
       "selections": (v1/*: any*/),
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Tag",
+      "kind": "LinkedField",
+      "name": "tags",
+      "plural": true,
+      "selections": (v1/*: any*/),
+      "storageKey": null
     }
   ],
   "type": "LocationInstance",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd3fb6f5f202edb01c801d06719204ec2';
+(node as any).hash = '52ec751022206121cbc31466cb418368';
 export default node;

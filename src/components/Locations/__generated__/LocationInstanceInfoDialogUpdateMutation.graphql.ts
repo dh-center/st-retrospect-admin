@@ -90,6 +90,9 @@ fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
   location {
     id
   }
+  tags {
+    id
+  }
 }
 
 fragment LocationInstanceListItem_instance on LocationInstance {
@@ -366,6 +369,16 @@ return {
                             "plural": false,
                             "selections": (v4/*: any*/),
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Tag",
+                            "kind": "LinkedField",
+                            "name": "tags",
+                            "plural": true,
+                            "selections": (v4/*: any*/),
+                            "storageKey": null
                           }
                         ],
                         "storageKey": null
@@ -385,12 +398,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e71788051d59e0c58ad6d9ec8fce4954",
+    "cacheID": "5d7e0cc0923d8ff0f3c699d1a3030d1e",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation LocationInstanceInfoDialogUpdateMutation(\n  $input: UpdateLocationInstanceInput!\n) {\n  locationInstances {\n    update(input: $input) {\n      recordId\n      record {\n        id\n        location {\n          ...LocationInfo_location\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  addresses {\n    address\n  }\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  source\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  architects {\n    id\n  }\n  location {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
+    "text": "mutation LocationInstanceInfoDialogUpdateMutation(\n  $input: UpdateLocationInstanceInput!\n) {\n  locationInstances {\n    update(input: $input) {\n      recordId\n      record {\n        id\n        location {\n          ...LocationInfo_location\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment LocationInfo_location on Location {\n  id\n  latitude\n  longitude\n  addresses {\n    address\n  }\n  instances {\n    id\n  }\n  ...LocationInstancesList_data\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  source\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  architects {\n    id\n  }\n  location {\n    id\n  }\n  tags {\n    id\n  }\n}\n\nfragment LocationInstanceListItem_instance on LocationInstance {\n  name\n  mainPhotoLink\n  description\n}\n\nfragment LocationInstancesList_data on Location {\n  instances {\n    id\n    name\n    ...LocationInstanceListItem_instance\n    ...LocationInstanceInfoDialog_locationInstance\n  }\n}\n"
   }
 };
 })();
