@@ -46,7 +46,10 @@ export default function TagsInput(props: TagsInputProps): ReactElement {
     mutation TagsInputMutation($input: CreateTagInput!) {
       tag {
         create(input: $input) {
-          recordId
+          record {
+            id
+            value
+          }
         }
       }
     }
@@ -85,8 +88,8 @@ export default function TagsInput(props: TagsInputProps): ReactElement {
             },
             onCompleted(response) {
               const newTags = tags.concat({
-                id: response.tag.create.recordId,
-                name: tag.name,
+                id: response.tag.create.record.id,
+                name: response.tag.create.record.value,
               });
 
               setTags(newTags);

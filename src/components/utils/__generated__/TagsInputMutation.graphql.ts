@@ -12,7 +12,10 @@ export type TagsInputMutationVariables = {
 export type TagsInputMutationResponse = {
     readonly tag: {
         readonly create: {
-            readonly recordId: string;
+            readonly record: {
+                readonly id: string;
+                readonly value: string;
+            };
         };
     };
 };
@@ -29,7 +32,10 @@ mutation TagsInputMutation(
 ) {
   tag {
     create(input: $input) {
-      recordId
+      record {
+        id
+        value
+      }
     }
   }
 }
@@ -69,8 +75,26 @@ v1 = [
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "recordId",
+            "concreteType": "Tag",
+            "kind": "LinkedField",
+            "name": "record",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "value",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -98,14 +122,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "a5804082f1910c0e3b12d3df42d5cc37",
+    "cacheID": "9a0537fb9b3f8e1c43e5da6130f9d254",
     "id": null,
     "metadata": {},
     "name": "TagsInputMutation",
     "operationKind": "mutation",
-    "text": "mutation TagsInputMutation(\n  $input: CreateTagInput!\n) {\n  tag {\n    create(input: $input) {\n      recordId\n    }\n  }\n}\n"
+    "text": "mutation TagsInputMutation(\n  $input: CreateTagInput!\n) {\n  tag {\n    create(input: $input) {\n      record {\n        id\n        value\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5d76fe3700fbb8bc3507a41d0483a2a6';
+(node as any).hash = '6531b67e1bf9074e5b3886e9ee5c41bb';
 export default node;
