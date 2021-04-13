@@ -8,7 +8,7 @@ export type PersonsTreeMap_data = {
     readonly persons: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly professions: ReadonlyArray<string | null> | null;
+                readonly professions: ReadonlyArray<string> | null;
                 readonly birthDate: string | null;
             };
         }>;

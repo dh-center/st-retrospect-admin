@@ -17,7 +17,7 @@ export type LocationInstanceInfoDialog_locationInstance = {
     readonly photoLinks: ReadonlyArray<string> | null;
     readonly architects: ReadonlyArray<{
         readonly id: string;
-    } | null> | null;
+    }>;
     readonly location: {
         readonly id: string;
     };

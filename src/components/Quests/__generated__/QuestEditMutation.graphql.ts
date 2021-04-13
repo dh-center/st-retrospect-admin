@@ -14,6 +14,7 @@ export type UpdateQuestInput = {
     earnedExp?: number | null;
     data?: EditorDataInput | null;
     credits?: EditorDataInput | null;
+    tagIds?: Array<string> | null;
 };
 export type EditorDataInput = {
     time?: number | null;

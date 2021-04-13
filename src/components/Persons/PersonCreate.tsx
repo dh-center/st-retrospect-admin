@@ -36,6 +36,7 @@ function generatePersonInput(): CreatePersonInput {
     deathDate: '',
     photoLinks: [],
     wikiLink: '',
+    tagIds: [],
   };
 }
 

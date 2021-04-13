@@ -15,6 +15,7 @@ export type CreatePersonInput = {
     deathDate?: string | null;
     photoLinks?: Array<string> | null;
     wikiLink?: string | null;
+    tagIds: Array<string>;
 };
 export type PersonCreateMutationVariables = {
     input: CreatePersonInput;

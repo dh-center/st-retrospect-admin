@@ -18,7 +18,7 @@ export type LocationInstanceInfoDialogAddArchitectMutationResponse = {
                     readonly id: string;
                     readonly architects: ReadonlyArray<{
                         readonly id: string;
-                    } | null> | null;
+                    }>;
                 } | null;
             };
         };

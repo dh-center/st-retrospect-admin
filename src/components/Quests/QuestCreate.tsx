@@ -40,6 +40,7 @@ export function generateQuestInput(): CreateQuestInput {
       version: null,
       blocks: [],
     },
+    tagIds: [],
   };
 }
 
