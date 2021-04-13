@@ -6,11 +6,28 @@ import graphql from 'babel-plugin-relay/macro';
 import { TagsInputQuery } from './__generated__/TagsInputQuery.graphql';
 import { TagsInputMutation } from './__generated__/TagsInputMutation.graphql';
 
+/**
+ * Props of component
+ */
 interface TagsInputProps {
+  /**
+   * Current tags ids
+   */
   value: string[];
+
+  /**
+   * onChange event handler
+   *
+   * @param value - new value
+   */
   onChange: (value: string[]) => void;
 }
 
+/**
+ * Tags input with search
+ *
+ * @param props - props of component
+ */
 export default function TagsInput(props: TagsInputProps): ReactElement {
   const data = useLazyLoadQuery<TagsInputQuery>(graphql`
     query TagsInputQuery {
