@@ -63,6 +63,7 @@ function PersonEditForm(props: Props): React.ReactElement {
   const originalPerson = {
     ...props.originalPerson,
     tagIds: props.originalPerson.tags.map(tag => tag.id),
+    tags: undefined,
   };
   const [input, setInput] = useState(() => deepCopy(originalPerson as UpdatePersonInput));
 
