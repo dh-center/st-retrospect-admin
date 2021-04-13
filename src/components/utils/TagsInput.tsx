@@ -29,6 +29,8 @@ interface TagsInputProps {
  * @param props - props of component
  */
 export default function TagsInput(props: TagsInputProps): ReactElement {
+  const [fetchKey, setFetchKey] = useState<number>(0);
+
   const data = useLazyLoadQuery<TagsInputQuery>(graphql`
     query TagsInputQuery {
       tags {
@@ -40,7 +42,11 @@ export default function TagsInput(props: TagsInputProps): ReactElement {
         }
       }
     }
-  `, {});
+  `, {},
+  {
+    fetchPolicy: 'network-only',
+    fetchKey,
+  });
 
   const [ createTag ] = useMutation<TagsInputMutation>(graphql`
     mutation TagsInputMutation($input: CreateTagInput!) {
@@ -93,6 +99,7 @@ export default function TagsInput(props: TagsInputProps): ReactElement {
               });
 
               setTags(newTags);
+              setFetchKey(fetchKey + 1);
               props.onChange(newTags.map(tagElement => tagElement.id as string));
             },
           });
