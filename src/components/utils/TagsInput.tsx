@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useMemo, useState } from 'react';
 import ReactTags, { Tag } from 'react-tag-autocomplete';
 import withLabel from './LabeledComponent';
 import { useLazyLoadQuery, useMutation } from 'react-relay';
@@ -61,14 +61,14 @@ export default function TagsInput(props: TagsInputProps): ReactElement {
     }
   `);
 
-  const suggestions: Tag[] = data.tags.edges.map(edge => {
+  const suggestions: Tag[] = useMemo(() => data.tags.edges.map(edge => {
     return {
       id: edge.node.id,
       name: edge.node.value,
     };
-  });
+  }), [ data ]);
 
-  const originalTags: Tag[] = data.tags.edges
+  const originalTags: Tag[] = useMemo(() => data.tags.edges
     .filter(edge => {
       return props.value.includes(edge.node.id);
     })
@@ -77,7 +77,7 @@ export default function TagsInput(props: TagsInputProps): ReactElement {
         id: edge.node.id,
         name: edge.node.value,
       };
-    });
+    }), [ data ]);
 
   const [tags, setTags] = useState<Tag[]>(originalTags);
 
