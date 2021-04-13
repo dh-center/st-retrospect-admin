@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, Suspense, useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import useUniqueId from '../../utils/useUniqueId';
@@ -39,6 +39,7 @@ import {
 } from './__generated__/LocationInstanceInfoDialogRemoveArchitectMutation.graphql';
 import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
 import handleApiError from '../../utils/handleApiError';
+import { LabeledTagsInput } from '../utils/TagsInput';
 
 /**
  * Union type for inputs for creating and updating location instances
@@ -90,6 +91,7 @@ function generateLocationInstanceInput(locationId: string): CreateLocationInstan
     startDate: '',
     source: '',
     locationId,
+    tagIds: [],
   };
 }
 
@@ -112,6 +114,7 @@ function instanceToInput(instance: LocationInstanceInfoDialog_locationInstance |
   }
 
   return {
+    tagIds: instance.tags.map(tag => tag.id),
     constructionDate: instance.constructionDate,
     demolitionDate: instance.demolitionDate,
     description: instance.description || '',
@@ -516,6 +519,18 @@ function LocationInstanceInfoDialog(props: Props): React.ReactElement {
               value={input.endDate || ''}
             />
           </Form.Group>
+          <Suspense fallback='Loading tags...'>
+            <LabeledTagsInput
+              label='Tags'
+              onChange={value => {
+                setInput({
+                  ...input,
+                  tagIds: value,
+                });
+              }}
+              value={input.tagIds || []}
+            />
+          </Suspense>
           <Form.Group>
             <Form.Label>Main photo</Form.Label>
             <ImageGallery
@@ -621,6 +636,9 @@ export default createRefetchContainer(
           id
         }
         location {
+          id
+        }
+        tags {
           id
         }
       }

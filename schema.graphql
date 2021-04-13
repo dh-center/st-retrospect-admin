@@ -172,6 +172,9 @@ input CreateLocationInstanceInput {
 
   """Source of information about location instance"""
   source: MultilingualString!
+
+  """Location instance tags"""
+  tagIds: [GlobalId!]!
 }
 
 type CreateLocationInstancePayload {
@@ -239,7 +242,7 @@ input CreatePersonInput {
   wikiLink: String
 
   """Person tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]!
 }
 
 type CreatePersonPayload {
@@ -276,7 +279,7 @@ input CreateQuestInput {
   credits: EditorDataInput!
 
   """Quest tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]!
 }
 
 type CreateQuestPayload {
@@ -557,7 +560,7 @@ input LocationInstanceInput {
   endDate: String
 
   """Location instance tags"""
-  tagIds: [String!]
+  tagIds: [GlobalId!]
 }
 
 type LocationInstanceMutations {
@@ -1318,6 +1321,9 @@ input UpdateLocationInstanceInput {
 
   """Source of information about location instance"""
   source: MultilingualString!
+
+  """Location instance tags"""
+  tagIds: [GlobalId!]!
 }
 
 type UpdateLocationInstancePayload {
@@ -1392,7 +1398,7 @@ input UpdatePersonInput {
   wikiLink: String
 
   """Person tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]!
 }
 
 type UpdatePersonPayload {
@@ -1432,7 +1438,7 @@ input UpdateQuestInput {
   credits: EditorDataInput
 
   """Quest tags"""
-  tagIds: [String!]
+  tagIds: [GlobalId!]
 }
 
 type UpdateQuestPayload {

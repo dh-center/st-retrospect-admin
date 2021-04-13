@@ -2275,6 +2275,13 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-tag-autocomplete@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-tag-autocomplete/-/react-tag-autocomplete-6.1.0.tgz#02def01a2dd4e17756a3bd69002d43d8f4ccd6d8"
+  integrity sha512-6qJQS81ZMaqV/ZSADwiU91TXnR6ZJINPqoV3z2SMMSlUcO6CV8Vc5QnqcqcVTj2CHnU3UQ2Q5QfSj3NyXomcDg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.4.1":
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.1.tgz#e1a3cb278df7f47f17b5082b1b3da17170bd44b1"
@@ -10391,6 +10398,11 @@ react-select-search@^3.0.5:
   integrity sha512-240+x+AmgoBcUW5O5hIvFWji5qhJpTlj6Z4TpGjzG+I1vp2kQ0pHYjllgse6RrcqazOq/mqZMOFaIs7zt7Zptg==
   optionalDependencies:
     fuse.js "^3.4.5"
+
+react-tag-autocomplete@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/react-tag-autocomplete/-/react-tag-autocomplete-6.1.0.tgz#9fb70149a69b33379013e5255bcd7ad97d8ec06b"
+  integrity sha512-AMhVqxEEIrOfzH0A9XrpsTaLZCVYgjjxp3DSTuSvx91LBSFI6uYcKe38ltR/H/TQw4aytofVghQ1hR9sKpXRQA==
 
 react-transition-group@^4.4.1:
   version "4.4.1"

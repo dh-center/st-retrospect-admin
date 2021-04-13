@@ -46,6 +46,9 @@ fragment LocationInstanceInfoDialog_locationInstance on LocationInstance {
   location {
     id
   }
+  tags {
+    id
+  }
 }
 */
 
@@ -198,6 +201,16 @@ return {
             "plural": false,
             "selections": (v3/*: any*/),
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Tag",
+            "kind": "LinkedField",
+            "name": "tags",
+            "plural": true,
+            "selections": (v3/*: any*/),
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -205,12 +218,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16ee19ae2e203bad096b3783f1c785e7",
+    "cacheID": "eb0016ce6b31a8c6b262c4ec0bff0d4e",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceInfoDialogRefetchQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: GlobalId!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  source\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  architects {\n    id\n  }\n  location {\n    id\n  }\n}\n"
+    "text": "query LocationInstanceInfoDialogRefetchQuery(\n  $locationInstaceId: GlobalId!\n) {\n  locationInstance(id: $locationInstaceId) {\n    ...LocationInstanceInfoDialog_locationInstance\n    id\n  }\n}\n\nfragment LocationInstanceInfoDialog_locationInstance on LocationInstance {\n  id\n  name\n  description\n  source\n  constructionDate\n  demolitionDate\n  startDate\n  endDate\n  mainPhotoLink\n  photoLinks\n  architects {\n    id\n  }\n  location {\n    id\n  }\n  tags {\n    id\n  }\n}\n"
   }
 };
 })();

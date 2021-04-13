@@ -81,6 +81,9 @@ export default function QuestView(): ReactElement {
             description
             minLevel
             earnedExp
+            tags {
+              value
+            }
           }
         }
       `}
@@ -115,6 +118,12 @@ export default function QuestView(): ReactElement {
               <LabeledText
                 content={props.quest.description}
                 label='Description'
+              />
+              <LabeledText
+                content={props.quest.tags
+                  .map(tag => tag.value)
+                  .join('; ')}
+                label='Tags'
               />
               <LabeledText
                 content={props.quest.minLevel.toString()}

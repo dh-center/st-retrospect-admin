@@ -1,61 +1,41 @@
-import graphql from 'babel-plugin-relay/macro';
+import {
+  QuestEditFormUpdateMutation,
+  QuestEditFormUpdateMutationResponse,
+  UpdateQuestInput
+} from './__generated__/QuestEditFormUpdateMutation.graphql';
 import commitMutation from 'relay-commit-mutation-promise';
 import environment from '../../appEnv';
-import {
-  CreateQuestInput,
-  QuestCreateMutation,
-  QuestCreateMutationResponse
-} from './__generated__/QuestCreateMutation.graphql';
+import graphql from 'babel-plugin-relay/macro';
+import { QuestEditForm_originalQuest } from './__generated__/QuestEditForm_originalQuest.graphql';
 import React, { FormEvent, Suspense, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import deepCopy from '../../utils/deepCopy';
 import notifier from 'codex-notifier';
+import handleApiError from '../../utils/handleApiError';
 import ContentWrapper from '../ContentWrapper';
-import { Form, Spinner } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import Input from '../utils/Input';
-import Button from 'react-bootstrap/Button';
 import Textarea from '../utils/Textarea';
+import { LabeledTagsInput } from '../utils/TagsInput';
+import Button from 'react-bootstrap/cjs/Button';
+import { createFragmentContainer } from 'react-relay';
+import editorjsStyles from '../../editorjs-plugins/EditorJs.module.css';
+import EditorJs from 'react-editor-js';
 import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
-import EditorJs from 'react-editor-js';
-import handleApiError from '../../utils/handleApiError';
-import editorjsStyles from '../../editorjs-plugins/EditorJs.module.css';
-import { LabeledTagsInput } from '../utils/TagsInput';
+import ButtonWithLoader from '../utils/ButtonWithLoader';
+import useLeaveEditPage from '../../utils/useLeaveEditPage';
 
 /**
- * Generates input data for creating new quest
- */
-export function generateQuestInput(): CreateQuestInput {
-  return {
-    name: '',
-    description: '',
-    type: 'QUIZ',
-    minLevel: 0,
-    earnedExp: 0,
-    data: {
-      time: null,
-      version: null,
-      blocks: [],
-    },
-    credits: {
-      time: null,
-      version: null,
-      blocks: [],
-    },
-    tagIds: [],
-  };
-}
-
-/**
- * Mutation for creating new quest
+ * Executes update mutation for quest
  *
- * @param input - input data for creating
+ * @param input - updated quest object
  */
-function create(input: CreateQuestInput): Promise<QuestCreateMutationResponse> {
-  return commitMutation<QuestCreateMutation>(environment, {
+export function update(input: UpdateQuestInput): Promise<QuestEditFormUpdateMutationResponse> {
+  return commitMutation<QuestEditFormUpdateMutation>(environment, {
     mutation: graphql`
-      mutation QuestCreateMutation($input: CreateQuestInput!) {
+      mutation QuestEditFormUpdateMutation($input: UpdateQuestInput!) {
         quest {
-          create(input: $input) {
+          update(input: $input) {
             recordId
           }
         }
@@ -66,43 +46,60 @@ function create(input: CreateQuestInput): Promise<QuestCreateMutationResponse> {
 }
 
 /**
- * Component implements quest creating
+ * Props for QuestEditForm
  */
-export default function QuestCreate(): React.ReactElement {
-  const [input, setInput] = useState<CreateQuestInput>(generateQuestInput);
+interface Props {
+  /**
+   * Data about original quest for editing
+   */
+  originalQuest: QuestEditForm_originalQuest;
+}
+
+/**
+ * Form for editing quests
+ *
+ * @param props - props for component rendering
+ */
+function QuestEditForm(props: Props): React.ReactElement {
+  const originalQuest = {
+    ...props.originalQuest,
+    tagIds: props.originalQuest.tags.map(tag => tag.id),
+    tags: undefined,
+  };
+  const [input, setInput] = useState(() => deepCopy(originalQuest as UpdateQuestInput));
+
   const [isLoading, setLoadingStatus] = useState(false);
-  const history = useHistory();
+
+  const leaveEditPage = useLeaveEditPage();
 
   /**
-   * Saves created quest to API
+   * Saves updated quest to API
    *
-   * @param e - form submit event
+   * @param e - submit form event
    */
-  const saveQuestToApi = async (e: FormEvent): Promise<void> => {
+  const updateQuest = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-    if (!input) {
-      return;
-    }
-
-    setLoadingStatus(true);
-    try {
-      await create(input);
-      notifier.show({
-        message: `Successfully created`,
-        style: 'success',
-        time: 5000,
-      });
-      setLoadingStatus(false);
-      history.push('/quests');
-    } catch (error) {
-      setLoadingStatus(false);
-      handleApiError(error);
+    if ('id' in input) {
+      setLoadingStatus(true);
+      try {
+        await update(input);
+        notifier.show({
+          message: 'Successfully updated',
+          style: 'success',
+          time: 5000,
+        });
+        setLoadingStatus(false);
+        leaveEditPage();
+      } catch (error) {
+        setLoadingStatus(false);
+        handleApiError(error);
+      }
     }
   };
 
   return (
     <ContentWrapper>
-      <Form onSubmit={saveQuestToApi}>
+      <Form onSubmit={updateQuest}>
         <Input
           label='Name'
           onChange={value => setInput({
@@ -110,7 +107,7 @@ export default function QuestCreate(): React.ReactElement {
             name: value,
           })}
           required
-          value={input.name}
+          value={input?.name || ''}
         />
         <Textarea
           label='Description'
@@ -118,7 +115,7 @@ export default function QuestCreate(): React.ReactElement {
             ...input,
             description: value.toString(),
           })}
-          value={input.description || ''}
+          value={input?.description || ''}
         />
         <Form.Group>
           <Form.Label htmlFor='photo'>Photo</Form.Label>
@@ -133,7 +130,7 @@ export default function QuestCreate(): React.ReactElement {
           <Form.Label htmlFor=''>Type</Form.Label>
           <div>
             <Form.Check
-              checked={input.type === 'QUIZ'}
+              checked={input?.type === 'QUIZ'}
               id='quiz'
               inline
               label='Quiz'
@@ -149,7 +146,7 @@ export default function QuestCreate(): React.ReactElement {
               value='QUIZ'
             />
             <Form.Check
-              checked={input.type === 'ROUTE'}
+              checked={input?.type === 'ROUTE'}
               id='route'
               inline
               label='Route'
@@ -187,7 +184,7 @@ export default function QuestCreate(): React.ReactElement {
           })}
           required
           type='number'
-          value={input.minLevel.toString()}
+          value={input?.minLevel !== undefined ? Number(input?.minLevel).toString() : '0'}
         />
         <Input
           label='Earned experience'
@@ -198,16 +195,16 @@ export default function QuestCreate(): React.ReactElement {
           })}
           required
           type='number'
-          value={input.earnedExp.toString()}
+          value={input?.earnedExp !== undefined ? Number(input?.earnedExp).toString() : '0'}
         />
         <Form.Group>
           <h2>Route content</h2>
           <div className={editorjsStyles.editorjsWrapper}>
             <EditorJs
               data={{
-                blocks: (input.data?.blocks || []) as OutputBlockData[],
-                time: input.data?.time || undefined,
-                version: input.data?.version || undefined,
+                blocks: (input?.data?.blocks || []) as OutputBlockData[],
+                time: input?.data?.time || undefined,
+                version: input?.data?.version || undefined,
               }}
               onChange={(api: API, editorData?: OutputData) => {
                 if (editorData) {
@@ -231,9 +228,9 @@ export default function QuestCreate(): React.ReactElement {
           <div className={editorjsStyles.editorjsWrapper}>
             <EditorJs
               data={{
-                blocks: (input.credits?.blocks || []) as OutputBlockData[],
-                time: input.credits?.time || undefined,
-                version: input.credits?.version || undefined,
+                blocks: (input?.credits?.blocks || []) as OutputBlockData[],
+                time: input?.credits?.time || undefined,
+                version: input?.credits?.version || undefined,
               }}
               onChange={(api: API, editorData?: OutputData) => {
                 if (editorData) {
@@ -252,23 +249,51 @@ export default function QuestCreate(): React.ReactElement {
             />
           </div>
         </Form.Group>
-        <Button
-          className='m-1'
-          type='submit'
-        >
-          {isLoading
-            ? (
-              <Spinner
-                animation='border'
-                aria-hidden='true'
-                as='span'
-                role='status'
-                size='sm'
-              />
-            )
-            : 'Create'}
-        </Button>
+        <div>
+          <ButtonWithLoader
+            isLoading={isLoading}
+            type='submit'
+          >
+            Save
+          </ButtonWithLoader>
+          <Button
+            className='m-1'
+            onClick={() => leaveEditPage()}
+            variant='outline-danger'
+          >
+            Cancel
+          </Button>
+        </div>
       </Form>
     </ContentWrapper>
   );
 }
+
+export default createFragmentContainer(
+  QuestEditForm,
+  {
+    originalQuest: graphql`
+      fragment QuestEditForm_originalQuest on Quest {
+        id
+        name
+        description
+        type
+        minLevel
+        earnedExp
+        data {
+          time
+          version
+          blocks
+        }
+        credits {
+          time
+          version
+          blocks
+        }
+        tags {
+          id
+        }
+      }
+    `,
+  }
+);

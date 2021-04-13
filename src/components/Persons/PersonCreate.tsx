@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, Suspense } from 'react';
 import { useHistory } from 'react-router-dom';
 import notifier from 'codex-notifier';
 import ContentWrapper from '../ContentWrapper';
@@ -19,6 +19,7 @@ import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
 import ImageUploader from '../utils/ImageUploader';
 import handleApiError from '../../utils/handleApiError';
+import { LabeledTagsInput } from '../utils/TagsInput';
 
 /**
  * Generates input data for creating new person
@@ -206,6 +207,18 @@ export default function PersonCreate(): React.ReactElement {
             });
           }}
         />
+        <Suspense fallback='Loading tags...'>
+          <LabeledTagsInput
+            label='Tags'
+            onChange={value => {
+              setInput({
+                ...input,
+                tagIds: value,
+              });
+            }}
+            value={input.tagIds || []}
+          />
+        </Suspense>
         <Input
           label='Wiki link'
           onChange={value => setInput({
