@@ -7,7 +7,6 @@ import Input from '../utils/Input';
 import { LabeledArrayOfInputs } from '../utils/ArrayOfInputs';
 import { PersonEditForm_originalPerson } from './__generated__/PersonEditForm_originalPerson.graphql';
 import deepCopy from '../../utils/deepCopy';
-import { useHistory, useLocation } from 'react-router-dom';
 import ContentWrapper from '../ContentWrapper';
 import { Form } from 'react-bootstrap';
 import commitMutation from 'relay-commit-mutation-promise';
@@ -24,7 +23,7 @@ import styles from './Images.module.css';
 import ImageUploader from '../utils/ImageUploader';
 import handleApiError from '../../utils/handleApiError';
 import { LabeledTagsInput } from '../utils/TagsInput';
-import useLeaveEditPage from "../../utils/useLeaveEditPage";
+import useLeaveEditPage from '../../utils/useLeaveEditPage';
 
 /**
  * Executes update mutation for person
