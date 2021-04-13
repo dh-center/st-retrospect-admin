@@ -36,6 +36,9 @@ directive @authCheck on FIELD_DEFINITION
 """Directive for checking admin permissions"""
 directive @adminCheck on FIELD_DEFINITION
 
+"""Directive for checking editor permissions"""
+directive @editorCheck on FIELD_DEFINITION
+
 """Exposes a URL that specifies the behaviour of this scalar."""
 directive @specifiedBy(
   """The URL that specifies the behaviour of this scalar."""
@@ -234,6 +237,9 @@ input CreatePersonInput {
 
   """Person's info link"""
   wikiLink: String
+
+  """Person tags"""
+  tagIds: [String!]!
 }
 
 type CreatePersonPayload {
@@ -268,6 +274,9 @@ input CreateQuestInput {
 
   """Information about quest authors"""
   credits: EditorDataInput!
+
+  """Quest tags"""
+  tagIds: [String!]!
 }
 
 type CreateQuestPayload {
@@ -483,7 +492,7 @@ type LocationInstance implements Node {
   wikiLink: String
 
   """Array of location's types"""
-  locationTypes: [LocationType]
+  locationTypes: [LocationType!]
 
   """Location style"""
   locationStyle: LocationStyle
@@ -510,10 +519,13 @@ type LocationInstance implements Node {
   relations: [Relation!]!
 
   """Array of architects"""
-  architects: [Person]
+  architects: [Person!]!
 
   """Source of information about location instance"""
   source: MultilingualString
+
+  """Location instance tags"""
+  tags: [Tag!]!
 }
 
 input LocationInstanceInput {
@@ -543,6 +555,9 @@ input LocationInstanceInput {
 
   """End of period"""
   endDate: String
+
+  """Location instance tags"""
+  tagIds: [String!]
 }
 
 type LocationInstanceMutations {
@@ -677,7 +692,7 @@ type Person implements Node {
   pseudonym: MultilingualString
 
   """Person's professions"""
-  professions: [String]
+  professions: [String!]
 
   """Person's description"""
   description: MultilingualString
@@ -698,7 +713,10 @@ type Person implements Node {
   mainPhotoLink: String
 
   """Person's photos links"""
-  photoLinks: [String]
+  photoLinks: [String!]
+
+  """Person tags"""
+  tags: [Tag!]!
 }
 
 """Model for representing list of persons"""
@@ -795,12 +813,6 @@ type Query {
 
   """Get all locationInstances"""
   locationInstances: [LocationInstance!]!
-
-  """Get relations on user request"""
-  search(
-    """The string on the basis of which the request will be made"""
-    searchString: String!
-  ): [Relation!]!
 
   """Returns list of all location types"""
   locationTypes: [LocationType!]!
@@ -911,6 +923,9 @@ type Query {
     last: Int
   ): QuestConnection!
 
+  """Search for entities by search query"""
+  search(input: SearchInput!): [SearchResult!]!
+
   """Get specific tag"""
   tag(
     """Tag id"""
@@ -973,6 +988,9 @@ type Quest implements Node {
 
   """Quest progress states (passed, available, blocked)"""
   questProgressState: QuestUserProgressStates!
+
+  """Quest tags"""
+  tags: [Tag!]!
 }
 
 """Model for representing list of quests"""
@@ -1149,6 +1167,24 @@ type RemoveArchitectPayload {
   """Deleted relation id"""
   recordId: GlobalId!
 }
+
+"""Search query input"""
+input SearchInput {
+  """Query string"""
+  query: String!
+
+  """Start of search range"""
+  startYear: Int!
+
+  """End of search range"""
+  endYear: Int!
+
+  """Entity category"""
+  category: [String!]
+}
+
+"""Possible data types that the search might return"""
+union SearchResult = LocationInstance | Person | Quest
 
 """Tag of person or location instance"""
 type Tag implements Node {
@@ -1354,6 +1390,9 @@ input UpdatePersonInput {
 
   """Person's info link"""
   wikiLink: String
+
+  """Person tags"""
+  tagIds: [String!]!
 }
 
 type UpdatePersonPayload {
@@ -1391,6 +1430,9 @@ input UpdateQuestInput {
 
   """Information about quest authors"""
   credits: EditorDataInput
+
+  """Quest tags"""
+  tagIds: [String!]
 }
 
 type UpdateQuestPayload {

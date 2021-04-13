@@ -13,6 +13,7 @@ export type CreateQuestInput = {
     earnedExp: number;
     data: EditorDataInput;
     credits: EditorDataInput;
+    tagIds: Array<string>;
 };
 export type EditorDataInput = {
     time?: number | null;

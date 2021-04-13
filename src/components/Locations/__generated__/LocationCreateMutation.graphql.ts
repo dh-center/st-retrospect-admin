@@ -19,6 +19,7 @@ export type LocationInstanceInput = {
     demolitionDate?: string | null;
     startDate?: string | null;
     endDate?: string | null;
+    tagIds?: Array<string> | null;
 };
 export type CreateAddressInput = {
     countryCode: string;

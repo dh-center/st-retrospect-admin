@@ -14,11 +14,11 @@ export type PersonViewQueryResponse = {
         readonly patronymic: string | null;
         readonly pseudonym: string | null;
         readonly mainPhotoLink: string | null;
-        readonly professions: ReadonlyArray<string | null> | null;
+        readonly professions: ReadonlyArray<string> | null;
         readonly description: string | null;
         readonly birthDate: string | null;
         readonly deathDate: string | null;
-        readonly photoLinks: ReadonlyArray<string | null> | null;
+        readonly photoLinks: ReadonlyArray<string> | null;
         readonly wikiLink: string | null;
     } | null;
 };

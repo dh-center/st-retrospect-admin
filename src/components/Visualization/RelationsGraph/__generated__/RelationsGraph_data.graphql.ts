@@ -20,7 +20,7 @@ export type RelationsGraph_data = {
                     readonly name: string | null;
                     readonly locationTypes: ReadonlyArray<{
                         readonly id: string;
-                    } | null> | null;
+                    }> | null;
                 } | null;
             };
         }>;
