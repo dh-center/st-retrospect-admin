@@ -1,0 +1,99 @@
+import { ReactElement, useState } from 'react';
+import ReactTags, { Tag } from 'react-tag-autocomplete';
+import withLabel from './LabeledComponent';
+import { useLazyLoadQuery, useMutation } from 'react-relay';
+import graphql from 'babel-plugin-relay/macro';
+import { TagsInputQuery } from './__generated__/TagsInputQuery.graphql';
+import { TagsInputMutation } from './__generated__/TagsInputMutation.graphql';
+
+interface TagsInputProps {
+  value: string[];
+  onChange: (value: string[]) => void;
+}
+
+export default function TagsInput(props: TagsInputProps): ReactElement {
+  const data = useLazyLoadQuery<TagsInputQuery>(graphql`
+    query TagsInputQuery {
+      tags {
+        edges {
+          node {
+            id
+            value
+          }
+        }
+      }
+    }
+  `, {});
+
+  const [ createTag ] = useMutation<TagsInputMutation>(graphql`
+    mutation TagsInputMutation($input: CreateTagInput!) {
+      tag {
+        create(input: $input) {
+          recordId
+        }
+      }
+    }
+  `);
+
+  const suggestions: Tag[] = data.tags.edges.map(edge => {
+    return {
+      id: edge.node.id,
+      name: edge.node.value,
+    };
+  });
+
+  const originalTags: Tag[] = data.tags.edges
+    .filter(edge => {
+      return props.value.includes(edge.node.id);
+    })
+    .map(edge => {
+      return {
+        id: edge.node.id,
+        name: edge.node.value,
+      };
+    });
+
+  const [tags, setTags] = useState<Tag[]>(originalTags);
+
+  return (
+    <ReactTags
+      allowNew
+      onAddition={(tag: Tag) => {
+        if (!tag.id) {
+          createTag({
+            variables: {
+              input: {
+                value: tag.name,
+              },
+            },
+            onCompleted(response) {
+              const newTags = tags.concat({
+                id: response.tag.create.recordId,
+                name: tag.name,
+              });
+
+              setTags(newTags);
+              props.onChange(newTags.map(tagElement => tagElement.id as string));
+            },
+          });
+        } else {
+          const newTags = tags.concat(tag);
+
+          setTags(newTags);
+          props.onChange(newTags.map(tagElement => tagElement.id as string));
+        }
+      }}
+      onDelete={(index) => {
+        const newTags = tags.slice(0);
+
+        newTags.splice(index, 1);
+        setTags(newTags);
+        props.onChange(newTags.map(tagElement => tagElement.id as string));
+      }}
+      suggestions={suggestions}
+      tags={tags}
+    />
+  );
+}
+
+export const LabeledTagsInput = withLabel(TagsInput);

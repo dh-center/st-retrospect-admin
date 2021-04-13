@@ -6,7 +6,7 @@ import {
   QuestCreateMutation,
   QuestCreateMutationResponse
 } from './__generated__/QuestCreateMutation.graphql';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, Suspense, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import notifier from 'codex-notifier';
 import ContentWrapper from '../ContentWrapper';
@@ -19,6 +19,7 @@ import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 import EditorJs from 'react-editor-js';
 import handleApiError from '../../utils/handleApiError';
 import editorjsStyles from '../../editorjs-plugins/EditorJs.module.css';
+import { LabeledTagsInput } from '../utils/TagsInput';
 
 /**
  * Generates input data for creating new quest
@@ -165,6 +166,18 @@ export default function QuestCreate(): React.ReactElement {
             />
           </div>
         </Form.Group>
+        <Suspense fallback='Loading tags...'>
+          <LabeledTagsInput
+            label='Tags'
+            onChange={value => {
+              setInput({
+                ...input,
+                tagIds: value,
+              });
+            }}
+            value={input.tagIds || []}
+          />
+        </Suspense>
         <Input
           label='Minimum level'
           min={0}

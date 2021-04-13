@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, Suspense, useState } from 'react';
 import { createFragmentContainer } from 'react-relay';
 import Button from 'react-bootstrap/cjs/Button';
 import Spinner from 'react-bootstrap/cjs/Spinner';
@@ -23,6 +23,7 @@ import ImageGallery from '../utils/ImageGallery';
 import styles from './Images.module.css';
 import ImageUploader from '../utils/ImageUploader';
 import handleApiError from '../../utils/handleApiError';
+import { LabeledTagsInput } from '../utils/TagsInput';
 
 /**
  * Executes update mutation for person
@@ -216,6 +217,18 @@ function PersonEditForm(props: Props): React.ReactElement {
             });
           }}
         />
+        <Suspense fallback='Loading tags...'>
+          <LabeledTagsInput
+            label='Tags'
+            onChange={value => {
+              setInput({
+                ...input,
+                tagIds: value,
+              });
+            }}
+            value={input.tagIds || []}
+          />
+        </Suspense>
         <Input
           label='Wiki link'
           onChange={value => setInput({
