@@ -17,6 +17,9 @@ export type PersonEditForm_originalPerson = {
     readonly deathDate: string | null;
     readonly photoLinks: ReadonlyArray<string> | null;
     readonly wikiLink: string | null;
+    readonly tags: ReadonlyArray<{
+        readonly id: string;
+    }>;
     readonly " $refType": "PersonEditForm_originalPerson";
 };
 export type PersonEditForm_originalPerson$data = PersonEditForm_originalPerson;
@@ -27,19 +30,21 @@ export type PersonEditForm_originalPerson$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "PersonEditForm_originalPerson",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -116,10 +121,23 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "wikiLink",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Tag",
+      "kind": "LinkedField",
+      "name": "tags",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "Person",
   "abstractKey": null
 };
-(node as any).hash = '2c215c5fe3a369c337da6d19d76990c4';
+})();
+(node as any).hash = 'bbaa8d33ad4acc8541ef1f53e112e6f8';
 export default node;

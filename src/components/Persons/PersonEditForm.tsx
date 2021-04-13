@@ -60,7 +60,11 @@ interface Props {
  * @param props - props for component rendering
  */
 function PersonEditForm(props: Props): React.ReactElement {
-  const [input, setInput] = useState(() => deepCopy(props.originalPerson as UpdatePersonInput));
+  const originalPerson = {
+    ...props.originalPerson,
+    tagIds: props.originalPerson.tags.map(tag => tag.id),
+  };
+  const [input, setInput] = useState(() => deepCopy(originalPerson as UpdatePersonInput));
 
   const [isLoading, setLoadingStatus] = useState(false);
   const history = useHistory();
@@ -266,6 +270,9 @@ export default createFragmentContainer(
         deathDate
         photoLinks
         wikiLink
+        tags {
+          id
+        }
       }
     `,
   }

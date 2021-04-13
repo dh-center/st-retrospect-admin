@@ -42,6 +42,9 @@ fragment PersonEditForm_originalPerson on Person {
   deathDate
   photoLinks
   wikiLink
+  tags {
+    id
+  }
 }
 */
 
@@ -59,7 +62,14 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -101,13 +111,7 @@ return {
         "name": "person",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -184,6 +188,18 @@ return {
             "kind": "ScalarField",
             "name": "wikiLink",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Tag",
+            "kind": "LinkedField",
+            "name": "tags",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/)
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -191,12 +207,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d49b5af457700a46f79242341c7d6647",
+    "cacheID": "2704e1d77bd34ba67f5108dfaf38d609",
     "id": null,
     "metadata": {},
     "name": "PersonEditQuery",
     "operationKind": "query",
-    "text": "query PersonEditQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    ...PersonEditForm_originalPerson\n    id\n  }\n}\n\nfragment PersonEditForm_originalPerson on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  mainPhotoLink\n  professions\n  description\n  birthDate\n  deathDate\n  photoLinks\n  wikiLink\n}\n"
+    "text": "query PersonEditQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    ...PersonEditForm_originalPerson\n    id\n  }\n}\n\nfragment PersonEditForm_originalPerson on Person {\n  id\n  lastName\n  firstName\n  patronymic\n  pseudonym\n  mainPhotoLink\n  professions\n  description\n  birthDate\n  deathDate\n  photoLinks\n  wikiLink\n  tags {\n    id\n  }\n}\n"
   }
 };
 })();
