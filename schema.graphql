@@ -631,6 +631,19 @@ type LocationMutations {
   delete(id: GlobalId!): DeleteLocationPayload!
 }
 
+"""Model for representing list of locations"""
+type LocationSearchConnection {
+  """List of locations edges"""
+  edges: [LocationEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+  suggest: String
+}
+
 """Location style"""
 type LocationStyle implements Node {
   """LoactionStyle ID"""
@@ -966,7 +979,7 @@ type Query {
     last: Int
   ): QuestConnection!
   locationInstancesSearch(input: SearchInput!): LocationInstanceConnection!
-  locationsSearch(input: SearchInput!): LocationConnection!
+  locationsSearch(input: SearchInput!): LocationSearchConnection!
 
   """Get specific tag"""
   tag(

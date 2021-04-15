@@ -117,6 +117,7 @@ export default function LocationsPage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(25);
   const [query, setQuery] = useState('');
+  const [currentQuery, setCurrentQuery] = useState('');
 
   const data = useLazyLoadQuery<LocationsPageQuery>(
     graphql`
@@ -129,6 +130,7 @@ export default function LocationsPage() {
               }
             }
             totalCount
+            suggest
           }
         }
     `, {
@@ -141,6 +143,16 @@ export default function LocationsPage() {
 
   return (
     <div>
+      <form onSubmit={e => {
+        e.preventDefault();
+        setQuery(currentQuery);
+      }
+      }>
+        <input onChange={(e) => setCurrentQuery(e.target.value)} type='text' value={currentQuery}/>
+        <button>Search</button>
+      </form>
+      {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
+      {data.locationsSearch.suggest && <div>Maybe you meant <span dangerouslySetInnerHTML={{ __html:data.locationsSearch.suggest }}/></div>}
       <Table>
         <thead>
           <tr>

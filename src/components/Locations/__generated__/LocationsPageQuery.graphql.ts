@@ -18,6 +18,7 @@ export type LocationsPageQueryResponse = {
             };
         }>;
         readonly totalCount: number;
+        readonly suggest: string | null;
     };
 };
 export type LocationsPageQuery = {
@@ -41,6 +42,7 @@ query LocationsPageQuery(
       }
     }
     totalCount
+    suggest
   }
 }
 
@@ -117,6 +119,13 @@ v5 = {
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "suggest",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -132,7 +141,7 @@ return {
       {
         "alias": null,
         "args": (v3/*: any*/),
-        "concreteType": "LocationConnection",
+        "concreteType": "LocationSearchConnection",
         "kind": "LinkedField",
         "name": "locationsSearch",
         "plural": false,
@@ -165,7 +174,8 @@ return {
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v5/*: any*/),
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -186,7 +196,7 @@ return {
       {
         "alias": null,
         "args": (v3/*: any*/),
-        "concreteType": "LocationConnection",
+        "concreteType": "LocationSearchConnection",
         "kind": "LinkedField",
         "name": "locationsSearch",
         "plural": false,
@@ -272,21 +282,22 @@ return {
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v5/*: any*/),
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "080a52f95b7419b8eb9f05eb8e863e92",
+    "cacheID": "7e415e7af27f9b44d35b91465ee5845c",
     "id": null,
     "metadata": {},
     "name": "LocationsPageQuery",
     "operationKind": "query",
-    "text": "query LocationsPageQuery(\n  $query: String!\n  $skip: Int!\n  $first: Int!\n) {\n  locationsSearch(input: {query: $query, windowedPagination: {skip: $skip, first: $first}}) {\n    edges {\n      node {\n        id\n        ...LocationsPage_location\n      }\n    }\n    totalCount\n  }\n}\n\nfragment LocationsPage_location on Location {\n  id\n  longitude\n  latitude\n  addresses {\n    address\n  }\n  instances {\n    id\n    name\n    description\n  }\n}\n"
+    "text": "query LocationsPageQuery(\n  $query: String!\n  $skip: Int!\n  $first: Int!\n) {\n  locationsSearch(input: {query: $query, windowedPagination: {skip: $skip, first: $first}}) {\n    edges {\n      node {\n        id\n        ...LocationsPage_location\n      }\n    }\n    totalCount\n    suggest\n  }\n}\n\nfragment LocationsPage_location on Location {\n  id\n  longitude\n  latitude\n  addresses {\n    address\n  }\n  instances {\n    id\n    name\n    description\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '500c5a8377bfca1da62220a97a22a443';
+(node as any).hash = '59d79f659b827c5160c781830e45a47b';
 export default node;
