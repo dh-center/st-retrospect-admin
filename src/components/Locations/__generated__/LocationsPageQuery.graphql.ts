@@ -5,11 +5,20 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type LocationsPageQueryVariables = {
-    first?: number | null;
-    after?: unknown | null;
+    query: string;
+    skip: number;
+    first: number;
 };
 export type LocationsPageQueryResponse = {
-    readonly " $fragmentRefs": FragmentRefs<"LocationsList_entityConnection">;
+    readonly locationsSearch: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"LocationsPage_location">;
+            };
+        }>;
+        readonly totalCount: number;
+    };
 };
 export type LocationsPageQuery = {
     readonly response: LocationsPageQueryResponse;
@@ -20,36 +29,32 @@ export type LocationsPageQuery = {
 
 /*
 query LocationsPageQuery(
-  $first: Int
-  $after: Cursor
+  $query: String!
+  $skip: Int!
+  $first: Int!
 ) {
-  ...LocationsList_entityConnection_2HEEH6
-}
-
-fragment LocationsList_entityConnection_2HEEH6 on Query {
-  entities: locations(first: $first, after: $after) {
-    totalCount
+  locationsSearch(input: {query: $query, windowedPagination: {skip: $skip, first: $first}}) {
     edges {
       node {
         id
-        latitude
-        longitude
-        addresses {
-          address
-        }
-        instances {
-          id
-          name
-          description
-        }
-        __typename
+        ...LocationsPage_location
       }
-      cursor
     }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
+    totalCount
+  }
+}
+
+fragment LocationsPage_location on Location {
+  id
+  longitude
+  latitude
+  addresses {
+    address
+  }
+  instances {
+    id
+    name
+    description
   }
 }
 */
@@ -58,75 +63,80 @@ const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "after"
+  "name": "first"
 },
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "first"
+  "name": "query"
 },
-v2 = [
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "skip"
+},
+v3 = [
   {
-    "kind": "Variable",
-    "name": "after",
-    "variableName": "after"
-  },
-  {
-    "kind": "Variable",
-    "name": "first",
-    "variableName": "first"
+    "fields": [
+      {
+        "kind": "Variable",
+        "name": "query",
+        "variableName": "query"
+      },
+      {
+        "fields": [
+          {
+            "kind": "Variable",
+            "name": "first",
+            "variableName": "first"
+          },
+          {
+            "kind": "Variable",
+            "name": "skip",
+            "variableName": "skip"
+          }
+        ],
+        "kind": "ObjectValue",
+        "name": "windowedPagination"
+      }
+    ],
+    "kind": "ObjectValue",
+    "name": "input"
   }
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "totalCount",
   "storageKey": null
 };
 return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
     "name": "LocationsPageQuery",
     "selections": [
       {
-        "args": (v2/*: any*/),
-        "kind": "FragmentSpread",
-        "name": "LocationsList_entityConnection"
-      }
-    ],
-    "type": "Query",
-    "abstractKey": null
-  },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
-    "kind": "Operation",
-    "name": "LocationsPageQuery",
-    "selections": [
-      {
-        "alias": "entities",
-        "args": (v2/*: any*/),
+        "alias": null,
+        "args": (v3/*: any*/),
         "concreteType": "LocationConnection",
         "kind": "LinkedField",
-        "name": "locations",
+        "name": "locationsSearch",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "totalCount",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -143,19 +153,73 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "LocationsPage_location"
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          (v5/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ],
+    "type": "Query",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v0/*: any*/)
+    ],
+    "kind": "Operation",
+    "name": "LocationsPageQuery",
+    "selections": [
+      {
+        "alias": null,
+        "args": (v3/*: any*/),
+        "concreteType": "LocationConnection",
+        "kind": "LinkedField",
+        "name": "locationsSearch",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "LocationEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Location",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "latitude",
+                    "name": "longitude",
                     "storageKey": null
                   },
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "longitude",
+                    "name": "latitude",
                     "storageKey": null
                   },
                   {
@@ -184,7 +248,7 @@ return {
                     "name": "instances",
                     "plural": true,
                     "selections": [
-                      (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -201,75 +265,28 @@ return {
                       }
                     ],
                     "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "__typename",
-                    "storageKey": null
                   }
                 ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "cursor",
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "PageInfo",
-            "kind": "LinkedField",
-            "name": "pageInfo",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "endCursor",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "hasNextPage",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
+          (v5/*: any*/)
         ],
         "storageKey": null
-      },
-      {
-        "alias": "entities",
-        "args": (v2/*: any*/),
-        "filters": null,
-        "handle": "connection",
-        "key": "LocationsPage_entities",
-        "kind": "LinkedHandle",
-        "name": "locations"
       }
     ]
   },
   "params": {
-    "cacheID": "d77017fdd779c068c9c8f12067acec4c",
+    "cacheID": "080a52f95b7419b8eb9f05eb8e863e92",
     "id": null,
     "metadata": {},
     "name": "LocationsPageQuery",
     "operationKind": "query",
-    "text": "query LocationsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...LocationsList_entityConnection_2HEEH6\n}\n\nfragment LocationsList_entityConnection_2HEEH6 on Query {\n  entities: locations(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        latitude\n        longitude\n        addresses {\n          address\n        }\n        instances {\n          id\n          name\n          description\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query LocationsPageQuery(\n  $query: String!\n  $skip: Int!\n  $first: Int!\n) {\n  locationsSearch(input: {query: $query, windowedPagination: {skip: $skip, first: $first}}) {\n    edges {\n      node {\n        id\n        ...LocationsPage_location\n      }\n    }\n    totalCount\n  }\n}\n\nfragment LocationsPage_location on Location {\n  id\n  longitude\n  latitude\n  addresses {\n    address\n  }\n  instances {\n    id\n    name\n    description\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '04d6702f1c4c035265db06c478d3748d';
+(node as any).hash = '500c5a8377bfca1da62220a97a22a443';
 export default node;

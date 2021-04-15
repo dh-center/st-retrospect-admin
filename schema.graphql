@@ -352,6 +352,24 @@ type CreateTagPayload {
 
 scalar Cursor
 
+input CursoredPaginationArgs {
+  """The cursor after which we take the data"""
+  after: Cursor
+
+  """The cursor after before we take the data"""
+  before: Cursor
+
+  """
+  Number of requested nodes after a node with a cursor in the after argument
+  """
+  first: Int
+
+  """
+  Number of requested nodes before a node with a cursor in the before argument
+  """
+  last: Int
+}
+
 type DeleteLocationInstancePayload {
   """Created location id"""
   recordId: GlobalId!
@@ -529,6 +547,28 @@ type LocationInstance implements Node {
 
   """Location instance tags"""
   tags: [Tag!]!
+}
+
+"""Model for representing list of locations instances"""
+type LocationInstanceConnection {
+  """List of location instances edges"""
+  edges: [LocationInstanceEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+  suggest: String
+}
+
+"""Information about specific location instance in connection"""
+type LocationInstanceEdge {
+  """Cursor of this location"""
+  cursor: Cursor!
+
+  """Location instance info"""
+  node: LocationInstance!
 }
 
 input LocationInstanceInput {
@@ -925,9 +965,8 @@ type Query {
     """
     last: Int
   ): QuestConnection!
-
-  """Search for entities by search query"""
-  search(input: SearchInput!): [SearchResult!]!
+  locationInstancesSearch(input: SearchInput!): LocationInstanceConnection!
+  locationsSearch(input: SearchInput!): LocationConnection!
 
   """Get specific tag"""
   tag(
@@ -1177,17 +1216,15 @@ input SearchInput {
   query: String!
 
   """Start of search range"""
-  startYear: Int!
+  startYear: Int
 
   """End of search range"""
-  endYear: Int!
+  endYear: Int
 
   """Entity category"""
   category: [String!]
+  windowedPagination: WindowedPaginationArgs
 }
-
-"""Possible data types that the search might return"""
-union SearchResult = LocationInstance | Person | Quest
 
 """Tag of person or location instance"""
 type Tag implements Node {
@@ -1599,5 +1636,10 @@ type UserMutations {
 
   """Updates user data"""
   update(input: UpdateUserInput!): UpdateUserPayload!
+}
+
+input WindowedPaginationArgs {
+  skip: Int
+  first: Int
 }
 

@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import LocationView from './LocationView';
@@ -22,7 +22,9 @@ export default function LocationsRouter(): ReactElement {
         <LocationView/>
       </PrivateRoute>
       <PrivateRoute path='/locations'>
-        <LocationPage/>
+        <Suspense fallback='Loading'>
+          <LocationPage/>
+        </Suspense>
       </PrivateRoute>
     </Switch>
   );
