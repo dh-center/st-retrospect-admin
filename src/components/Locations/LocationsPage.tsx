@@ -1,9 +1,10 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,@typescript-eslint/naming-convention */
 import { useFragment, useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LocationsPageQuery } from './__generated__/LocationsPageQuery.graphql';
 import { useHistory } from 'react-router';
+import { Link, useLocation } from 'react-router-dom';
 import { LocationsPage_location$key } from './__generated__/LocationsPage_location.graphql';
 import PaginationControl from 'rc-pagination';
 import locale from 'rc-pagination/lib/locale/ru_RU';
@@ -118,6 +119,8 @@ export default function LocationsPage() {
   const [pageSize, setPageSize] = useState(25);
   const [query, setQuery] = useState('');
   const [currentQuery, setCurrentQuery] = useState('');
+  const history = useHistory();
+  const location = useLocation();
 
   const data = useLazyLoadQuery<LocationsPageQuery>(
     graphql`
@@ -140,19 +143,45 @@ export default function LocationsPage() {
     }
   );
 
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    if (query) {
+      params.append('query', query);
+    } else {
+      params.delete('query');
+    }
+
+    history.push({ search: params.toString() });
+  }, [query, history]);
+
 
   return (
     <div>
-      <form onSubmit={e => {
-        e.preventDefault();
-        setQuery(currentQuery);
-      }
-      }>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          setQuery(currentQuery);
+        }}
+      >
         <input onChange={(e) => setCurrentQuery(e.target.value)} type='text' value={currentQuery}/>
         <button>Search</button>
       </form>
-      {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
-      {data.locationsSearch.suggest && <div>Maybe you meant <span dangerouslySetInnerHTML={{ __html:data.locationsSearch.suggest }}/></div>}
+      {data.locationsSearch.suggest &&
+        <div>
+          Did you mean {' '}
+          <Link
+            dangerouslySetInnerHTML={{ __html: data.locationsSearch.suggest }}
+            onClick={() => {
+              const queryString =data.locationsSearch.suggest?.replace(/(<([^>]+)>)/gi, '') || '';
+
+              setQuery(queryString);
+              setCurrentQuery(queryString);
+            }}
+            to={`/locations?query=${data.locationsSearch.suggest.replace(/(<([^>]+)>)/gi, '')}`}
+          />
+        </div>
+      }
       <Table>
         <thead>
           <tr>
