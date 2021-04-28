@@ -4,11 +4,12 @@ import graphql from 'babel-plugin-relay/macro';
 import React, { useEffect, useState } from 'react';
 import { LocationsPageQuery } from './__generated__/LocationsPageQuery.graphql';
 import { useHistory } from 'react-router';
-import { Link, useLocation } from 'react-router-dom';
 import { LocationsPage_location$key } from './__generated__/LocationsPage_location.graphql';
-import PaginationControl from 'rc-pagination';
-import locale from 'rc-pagination/lib/locale/ru_RU';
 import styled from 'styled-components';
+import SearchForm from '../utils/SearchForm';
+import Button from 'react-bootstrap/Button';
+import PaginationControls from '../utils/PaginationControls';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const Table = styled.table`
   border-collapse: collapse;
@@ -38,6 +39,14 @@ const TableBody = styled.tbody`
   & tr:hover td {
     background: rgba(0,0,0,.075);;
   }
+`;
+
+const ControlsPanel = styled.div`
+  bottom: 0;
+  position: sticky;
+  background-color: rgba(255,255,255,.8);
+  padding: 5px;
+  backdrop-filter: blur(6px);
 `;
 
 interface LocationRowProps {
@@ -118,9 +127,7 @@ export default function LocationsPage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(25);
   const [query, setQuery] = useState('');
-  const [currentQuery, setCurrentQuery] = useState('');
   const history = useHistory();
-  const location = useLocation();
 
   const data = useLazyLoadQuery<LocationsPageQuery>(
     graphql`
@@ -158,30 +165,7 @@ export default function LocationsPage() {
 
   return (
     <div>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          setQuery(currentQuery);
-        }}
-      >
-        <input onChange={(e) => setCurrentQuery(e.target.value)} type='text' value={currentQuery}/>
-        <button>Search</button>
-      </form>
-      {data.locationsSearch.suggest &&
-        <div>
-          Did you mean {' '}
-          <Link
-            dangerouslySetInnerHTML={{ __html: data.locationsSearch.suggest }}
-            onClick={() => {
-              const queryString =data.locationsSearch.suggest?.replace(/(<([^>]+)>)/gi, '') || '';
-
-              setQuery(queryString);
-              setCurrentQuery(queryString);
-            }}
-            to={`/locations?query=${data.locationsSearch.suggest.replace(/(<([^>]+)>)/gi, '')}`}
-          />
-        </div>
-      }
+      <SearchForm onSubmit={value => setQuery(value)}/>
       <Table>
         <thead>
           <tr>
@@ -201,28 +185,21 @@ export default function LocationsPage() {
           <LocationRow index={currentPage * pageSize + index} key={edge.node.id} location={edge.node}/>
         )}
       </Table>
+      <ControlsPanel>
+        <LinkContainer to='/locations/create'>
+          <Button variant='outline-success'>
+            Create
+          </Button>
+        </LinkContainer>
 
-      <div className='d-flex justify-content-center'>
-        <PaginationControl
-          current={currentPage + 1}
-          locale={locale}
-          onChange={(page) => setCurrentPage(page - 1)}
+        <PaginationControls
+          currentPage={currentPage}
+          onCurrentPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
           pageSize={pageSize}
-          total={data.locationsSearch.totalCount}
+          totalCount={data.locationsSearch.totalCount}
         />
-        <select
-          onChange={e => {
-            setPageSize(Number(e.target.value));
-          }}
-          value={pageSize}
-        >
-          {[10, 25, 50, 100].map(size => (
-            <option key={size} value={size}>
-              Show {size}
-            </option>
-          ))}
-        </select>
-      </div>
+      </ControlsPanel>
     </div>
   );
 }
