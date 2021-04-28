@@ -174,7 +174,7 @@ export default function LocationsPage(): React.ReactElement {
 
   return (
     <div>
-      <SearchForm initialState={query} onSubmit={value => setQuery(value)}/>
+      <SearchForm initialState={query} onSubmit={value => setQuery(value)} suggest={data.locationsSearch.suggest}/>
       <Table>
         <thead>
           <tr>

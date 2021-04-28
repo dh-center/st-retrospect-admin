@@ -15,10 +15,14 @@ interface SearchFormProps {
    * Initial form query
    */
   initialState: string
+
+  /**
+   * Suggested text from search engine
+   */
+  suggest: string | null
 }
 
 const StyledForm = styled.form`
-  display: flex;
   padding: 0 5px;
 `;
 
@@ -26,12 +30,25 @@ const SearchLine = styled(Form.Control)`
   margin-right: 5px;
 ` as typeof Form.Control;
 
+const Suggest = styled.span`
+  color: blue;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const Row = styled.div`
+  display: flex;
+`;
+
 /**
  * Form for input search queries
  *
  * @param props - props for component rendering
  */
-export default function SearchForm(props: SearchFormProps): React.ReactElement {
+export default function SearchForm(props: SearchFormProps): React.ReactElement { /* eslint-disable @typescript-eslint/naming-convention */
   const [query, setQuery] = useState(props.initialState);
 
   return (
@@ -41,8 +58,24 @@ export default function SearchForm(props: SearchFormProps): React.ReactElement {
         props.onSubmit(query);
       }}
     >
-      <SearchLine onChange={(e) => setQuery(e.target.value)} type='text' value={query}/>
-      <Button variant='primary'>Search</Button>
+      <Row>
+        <SearchLine onChange={(e) => setQuery(e.target.value)} type='text' value={query}/>
+        <Button variant='primary'>Search</Button>
+      </Row>
+      {props.suggest &&
+      <div>
+        Did you mean {' '}
+        <Suggest
+          dangerouslySetInnerHTML={{ __html: props.suggest }}
+          onClick={() => {
+            const queryString =props.suggest?.replace(/(<([^>]+)>)/gi, '') || '';
+
+            setQuery(queryString);
+            props.onSubmit(queryString);
+          }}
+        />
+      </div>
+      }
     </StyledForm>
   );
 }
