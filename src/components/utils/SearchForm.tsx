@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Col, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import styled from 'styled-components';
 
 interface SearchFormProps {
   /**
@@ -9,7 +10,21 @@ interface SearchFormProps {
    * @param query - submitted query
    */
   onSubmit(query: string): void
+
+  /**
+   * Initial form query
+   */
+  initialState: string
 }
+
+const StyledForm = styled.form`
+  display: flex;
+  padding: 0 5px;
+`;
+
+const SearchLine = styled(Form.Control)`
+  margin-right: 5px;
+` as typeof Form.Control;
 
 /**
  * Form for input search queries
@@ -17,23 +32,17 @@ interface SearchFormProps {
  * @param props - props for component rendering
  */
 export default function SearchForm(props: SearchFormProps): React.ReactElement {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(props.initialState);
 
   return (
-    <Form
+    <StyledForm
       onSubmit={e => {
         e.preventDefault();
         props.onSubmit(query);
       }}
     >
-      <Form.Row>
-        <Col>
-          <Form.Control onChange={(e) => setQuery(e.target.value)} type='text' value={query}/>
-        </Col>
-        <Col>
-          <Button variant='primary'>Search</Button>
-        </Col>
-      </Form.Row>
-    </Form>
+      <SearchLine onChange={(e) => setQuery(e.target.value)} type='text' value={query}/>
+      <Button variant='primary'>Search</Button>
+    </StyledForm>
   );
 }

@@ -10,10 +10,12 @@ import SearchForm from '../utils/SearchForm';
 import Button from 'react-bootstrap/Button';
 import PaginationControls from '../utils/PaginationControls';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
+  margin-top: 5px;
 `;
 
 const Cell = styled.td`
@@ -110,23 +112,30 @@ function LocationRow(props: LocationRowProps): React.ReactElement {
 
   const rowSpan = instancesRows.length || 1;
 
-  return <TableBody>
-    <tr onClick={onClick}>
-      <Cell rowSpan={rowSpan}>{props.index + 1}</Cell>
-      <Cell rowSpan={rowSpan}>{getAddress(location.addresses)}</Cell>
-      <Cell rowSpan={rowSpan}>{location.latitude}</Cell>
-      <Cell rowSpan={rowSpan}>{location.longitude}</Cell>
-      {instancesRows.shift() || <><Cell/><Cell/></>}
-    </tr>
-    {instancesRows.map((row, index) => <tr key={index} onClick={onClick}>{row}</tr>)}
-  </TableBody>;
+  return (
+    <TableBody>
+      <tr onClick={onClick}>
+        <Cell rowSpan={rowSpan}>{props.index + 1}</Cell>
+        <Cell rowSpan={rowSpan}>{getAddress(location.addresses)}</Cell>
+        <Cell rowSpan={rowSpan}>{location.latitude}</Cell>
+        <Cell rowSpan={rowSpan}>{location.longitude}</Cell>
+        {instancesRows.shift() || <><Cell/><Cell/></>}
+      </tr>
+      {instancesRows.map((row, index) => <tr key={index} onClick={onClick}>{row}</tr>)}
+    </TableBody>
+  );
 }
 
 
-export default function LocationsPage() {
+export default function LocationsPage(): React.ReactElement {
   const [currentPage, setCurrentPage] = useState(0);
+  const location = useLocation();
   const [pageSize, setPageSize] = useState(25);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(() => {
+    const qs = new URLSearchParams(location.search);
+
+    return qs.get('query') || '';
+  });
   const history = useHistory();
 
   const data = useLazyLoadQuery<LocationsPageQuery>(
@@ -165,7 +174,7 @@ export default function LocationsPage() {
 
   return (
     <div>
-      <SearchForm onSubmit={value => setQuery(value)}/>
+      <SearchForm initialState={query} onSubmit={value => setQuery(value)}/>
       <Table>
         <thead>
           <tr>
