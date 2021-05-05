@@ -1,6 +1,7 @@
 import React from 'react';
 import SelectSearch, { SelectSearchOption } from 'react-select-search';
 import './index.css';
+import fuzzySearch from '../../../utils/fuzzySearch';
 
 /**
  * Props for custom select component
@@ -45,6 +46,7 @@ export default function CustomSelect(props: ComponentProps): React.ReactElement 
   return (
     <SelectSearch
       disabled={props.disabled}
+      filterOptions={fuzzySearch}
       onChange={(selected): void => {
         onChange(selected.toString());
       }}
