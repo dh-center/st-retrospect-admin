@@ -1,7 +1,6 @@
 import React from 'react';
-import SelectSearch, { SelectSearchOption } from 'react-select-search';
+import SelectSearch, { fuzzySearch, SelectSearchOption } from 'react-select-search';
 import './index.css';
-import fuzzySearch from '../../../utils/fuzzySearch';
 
 /**
  * Props for custom select component
