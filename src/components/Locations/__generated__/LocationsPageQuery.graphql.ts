@@ -14,7 +14,7 @@ export type LocationsPageQueryResponse = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"LocationsPage_location">;
+                readonly " $fragmentRefs": FragmentRefs<"LocationRow_location">;
             };
         }>;
         readonly totalCount: number;
@@ -38,7 +38,7 @@ query LocationsPageQuery(
     edges {
       node {
         id
-        ...LocationsPage_location
+        ...LocationRow_location
       }
     }
     totalCount
@@ -46,7 +46,7 @@ query LocationsPageQuery(
   }
 }
 
-fragment LocationsPage_location on Location {
+fragment LocationRow_location on Location {
   id
   longitude
   latitude
@@ -166,7 +166,7 @@ return {
                   {
                     "args": null,
                     "kind": "FragmentSpread",
-                    "name": "LocationsPage_location"
+                    "name": "LocationRow_location"
                   }
                 ],
                 "storageKey": null
@@ -290,14 +290,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7e415e7af27f9b44d35b91465ee5845c",
+    "cacheID": "0f7aabc74004584db192509c17323f6f",
     "id": null,
     "metadata": {},
     "name": "LocationsPageQuery",
     "operationKind": "query",
-    "text": "query LocationsPageQuery(\n  $query: String!\n  $skip: Int!\n  $first: Int!\n) {\n  locationsSearch(input: {query: $query, windowedPagination: {skip: $skip, first: $first}}) {\n    edges {\n      node {\n        id\n        ...LocationsPage_location\n      }\n    }\n    totalCount\n    suggest\n  }\n}\n\nfragment LocationsPage_location on Location {\n  id\n  longitude\n  latitude\n  addresses {\n    address\n  }\n  instances {\n    id\n    name\n    description\n  }\n}\n"
+    "text": "query LocationsPageQuery(\n  $query: String!\n  $skip: Int!\n  $first: Int!\n) {\n  locationsSearch(input: {query: $query, windowedPagination: {skip: $skip, first: $first}}) {\n    edges {\n      node {\n        id\n        ...LocationRow_location\n      }\n    }\n    totalCount\n    suggest\n  }\n}\n\nfragment LocationRow_location on Location {\n  id\n  longitude\n  latitude\n  addresses {\n    address\n  }\n  instances {\n    id\n    name\n    description\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '59d79f659b827c5160c781830e45a47b';
+(node as any).hash = 'a601b736568abdcffcb85c9678c15bdd';
 export default node;
