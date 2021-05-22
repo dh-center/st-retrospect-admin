@@ -29,7 +29,7 @@ export default function PaginationControls(props: Props): React.ReactElement {
       <PaginationControl
         current={props.currentPage + 1}
         locale={locale}
-        onChange={(page) => props.onCurrentPageChange(page - 1)}
+        onChange={(page) => props.onCurrentPageChange(page)}
         pageSize={props.pageSize}
         total={props.totalCount}
       />

@@ -1,6 +1,6 @@
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import React, { useState } from 'react';
+import React  from 'react';
 import { LocationsPageQuery } from './__generated__/LocationsPageQuery.graphql';
 import styled from 'styled-components';
 import SearchForm from '../utils/SearchForm';
@@ -24,9 +24,11 @@ const ControlsPanel = styled.div`
  * Page with locations table
  */
 export default function LocationsPage(): React.ReactElement {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(25);
-  const [query, setQuery] = useStateWithUrlParams('query');
+  const [currentPage, setCurrentPage] = useStateWithUrlParams('page', 1);
+  const [pageSize, setPageSize] = useStateWithUrlParams('size', 25);
+  const [query, setQuery] = useStateWithUrlParams('query', '');
+
+  const pageIndex = currentPage - 1;
 
   const data = useLazyLoadQuery<LocationsPageQuery>(
     graphql`
@@ -44,7 +46,7 @@ export default function LocationsPage(): React.ReactElement {
         }
     `, {
       query,
-      skip: currentPage * pageSize,
+      skip: pageIndex * pageSize,
       first: pageSize,
     }
   );
@@ -72,7 +74,7 @@ export default function LocationsPage(): React.ReactElement {
         </thead>
 
         {data.locationsSearch.edges.map((edge, index) =>
-          <LocationRow index={currentPage * pageSize + index} key={edge.node.id} location={edge.node}/>
+          <LocationRow index={pageIndex * pageSize + index} key={edge.node.id} location={edge.node}/>
         )}
       </Table>
       <ControlsPanel>
@@ -83,7 +85,7 @@ export default function LocationsPage(): React.ReactElement {
         </LinkContainer>
 
         <PaginationControls
-          currentPage={currentPage}
+          currentPage={pageIndex}
           onCurrentPageChange={setCurrentPage}
           onPageSizeChange={setPageSize}
           pageSize={pageSize}
