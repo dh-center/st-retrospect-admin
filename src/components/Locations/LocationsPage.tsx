@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars,@typescript-eslint/naming-convention */
 import { useFragment, useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import React, { useEffect, useState } from 'react';
+import React, { useState} from 'react';
 import { LocationsPageQuery } from './__generated__/LocationsPageQuery.graphql';
 import { useHistory } from 'react-router';
 import { LocationsPage_location$key } from './__generated__/LocationsPage_location.graphql';
@@ -10,7 +10,7 @@ import SearchForm from '../utils/SearchForm';
 import Button from 'react-bootstrap/Button';
 import PaginationControls from '../utils/PaginationControls';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useLocation } from 'react-router-dom';
+import useStateWithUrlParams from "../../utils/useStateWithUrlParams";
 
 const Table = styled.table`
   border-collapse: collapse;
@@ -126,17 +126,13 @@ function LocationRow(props: LocationRowProps): React.ReactElement {
   );
 }
 
-
+/**
+ * Page with locations table
+ */
 export default function LocationsPage(): React.ReactElement {
   const [currentPage, setCurrentPage] = useState(0);
-  const location = useLocation();
   const [pageSize, setPageSize] = useState(25);
-  const [query, setQuery] = useState(() => {
-    const qs = new URLSearchParams(location.search);
-
-    return qs.get('query') || '';
-  });
-  const history = useHistory();
+  const [query, setQuery] = useStateWithUrlParams('query');
 
   const data = useLazyLoadQuery<LocationsPageQuery>(
     graphql`
@@ -159,22 +155,13 @@ export default function LocationsPage(): React.ReactElement {
     }
   );
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-
-    if (query) {
-      params.append('query', query);
-    } else {
-      params.delete('query');
-    }
-
-    history.push({ search: params.toString() });
-  }, [query, history]);
-
-
   return (
     <div>
-      <SearchForm initialState={query} onSubmit={value => setQuery(value)} suggest={data.locationsSearch.suggest}/>
+      <SearchForm
+        initialState={query}
+        onSubmit={value => setQuery(value)}
+        suggest={data.locationsSearch.suggest}
+      />
       <Table>
         <thead>
           <tr>
