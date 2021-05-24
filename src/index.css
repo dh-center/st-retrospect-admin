@@ -26,6 +26,10 @@ code {
   box-sizing: content-box;
 }
 
+.ce-toolbar {
+  z-index: 2;
+}
+
 .react-tags {
   position: relative;
   padding: 6px 0 0 6px;
