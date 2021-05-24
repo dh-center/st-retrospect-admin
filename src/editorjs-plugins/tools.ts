@@ -6,10 +6,13 @@ import Quote from '@editorjs/quote';
 import Marker from '@editorjs/marker';
 import TestConstructor from './TestConstructor';
 import Location from './Location';
-import { BlockToolConstructable } from '@editorjs/editorjs';
+import { BlockToolConstructable, InlineToolConstructable } from '@editorjs/editorjs';
 import Question from './Question';
 import CurrentQuestTask from './CurrentQuestTask';
 import MatchOptions from './MatchOptions';
+import AnswerInText from './AnswerInText';
+import PossibleAnswer from './AnswerInText/PossibleAnswer';
+import TrueAnswer from './AnswerInText/TrueAnswer';
 
 export const EDITOR_JS_TOOLS = {
   list: List,
@@ -30,4 +33,10 @@ export const EDITOR_JS_TOOLS = {
   question: Question as unknown as BlockToolConstructable,
   currentQuestTask: CurrentQuestTask as unknown as BlockToolConstructable,
   matchOptions: MatchOptions as unknown as BlockToolConstructable,
+  answerInText: {
+    class: AnswerInText as unknown as BlockToolConstructable,
+    inlineToolbar: ['possibleAnswer', 'trueAnswer'],
+  },
+  possibleAnswer: PossibleAnswer as unknown as InlineToolConstructable,
+  trueAnswer: TrueAnswer as unknown as InlineToolConstructable,
 };

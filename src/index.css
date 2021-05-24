@@ -26,6 +26,14 @@ code {
   box-sizing: content-box;
 }
 
+.possible-answer {
+  background: var(--yellow);
+}
+
+.true-answer {
+  background: var(--green);
+}
+
 .react-tags {
   position: relative;
   padding: 6px 0 0 6px;
