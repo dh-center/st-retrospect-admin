@@ -45,7 +45,7 @@ export default class PossibleAnswer implements InlineTool {
   /**
    * Displaying title
    */
-  public static get Title(): string {
+  public static get title(): string {
     return 'Possible answer';
   }
 

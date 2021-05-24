@@ -45,7 +45,7 @@ export default class TrueAnswer implements InlineTool {
   /**
    * Displaying title
    */
-  public static get Title(): string {
+  public static get title(): string {
     return 'True answer';
   }
 
