@@ -202,9 +202,7 @@ export default class TestConstructor implements BlockTool {
     ReactDOM.render(
       <TestConstructorComponent
         initialData={this.data}
-        onChange={(data) => {
-          this.data = data;
-        }}
+        onChange={(data) => this.data = data}
       />,
       element
     );
