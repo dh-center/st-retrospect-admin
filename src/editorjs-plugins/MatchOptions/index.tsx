@@ -38,11 +38,6 @@ interface MatchOptionsData {
   options: MatchOption[];
 }
 
-interface MatchOptionsComponentProps {
-  initialData: MatchOptionsData;
-  onChange(value: MatchOptionsData): void;
-}
-
 /**
  * ArrayOfOptionsInputs component props interface
  */
@@ -70,6 +65,11 @@ interface ArrayOfOptionsInputsProps {
   removeButtonText?: string;
 }
 
+/**
+ * Array of two inputs in a row
+ *
+ * @param props - props of component
+ */
 function ArrayOfOptionsInputs(props: ArrayOfOptionsInputsProps): ReactElement {
   /**
    * Adds empty element to array
@@ -148,6 +148,28 @@ function ArrayOfOptionsInputs(props: ArrayOfOptionsInputsProps): ReactElement {
 
 const LabeledArrayOfOptionsInputs = withLabel(ArrayOfOptionsInputs);
 
+/**
+ * MatchOptions component props
+ */
+interface MatchOptionsComponentProps {
+  /**
+   * Plugin's initial data
+   */
+  initialData: MatchOptionsData;
+
+  /**
+   * onChange hook
+   *
+   * @param value - new value
+   */
+  onChange(value: MatchOptionsData): void;
+}
+
+/**
+ * MatchOptions component for rendering in a plugin
+ *
+ * @param props - props of component
+ */
 function MatchOptionsComponent(props: MatchOptionsComponentProps): ReactElement {
   const [data, setData] = useState(props.initialData);
 
