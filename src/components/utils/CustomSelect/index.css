@@ -19,7 +19,6 @@
  */
 .select-search__value {
   position: relative;
-  z-index: 1;
 }
 
 .select-search__value::after {
