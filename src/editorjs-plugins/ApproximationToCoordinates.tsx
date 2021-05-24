@@ -2,10 +2,8 @@ import { BlockTool, ToolboxConfig } from '@editorjs/editorjs';
 import ReactDOM from 'react-dom';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import pluginBlockStyles from './PluginBlock.module.css';
-import styles from './Location.module.css';
 import React, { useState } from 'react';
 import Input from '../components/utils/Input';
-import classNames from 'classnames';
 import { LabeledLocationMap } from '../components/LocationMap';
 import { isLatitudeValid, isLongitudeValid } from '../utils/checkCoordinate';
 import throttle from 'lodash.throttle';
@@ -18,12 +16,12 @@ interface ApproximationToCoordinatesData {
   /**
    * Latitude of coordination
    */
-  latitude: number;
+  latitude: number | undefined;
 
   /**
    * Longitude of coordination
    */
-  longitude: number;
+  longitude: number | undefined;
 
   /**
    * Title of the approaching coordinates
@@ -54,17 +52,16 @@ interface ApproximationToCoordinatesComponentProps {
  * @param props - props for component rendering
  */
 function ApproximationToCoordinatesComponent(props: ApproximationToCoordinatesComponentProps): React.ReactElement {
-  const [data, setData] = useState<ApproximationToCoordinatesData>({
-    latitude: 0,
-    longitude: 0,
-    title: undefined,
-  });
+  const [data, setData] = useState(props.initialData);
 
   const onChange = (newData: ApproximationToCoordinatesData): void => {
     setData(newData);
     props.onChange(newData);
   };
 
+  /**
+   * Error message if latitude isn't correct
+   */
   const showLatitudeValidationErrorMessage = throttle(() => notifier.show({
     message: 'Latitude isn\'t correct. It should be from -90 to 90 and have \'.\' as delimiter.',
     style: 'error',
@@ -82,8 +79,8 @@ function ApproximationToCoordinatesComponent(props: ApproximationToCoordinatesCo
 
   return (
     <div className={pluginBlockStyles.wrapper}>
-      <label className={classNames(styles.label, styles.labelStrong)}>
-        Пользователь должен ответить на вопрос, выбрав правильный вариант ответа:
+      <label className={pluginBlockStyles.label}>
+        Пользователь подходит к (координаты):
       </label>
       <Input
         label='Название точки'
@@ -93,11 +90,11 @@ function ApproximationToCoordinatesComponent(props: ApproximationToCoordinatesCo
             title: value,
           });
         }}
-        value={data.title || 0}
+        value={data.title || ''}
       />
       <LabeledLocationMap
         label='Точка на карте'
-        lngLat={[data.longitude, data.latitude]}
+        lngLat={(data.latitude && data.longitude) ? [data.longitude, data.latitude] : [0, 0]}
         onChange={(lngLat) => {
           onChange({
             ...data,
@@ -177,13 +174,11 @@ export default class ApproximationToCoordinatesConstructor implements BlockTool 
   public render(): HTMLElement {
     const element = document.createElement('div');
 
-    element.className = 'test-constructor';
+    element.className = 'approximation-coordinates';
     ReactDOM.render(
       <ApproximationToCoordinatesComponent
         initialData={this.data}
-        onChange={(data) => {
-          this.data = data;
-        }}
+        onChange={(data) => this.data = data}
       />,
       element
     );
