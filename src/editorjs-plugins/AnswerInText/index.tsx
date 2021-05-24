@@ -4,6 +4,7 @@ import Input from '../../components/utils/Input';
 import { BlockTool, BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import { ToolboxConfig } from '@editorjs/editorjs';
 import ReactDOM from 'react-dom';
+import styles from './index.module.css';
 
 interface AnswerInTextData {
   task: string;
@@ -34,7 +35,9 @@ function AnswerInTextComponent(props: AnswerInTextComponentProps): ReactElement 
         })}
         value={data.task || ''}
       />
-      <div contentEditable>Wow lol kek</div>
+      <div className={styles.textWrapper}>
+        <div className={styles.text} contentEditable>{data.text}</div>
+      </div>
     </>
   );
 }
