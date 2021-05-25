@@ -24,6 +24,7 @@ interface Props {
 
   /**
    * Callback for handling page size change
+   *
    * @param value - new page size
    */
   onPageSizeChange(value: number): void;
@@ -48,6 +49,7 @@ const Select = styled.select`
 
 /**
  * Displays controls for pagination
+ *
  * @param props - props for component rendering
  */
 export default function PaginationControls(props: Props): React.ReactElement {
