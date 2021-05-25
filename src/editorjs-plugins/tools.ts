@@ -4,6 +4,7 @@ import Image from '@editorjs/image';
 import Delimiter from '@editorjs/delimiter';
 import Quote from '@editorjs/quote';
 import Marker from '@editorjs/marker';
+import Paragraph from '@editorjs/paragraph';
 import TestConstructor from './TestConstructor';
 import Location from './Location';
 import { BlockToolConstructable, InlineToolConstructable } from '@editorjs/editorjs';
@@ -16,6 +17,10 @@ import PossibleAnswer from './AnswerInText/PossibleAnswer';
 import TrueAnswer from './AnswerInText/TrueAnswer';
 
 export const EDITOR_JS_TOOLS = {
+  paragraph: {
+    class: Paragraph,
+    inlineToolbar: ['bold', 'italic', 'link', 'marker'],
+  },
   list: List,
   image: {
     class: Image,
