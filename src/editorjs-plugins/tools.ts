@@ -15,6 +15,7 @@ import MatchOptions from './MatchOptions';
 import AnswerInText from './AnswerInText';
 import PossibleAnswer from './AnswerInText/PossibleAnswer';
 import TrueAnswer from './AnswerInText/TrueAnswer';
+import DialogConstructor from './Dialog';
 
 export const EDITOR_JS_TOOLS = {
   paragraph: {
@@ -46,4 +47,5 @@ export const EDITOR_JS_TOOLS = {
   },
   possibleAnswer: PossibleAnswer as unknown as InlineToolConstructable,
   trueAnswer: TrueAnswer as unknown as InlineToolConstructable,
+  dialog: DialogConstructor as unknown as BlockToolConstructable,
 };
