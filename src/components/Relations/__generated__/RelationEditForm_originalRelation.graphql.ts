@@ -8,13 +8,13 @@ export type RelationEditForm_originalRelation = {
     readonly id: string;
     readonly person: {
         readonly id: string;
-    } | null;
+    };
     readonly relationType: {
         readonly id: string;
-    } | null;
+    };
     readonly locationInstance: {
         readonly id: string;
-    } | null;
+    };
     readonly startDate: string | null;
     readonly endDate: string | null;
     readonly quote: string | null;

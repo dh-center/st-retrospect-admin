@@ -1,10 +1,11 @@
-import { ReactElement } from 'react';
+import { ReactElement, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import LocationView from './LocationView';
 import LocationPage from './LocationsPage';
 import LocationEdit from './LocationEdit';
 import LocationCreate from './LocationCreate';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Functional component for quests view
@@ -22,7 +23,9 @@ export default function LocationsRouter(): ReactElement {
         <LocationView/>
       </PrivateRoute>
       <PrivateRoute path='/locations'>
-        <LocationPage/>
+        <Suspense fallback={<LoadingPlaceholder/>}>
+          <LocationPage/>
+        </Suspense>
       </PrivateRoute>
     </Switch>
   );

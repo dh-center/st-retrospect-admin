@@ -14,16 +14,16 @@ export type RelationViewQueryResponse = {
             readonly lastName: string | null;
             readonly firstName: string | null;
             readonly patronymic: string | null;
-        } | null;
+        };
         readonly locationInstance: {
             readonly location: {
                 readonly id: string;
             };
             readonly name: string | null;
-        } | null;
+        };
         readonly relationType: {
             readonly name: string;
-        } | null;
+        };
         readonly startDate: string | null;
         readonly endDate: string | null;
         readonly quote: string | null;
