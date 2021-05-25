@@ -72,7 +72,7 @@ export default class Question implements BlockTool {
     const pluginLabel = document.createElement('label');
 
     pluginLabel.innerText = 'Пользователь должен ответить на вопрос:';
-    pluginLabel.classList.add(styles.label, styles.labelStrong);
+    pluginLabel.className = pluginBlockStyles.label;
 
     /**
      * Question block

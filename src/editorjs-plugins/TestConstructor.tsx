@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom';
 import pluginBlockStyles from './PluginBlock.module.css';
 import Input from '../components/utils/Input';
 import { LabeledArrayOfInputs } from '../components/utils/ArrayOfInputs';
-import classNames from 'classnames';
 import ImageUploader from '../components/utils/ImageUploader';
 import ImageGallery from '../components/utils/ImageGallery';
 
@@ -77,7 +76,7 @@ function TestConstructorComponent(props: TestConstructorComponentProps): React.R
 
   return (
     <div className={pluginBlockStyles.wrapper}>
-      <label className={classNames(styles.label, styles.labelStrong)}>
+      <label className={pluginBlockStyles.label}>
         Пользователь должен ответить на вопрос, выбрав правильный вариант ответа:
       </label>
       <Input
@@ -203,9 +202,7 @@ export default class TestConstructor implements BlockTool {
     ReactDOM.render(
       <TestConstructorComponent
         initialData={this.data}
-        onChange={(data) => {
-          this.data = data;
-        }}
+        onChange={(data) => this.data = data}
       />,
       element
     );

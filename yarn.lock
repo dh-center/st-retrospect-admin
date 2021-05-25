@@ -10493,10 +10493,10 @@ react-scripts@4.0.3:
   optionalDependencies:
     fsevents "^2.1.3"
 
-react-select-search@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/react-select-search/-/react-select-search-3.0.5.tgz#6329e8a87692b8fb611b39b1279bd0cc178e0f7c"
-  integrity sha512-240+x+AmgoBcUW5O5hIvFWji5qhJpTlj6Z4TpGjzG+I1vp2kQ0pHYjllgse6RrcqazOq/mqZMOFaIs7zt7Zptg==
+react-select-search@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/react-select-search/-/react-select-search-3.0.7.tgz#e3e57612657257ff8dde45354377a8be3d62c258"
+  integrity sha512-fOy5vHfeFpGHEv9n+xkvqCAIfoAon0WRaWTFujBaMS4tKwhEn7WAPoyO4DEQFTou1LOq0D5nDDOaqeMzOxpCZg==
   optionalDependencies:
     fuse.js "^3.4.5"
 

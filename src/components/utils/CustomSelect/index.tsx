@@ -1,5 +1,5 @@
 import React from 'react';
-import SelectSearch, { SelectSearchOption } from 'react-select-search';
+import SelectSearch, { fuzzySearch, SelectSearchOption } from 'react-select-search';
 import './index.css';
 
 /**
@@ -45,6 +45,7 @@ export default function CustomSelect(props: ComponentProps): React.ReactElement 
   return (
     <SelectSearch
       disabled={props.disabled}
+      filterOptions={fuzzySearch}
       onChange={(selected): void => {
         onChange(selected.toString());
       }}
