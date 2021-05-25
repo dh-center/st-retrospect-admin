@@ -1,6 +1,6 @@
 import { useLazyLoadQuery } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import React  from 'react';
+import React from 'react';
 import { LocationsPageQuery } from './__generated__/LocationsPageQuery.graphql';
 import styled from 'styled-components';
 import SearchForm from '../utils/SearchForm';
@@ -14,7 +14,7 @@ import LocationRow from './LocationRow';
 const ControlsPanel = styled.div`
   bottom: 0;
   position: sticky;
-  background-color: rgba(255,255,255,.8);
+  background-color: rgba(255, 255, 255, .8);
   padding: 5px;
   backdrop-filter: blur(6px);
 `;
@@ -32,18 +32,16 @@ export default function LocationsPage(): React.ReactElement {
 
   const data = useLazyLoadQuery<LocationsPageQuery>(
     graphql`
-        query LocationsPageQuery($query: String!, $skip: Int!, $first: Int!) {
-          locationsSearch(input: {query: $query, windowedPagination: {skip: $skip, first: $first}}) {
-            edges {
-              node {
-                id
-                ...LocationRow_location
-              }
-            }
-            totalCount
-            suggest
+      query LocationsPageQuery($query: String!, $skip: Int!, $first: Int!) {
+        locationsSearch(input: {query: $query, skip: $skip, first: $first}) {
+          nodes {
+            id
+            ...LocationRow_location
           }
+          totalCount
+          suggest
         }
+      }
     `, {
       query,
       skip: pageIndex * pageSize,
@@ -72,9 +70,8 @@ export default function LocationsPage(): React.ReactElement {
             <HeadCell>Description</HeadCell>
           </tr>
         </thead>
-
-        {data.locationsSearch.edges.map((edge, index) =>
-          <LocationRow index={pageIndex * pageSize + index} key={edge.node.id} location={edge.node}/>
+        {data.locationsSearch.nodes.map((node, index) =>
+          <LocationRow index={pageIndex * pageSize + index} key={node.id} location={node}/>
         )}
       </Table>
       <ControlsPanel>

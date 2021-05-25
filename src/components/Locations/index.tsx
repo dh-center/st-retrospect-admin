@@ -5,6 +5,7 @@ import LocationView from './LocationView';
 import LocationPage from './LocationsPage';
 import LocationEdit from './LocationEdit';
 import LocationCreate from './LocationCreate';
+import LoadingPlaceholder from '../utils/LoadingPlaceholder';
 
 /**
  * Functional component for quests view
@@ -22,7 +23,7 @@ export default function LocationsRouter(): ReactElement {
         <LocationView/>
       </PrivateRoute>
       <PrivateRoute path='/locations'>
-        <Suspense fallback='Loading'>
+        <Suspense fallback={<LoadingPlaceholder/>}>
           <LocationPage/>
         </Suspense>
       </PrivateRoute>

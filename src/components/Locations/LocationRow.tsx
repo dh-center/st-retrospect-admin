@@ -38,7 +38,6 @@ export default function LocationRow(props: LocationRowProps): React.ReactElement
       }
       instances {
         id
-        id
         name
         description
       }
