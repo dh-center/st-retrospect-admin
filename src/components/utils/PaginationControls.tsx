@@ -3,11 +3,34 @@ import PaginationControl from 'rc-pagination';
 import locale from 'rc-pagination/lib/locale/ru_RU';
 import styled from 'styled-components';
 
+/**
+ * Props for PaginationControls component
+ */
 interface Props {
+  /**
+   * Viewed page index
+   */
   currentPage: number;
-  onCurrentPageChange(value: number): void
+
+  /**
+   * Callback for handling page index change
+   */
+  onCurrentPageChange(value: number): void;
+
+  /**
+   * How many items to display
+   */
   pageSize: number;
+
+  /**
+   * Callback for handling page size change
+   * @param value - new page size
+   */
   onPageSizeChange(value: number): void;
+
+  /**
+   * Total count of available items
+   */
   totalCount: number;
 }
 
@@ -23,6 +46,10 @@ const Select = styled.select`
   bottom: 0;
 `;
 
+/**
+ * Displays controls for pagination
+ * @param props - props for component rendering
+ */
 export default function PaginationControls(props: Props): React.ReactElement {
   return (
     <Wrapper>

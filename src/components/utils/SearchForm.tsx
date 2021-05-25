@@ -68,7 +68,7 @@ export default function SearchForm(props: SearchFormProps): React.ReactElement {
         <Suggest
           dangerouslySetInnerHTML={{ __html: props.suggest }}
           onClick={() => {
-            const queryString =props.suggest?.replace(/(<([^>]+)>)/gi, '') || '';
+            const queryString = props.suggest?.replace(/(<([^>]+)>)/gi, '') || '';
 
             setQuery(queryString);
             props.onSubmit(queryString);
