@@ -1,9 +1,20 @@
 import { API, InlineTool, InlineToolConstructorOptions } from '@editorjs/editorjs';
+import PossibleAnswer from './PossibleAnswer';
 
 /**
  * Inline block for select true answer in text
  */
 export default class TrueAnswer implements InlineTool {
+  /**
+   * Wrapper tag class
+   */
+  public static class = 'true-answer';
+
+  /**
+   * Wrapper tag
+   */
+  private static tag = 'SPAN';
+
   /**
    * Button in inline toolbox
    */
@@ -13,16 +24,6 @@ export default class TrueAnswer implements InlineTool {
    * Editor.js API
    */
   private api: API;
-
-  /**
-   * Wrapper tag
-   */
-  private tag = 'SPAN';
-
-  /**
-   * Wrapper tag class
-   */
-  private class = 'true-answer';
 
   /**
    * Plugin constructor
@@ -50,10 +51,21 @@ export default class TrueAnswer implements InlineTool {
   }
 
   /**
+   * Getter with information for sanitizer
+   */
+  public static get sanitize(): unknown {
+    return {
+      [TrueAnswer.tag.toLowerCase()]: {
+        class: [TrueAnswer.class, PossibleAnswer.class],
+      },
+    };
+  }
+
+  /**
    * Checks block state
    */
   public checkState(): boolean {
-    const wrapper = this.api.selection.findParentTag(this.tag, this.class);
+    const wrapper = this.api.selection.findParentTag(TrueAnswer.tag, TrueAnswer.class);
 
     if (this.button) {
       this.button.classList.toggle(this.api.styles.inlineToolButtonActive, !!wrapper);
@@ -85,7 +97,7 @@ export default class TrueAnswer implements InlineTool {
    * @param range - selected range
    */
   public surround(range: Range): void {
-    const termWrapper = this.api.selection.findParentTag(this.tag, this.class);
+    const termWrapper = this.api.selection.findParentTag(TrueAnswer.tag, TrueAnswer.class);
 
     if (termWrapper) {
       this.unwrap(termWrapper);
@@ -101,9 +113,9 @@ export default class TrueAnswer implements InlineTool {
    */
   private wrap(range: Range): void {
     const selectedText = range.extractContents();
-    const wrapper = document.createElement(this.tag);
+    const wrapper = document.createElement(TrueAnswer.tag);
 
-    wrapper.classList.add(this.class);
+    wrapper.classList.add(TrueAnswer.class);
     wrapper.appendChild(selectedText);
     range.insertNode(wrapper);
 
