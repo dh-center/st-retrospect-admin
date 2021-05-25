@@ -14,14 +14,14 @@ export type RelationsGraph_data = {
                     readonly lastName: string | null;
                     readonly firstName: string | null;
                     readonly patronymic: string | null;
-                } | null;
+                };
                 readonly locationInstance: {
                     readonly id: string;
                     readonly name: string | null;
                     readonly locationTypes: ReadonlyArray<{
                         readonly id: string;
                     }> | null;
-                } | null;
+                };
             };
         }>;
     };
