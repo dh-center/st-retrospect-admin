@@ -3,18 +3,43 @@ import { BlockTool, BlockToolConstructorOptions } from '@editorjs/editorjs/types
 import { ToolboxConfig } from '@editorjs/editorjs';
 import styles from './index.module.css';
 
+/**
+ * Answer in text plugin data
+ */
 interface AnswerInTextData {
+  /**
+   * Current task
+   */
   task?: string;
+
+  /**
+   * Text for searching answers
+   */
   text?: string;
 }
 
+/**
+ * Plugin for searching answers in text
+ */
 export default class AnswerInText implements BlockTool {
+  /**
+   * Plugin data
+   */
   private data: AnswerInTextData;
 
+  /**
+   * Plugin constructor
+   *
+   * @param options - plugin options
+   * @param options.data - previously saved data
+   */
   constructor({ data }: BlockToolConstructorOptions<AnswerInTextData>) {
     this.data = data;
   }
 
+  /**
+   * Getter for information about plugin in toolbox
+   */
   public static get toolbox(): ToolboxConfig {
     return {
       icon: `
@@ -26,6 +51,9 @@ export default class AnswerInText implements BlockTool {
     };
   }
 
+  /**
+   * Render function for plugin content
+   */
   public render(): HTMLElement {
     const container = document.createElement('div');
 
@@ -70,11 +98,11 @@ export default class AnswerInText implements BlockTool {
    */
   public save(block: HTMLElement): AnswerInTextData {
     const task = block.getElementsByTagName('input')[0].value;
-    const textBlock = block.querySelector('[contenteditable]');
+    const text = block.querySelector('[contenteditable]')?.innerHTML || '';
 
     return {
       task,
-      text: textBlock?.innerHTML || '',
+      text,
     };
   }
 }
