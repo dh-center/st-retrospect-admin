@@ -55,7 +55,7 @@ interface MessagesProps {
  * @param props - props with data for displaying messages
  */
 function DialogComponent(props: MessagesProps): ReactElement {
-  const [dataArray, setDataArray] = useState<MessageData[]>(props.initialData);
+  const [dataArray, setDataArray] = useState<MessageData[]>(props.initialData || []);
 
   const onChange = (newData: MessageData[]): void => {
     setDataArray(newData);
@@ -116,6 +116,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
   /**
    * Returns array of components with messages
    */
+  console.log(typeof dataArray);
   const inputList = dataArray.map((dataItem, index) => {
     return (
       <Form.Row className={styles.inputLineItemWrapper} key={index}>
