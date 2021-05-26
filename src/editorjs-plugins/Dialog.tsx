@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
  */
 interface MessageData {
   /**
-   * Message text (if this is person message) / Reaction text (if this is user reaction)
+   * Message text (if this is person message) / Reaction text (if this is user message)
    */
   message: string;
 
@@ -25,6 +25,11 @@ interface MessageData {
    * title of reaction to message
    */
   reaction?: string;
+
+  /**
+   * Left/right chat side for messages from persons (false - left, true - right)
+   */
+  side?: boolean
 }
 
 /**
@@ -83,6 +88,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
     newArray.push({
       message: '',
       sender: '',
+      side: false,
     });
     setDataArray(() => {
       onChange(newArray);
