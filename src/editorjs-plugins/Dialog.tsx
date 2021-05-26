@@ -113,6 +113,9 @@ function DialogComponent(props: MessagesProps): ReactElement {
     });
   };
 
+  /**
+   * Returns array of components with messages
+   */
   const inputList = dataArray.map((dataItem, index) => {
     return (
       <Form.Row className={styles.inputLineItemWrapper} key={index}>
