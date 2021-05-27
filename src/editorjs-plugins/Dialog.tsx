@@ -1,11 +1,18 @@
 import { ReactElement, useState } from 'react';
 import Input from '../components/utils/Input';
-import { Button, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import styles from './Dialog.module.css';
 import pluginBlockStyles from './PluginBlock.module.css';
 import { BlockTool, ToolboxConfig } from '@editorjs/editorjs';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import ReactDOM from 'react-dom';
+
+/**
+ * Interface for interaction with EditorJS
+ */
+interface DialogPluginData {
+  messages: MessageData[];
+}
 
 /**
  * Interface for ONE dialog message
@@ -27,9 +34,9 @@ interface MessageData {
   reaction?: string;
 
   /**
-   * Left/right chat side for messages from persons (false - left, true - right)
+   * Chat side for messages from persons - left or not left (right)
    */
-  side?: boolean
+  isLeft?: boolean
 }
 
 /**
@@ -72,11 +79,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
       message: '',
       reaction: '',
     });
-    setDataArray(() => {
-      onChange(newArray);
-
-      return newArray;
-    });
+    onChange(newArray);
   };
 
   /**
@@ -88,13 +91,9 @@ function DialogComponent(props: MessagesProps): ReactElement {
     newArray.push({
       message: '',
       sender: '',
-      side: false,
+      isLeft: false,
     });
-    setDataArray(() => {
-      onChange(newArray);
-
-      return newArray;
-    });
+    onChange(newArray);
   };
 
   /**
@@ -106,20 +105,17 @@ function DialogComponent(props: MessagesProps): ReactElement {
     const newArray = dataArray;
 
     newArray.splice(index, 1);
-    setDataArray(() => {
-      props.onChange(newArray);
-
-      return newArray;
-    });
+    onChange(newArray);
   };
 
   /**
    * Returns array of components with messages
    */
-  console.log(typeof dataArray);
   const inputList = dataArray.map((dataItem, index) => {
+    console.log('dataArray: ' + dataArray);
+
     return (
-      <Form.Row className={styles.inputLineItemWrapper} key={index}>
+      <div className={styles.inputLineItemWrapper} key={index}>
         {
           !dataItem.reaction &&
           <Input
@@ -127,7 +123,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
             onChange={(value: string) => {
               const newArray = dataArray;
 
-              dataItem.sender = value;
+              newArray[index].sender = value;
               onChange(newArray);
             }}
             value={dataItem.sender || ''}
@@ -141,7 +137,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
             onChange={(value: string) => {
               const newArray = dataArray;
 
-              dataItem.reaction = value;
+              newArray[index].reaction = value;
               onChange(newArray);
             }}
             value={dataItem.message}
@@ -153,7 +149,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
           onChange={(value: string) => {
             const newArray = dataArray;
 
-            dataItem.message = value;
+            newArray[index].message = value;
             onChange(newArray);
           }}
           value={dataItem.message}
@@ -165,9 +161,9 @@ function DialogComponent(props: MessagesProps): ReactElement {
           type='button'
           variant='outline-danger'
         >
-          -
+          удалить
         </Button>
-      </Form.Row>
+      </div>
     );
   });
 
@@ -180,7 +176,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
         type='button'
         variant='success'
       >
-        +1
+        + person message (left)
       </Button>
       <Button
         className={styles.addButton}
@@ -188,7 +184,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
         type='button'
         variant='success'
       >
-        +2
+        + user message (right)
       </Button>
     </div>
   );
@@ -201,7 +197,7 @@ export default class DialogConstructor implements BlockTool {
   /**
    * Previously saved data
    */
-  private data: MessageData[];
+  private data: DialogPluginData;
 
   /**
    * Plugin constructor
@@ -209,7 +205,7 @@ export default class DialogConstructor implements BlockTool {
    * @param options - plugin options
    * @param options.data - previously saved data
    */
-  constructor({ data }: BlockToolConstructorOptions<MessageData[]>) {
+  constructor({ data }: BlockToolConstructorOptions<DialogPluginData>) {
     this.data = data;
   }
 
@@ -234,8 +230,10 @@ export default class DialogConstructor implements BlockTool {
     element.className = 'dialog';
     ReactDOM.render(
       <DialogComponent
-        initialData={this.data}
-        onChange={(data) => this.data = data}
+        initialData={this.data.messages}
+        onChange={(data) => {
+          this.data.messages = data;
+        }}
       />,
       element
     );
@@ -247,6 +245,6 @@ export default class DialogConstructor implements BlockTool {
    * Return information structure after save
    */
   public save(): MessageData[] {
-    return this.data;
+    return this.data.messages;
   }
 }
