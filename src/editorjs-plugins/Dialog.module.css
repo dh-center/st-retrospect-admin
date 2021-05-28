@@ -1,21 +1,48 @@
-.inputLineItemWrapper {
+.messages {
   display: flex;
+  flex-direction: column;
+}
+
+.leftMessage {
+  display: flex;
+  flex-direction: column;
   width: 70%;
   margin: 0 0 .25em;
+  align-self: flex-start;
+  border: 1px solid #bfbcbc;
+  border-radius: .25rem;
+  padding: 10px;
+}
+
+.rightMessage {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 0 .25em;
+  align-self: flex-end;
+  border: 1px solid #bfbcbc;
+  border-radius: .25rem;
+  padding: 10px;
+}
+
+.messageButtons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
 }
 
 .input {
-  padding: .25em 0;
   margin-right: .25em;
   margin-bottom: 0;
   flex-grow: 14;
 }
 
 .addButton {
-  width: 100%;
+  width: 30%;
 }
 
 .removeButton {
   flex-grow: 1;
+  height: 40px;
 }
 

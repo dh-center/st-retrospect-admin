@@ -36,7 +36,7 @@ interface MessageData {
   /**
    * Chat side for messages from persons - left or not left (right)
    */
-  isLeft?: boolean
+  isLeft: boolean
 }
 
 /**
@@ -78,6 +78,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
     newArray.push({
       message: '',
       reaction: '',
+      isLeft: false,
     });
     onChange({
       messages: newArray,
@@ -86,14 +87,16 @@ function DialogComponent(props: MessagesProps): ReactElement {
 
   /**
    * Adds person's message
+   *
+   * @param isLeft - chat side, where message will be added
    */
-  const addPersonMessage = (): void => {
+  const addPersonMessage = (isLeft: boolean): void => {
     const newArray = dataArray.messages;
 
     newArray.push({
       message: '',
       sender: '',
-      isLeft: false,
+      isLeft,
     });
     onChange({
       messages: newArray,
@@ -118,12 +121,10 @@ function DialogComponent(props: MessagesProps): ReactElement {
    * Returns array of components with messages
    */
   const inputList = dataArray.messages.map((dataItem, index) => {
-    console.log('dataArray: ' + dataArray);
-
     return (
-      <div className={styles.inputLineItemWrapper} key={index}>
+      <div className={dataItem.isLeft ? styles.leftMessage : styles.rightMessage} key={index}>
         {
-          !dataItem.reaction &&
+          (dataItem.reaction === undefined) &&
           <Input
             label='Отправитель'
             onChange={(value: string) => {
@@ -139,7 +140,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
         }
 
         {
-          dataItem.reaction &&
+          !(dataItem.reaction === undefined) &&
           <Input
             label='Реакция пользователя'
             onChange={(value: string) => {
@@ -155,7 +156,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
         }
 
         <Input
-          label='Cообщение'
+          label={(dataItem.reaction === undefined) ? 'Сообщение' : 'Ответ на реакцию'}
           onChange={(value: string) => {
             const newArray = dataArray.messages;
 
@@ -181,23 +182,35 @@ function DialogComponent(props: MessagesProps): ReactElement {
 
   return (
     <div className={pluginBlockStyles.wrapper}>
-      {inputList}
-      <Button
-        className={styles.addButton}
-        onClick={addPersonMessage}
-        type='button'
-        variant='success'
-      >
-        + person message (left)
-      </Button>
-      <Button
-        className={styles.addButton}
-        onClick={addUserMessage}
-        type='button'
-        variant='success'
-      >
-        + user message (right)
-      </Button>
+      <div className={styles.messages}>
+        {inputList}
+      </div>
+      <div className={styles.messageButtons}>
+        <Button
+          className={styles.addButton}
+          onClick={() => addPersonMessage(true)}
+          type='button'
+          variant='success'
+        >
+          + person (left)
+        </Button>
+        <Button
+          className={styles.addButton}
+          onClick={() => addPersonMessage(false)}
+          type='button'
+          variant='success'
+        >
+          + person (right)
+        </Button>
+        <Button
+          className={styles.addButton}
+          onClick={addUserMessage}
+          type='button'
+          variant='success'
+        >
+          + user (right)
+        </Button>
+      </div>
     </div>
   );
 }
