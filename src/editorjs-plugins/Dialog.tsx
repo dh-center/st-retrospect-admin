@@ -48,12 +48,12 @@ interface MessagesProps {
    *
    * @param value - value for changing
    */
-  onChange(value: MessageData[]): void;
+  onChange(value: DialogPluginData): void;
 
   /**
    * Default value
    */
-  initialData: MessageData[];
+  initialData: DialogPluginData;
 }
 
 /**
@@ -62,9 +62,9 @@ interface MessagesProps {
  * @param props - props with data for displaying messages
  */
 function DialogComponent(props: MessagesProps): ReactElement {
-  const [dataArray, setDataArray] = useState<MessageData[]>(props.initialData || []);
+  const [dataArray, setDataArray] = useState<DialogPluginData>(Object.keys(props.initialData).length === 0 ? { messages: [] } : props.initialData);
 
-  const onChange = (newData: MessageData[]): void => {
+  const onChange = (newData: DialogPluginData): void => {
     setDataArray(newData);
     props.onChange(newData);
   };
@@ -73,27 +73,31 @@ function DialogComponent(props: MessagesProps): ReactElement {
    * Adds user's message
    */
   const addUserMessage = (): void => {
-    const newArray = dataArray;
+    const newArray = dataArray.messages;
 
     newArray.push({
       message: '',
       reaction: '',
     });
-    onChange(newArray);
+    onChange({
+      messages: newArray,
+    });
   };
 
   /**
    * Adds person's message
    */
   const addPersonMessage = (): void => {
-    const newArray = dataArray;
+    const newArray = dataArray.messages;
 
     newArray.push({
       message: '',
       sender: '',
       isLeft: false,
     });
-    onChange(newArray);
+    onChange({
+      messages: newArray,
+    });
   };
 
   /**
@@ -102,16 +106,18 @@ function DialogComponent(props: MessagesProps): ReactElement {
    * @param index - index of element for removing
    */
   const removeMessage = (index: number): void => {
-    const newArray = dataArray;
+    const newArray = dataArray.messages;
 
     newArray.splice(index, 1);
-    onChange(newArray);
+    onChange({
+      messages: newArray,
+    });
   };
 
   /**
    * Returns array of components with messages
    */
-  const inputList = dataArray.map((dataItem, index) => {
+  const inputList = dataArray.messages.map((dataItem, index) => {
     console.log('dataArray: ' + dataArray);
 
     return (
@@ -121,10 +127,12 @@ function DialogComponent(props: MessagesProps): ReactElement {
           <Input
             label='Отправитель'
             onChange={(value: string) => {
-              const newArray = dataArray;
+              const newArray = dataArray.messages;
 
               newArray[index].sender = value;
-              onChange(newArray);
+              onChange({
+                messages: newArray,
+              });
             }}
             value={dataItem.sender || ''}
           />
@@ -135,10 +143,12 @@ function DialogComponent(props: MessagesProps): ReactElement {
           <Input
             label='Реакция пользователя'
             onChange={(value: string) => {
-              const newArray = dataArray;
+              const newArray = dataArray.messages;
 
               newArray[index].reaction = value;
-              onChange(newArray);
+              onChange({
+                messages: newArray,
+              });
             }}
             value={dataItem.message}
           />
@@ -147,10 +157,12 @@ function DialogComponent(props: MessagesProps): ReactElement {
         <Input
           label='Cообщение'
           onChange={(value: string) => {
-            const newArray = dataArray;
+            const newArray = dataArray.messages;
 
             newArray[index].message = value;
-            onChange(newArray);
+            onChange({
+              messages: newArray,
+            });
           }}
           value={dataItem.message}
         />
@@ -230,9 +242,9 @@ export default class DialogConstructor implements BlockTool {
     element.className = 'dialog';
     ReactDOM.render(
       <DialogComponent
-        initialData={this.data.messages}
+        initialData={this.data}
         onChange={(data) => {
-          this.data.messages = data;
+          this.data = data;
         }}
       />,
       element
@@ -244,7 +256,7 @@ export default class DialogConstructor implements BlockTool {
   /**
    * Return information structure after save
    */
-  public save(): MessageData[] {
-    return this.data.messages;
+  public save(): DialogPluginData {
+    return this.data;
   }
 }
