@@ -127,7 +127,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
         {
           (dataItem.reaction === undefined) &&
           <LabeledPersonsCustomSelect
-            label='Person'
+            label='Отправитель'
             onChange={(value) => {
               const newArray = dataArray.messages;
 
