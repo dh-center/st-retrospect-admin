@@ -6,6 +6,7 @@ import pluginBlockStyles from './PluginBlock.module.css';
 import { BlockTool, ToolboxConfig } from '@editorjs/editorjs';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import ReactDOM from 'react-dom';
+import { LabeledPersonsCustomSelect } from '../components/CustomSelects/PersonsCustomSelect';
 
 /**
  * Interface for interaction with EditorJS
@@ -125,9 +126,9 @@ function DialogComponent(props: MessagesProps): ReactElement {
       <div className={dataItem.isLeft ? styles.leftMessage : styles.rightMessage} key={index}>
         {
           (dataItem.reaction === undefined) &&
-          <Input
-            label='Отправитель'
-            onChange={(value: string) => {
+          <LabeledPersonsCustomSelect
+            label='Person'
+            onChange={(value) => {
               const newArray = dataArray.messages;
 
               newArray[index].sender = value;
@@ -135,7 +136,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
                 messages: newArray,
               });
             }}
-            value={dataItem.sender || ''}
+            value={dataItem.sender}
           />
         }
 
