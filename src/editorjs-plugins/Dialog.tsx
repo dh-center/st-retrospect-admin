@@ -82,6 +82,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
 
     newArray.push({
       message: '',
+      sender: 'user',
       reaction: '',
       isLeft: false,
     });
@@ -129,7 +130,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
     return (
       <div className={dataItem.isLeft ? classNames(styles.messageItem, styles.messageItemLeft) : classNames(styles.messageItem, styles.messageItemRight)} key={index}>
         {
-          (dataItem.reaction === undefined) &&
+          !(dataItem.sender === 'user') &&
           <LabeledPersonsCustomSelect
             label='Отправитель'
             onChange={(value) => {
@@ -145,7 +146,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
         }
 
         {
-          !(dataItem.reaction === undefined) &&
+          (dataItem.sender === 'user') &&
           <Input
             label='Реакция пользователя'
             onChange={(value: string) => {
@@ -156,7 +157,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
                 messages: newArray,
               });
             }}
-            value={dataItem.message}
+            value={dataItem.reaction || ''}
           />
         }
 
