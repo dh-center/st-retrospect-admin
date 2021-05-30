@@ -7,6 +7,7 @@ import { BlockTool, ToolboxConfig } from '@editorjs/editorjs';
 import { BlockToolConstructorOptions } from '@editorjs/editorjs/types/tools/block-tool';
 import ReactDOM from 'react-dom';
 import { LabeledPersonsCustomSelect } from '../components/CustomSelects/PersonsCustomSelect';
+import classNames from 'classnames';
 
 /**
  * Interface for interaction with EditorJS
@@ -126,7 +127,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
    */
   const inputList = dataArray.messages.map((dataItem, index) => {
     return (
-      <div className={dataItem.isLeft ? styles.leftMessage : styles.rightMessage} key={index}>
+      <div className={dataItem.isLeft ? classNames(styles.messageItem, styles.messageItemLeft) : classNames(styles.messageItem, styles.messageItemRight)} key={index}>
         {
           (dataItem.reaction === undefined) &&
           <LabeledPersonsCustomSelect
