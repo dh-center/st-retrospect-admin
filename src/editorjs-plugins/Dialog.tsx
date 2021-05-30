@@ -12,6 +12,9 @@ import { LabeledPersonsCustomSelect } from '../components/CustomSelects/PersonsC
  * Interface for interaction with EditorJS
  */
 interface DialogPluginData {
+  /**
+   * Array of all added messages
+   */
   messages: MessageData[];
 }
 
