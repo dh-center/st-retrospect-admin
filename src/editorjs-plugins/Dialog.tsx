@@ -162,7 +162,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
         }
 
         <Input
-          label={(dataItem.reaction === undefined) ? 'Сообщение' : 'Ответ на реакцию'}
+          label={(dataItem.reaction === undefined) ? 'Сообщение' : 'Отображаемый ответ пользователя'}
           onChange={(value: string) => {
             const newArray = dataArray.messages;
 
@@ -180,7 +180,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
           type='button'
           variant='outline-danger'
         >
-          удалить
+          Удалить
         </Button>
       </div>
     );
@@ -198,7 +198,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
           type='button'
           variant='success'
         >
-          + person (left)
+          + персона (left)
         </Button>
         <Button
           className={styles.addButton}
@@ -206,7 +206,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
           type='button'
           variant='success'
         >
-          + person (right)
+          + персона (right)
         </Button>
         <Button
           className={styles.addButton}
@@ -214,7 +214,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
           type='button'
           variant='success'
         >
-          + user (right)
+          + пользователь
         </Button>
       </div>
     </div>
