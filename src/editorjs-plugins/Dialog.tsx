@@ -128,7 +128,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
    */
   const inputList = dataArray.messages.map((dataItem, index) => {
     return (
-      <div className={dataItem.isLeft ? classNames(styles.messageItem, styles.messageItemLeft) : classNames(styles.messageItem, styles.messageItemRight)} key={index}>
+      <div className={classNames(styles.messageItem, dataItem.isLeft ? styles.messageItemLeft : styles.messageItemRight)} key={index}>
         {
           !(dataItem.sender === 'user') &&
           <LabeledPersonsCustomSelect
