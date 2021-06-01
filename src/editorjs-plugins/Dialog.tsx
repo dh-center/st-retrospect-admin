@@ -67,10 +67,10 @@ interface MessagesProps {
  * @param props - props with data for displaying messages
  */
 function DialogComponent(props: MessagesProps): ReactElement {
-  const [dataArray, setDataArray] = useState<DialogPluginData>(Object.keys(props.initialData).length === 0 ? { messages: [] } : props.initialData);
+  const [pluginData, setPluginData] = useState<DialogPluginData>(Object.keys(props.initialData).length === 0 ? { messages: [] } : props.initialData);
 
   const onChange = (newData: DialogPluginData): void => {
-    setDataArray(newData);
+    setPluginData(newData);
     props.onChange(newData);
   };
 
@@ -78,7 +78,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
    * Adds user's message
    */
   const addUserMessage = (): void => {
-    const newArray = dataArray.messages;
+    const newArray = pluginData.messages;
 
     newArray.push({
       message: '',
@@ -97,7 +97,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
    * @param isLeft - chat side, where message will be added
    */
   const addPersonMessage = (isLeft: boolean): void => {
-    const newArray = dataArray.messages;
+    const newArray = pluginData.messages;
 
     newArray.push({
       message: '',
@@ -115,7 +115,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
    * @param index - index of element for removing
    */
   const removeMessage = (index: number): void => {
-    const newArray = dataArray.messages;
+    const newArray = pluginData.messages;
 
     newArray.splice(index, 1);
     onChange({
@@ -126,7 +126,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
   /**
    * Returns array of components with messages
    */
-  const inputList = dataArray.messages.map((dataItem, index) => {
+  const inputList = pluginData.messages.map((dataItem, index) => {
     return (
       <div className={classNames(styles.messageItem, dataItem.isLeft ? styles.messageItemLeft : styles.messageItemRight)} key={index}>
         {
@@ -134,7 +134,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
           <LabeledPersonsCustomSelect
             label='Отправитель'
             onChange={(value) => {
-              const newArray = dataArray.messages;
+              const newArray = pluginData.messages;
 
               newArray[index].sender = value;
               onChange({
@@ -150,7 +150,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
           <Input
             label='Реакция пользователя'
             onChange={(value: string) => {
-              const newArray = dataArray.messages;
+              const newArray = pluginData.messages;
 
               newArray[index].reaction = value;
               onChange({
@@ -164,7 +164,7 @@ function DialogComponent(props: MessagesProps): ReactElement {
         <Input
           label={(dataItem.reaction === undefined) ? 'Сообщение' : 'Отображаемый ответ пользователя'}
           onChange={(value: string) => {
-            const newArray = dataArray.messages;
+            const newArray = pluginData.messages;
 
             newArray[index].message = value;
             onChange({
