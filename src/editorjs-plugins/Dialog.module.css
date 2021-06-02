@@ -1,0 +1,44 @@
+.messages {
+  display: flex;
+  flex-direction: column;
+}
+
+.messageItem {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 0 .25em;
+  border: 1px solid #bfbcbc;
+  border-radius: .25rem;
+  padding: 10px;
+}
+
+.messageItemLeft {
+  align-self: flex-start;
+}
+
+.messageItemRight {
+  align-self: flex-end;
+}
+
+.messageButtons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.input {
+  margin-right: .25em;
+  margin-bottom: 0;
+  flex-grow: 14;
+}
+
+.addButton {
+  width: 30%;
+}
+
+.removeButton {
+  flex-grow: 1;
+  height: 40px;
+}
+
