@@ -36,11 +36,15 @@ export function DefaultEntityRow<T extends Entity>(props: EntityRowProps<T>): Re
       return undefined;
     }
 
+    const keyValue = key==='tags'
+      ? props.entity.tags.map((tag: {value: string}) => tag.value).join(', ')
+      : props.entity[key] && props.entity[key].toString();
+
     return (
       <td
         key={key}
       >
-        {props.entity[key] && props.entity[key].toString()}
+        {keyValue}
       </td>
     );
   });

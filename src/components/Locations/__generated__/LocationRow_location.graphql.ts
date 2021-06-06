@@ -15,6 +15,10 @@ export type LocationRow_location = {
         readonly id: string;
         readonly name: string | null;
         readonly description: string | null;
+        readonly tags: ReadonlyArray<{
+            readonly id: string;
+            readonly value: string;
+        }>;
     }>;
     readonly " $refType": "LocationRow_location";
 };
@@ -95,6 +99,25 @@ return {
           "kind": "ScalarField",
           "name": "description",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Tag",
+          "kind": "LinkedField",
+          "name": "tags",
+          "plural": true,
+          "selections": [
+            (v0/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "value",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -104,5 +127,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e9a8187737328cd74657065f29119684';
+(node as any).hash = '26cf63faaac89e1c94e0ae55514ef254';
 export default node;

@@ -16,6 +16,10 @@ export type PersonsList_entityConnection = {
                 readonly pseudonym: string | null;
                 readonly birthDate: string | null;
                 readonly deathDate: string | null;
+                readonly tags: ReadonlyArray<{
+                    readonly id: string;
+                    readonly value: string;
+                }>;
             };
         }>;
     };
@@ -29,7 +33,15 @@ export type PersonsList_entityConnection$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -88,13 +100,7 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "id",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -135,6 +141,25 @@ const node: ReaderFragment = {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "deathDate",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Tag",
+                  "kind": "LinkedField",
+                  "name": "tags",
+                  "plural": true,
+                  "selections": [
+                    (v0/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "value",
+                      "storageKey": null
+                    }
+                  ],
                   "storageKey": null
                 },
                 {
@@ -189,5 +214,6 @@ const node: ReaderFragment = {
   "type": "Query",
   "abstractKey": null
 };
-(node as any).hash = 'f7f8ba667c53520b6bb98ecc84057887';
+})();
+(node as any).hash = '8edabd80e7fb11af62acc0a6b6a78fe2';
 export default node;

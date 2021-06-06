@@ -53,6 +53,10 @@ fragment LocationRow_location on Location {
     id
     name
     description
+    tags {
+      id
+      value
+    }
   }
 }
 */
@@ -243,6 +247,25 @@ return {
                     "kind": "ScalarField",
                     "name": "description",
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Tag",
+                    "kind": "LinkedField",
+                    "name": "tags",
+                    "plural": true,
+                    "selections": [
+                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "value",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -258,12 +281,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b1b59be64e5bc36934da1c55a8ce6f8c",
+    "cacheID": "84a6a6082b0687e89585f391d111dd94",
     "id": null,
     "metadata": {},
     "name": "LocationsPageQuery",
     "operationKind": "query",
-    "text": "query LocationsPageQuery(\n  $query: String!\n  $skip: Int!\n  $first: Int!\n) {\n  locationsSearch(input: {query: $query, skip: $skip, first: $first}) {\n    nodes {\n      id\n      ...LocationRow_location\n    }\n    totalCount\n    suggest\n  }\n}\n\nfragment LocationRow_location on Location {\n  id\n  longitude\n  latitude\n  addresses {\n    address\n  }\n  instances {\n    id\n    name\n    description\n  }\n}\n"
+    "text": "query LocationsPageQuery(\n  $query: String!\n  $skip: Int!\n  $first: Int!\n) {\n  locationsSearch(input: {query: $query, skip: $skip, first: $first}) {\n    nodes {\n      id\n      ...LocationRow_location\n    }\n    totalCount\n    suggest\n  }\n}\n\nfragment LocationRow_location on Location {\n  id\n  longitude\n  latitude\n  addresses {\n    address\n  }\n  instances {\n    id\n    name\n    description\n    tags {\n      id\n      value\n    }\n  }\n}\n"
   }
 };
 })();

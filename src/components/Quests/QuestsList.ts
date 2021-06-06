@@ -21,6 +21,10 @@ const QuestsList = createPaginationContainer<EntitiesListProps<QuestsPageEntityC
               id
               name
               description
+              tags {
+                id
+                value
+              }
             }
           }
         }
