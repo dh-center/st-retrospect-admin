@@ -40,6 +40,10 @@ export default function LocationRow(props: LocationRowProps): React.ReactElement
         id
         name
         description
+        tags {
+          id
+          value
+        }
       }
     }
   `, props.location);
@@ -48,6 +52,7 @@ export default function LocationRow(props: LocationRowProps): React.ReactElement
     <React.Fragment key={instance.id}>
       <Cell>{instance.name}</Cell>
       <Cell>{instance.description}</Cell>
+      <Cell>{instance.tags.map(tag => tag.value).join(', ')}</Cell>
     </React.Fragment>
   );
 

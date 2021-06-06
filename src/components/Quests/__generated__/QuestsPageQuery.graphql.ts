@@ -34,6 +34,10 @@ fragment QuestsList_entityConnection_2HEEH6 on Query {
         id
         name
         description
+        tags {
+          id
+          value
+        }
         __typename
       }
       cursor
@@ -68,7 +72,14 @@ v2 = [
     "name": "first",
     "variableName": "first"
   }
-];
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -128,13 +139,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -147,6 +152,25 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "description",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Tag",
+                    "kind": "LinkedField",
+                    "name": "tags",
+                    "plural": true,
+                    "selections": [
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "value",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   },
                   {
@@ -209,12 +233,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "85670e20600d31c3bf2e80915cdc5e1f",
+    "cacheID": "ffbfb8eb8552d71b65d8ae16cd66bbc4",
     "id": null,
     "metadata": {},
     "name": "QuestsPageQuery",
     "operationKind": "query",
-    "text": "query QuestsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...QuestsList_entityConnection_2HEEH6\n}\n\nfragment QuestsList_entityConnection_2HEEH6 on Query {\n  entities: quests(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        description\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query QuestsPageQuery(\n  $first: Int\n  $after: Cursor\n) {\n  ...QuestsList_entityConnection_2HEEH6\n}\n\nfragment QuestsList_entityConnection_2HEEH6 on Query {\n  entities: quests(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        description\n        tags {\n          id\n          value\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

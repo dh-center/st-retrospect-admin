@@ -12,6 +12,10 @@ export type QuestsList_entityConnection = {
                 readonly id: string;
                 readonly name: string;
                 readonly description: string | null;
+                readonly tags: ReadonlyArray<{
+                    readonly id: string;
+                    readonly value: string;
+                }>;
             };
         }>;
     };
@@ -25,7 +29,15 @@ export type QuestsList_entityConnection$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -84,13 +96,7 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "id",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -103,6 +109,25 @@ const node: ReaderFragment = {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "description",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Tag",
+                  "kind": "LinkedField",
+                  "name": "tags",
+                  "plural": true,
+                  "selections": [
+                    (v0/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "value",
+                      "storageKey": null
+                    }
+                  ],
                   "storageKey": null
                 },
                 {
@@ -157,5 +182,6 @@ const node: ReaderFragment = {
   "type": "Query",
   "abstractKey": null
 };
-(node as any).hash = 'ff8e5d93f7a0836c5bcb71d9f4f7142d';
+})();
+(node as any).hash = '5813f98b9066eab747159b50e3ff445b';
 export default node;

@@ -25,6 +25,10 @@ const PersonsList = createPaginationContainer<EntitiesListProps<PersonsPageEntit
               pseudonym
               birthDate
               deathDate
+              tags {
+                id
+                value
+              }
             }
           }
         }

@@ -63,11 +63,12 @@ export default function LocationsPage(): React.ReactElement {
             <HeadCell rowSpan={2}>Address</HeadCell>
             <HeadCell rowSpan={2}>Latitude</HeadCell>
             <HeadCell rowSpan={2}>Longitude</HeadCell>
-            <HeadCell colSpan={2}>Instances</HeadCell>
+            <HeadCell colSpan={3}>Instances</HeadCell>
           </tr>
           <tr>
             <HeadCell>Name</HeadCell>
             <HeadCell>Description</HeadCell>
+            <HeadCell>Tags</HeadCell>
           </tr>
         </thead>
         {data.locationsSearch.nodes.map((node, index) =>
