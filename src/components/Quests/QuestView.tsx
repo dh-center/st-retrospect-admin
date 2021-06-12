@@ -79,6 +79,10 @@ export default function QuestView(): ReactElement {
             id
             name
             description
+            wayToTravel
+            type
+            durationInMinutes
+            distanceInKilometers
             minLevel
             earnedExp
             tags {
@@ -108,6 +112,34 @@ export default function QuestView(): ReactElement {
           return <Redirect to='/quests'/>;
         }
 
+        const questType = (): string => {
+          switch (props.quest?.type) {
+            case 'QUIZ':
+              return 'Quiz';
+            case 'ROUTE':
+              return 'Route';
+            case 'STORY':
+              return 'Story';
+            case 'TEST':
+              return 'Test';
+            case '%future added value':
+            default:
+              return props.quest?.type.toString() || 'Undefined';
+          }
+        };
+
+        const questWayToTravel = (): string => {
+          switch (props.quest?.wayToTravel) {
+            case 'ON_FOOT':
+              return 'On foot';
+            case 'WITH_TRANSPORT':
+              return 'With transport';
+            case '%future added value':
+            default:
+              return props.quest?.type.toString() || 'Undefined';
+          }
+        };
+
         return (
           <ContentWrapper>
             <div>
@@ -124,6 +156,22 @@ export default function QuestView(): ReactElement {
                   .map(tag => tag.value)
                   .join('; ')}
                 label='Tags'
+              />
+              <LabeledText
+                content={questType()}
+                label='Type'
+              />
+              <LabeledText
+                content={questWayToTravel()}
+                label='Way to travel'
+              />
+              <LabeledText
+                content={props.quest.durationInMinutes.toString()}
+                label='Duration in minutes'
+              />
+              <LabeledText
+                content={props.quest.distanceInKilometers.toString()}
+                label='Distance in kilometers'
               />
               <LabeledText
                 content={props.quest.minLevel.toString()}

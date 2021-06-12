@@ -3,6 +3,8 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+export type TaskTypes = "QUIZ" | "ROUTE" | "STORY" | "TEST" | "%future added value";
+export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
 export type QuestViewQueryVariables = {
     id: string;
 };
@@ -11,6 +13,10 @@ export type QuestViewQueryResponse = {
         readonly id: string;
         readonly name: string;
         readonly description: string | null;
+        readonly wayToTravel: WayToTravel;
+        readonly type: TaskTypes;
+        readonly durationInMinutes: number;
+        readonly distanceInKilometers: number;
         readonly minLevel: number;
         readonly earnedExp: number;
         readonly tags: ReadonlyArray<{
@@ -33,6 +39,10 @@ query QuestViewQuery(
     id
     name
     description
+    wayToTravel
+    type
+    durationInMinutes
+    distanceInKilometers
     minLevel
     earnedExp
     tags {
@@ -83,17 +93,45 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "minLevel",
+  "name": "wayToTravel",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "earnedExp",
+  "name": "type",
   "storageKey": null
 },
 v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "durationInMinutes",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "distanceInKilometers",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "minLevel",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "earnedExp",
+  "storageKey": null
+},
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -120,6 +158,10 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
+          (v7/*: any*/),
+          (v8/*: any*/),
+          (v9/*: any*/),
+          (v10/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -128,7 +170,7 @@ return {
             "name": "tags",
             "plural": true,
             "selections": [
-              (v7/*: any*/)
+              (v11/*: any*/)
             ],
             "storageKey": null
           }
@@ -158,6 +200,10 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
+          (v7/*: any*/),
+          (v8/*: any*/),
+          (v9/*: any*/),
+          (v10/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -166,7 +212,7 @@ return {
             "name": "tags",
             "plural": true,
             "selections": [
-              (v7/*: any*/),
+              (v11/*: any*/),
               (v2/*: any*/)
             ],
             "storageKey": null
@@ -177,14 +223,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cd55baea1d0c38229661a3a79cb4dcd9",
+    "cacheID": "d0bc1801e3a39df682143691f66ff9bd",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    wayToTravel\n    type\n    durationInMinutes\n    distanceInKilometers\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ed035d1947d2c664b634bb8b9187ea8d';
+(node as any).hash = '635e573de3533cf0eb5110e285349e23';
 export default node;

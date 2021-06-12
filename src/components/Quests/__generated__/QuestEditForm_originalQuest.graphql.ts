@@ -4,12 +4,16 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
+export type TaskTypes = "QUIZ" | "ROUTE" | "STORY" | "TEST" | "%future added value";
+export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
 export type QuestEditForm_originalQuest = {
     readonly id: string;
     readonly name: string;
     readonly description: string | null;
     readonly type: TaskTypes;
+    readonly wayToTravel: WayToTravel;
+    readonly distanceInKilometers: number;
+    readonly durationInMinutes: number;
     readonly minLevel: number;
     readonly earnedExp: number;
     readonly data: {
@@ -98,6 +102,27 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "wayToTravel",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "distanceInKilometers",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "durationInMinutes",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "minLevel",
       "storageKey": null
     },
@@ -145,5 +170,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ae730ca3975dbb943fe09470f2623e18';
+(node as any).hash = 'c830227319c63d4b5b33ff704697dbf4';
 export default node;

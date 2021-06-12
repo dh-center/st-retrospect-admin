@@ -161,8 +161,99 @@ function QuestEditForm(props: Props): React.ReactElement {
               type='radio'
               value='ROUTE'
             />
+            <Form.Check
+              checked={input.type === 'STORY'}
+              id='story'
+              inline
+              label='Story'
+              name='type'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  type: 'STORY',
+                });
+              }}
+              required
+              type='radio'
+              value='STORY'
+            />
+            <Form.Check
+              checked={input.type === 'TEST'}
+              id='test'
+              inline
+              label='Test'
+              name='type'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  type: 'TEST',
+                });
+              }}
+              required
+              type='radio'
+              value='TEST'
+            />
           </div>
         </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor=''>Way to travel</Form.Label>
+          <div>
+            <Form.Check
+              checked={input.wayToTravel === 'ON_FOOT'}
+              id='onFoot'
+              inline
+              label='On foot'
+              name='wayToTravel'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  wayToTravel: 'ON_FOOT',
+                });
+              }}
+              required
+              type='radio'
+              value='ON_FOOT'
+            />
+            <Form.Check
+              checked={input.wayToTravel === 'WITH_TRANSPORT'}
+              id='withTransport'
+              inline
+              label='With transport'
+              name='wayToTravel'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  wayToTravel: 'WITH_TRANSPORT',
+                });
+              }}
+              required
+              type='radio'
+              value='WITH_TRANSPORT'
+            />
+          </div>
+        </Form.Group>
+        <Input
+          label='Duration in minutes'
+          min={0}
+          onChange={value => setInput({
+            ...input,
+            durationInMinutes: Number(value),
+          })}
+          required
+          type='number'
+          value={input?.durationInMinutes !== undefined ? Number(input?.durationInMinutes).toString() : '1'}
+        />
+        <Input
+          label='Distance in kilometers'
+          min={0}
+          onChange={value => setInput({
+            ...input,
+            distanceInKilometers: Number(value),
+          })}
+          required
+          type='number'
+          value={input?.distanceInKilometers !== undefined ? Number(input?.distanceInKilometers).toString() : '1'}
+        />
         <Suspense fallback='Loading tags...'>
           <LabeledTagsInput
             label='Tags'
@@ -278,6 +369,9 @@ export default createFragmentContainer(
         name
         description
         type
+        wayToTravel
+        distanceInKilometers
+        durationInMinutes
         minLevel
         earnedExp
         data {

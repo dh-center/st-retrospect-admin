@@ -260,6 +260,15 @@ input CreateQuestInput {
   """Quest description"""
   description: String
 
+  """What user needs to use for route passing"""
+  wayToTravel: WayToTravel! = ON_FOOT
+
+  """Quest duration in minutes"""
+  durationInMinutes: Int!
+
+  """Quest distance in kilometers"""
+  distanceInKilometers: Int!
+
   """Quest photo"""
   photo: String
 
@@ -544,7 +553,6 @@ type LocationInstanceConnection {
 
   """Number of available edges"""
   totalCount: Int!
-  suggest: String
 }
 
 """Information about specific location instance in connection"""
@@ -603,21 +611,6 @@ type LocationInstanceMutations {
 
   """Delete location instance"""
   delete(id: GlobalId!): DeleteLocationInstancePayload!
-}
-
-"""Model for representing result of location instances search query"""
-type LocationInstancesSearchResult {
-  """List of finded locations"""
-  nodes: [LocationInstance!]!
-
-  """Number of available result items"""
-  totalCount: Int!
-
-  """Proposed query if user made a typo"""
-  suggest: String
-
-  """Proposed query if user made a typo with indication of the place of it"""
-  highlightedSuggest: String
 }
 
 type LocationMutations {
@@ -985,13 +978,16 @@ type Query {
   locationsSearch(input: SearchInput!): LocationsSearchResult!
 
   """Query for searching location instances related with some person"""
-  locationInstanceByPersonSearch(input: SearchInput!): LocationInstancesSearchResult!
+  relationsByPersonSearch(input: SearchInput!): RelationsSearchResult!
 
   """Get specific tag"""
   tag(
     """Tag id"""
     id: GlobalId!
   ): Tag
+
+  """Returns array of tags which belong to quests"""
+  questTags: [Tag!]!
 
   """List of available tags"""
   tags(
@@ -1028,6 +1024,15 @@ type Quest implements Node {
 
   """Quest type (quiz, route, etc.)"""
   type: TaskTypes!
+
+  """What user needs to use for route passing"""
+  wayToTravel: WayToTravel!
+
+  """Quest duration in minutes"""
+  durationInMinutes: Int!
+
+  """Quest distance in kilometers"""
+  distanceInKilometers: Int!
 
   """Quest task"""
   task: JSON!
@@ -1175,6 +1180,21 @@ type RelationMutations {
   delete(id: GlobalId!): DeleteRelationPayload!
 }
 
+"""Model for representing result of location instances search query"""
+type RelationsSearchResult {
+  """List of finded locations"""
+  nodes: [Relation!]!
+
+  """Number of available result items"""
+  totalCount: Int!
+
+  """Proposed query if user made a typo"""
+  suggest: String
+
+  """Proposed query if user made a typo with indication of the place of it"""
+  highlightedSuggest: String
+}
+
 """Represents one of the relations types"""
 type RelationType implements Node {
   """Relation type id"""
@@ -1243,8 +1263,8 @@ input SearchInput {
   """End of search range"""
   endYear: Int
 
-  """Entity category"""
-  category: [String!]
+  """Tag ids for filtering"""
+  tagIds: [GlobalId!]
 
   """How many documents in the selection to skip"""
   skip: Int! = 0
@@ -1304,6 +1324,12 @@ enum TaskTypes {
 
   """Task type route"""
   ROUTE
+
+  """Story about something without quiz parts"""
+  STORY
+
+  """Test without traveling"""
+  TEST
 }
 
 """
@@ -1483,6 +1509,15 @@ input UpdateQuestInput {
   """Quest description"""
   description: String
 
+  """What user needs to use for route passing"""
+  wayToTravel: WayToTravel
+
+  """Quest duration in minutes"""
+  durationInMinutes: Int
+
+  """Quest distance in kilometers"""
+  distanceInKilometers: Int
+
   """Quest photo"""
   photo: String
 
@@ -1625,6 +1660,18 @@ type User implements Node {
 
   """Array of user permission"""
   permissions: [String!]!
+
+  """Accepted user friends"""
+  friends: [User!]!
+
+  """Unaccepted friend requests to other users"""
+  friendPendingRequests: [User!]!
+
+  """
+  Friend requests to user
+  User can accept or reject them
+  """
+  friendRequests: [User!]!
 }
 
 type UserCompleteQuestPayload {
@@ -1663,5 +1710,29 @@ type UserMutations {
 
   """Updates user data"""
   update(input: UpdateUserInput!): UpdateUserPayload!
+
+  """Send friend request to user by user id"""
+  sendFriendRequest(id: GlobalId!): UpdateUserPayload!
+
+  """Cancel dispatched friend request"""
+  cancelFriendRequest(id: GlobalId!): UpdateUserPayload!
+
+  """Accept received friend request"""
+  acceptFriendRequest(id: GlobalId!): UpdateUserPayload!
+
+  """Reject received friend request"""
+  rejectFriendRequest(id: GlobalId!): UpdateUserPayload!
+
+  """Remove user from friends"""
+  removeFromFriends(id: GlobalId!): UpdateUserPayload!
+}
+
+"""What user needs to use for route passing"""
+enum WayToTravel {
+  """Uses his feets"""
+  ON_FOOT
+
+  """Uses scooter or bycicle"""
+  WITH_TRANSPORT
 }
 
