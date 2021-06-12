@@ -232,6 +232,28 @@ function QuestEditForm(props: Props): React.ReactElement {
             />
           </div>
         </Form.Group>
+        <Input
+          label='Duration in minutes'
+          min={0}
+          onChange={value => setInput({
+            ...input,
+            durationInMinutes: Number(value),
+          })}
+          required
+          type='number'
+          value={input?.durationInMinutes !== undefined ? Number(input?.durationInMinutes).toString() : '1'}
+        />
+        <Input
+          label='Distance in kilometers'
+          min={0}
+          onChange={value => setInput({
+            ...input,
+            distanceInKilometers: Number(value),
+          })}
+          required
+          type='number'
+          value={input?.distanceInKilometers !== undefined ? Number(input?.distanceInKilometers).toString() : '1'}
+        />
         <Suspense fallback='Loading tags...'>
           <LabeledTagsInput
             label='Tags'
@@ -348,6 +370,8 @@ export default createFragmentContainer(
         description
         type
         wayToTravel
+        distanceInKilometers
+        durationInMinutes
         minLevel
         earnedExp
         data {

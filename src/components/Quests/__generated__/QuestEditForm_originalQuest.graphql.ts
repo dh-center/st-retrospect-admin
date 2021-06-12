@@ -12,6 +12,8 @@ export type QuestEditForm_originalQuest = {
     readonly description: string | null;
     readonly type: TaskTypes;
     readonly wayToTravel: WayToTravel;
+    readonly distanceInKilometers: number;
+    readonly durationInMinutes: number;
     readonly minLevel: number;
     readonly earnedExp: number;
     readonly data: {
@@ -107,6 +109,20 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "distanceInKilometers",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "durationInMinutes",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "minLevel",
       "storageKey": null
     },
@@ -154,5 +170,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4d25f0fe7f8a61789b063b76000d92fc';
+(node as any).hash = 'c830227319c63d4b5b33ff704697dbf4';
 export default node;

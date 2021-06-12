@@ -238,6 +238,28 @@ export default function QuestCreate(): React.ReactElement {
             />
           </div>
         </Form.Group>
+        <Input
+          label='Duration in minutes'
+          min={0}
+          onChange={value => setInput({
+            ...input,
+            durationInMinutes: Number(value),
+          })}
+          required
+          type='number'
+          value={input.durationInMinutes.toString()}
+        />
+        <Input
+          label='Distance in minutes'
+          min={0}
+          onChange={value => setInput({
+            ...input,
+            distanceInKilometers: Number(value),
+          })}
+          required
+          type='number'
+          value={input.distanceInKilometers.toString()}
+        />
         <Suspense fallback='Loading tags...'>
           <LabeledTagsInput
             label='Tags'
