@@ -208,7 +208,7 @@ export default function QuestCreate(): React.ReactElement {
               checked={input.wayToTravel === 'ON_FOOT'}
               id='onFoot'
               inline
-              label='Пешком'
+              label='On foot'
               name='wayToTravel'
               onChange={(): void => {
                 setInput({
@@ -224,7 +224,7 @@ export default function QuestCreate(): React.ReactElement {
               checked={input.wayToTravel === 'WITH_TRANSPORT'}
               id='withTransport'
               inline
-              label='С транспортом'
+              label='With transport'
               name='wayToTravel'
               onChange={(): void => {
                 setInput({
