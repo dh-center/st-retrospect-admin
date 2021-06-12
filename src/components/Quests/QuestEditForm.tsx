@@ -161,6 +161,75 @@ function QuestEditForm(props: Props): React.ReactElement {
               type='radio'
               value='ROUTE'
             />
+            <Form.Check
+              checked={input.type === 'STORY'}
+              id='story'
+              inline
+              label='Story'
+              name='type'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  type: 'STORY',
+                });
+              }}
+              required
+              type='radio'
+              value='STORY'
+            />
+            <Form.Check
+              checked={input.type === 'TEST'}
+              id='test'
+              inline
+              label='Test'
+              name='type'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  type: 'TEST',
+                });
+              }}
+              required
+              type='radio'
+              value='TEST'
+            />
+          </div>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor=''>Way to travel</Form.Label>
+          <div>
+            <Form.Check
+              checked={input.wayToTravel === 'ON_FOOT'}
+              id='onFoot'
+              inline
+              label='Пешком'
+              name='wayToTravel'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  wayToTravel: 'ON_FOOT',
+                });
+              }}
+              required
+              type='radio'
+              value='ON_FOOT'
+            />
+            <Form.Check
+              checked={input.wayToTravel === 'WITH_TRANSPORT'}
+              id='withTransport'
+              inline
+              label='С транспортом'
+              name='wayToTravel'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  wayToTravel: 'WITH_TRANSPORT',
+                });
+              }}
+              required
+              type='radio'
+              value='WITH_TRANSPORT'
+            />
           </div>
         </Form.Group>
         <Suspense fallback='Loading tags...'>
@@ -278,6 +347,7 @@ export default createFragmentContainer(
         name
         description
         type
+        wayToTravel
         minLevel
         earnedExp
         data {

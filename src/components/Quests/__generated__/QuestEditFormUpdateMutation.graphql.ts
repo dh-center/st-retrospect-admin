@@ -3,11 +3,15 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
+export type TaskTypes = "QUIZ" | "ROUTE" | "STORY" | "TEST" | "%future added value";
+export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
 export type UpdateQuestInput = {
     id: string;
     name?: string | null;
     description?: string | null;
+    wayToTravel?: WayToTravel | null;
+    durationInMinutes?: number | null;
+    distanceInKilometers?: number | null;
     photo?: string | null;
     type?: TaskTypes | null;
     minLevel?: number | null;
