@@ -108,6 +108,7 @@ function TestConstructorComponent(props: TestConstructorComponentProps): React.R
         }}
       />
       <LabeledArrayOfInputs
+        checkedValueIndex={data.correctAnswerIndex}
         label='Варианты ответов'
         onChange={(value) => {
           onChange({
@@ -115,20 +116,14 @@ function TestConstructorComponent(props: TestConstructorComponentProps): React.R
             answers: value,
           });
         }}
-        value={data.answers}
-      />
-      <Input
-        label='Номер правильного ответа:'
-        max={data.answers?.length || 0}
-        min={0}
-        onChange={(value) => {
+        onValueCheck={(index) => {
           onChange({
             ...data,
-            correctAnswerIndex: value,
+            correctAnswerIndex: index,
           });
         }}
-        type='number'
-        value={data.correctAnswerIndex || 0}
+        value={data.answers}
+        withRadioButtons
       />
       <Input
         label='Сообщение для правильного ответа:'

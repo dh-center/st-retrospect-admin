@@ -3,6 +3,7 @@ import Input from './Input';
 import { Button, Form } from 'react-bootstrap';
 import withLabel from './LabeledComponent';
 import styles from './ArrayOfInputs.module.css';
+import useUniqueId from '../../utils/useUniqueId';
 
 /**
  * ArrayOfInputs component props interface
@@ -29,6 +30,23 @@ interface ArrayOfInputsProps {
    * Text on removing button
    */
   removeButtonText?: string;
+
+  /**
+   * Displays radio buttons with inputs
+   */
+  withRadioButtons?: boolean;
+
+  /**
+   * Index of checked value
+   */
+  checkedValueIndex?: number;
+
+  /**
+   * On value check handler
+   *
+   * @param index - checked value index
+   */
+  onValueCheck?: (index: number) => void;
 }
 
 /**
@@ -38,6 +56,7 @@ interface ArrayOfInputsProps {
  */
 export default function ArrayOfInputs(props: ArrayOfInputsProps): ReactElement {
   const [dataArray, setDataArray] = useState(props.value || []);
+  const id = useUniqueId('app-array-of-inputs');
 
   /**
    * Adds empty element to array
@@ -72,6 +91,19 @@ export default function ArrayOfInputs(props: ArrayOfInputsProps): ReactElement {
   const inputList = dataArray.map((dataItem, index) => {
     return (
       <Form.Row className={styles.inputLineItemWrapper} key={index}>
+        { props.withRadioButtons &&
+        <Form.Check
+          checked={props.checkedValueIndex === index}
+          inline
+          name={id`array-of-inputs`}
+          onChange={(): void => {
+            if (props.onValueCheck) {
+              props.onValueCheck(index);
+            }
+          }}
+          type='radio'
+        />
+        }
         <Input
           className={styles.input}
           onChange={(value) => {
