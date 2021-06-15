@@ -270,7 +270,7 @@ input CreateQuestInput {
   durationInMinutes: Int!
 
   """Quest distance in kilometers"""
-  distanceInKilometers: Int!
+  distanceInKilometers: Float!
 
   """Quest photo"""
   photo: String
@@ -1045,7 +1045,7 @@ type Quest implements Node {
   durationInMinutes: Int!
 
   """Quest distance in kilometers"""
-  distanceInKilometers: Int!
+  distanceInKilometers: Float!
 
   """Quest task"""
   task: JSON!
@@ -1547,7 +1547,7 @@ input UpdateQuestInput {
   durationInMinutes: Int
 
   """Quest distance in kilometers"""
-  distanceInKilometers: Int
+  distanceInKilometers: Float
 
   """Quest photo"""
   photo: String
