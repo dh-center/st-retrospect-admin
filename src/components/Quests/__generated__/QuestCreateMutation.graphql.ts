@@ -18,6 +18,7 @@ export type CreateQuestInput = {
     data: EditorDataInput;
     credits: EditorDataInput;
     tagIds: Array<string>;
+    personsCardsIds: Array<string>;
 };
 export type EditorDataInput = {
     time?: number | null;

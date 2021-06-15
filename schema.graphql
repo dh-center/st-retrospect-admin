@@ -223,6 +223,9 @@ input CreatePersonInput {
   """Link with main photo"""
   mainPhotoLink: String
 
+  """Link with photo for card"""
+  cardPhotoLink: String
+
   """Person's professions"""
   professions: [String!]
 
@@ -289,6 +292,9 @@ input CreateQuestInput {
 
   """Quest tags"""
   tagIds: [GlobalId!]!
+
+  """Cards ids that user will get after quest passing"""
+  personsCardsIds: [GlobalId!]!
 }
 
 type CreateQuestPayload {
@@ -763,6 +769,9 @@ type Person implements Node {
   """Person's main photo"""
   mainPhotoLink: String
 
+  """Link with photo for card"""
+  cardPhotoLink: String
+
   """Person's photos links"""
   photoLinks: [String!]
 
@@ -830,6 +839,7 @@ type Query {
     """
     last: Int
   ): PersonConnection!
+  personsCards: [Person!]!
 
   """Get specific location"""
   location(
@@ -949,6 +959,9 @@ type Query {
     last: Int
   ): UserConnection!
 
+  """Search users by username"""
+  usersSearch(username: String!): [User!]!
+
   """Get specific Quest"""
   quest(
     """Quest id"""
@@ -1045,6 +1058,9 @@ type Quest implements Node {
 
   """Quest rewards"""
   rewards: [JSON!]!
+
+  """Cards that user will get after quest passing"""
+  personsCards: [Person!]!
 
   """The minimum level required by the user to complete this quest"""
   minLevel: Int!
@@ -1250,6 +1266,18 @@ input RemoveArchitectInput {
 type RemoveArchitectPayload {
   """Deleted relation id"""
   recordId: GlobalId!
+}
+
+"""Input to resetting user password"""
+input ResetPasswordInput {
+  """Email of the user who wants reset password"""
+  email: String!
+
+  """One-time code from email"""
+  code: String!
+
+  """New password to set"""
+  newPassword: String!
 }
 
 """Search query input"""
@@ -1469,6 +1497,9 @@ input UpdatePersonInput {
   """Link with main photo"""
   mainPhotoLink: String
 
+  """Link with photo for card"""
+  cardPhotoLink: String
+
   """Person's professions"""
   professions: [String!]
 
@@ -1538,6 +1569,9 @@ input UpdateQuestInput {
 
   """Quest tags"""
   tagIds: [GlobalId!]
+
+  """Cards ids that user will get after quest passing"""
+  personsCardsIds: [GlobalId!]
 }
 
 type UpdateQuestPayload {
@@ -1711,6 +1745,9 @@ type UserMutations {
   """Updates user data"""
   update(input: UpdateUserInput!): UpdateUserPayload!
 
+  """Changes username of the user"""
+  changeUsername(username: String!): UpdateUserPayload!
+
   """Send friend request to user by user id"""
   sendFriendRequest(id: GlobalId!): UpdateUserPayload!
 
@@ -1725,6 +1762,12 @@ type UserMutations {
 
   """Remove user from friends"""
   removeFromFriends(id: GlobalId!): UpdateUserPayload!
+
+  """Sends one-time code to user email for password resetting"""
+  sendCodeForPasswordReset(email: String!): Boolean!
+
+  """Resets user password"""
+  resetPassword(input: ResetPasswordInput!): UpdateUserPayload!
 }
 
 """What user needs to use for route passing"""

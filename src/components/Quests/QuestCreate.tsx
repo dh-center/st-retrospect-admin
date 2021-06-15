@@ -20,6 +20,8 @@ import EditorJs from 'react-editor-js';
 import handleApiError from '../../utils/handleApiError';
 import editorjsStyles from '../../editorjs-plugins/EditorJs.module.css';
 import { LabeledTagsInput } from '../utils/TagsInput';
+import ArrayOfCustomSelects from '../utils/ArrayOfCustomSelects';
+import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
 
 /**
  * Generates input data for creating new quest
@@ -45,6 +47,7 @@ export function generateQuestInput(): CreateQuestInput {
       blocks: [],
     },
     tagIds: [],
+    personsCardsIds: [],
   };
 }
 
@@ -294,6 +297,21 @@ export default function QuestCreate(): React.ReactElement {
           type='number'
           value={input.earnedExp.toString()}
         />
+        <Form.Group>
+          <Form.Label>Persons cards</Form.Label>
+          <ArrayOfCustomSelects
+            CustomSelect={PersonsCustomSelect}
+            addButtonText='Add card...'
+            onChange={value => {
+              setInput({
+                ...input,
+                personsCardsIds: value.filter((val): val is string => val !== null),
+              });
+            }}
+            removeButtonText='Remove card'
+            value={input.personsCardsIds}
+          />
+        </Form.Group>
         <Form.Group>
           <h2>Route content</h2>
           <div className={editorjsStyles.editorjsWrapper}>

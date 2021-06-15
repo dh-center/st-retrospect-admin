@@ -24,6 +24,8 @@ import { API, OutputBlockData, OutputData } from '@editorjs/editorjs';
 import { EDITOR_JS_TOOLS } from '../../editorjs-plugins/tools';
 import ButtonWithLoader from '../utils/ButtonWithLoader';
 import useLeaveEditPage from '../../utils/useLeaveEditPage';
+import ArrayOfCustomSelects from '../utils/ArrayOfCustomSelects';
+import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
 
 /**
  * Executes update mutation for quest
@@ -65,6 +67,8 @@ function QuestEditForm(props: Props): React.ReactElement {
     ...props.originalQuest,
     tagIds: props.originalQuest.tags.map(tag => tag.id),
     tags: undefined,
+    personsCardsIds: props.originalQuest.personsCards.map(personCard => personCard.id),
+    personsCards: undefined,
   };
   const [input, setInput] = useState(() => deepCopy(originalQuest as UpdateQuestInput));
 
@@ -289,6 +293,21 @@ function QuestEditForm(props: Props): React.ReactElement {
           value={input?.earnedExp !== undefined ? Number(input?.earnedExp).toString() : '0'}
         />
         <Form.Group>
+          <Form.Label>Persons cards</Form.Label>
+          <ArrayOfCustomSelects
+            CustomSelect={PersonsCustomSelect}
+            addButtonText='Add card...'
+            onChange={value => {
+              setInput({
+                ...input,
+                personsCardsIds: value.filter((val): val is string => val !== null),
+              });
+            }}
+            removeButtonText='Remove card'
+            value={input?.personsCardsIds || []}
+          />
+        </Form.Group>
+        <Form.Group>
           <h2>Route content</h2>
           <div className={editorjsStyles.editorjsWrapper}>
             <EditorJs
@@ -385,6 +404,9 @@ export default createFragmentContainer(
           blocks
         }
         tags {
+          id
+        }
+        personsCards {
           id
         }
       }

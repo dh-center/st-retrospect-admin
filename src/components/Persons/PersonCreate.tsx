@@ -31,6 +31,7 @@ function generatePersonInput(): CreatePersonInput {
     patronymic: '',
     pseudonym: '',
     mainPhotoLink: null,
+    cardPhotoLink: null,
     professions: [],
     description: '',
     birthDate: '',
@@ -149,6 +150,25 @@ export default function PersonCreate(): React.ReactElement {
             setInput({
               ...input,
               mainPhotoLink: url,
+            });
+          }}
+        />
+        <ImageGallery
+          className={styles.mainPhoto}
+          images={input.cardPhotoLink ? [ input.cardPhotoLink ] : undefined}
+          label='Card photo'
+          onChange={([ link ]) => setInput({
+            ...input,
+            cardPhotoLink: link,
+          })}
+          viewOnly={false}
+        />
+        <ImageUploader
+          entityName='person'
+          onImageUpload={(url) => {
+            setInput({
+              ...input,
+              cardPhotoLink: url,
             });
           }}
         />

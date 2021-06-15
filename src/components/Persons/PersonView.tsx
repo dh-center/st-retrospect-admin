@@ -80,6 +80,7 @@ function PersonView(): React.ReactElement {
             patronymic
             pseudonym
             mainPhotoLink
+            cardPhotoLink
             professions
             description
             birthDate
@@ -136,6 +137,12 @@ function PersonView(): React.ReactElement {
                 className={styles.mainPhoto}
                 images={props.person.mainPhotoLink ? [ props.person.mainPhotoLink ] : undefined}
                 label='Main photo'
+                viewOnly
+              />
+              <ImageGallery
+                className={styles.mainPhoto}
+                images={props.person.cardPhotoLink ? [ props.person.cardPhotoLink ] : undefined}
+                label='Card photo'
                 viewOnly
               />
               <LabeledText
