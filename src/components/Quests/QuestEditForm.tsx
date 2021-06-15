@@ -255,6 +255,7 @@ function QuestEditForm(props: Props): React.ReactElement {
             distanceInKilometers: Number(value),
           })}
           required
+          step={0.1}
           type='number'
           value={input?.distanceInKilometers !== undefined ? Number(input?.distanceInKilometers).toString() : '1'}
         />
