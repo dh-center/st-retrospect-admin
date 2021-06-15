@@ -9,6 +9,7 @@ export type CreatePersonInput = {
     patronymic?: string | null;
     pseudonym?: string | null;
     mainPhotoLink?: string | null;
+    cardPhotoLink?: string | null;
     professions?: Array<string> | null;
     description?: string | null;
     birthDate?: string | null;
