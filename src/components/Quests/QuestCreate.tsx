@@ -253,13 +253,14 @@ export default function QuestCreate(): React.ReactElement {
           value={input.durationInMinutes.toString()}
         />
         <Input
-          label='Distance in minutes'
+          label='Distance in kilometers'
           min={0}
           onChange={value => setInput({
             ...input,
             distanceInKilometers: Number(value),
           })}
           required
+          step={0.1}
           type='number'
           value={input.distanceInKilometers.toString()}
         />
