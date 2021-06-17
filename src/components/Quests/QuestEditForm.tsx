@@ -182,20 +182,20 @@ function QuestEditForm(props: Props): React.ReactElement {
               value='STORY'
             />
             <Form.Check
-              checked={input.type === 'TEST'}
-              id='test'
+              checked={input.type === 'QUEST'}
+              id='quest'
               inline
-              label='Test'
+              label='Quest'
               name='type'
               onChange={(): void => {
                 setInput({
                   ...input,
-                  type: 'TEST',
+                  type: 'QUEST',
                 });
               }}
               required
               type='radio'
-              value='TEST'
+              value='QUEST'
             />
           </div>
         </Form.Group>

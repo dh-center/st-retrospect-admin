@@ -128,8 +128,8 @@ export default function QuestView(): ReactElement {
               return 'Route';
             case 'STORY':
               return 'Story';
-            case 'TEST':
-              return 'Test';
+            case 'QUEST':
+              return 'Quest';
             case '%future added value':
             default:
               return props.quest?.type.toString() || 'Undefined';
