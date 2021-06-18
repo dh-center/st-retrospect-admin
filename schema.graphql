@@ -45,6 +45,33 @@ directive @specifiedBy(
   url: String!
 ) on SCALAR
 
+"""An achievement that a user can get for completing a quest"""
+type Achievement implements Node {
+  """Achievement identifier"""
+  id: ID!
+
+  """Achievement name"""
+  name: String!
+
+  """Unit of measure in which the value is calculated"""
+  unit: AchievementUnits!
+
+  """Current value reached by the user"""
+  currentValue: Float!
+
+  """The value you need to get the achievement"""
+  requiredValue: Float!
+}
+
+"""Unit of measure in which the value is calculated"""
+enum AchievementUnits {
+  """Distance unit, for example, kilimetrs"""
+  DISTANCE
+
+  """Quantity unit, for example, number of passed quests"""
+  QUANTITY
+}
+
 input AddArchitectInput {
   """Location instance id"""
   locationInstanceId: GlobalId!
@@ -295,6 +322,9 @@ input CreateQuestInput {
 
   """Cards ids that user will get after quest passing"""
   personsCardsIds: [GlobalId!]!
+
+  """Achievements that the user can get after completing the quest"""
+  linkedAchievementsIds: [GlobalId!]!
 }
 
 type CreateQuestPayload {
@@ -1062,6 +1092,9 @@ type Quest implements Node {
   """Cards that user will get after quest passing"""
   personsCards: [Person!]!
 
+  """Achievements that the user can get after completing the quest"""
+  linkedAchievements: [Achievement!]!
+
   """The minimum level required by the user to complete this quest"""
   minLevel: Int!
 
@@ -1356,8 +1389,8 @@ enum TaskTypes {
   """Story about something without quiz parts"""
   STORY
 
-  """Test without traveling"""
-  TEST
+  """Quest is a route with tests"""
+  QUEST
 }
 
 """
@@ -1572,6 +1605,9 @@ input UpdateQuestInput {
 
   """Cards ids that user will get after quest passing"""
   personsCardsIds: [GlobalId!]
+
+  """Achievements that the user can get after completing the quest"""
+  linkedAchievementsIds: [GlobalId!]
 }
 
 type UpdateQuestPayload {
@@ -1685,6 +1721,9 @@ type User implements Node {
 
   """Quests that user complete"""
   completedQuests: [Quest!]!
+
+  """User's achievements"""
+  receivedAchievements: [Achievement!]!
 
   """User experience"""
   exp: Int!

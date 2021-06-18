@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type TaskTypes = "QUIZ" | "ROUTE" | "STORY" | "TEST" | "%future added value";
+export type TaskTypes = "QUEST" | "QUIZ" | "ROUTE" | "STORY" | "%future added value";
 export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
 export type QuestEditForm_originalQuest = {
     readonly id: string;

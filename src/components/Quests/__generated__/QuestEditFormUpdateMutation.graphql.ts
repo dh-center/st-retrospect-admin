@@ -3,7 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type TaskTypes = "QUIZ" | "ROUTE" | "STORY" | "TEST" | "%future added value";
+export type TaskTypes = "QUEST" | "QUIZ" | "ROUTE" | "STORY" | "%future added value";
 export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
 export type UpdateQuestInput = {
     id: string;
@@ -20,6 +20,7 @@ export type UpdateQuestInput = {
     credits?: EditorDataInput | null;
     tagIds?: Array<string> | null;
     personsCardsIds?: Array<string> | null;
+    linkedAchievementsIds?: Array<string> | null;
 };
 export type EditorDataInput = {
     time?: number | null;
