@@ -45,6 +45,33 @@ directive @specifiedBy(
   url: String!
 ) on SCALAR
 
+"""An achievement that a user can get for completing a quest"""
+type Achievement implements Node {
+  """Achievement identifier"""
+  id: ID!
+
+  """Achievement name"""
+  name: String!
+
+  """Unit of measure in which the value is calculated"""
+  unit: AchievementUnits!
+
+  """Current value reached by the user"""
+  currentValue: Float!
+
+  """The value you need to get the achievement"""
+  requiredValue: Float!
+}
+
+"""Unit of measure in which the value is calculated"""
+enum AchievementUnits {
+  """Distance unit, for example, kilometrs"""
+  DISTANCE
+
+  """Quantity unit, for example, number of passed quests"""
+  QUANTITY
+}
+
 input AddArchitectInput {
   """Location instance id"""
   locationInstanceId: GlobalId!
@@ -223,6 +250,9 @@ input CreatePersonInput {
   """Link with main photo"""
   mainPhotoLink: String
 
+  """Link with photo for card"""
+  cardPhotoLink: String
+
   """Person's professions"""
   professions: [String!]
 
@@ -267,7 +297,7 @@ input CreateQuestInput {
   durationInMinutes: Int!
 
   """Quest distance in kilometers"""
-  distanceInKilometers: Int!
+  distanceInKilometers: Float!
 
   """Quest photo"""
   photo: String
@@ -289,6 +319,12 @@ input CreateQuestInput {
 
   """Quest tags"""
   tagIds: [GlobalId!]!
+
+  """Cards ids that user will get after quest passing"""
+  personsCardsIds: [GlobalId!]!
+
+  """Achievements that the user can get after completing the quest"""
+  linkedAchievementsIds: [GlobalId!]!
 }
 
 type CreateQuestPayload {
@@ -763,6 +799,9 @@ type Person implements Node {
   """Person's main photo"""
   mainPhotoLink: String
 
+  """Link with photo for card"""
+  cardPhotoLink: String
+
   """Person's photos links"""
   photoLinks: [String!]
 
@@ -830,6 +869,7 @@ type Query {
     """
     last: Int
   ): PersonConnection!
+  personsCards: [Person!]!
 
   """Get specific location"""
   location(
@@ -949,6 +989,9 @@ type Query {
     last: Int
   ): UserConnection!
 
+  """Search users by username"""
+  usersSearch(username: String!): [User!]!
+
   """Get specific Quest"""
   quest(
     """Quest id"""
@@ -979,6 +1022,9 @@ type Query {
 
   """Query for searching location instances related with some person"""
   relationsByPersonSearch(input: SearchInput!): RelationsSearchResult!
+
+  """List of all achievements"""
+  achievements: [Achievement!]!
 
   """Get specific tag"""
   tag(
@@ -1032,7 +1078,7 @@ type Quest implements Node {
   durationInMinutes: Int!
 
   """Quest distance in kilometers"""
-  distanceInKilometers: Int!
+  distanceInKilometers: Float!
 
   """Quest task"""
   task: JSON!
@@ -1045,6 +1091,12 @@ type Quest implements Node {
 
   """Quest rewards"""
   rewards: [JSON!]!
+
+  """Cards that user will get after quest passing"""
+  personsCards: [Person!]!
+
+  """Achievements that the user can get after completing the quest"""
+  linkedAchievements: [Achievement!]!
 
   """The minimum level required by the user to complete this quest"""
   minLevel: Int!
@@ -1060,6 +1112,11 @@ type Quest implements Node {
 
   """Location instances that are present in the quest"""
   locationInstances: [LocationInstance!]!
+
+  """
+  The likelihood that the user will like this quest (rating based on a recommendation system)
+  """
+  recommendationScore: Float!
 }
 
 """Model for representing list of quests"""
@@ -1252,6 +1309,18 @@ type RemoveArchitectPayload {
   recordId: GlobalId!
 }
 
+"""Input to resetting user password"""
+input ResetPasswordInput {
+  """Email of the user who wants reset password"""
+  email: String!
+
+  """One-time code from email"""
+  code: String!
+
+  """New password to set"""
+  newPassword: String!
+}
+
 """Search query input"""
 input SearchInput {
   """Query string"""
@@ -1328,8 +1397,8 @@ enum TaskTypes {
   """Story about something without quiz parts"""
   STORY
 
-  """Test without traveling"""
-  TEST
+  """Quest is a route with tests"""
+  QUEST
 }
 
 """
@@ -1469,6 +1538,9 @@ input UpdatePersonInput {
   """Link with main photo"""
   mainPhotoLink: String
 
+  """Link with photo for card"""
+  cardPhotoLink: String
+
   """Person's professions"""
   professions: [String!]
 
@@ -1516,7 +1588,7 @@ input UpdateQuestInput {
   durationInMinutes: Int
 
   """Quest distance in kilometers"""
-  distanceInKilometers: Int
+  distanceInKilometers: Float
 
   """Quest photo"""
   photo: String
@@ -1538,6 +1610,12 @@ input UpdateQuestInput {
 
   """Quest tags"""
   tagIds: [GlobalId!]
+
+  """Cards ids that user will get after quest passing"""
+  personsCardsIds: [GlobalId!]
+
+  """Achievements that the user can get after completing the quest"""
+  linkedAchievementsIds: [GlobalId!]
 }
 
 type UpdateQuestPayload {
@@ -1617,20 +1695,31 @@ type UpdateTagPayload {
   record: Tag!
 }
 
+"""Input for updating user attributes"""
 input UpdateUserInput {
-  """Id of the user to update"""
-  id: GlobalId!
+  """New username"""
+  username: String
 
-  """New persmissions"""
-  permissions: [String!]!
+  """New user profile photo"""
+  photo: String
 }
 
+"""Payload that returns after updating user data"""
 type UpdateUserPayload {
   """Updated user id"""
   recordId: GlobalId!
 
   """Updated user"""
   record: User!
+}
+
+"""Input for updating users permissions"""
+input UpdateUserPermissionsInput {
+  """Id of the user to update"""
+  id: GlobalId!
+
+  """New persmissions"""
+  permissions: [String!]!
 }
 
 type User implements Node {
@@ -1652,6 +1741,9 @@ type User implements Node {
   """Quests that user complete"""
   completedQuests: [Quest!]!
 
+  """User's achievements"""
+  receivedAchievements: [Achievement!]!
+
   """User experience"""
   exp: Int!
 
@@ -1672,14 +1764,6 @@ type User implements Node {
   User can accept or reject them
   """
   friendRequests: [User!]!
-}
-
-type UserCompleteQuestPayload {
-  """User id"""
-  recordId: GlobalId!
-
-  """User completed quest"""
-  record: User!
 }
 
 """Model for representing list of persons"""
@@ -1706,9 +1790,12 @@ type UserEdge {
 """Mutations for users"""
 type UserMutations {
   """Complete quest"""
-  completeQuest(questId: GlobalId!): UserCompleteQuestPayload!
+  completeQuest(questId: GlobalId!): UpdateUserPayload!
 
-  """Updates user data"""
+  """Updates user permissions"""
+  setPermissions(input: UpdateUserPermissionsInput!): UpdateUserPayload!
+
+  """Changes User attributes"""
   update(input: UpdateUserInput!): UpdateUserPayload!
 
   """Send friend request to user by user id"""
@@ -1725,6 +1812,12 @@ type UserMutations {
 
   """Remove user from friends"""
   removeFromFriends(id: GlobalId!): UpdateUserPayload!
+
+  """Sends one-time code to user email for password resetting"""
+  sendCodeForPasswordReset(email: String!): Boolean!
+
+  """Resets user password"""
+  resetPassword(input: ResetPasswordInput!): UpdateUserPayload!
 }
 
 """What user needs to use for route passing"""
