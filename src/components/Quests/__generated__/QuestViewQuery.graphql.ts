@@ -22,6 +22,12 @@ export type QuestViewQueryResponse = {
         readonly tags: ReadonlyArray<{
             readonly value: string;
         }>;
+        readonly personsCards: ReadonlyArray<{
+            readonly id: string;
+            readonly lastName: string | null;
+            readonly firstName: string | null;
+            readonly patronymic: string | null;
+        }>;
     } | null;
 };
 export type QuestViewQuery = {
@@ -48,6 +54,12 @@ query QuestViewQuery(
     tags {
       value
       id
+    }
+    personsCards {
+      id
+      lastName
+      firstName
+      patronymic
     }
   }
 }
@@ -137,6 +149,39 @@ v11 = {
   "kind": "ScalarField",
   "name": "value",
   "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Person",
+  "kind": "LinkedField",
+  "name": "personsCards",
+  "plural": true,
+  "selections": [
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "lastName",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "firstName",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "patronymic",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -173,7 +218,8 @@ return {
               (v11/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v12/*: any*/)
         ],
         "storageKey": null
       }
@@ -216,21 +262,22 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v12/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d0bc1801e3a39df682143691f66ff9bd",
+    "cacheID": "5d3199217fd59b9b5184aaa104bce576",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    wayToTravel\n    type\n    durationInMinutes\n    distanceInKilometers\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    wayToTravel\n    type\n    durationInMinutes\n    distanceInKilometers\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n    personsCards {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '635e573de3533cf0eb5110e285349e23';
+(node as any).hash = '0f4870cfa40917a599a20413f5309ca2';
 export default node;

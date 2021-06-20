@@ -14,6 +14,7 @@ export type PersonViewQueryResponse = {
         readonly patronymic: string | null;
         readonly pseudonym: string | null;
         readonly mainPhotoLink: string | null;
+        readonly cardPhotoLink: string | null;
         readonly professions: ReadonlyArray<string> | null;
         readonly description: string | null;
         readonly birthDate: string | null;
@@ -43,6 +44,7 @@ query PersonViewQuery(
     patronymic
     pseudonym
     mainPhotoLink
+    cardPhotoLink
     professions
     description
     birthDate
@@ -118,45 +120,52 @@ v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "professions",
+  "name": "cardPhotoLink",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "description",
+  "name": "professions",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "birthDate",
+  "name": "description",
   "storageKey": null
 },
 v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "deathDate",
+  "name": "birthDate",
   "storageKey": null
 },
 v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "photoLinks",
+  "name": "deathDate",
   "storageKey": null
 },
 v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "wikiLink",
+  "name": "photoLinks",
   "storageKey": null
 },
 v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "wikiLink",
+  "storageKey": null
+},
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -190,6 +199,7 @@ return {
           (v11/*: any*/),
           (v12/*: any*/),
           (v13/*: any*/),
+          (v14/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -198,7 +208,7 @@ return {
             "name": "tags",
             "plural": true,
             "selections": [
-              (v14/*: any*/)
+              (v15/*: any*/)
             ],
             "storageKey": null
           }
@@ -235,6 +245,7 @@ return {
           (v11/*: any*/),
           (v12/*: any*/),
           (v13/*: any*/),
+          (v14/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -243,7 +254,7 @@ return {
             "name": "tags",
             "plural": true,
             "selections": [
-              (v14/*: any*/),
+              (v15/*: any*/),
               (v2/*: any*/)
             ],
             "storageKey": null
@@ -254,14 +265,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "467ad5d61890da63f80538e451316d75",
+    "cacheID": "464ab3b2bfa9e6773d7ba78b6686405e",
     "id": null,
     "metadata": {},
     "name": "PersonViewQuery",
     "operationKind": "query",
-    "text": "query PersonViewQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    mainPhotoLink\n    professions\n    description\n    birthDate\n    deathDate\n    photoLinks\n    wikiLink\n    tags {\n      value\n      id\n    }\n  }\n}\n"
+    "text": "query PersonViewQuery(\n  $id: GlobalId!\n) {\n  person(id: $id) {\n    id\n    lastName\n    firstName\n    patronymic\n    pseudonym\n    mainPhotoLink\n    cardPhotoLink\n    professions\n    description\n    birthDate\n    deathDate\n    photoLinks\n    wikiLink\n    tags {\n      value\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1cb7b7fdb42748a552be66c277679cfa';
+(node as any).hash = '4826bf18ad713e4f8b9cde6d7cdce736';
 export default node;

@@ -29,6 +29,9 @@ export type QuestEditForm_originalQuest = {
     readonly tags: ReadonlyArray<{
         readonly id: string;
     }>;
+    readonly personsCards: ReadonlyArray<{
+        readonly id: string;
+    }>;
     readonly " $refType": "QuestEditForm_originalQuest";
 };
 export type QuestEditForm_originalQuest$data = QuestEditForm_originalQuest;
@@ -69,6 +72,9 @@ v1 = [
     "name": "blocks",
     "storageKey": null
   }
+],
+v2 = [
+  (v0/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -160,9 +166,17 @@ return {
       "kind": "LinkedField",
       "name": "tags",
       "plural": true,
-      "selections": [
-        (v0/*: any*/)
-      ],
+      "selections": (v2/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Person",
+      "kind": "LinkedField",
+      "name": "personsCards",
+      "plural": true,
+      "selections": (v2/*: any*/),
       "storageKey": null
     }
   ],
@@ -170,5 +184,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c830227319c63d4b5b33ff704697dbf4';
+(node as any).hash = 'c2cc5961a2b37d5bb41490350fe1e506';
 export default node;

@@ -17,6 +17,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Spinner } from 'react-bootstrap';
 import { QuestViewQuery } from './__generated__/QuestViewQuery.graphql';
 import handleApiError from '../../utils/handleApiError';
+import LabeledArrayOfLinks from '../utils/LabeledArrayOfLinks';
+import personsFullName from '../../utils/personsFullname';
 
 /**
  * Removes quest by its id
@@ -88,6 +90,12 @@ export default function QuestView(): ReactElement {
             tags {
               value
             }
+            personsCards {
+              id
+              lastName
+              firstName
+              patronymic
+            }
           }
         }
       `}
@@ -120,8 +128,8 @@ export default function QuestView(): ReactElement {
               return 'Route';
             case 'STORY':
               return 'Story';
-            case 'TEST':
-              return 'Test';
+            case 'QUEST':
+              return 'Quest';
             case '%future added value':
             default:
               return props.quest?.type.toString() || 'Undefined';
@@ -180,6 +188,15 @@ export default function QuestView(): ReactElement {
               <LabeledText
                 content={props.quest.earnedExp.toString()}
                 label='Earned experience'
+              />
+              <LabeledArrayOfLinks
+                items={props.quest.personsCards.map(personCard => {
+                  return {
+                    link: `/persons/${personCard.id}`,
+                    value: personsFullName(personCard),
+                  };
+                })}
+                label='Persons cards'
               />
             </div>
             <div>

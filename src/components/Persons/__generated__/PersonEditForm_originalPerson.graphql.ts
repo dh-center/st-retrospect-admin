@@ -11,6 +11,7 @@ export type PersonEditForm_originalPerson = {
     readonly patronymic: string | null;
     readonly pseudonym: string | null;
     readonly mainPhotoLink: string | null;
+    readonly cardPhotoLink: string | null;
     readonly professions: ReadonlyArray<string> | null;
     readonly description: string | null;
     readonly birthDate: string | null;
@@ -84,6 +85,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "cardPhotoLink",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "professions",
       "storageKey": null
     },
@@ -139,5 +147,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'bbaa8d33ad4acc8541ef1f53e112e6f8';
+(node as any).hash = 'dd68c213e8393bc1fa98259d5758348e';
 export default node;

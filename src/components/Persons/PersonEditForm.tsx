@@ -153,6 +153,25 @@ function PersonEditForm(props: Props): React.ReactElement {
             });
           }}
         />
+        <ImageGallery
+          className={styles.mainPhoto}
+          images={input.cardPhotoLink ? [ input.cardPhotoLink ] : undefined}
+          label='Card photo'
+          onChange={([ link ]) => setInput({
+            ...input,
+            cardPhotoLink: link,
+          })}
+          viewOnly={false}
+        />
+        <ImageUploader
+          entityName='person'
+          onImageUpload={(url) => {
+            setInput({
+              ...input,
+              cardPhotoLink: url,
+            });
+          }}
+        />
         <LabeledArrayOfInputs
           addButtonText='Add profession...'
           label='Professions'
@@ -269,6 +288,7 @@ export default createFragmentContainer(
         patronymic
         pseudonym
         mainPhotoLink
+        cardPhotoLink
         professions
         description
         birthDate
