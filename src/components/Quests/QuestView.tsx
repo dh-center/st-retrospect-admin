@@ -81,6 +81,7 @@ export default function QuestView(): ReactElement {
             id
             name
             description
+            language
             wayToTravel
             type
             durationInMinutes
@@ -168,6 +169,10 @@ export default function QuestView(): ReactElement {
               <LabeledText
                 content={questType()}
                 label='Type'
+              />
+              <LabeledText
+                content={props.quest.language}
+                label='Language'
               />
               <LabeledText
                 content={questWayToTravel()}

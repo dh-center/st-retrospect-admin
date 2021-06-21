@@ -290,6 +290,9 @@ input CreateQuestInput {
   """Quest description"""
   description: String
 
+  """Quest content languange"""
+  language: Languages
+
   """What user needs to use for route passing"""
   wayToTravel: WayToTravel! = ON_FOOT
 
@@ -1071,6 +1074,9 @@ type Quest implements Node {
   """Quest type (quiz, route, etc.)"""
   type: TaskTypes!
 
+  """Quest content languange"""
+  language: Languages!
+
   """What user needs to use for route passing"""
   wayToTravel: WayToTravel!
 
@@ -1580,6 +1586,9 @@ input UpdateQuestInput {
 
   """Quest description"""
   description: String
+
+  """Quest content languange"""
+  language: Languages
 
   """What user needs to use for route passing"""
   wayToTravel: WayToTravel

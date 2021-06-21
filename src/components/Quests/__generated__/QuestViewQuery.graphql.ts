@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+export type Languages = "EN" | "RU" | "%future added value";
 export type TaskTypes = "QUEST" | "QUIZ" | "ROUTE" | "STORY" | "%future added value";
 export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
 export type QuestViewQueryVariables = {
@@ -13,6 +14,7 @@ export type QuestViewQueryResponse = {
         readonly id: string;
         readonly name: string;
         readonly description: string | null;
+        readonly language: Languages;
         readonly wayToTravel: WayToTravel;
         readonly type: TaskTypes;
         readonly durationInMinutes: number;
@@ -45,6 +47,7 @@ query QuestViewQuery(
     id
     name
     description
+    language
     wayToTravel
     type
     durationInMinutes
@@ -105,52 +108,59 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "wayToTravel",
+  "name": "language",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "type",
+  "name": "wayToTravel",
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "durationInMinutes",
+  "name": "type",
   "storageKey": null
 },
 v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "distanceInKilometers",
+  "name": "durationInMinutes",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "minLevel",
+  "name": "distanceInKilometers",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "earnedExp",
+  "name": "minLevel",
   "storageKey": null
 },
 v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "value",
+  "name": "earnedExp",
   "storageKey": null
 },
 v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "value",
+  "storageKey": null
+},
+v13 = {
   "alias": null,
   "args": null,
   "concreteType": "Person",
@@ -207,6 +217,7 @@ return {
           (v8/*: any*/),
           (v9/*: any*/),
           (v10/*: any*/),
+          (v11/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -215,11 +226,11 @@ return {
             "name": "tags",
             "plural": true,
             "selections": [
-              (v11/*: any*/)
+              (v12/*: any*/)
             ],
             "storageKey": null
           },
-          (v12/*: any*/)
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
@@ -250,6 +261,7 @@ return {
           (v8/*: any*/),
           (v9/*: any*/),
           (v10/*: any*/),
+          (v11/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -258,26 +270,26 @@ return {
             "name": "tags",
             "plural": true,
             "selections": [
-              (v11/*: any*/),
+              (v12/*: any*/),
               (v2/*: any*/)
             ],
             "storageKey": null
           },
-          (v12/*: any*/)
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "5d3199217fd59b9b5184aaa104bce576",
+    "cacheID": "bd87b6a497ba383111098fe3c8ebf073",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    wayToTravel\n    type\n    durationInMinutes\n    distanceInKilometers\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n    personsCards {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    language\n    wayToTravel\n    type\n    durationInMinutes\n    distanceInKilometers\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n    personsCards {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0f4870cfa40917a599a20413f5309ca2';
+(node as any).hash = 'd295ad1811497458ca7d4b8318ff7185';
 export default node;
