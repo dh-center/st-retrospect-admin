@@ -30,6 +30,7 @@ export function generateQuestInput(): CreateQuestInput {
   return {
     name: '',
     description: '',
+    language: 'RU',
     wayToTravel: 'ON_FOOT',
     durationInMinutes: 1,
     distanceInKilometers: 1,
@@ -202,6 +203,43 @@ export default function QuestCreate(): React.ReactElement {
               required
               type='radio'
               value='QUEST'
+            />
+          </div>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor=''>Language</Form.Label>
+          <div>
+            <Form.Check
+              checked={input.language === 'RU'}
+              id='ru'
+              inline
+              label='Russian'
+              name='language'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  language: 'RU',
+                });
+              }}
+              required
+              type='radio'
+              value='RU'
+            />
+            <Form.Check
+              checked={input.language === 'EN'}
+              id='en'
+              inline
+              label='English'
+              name='language'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  language: 'EN',
+                });
+              }}
+              required
+              type='radio'
+              value='EN'
             />
           </div>
         </Form.Group>

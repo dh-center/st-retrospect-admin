@@ -9,7 +9,7 @@ export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
 export type CreateQuestInput = {
     name: string;
     description?: string | null;
-    language?: Languages | null;
+    language: Languages;
     wayToTravel: WayToTravel;
     durationInMinutes: number;
     distanceInKilometers: number;

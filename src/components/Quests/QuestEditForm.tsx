@@ -200,6 +200,43 @@ function QuestEditForm(props: Props): React.ReactElement {
           </div>
         </Form.Group>
         <Form.Group>
+          <Form.Label htmlFor=''>Language</Form.Label>
+          <div>
+            <Form.Check
+              checked={input.language === 'RU'}
+              id='ru'
+              inline
+              label='Russian'
+              name='language'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  language: 'RU',
+                });
+              }}
+              required
+              type='radio'
+              value='RU'
+            />
+            <Form.Check
+              checked={input.language === 'EN'}
+              id='en'
+              inline
+              label='English'
+              name='language'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  language: 'EN',
+                });
+              }}
+              required
+              type='radio'
+              value='EN'
+            />
+          </div>
+        </Form.Group>
+        <Form.Group>
           <Form.Label htmlFor=''>Way to travel</Form.Label>
           <div>
             <Form.Check
@@ -388,6 +425,7 @@ export default createFragmentContainer(
         id
         name
         description
+        language
         type
         wayToTravel
         distanceInKilometers

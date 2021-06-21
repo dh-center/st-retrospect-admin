@@ -33,6 +33,7 @@ fragment QuestEditForm_originalQuest on Quest {
   id
   name
   description
+  language
   type
   wayToTravel
   distanceInKilometers
@@ -166,6 +167,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "language",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "type",
             "storageKey": null
           },
@@ -250,12 +258,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "eba45e1e65da13e8dcf0ee68e97c82d4",
+    "cacheID": "52ef68f321cf7abfe7804337dac2acc2",
     "id": null,
     "metadata": {},
     "name": "QuestEditQuery",
     "operationKind": "query",
-    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    ...QuestEditForm_originalQuest\n    id\n  }\n}\n\nfragment QuestEditForm_originalQuest on Quest {\n  id\n  name\n  description\n  type\n  wayToTravel\n  distanceInKilometers\n  durationInMinutes\n  minLevel\n  earnedExp\n  data {\n    time\n    version\n    blocks\n  }\n  credits {\n    time\n    version\n    blocks\n  }\n  tags {\n    id\n  }\n  personsCards {\n    id\n  }\n}\n"
+    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    ...QuestEditForm_originalQuest\n    id\n  }\n}\n\nfragment QuestEditForm_originalQuest on Quest {\n  id\n  name\n  description\n  language\n  type\n  wayToTravel\n  distanceInKilometers\n  durationInMinutes\n  minLevel\n  earnedExp\n  data {\n    time\n    version\n    blocks\n  }\n  credits {\n    time\n    version\n    blocks\n  }\n  tags {\n    id\n  }\n  personsCards {\n    id\n  }\n}\n"
   }
 };
 })();

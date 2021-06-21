@@ -4,12 +4,14 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type Languages = "EN" | "RU" | "%future added value";
 export type TaskTypes = "QUEST" | "QUIZ" | "ROUTE" | "STORY" | "%future added value";
 export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
 export type QuestEditForm_originalQuest = {
     readonly id: string;
     readonly name: string;
     readonly description: string | null;
+    readonly language: Languages;
     readonly type: TaskTypes;
     readonly wayToTravel: WayToTravel;
     readonly distanceInKilometers: number;
@@ -101,6 +103,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "language",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "type",
       "storageKey": null
     },
@@ -184,5 +193,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c2cc5961a2b37d5bb41490350fe1e506';
+(node as any).hash = '16d68087be7401b03a217067e4bc5854';
 export default node;
