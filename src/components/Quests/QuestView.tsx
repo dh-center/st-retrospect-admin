@@ -97,6 +97,9 @@ export default function QuestView(): ReactElement {
               firstName
               patronymic
             }
+            linkedAchievements {
+              name
+            }
           }
         }
       `}
@@ -165,6 +168,12 @@ export default function QuestView(): ReactElement {
                   .map(tag => tag.value)
                   .join('; ')}
                 label='Tags'
+              />
+              <LabeledText
+                content={props.quest.linkedAchievements
+                  .map(achievement => achievement.name)
+                  .join('; ')}
+                label='Linked achievements'
               />
               <LabeledText
                 content={questType()}

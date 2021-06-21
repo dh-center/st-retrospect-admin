@@ -34,6 +34,9 @@ export type QuestEditForm_originalQuest = {
     readonly personsCards: ReadonlyArray<{
         readonly id: string;
     }>;
+    readonly linkedAchievements: ReadonlyArray<{
+        readonly id: string;
+    }>;
     readonly " $refType": "QuestEditForm_originalQuest";
 };
 export type QuestEditForm_originalQuest$data = QuestEditForm_originalQuest;
@@ -187,11 +190,21 @@ return {
       "plural": true,
       "selections": (v2/*: any*/),
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Achievement",
+      "kind": "LinkedField",
+      "name": "linkedAchievements",
+      "plural": true,
+      "selections": (v2/*: any*/),
+      "storageKey": null
     }
   ],
   "type": "Quest",
   "abstractKey": null
 };
 })();
-(node as any).hash = '16d68087be7401b03a217067e4bc5854';
+(node as any).hash = '93de2f396ad3447400cb72c4087eec89';
 export default node;

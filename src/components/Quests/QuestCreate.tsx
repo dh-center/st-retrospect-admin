@@ -22,6 +22,7 @@ import editorjsStyles from '../../editorjs-plugins/EditorJs.module.css';
 import { LabeledTagsInput } from '../utils/TagsInput';
 import ArrayOfCustomSelects from '../utils/ArrayOfCustomSelects';
 import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
+import AchievementsCustomSelect from '../CustomSelects/AchievementsCustomSelect';
 
 /**
  * Generates input data for creating new quest
@@ -350,6 +351,21 @@ export default function QuestCreate(): React.ReactElement {
             }}
             removeButtonText='Remove card'
             value={input.personsCardsIds}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Linked achievements</Form.Label>
+          <ArrayOfCustomSelects
+            CustomSelect={AchievementsCustomSelect}
+            addButtonText='Add achievement...'
+            onChange={value => {
+              setInput({
+                ...input,
+                linkedAchievementsIds: value.filter((val): val is string => val !== null),
+              });
+            }}
+            removeButtonText='Remove achievement'
+            value={input.linkedAchievementsIds}
           />
         </Form.Group>
         <Form.Group>

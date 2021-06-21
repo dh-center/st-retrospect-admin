@@ -1747,6 +1747,9 @@ type User implements Node {
   """User last name"""
   lastName: String
 
+  """User email address"""
+  email: String
+
   """Quests that user complete"""
   completedQuests: [Quest!]!
 

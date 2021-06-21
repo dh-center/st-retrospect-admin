@@ -30,6 +30,9 @@ export type QuestViewQueryResponse = {
             readonly firstName: string | null;
             readonly patronymic: string | null;
         }>;
+        readonly linkedAchievements: ReadonlyArray<{
+            readonly name: string;
+        }>;
     } | null;
 };
 export type QuestViewQuery = {
@@ -63,6 +66,10 @@ query QuestViewQuery(
       lastName
       firstName
       patronymic
+    }
+    linkedAchievements {
+      name
+      id
     }
   }
 }
@@ -230,7 +237,19 @@ return {
             ],
             "storageKey": null
           },
-          (v13/*: any*/)
+          (v13/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Achievement",
+            "kind": "LinkedField",
+            "name": "linkedAchievements",
+            "plural": true,
+            "selections": [
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -275,21 +294,34 @@ return {
             ],
             "storageKey": null
           },
-          (v13/*: any*/)
+          (v13/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Achievement",
+            "kind": "LinkedField",
+            "name": "linkedAchievements",
+            "plural": true,
+            "selections": [
+              (v3/*: any*/),
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "bd87b6a497ba383111098fe3c8ebf073",
+    "cacheID": "8f97eaba111448326a64a7f7c1c5cff2",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    language\n    wayToTravel\n    type\n    durationInMinutes\n    distanceInKilometers\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n    personsCards {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    language\n    wayToTravel\n    type\n    durationInMinutes\n    distanceInKilometers\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n    personsCards {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    linkedAchievements {\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd295ad1811497458ca7d4b8318ff7185';
+(node as any).hash = '0f0fd2bff41e5b8d23650c035d74f064';
 export default node;

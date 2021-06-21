@@ -56,6 +56,9 @@ fragment QuestEditForm_originalQuest on Quest {
   personsCards {
     id
   }
+  linkedAchievements {
+    id
+  }
 }
 */
 
@@ -251,6 +254,16 @@ return {
             "plural": true,
             "selections": (v4/*: any*/),
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Achievement",
+            "kind": "LinkedField",
+            "name": "linkedAchievements",
+            "plural": true,
+            "selections": (v4/*: any*/),
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -258,12 +271,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "52ef68f321cf7abfe7804337dac2acc2",
+    "cacheID": "7a3a4869c96d3fc50bac20648c297d24",
     "id": null,
     "metadata": {},
     "name": "QuestEditQuery",
     "operationKind": "query",
-    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    ...QuestEditForm_originalQuest\n    id\n  }\n}\n\nfragment QuestEditForm_originalQuest on Quest {\n  id\n  name\n  description\n  language\n  type\n  wayToTravel\n  distanceInKilometers\n  durationInMinutes\n  minLevel\n  earnedExp\n  data {\n    time\n    version\n    blocks\n  }\n  credits {\n    time\n    version\n    blocks\n  }\n  tags {\n    id\n  }\n  personsCards {\n    id\n  }\n}\n"
+    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    ...QuestEditForm_originalQuest\n    id\n  }\n}\n\nfragment QuestEditForm_originalQuest on Quest {\n  id\n  name\n  description\n  language\n  type\n  wayToTravel\n  distanceInKilometers\n  durationInMinutes\n  minLevel\n  earnedExp\n  data {\n    time\n    version\n    blocks\n  }\n  credits {\n    time\n    version\n    blocks\n  }\n  tags {\n    id\n  }\n  personsCards {\n    id\n  }\n  linkedAchievements {\n    id\n  }\n}\n"
   }
 };
 })();
