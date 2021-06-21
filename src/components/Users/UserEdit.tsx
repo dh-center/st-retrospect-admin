@@ -7,11 +7,11 @@ import Form from 'react-bootstrap/Form';
 import { useLazyLoadQuery, useMutation } from 'react-relay';
 import { useParams } from 'react-router';
 import { UserEditQuery } from './__generated__/UserEditQuery.graphql';
-import { UserEditMutation } from './__generated__/UserEditMutation.graphql';
 import ButtonWithLoader from '../utils/ButtonWithLoader';
 import useLeaveEditPage from '../../utils/useLeaveEditPage';
 import notifications from '../../controllers/notificationsController';
 import hasPermission from '../../utils/hasPermission';
+import { UserEditPermissionsMutation } from './__generated__/UserEditPermissionsMutation.graphql';
 
 const userEditQuery = graphql`
   query UserEditQuery ($id: GlobalId!) {
@@ -26,10 +26,10 @@ const userEditQuery = graphql`
   }
 `;
 
-const userEditMutation = graphql`
-  mutation UserEditMutation($input: UpdateUserInput!) {
+const userSetPermissionsMutation = graphql`
+  mutation UserEditPermissionsMutation($input: UpdateUserPermissionsInput!) {
     user {
-      update(input: $input) {
+      setPermissions(input: $input) {
         record {
           id
           permissions
@@ -45,7 +45,7 @@ const userEditMutation = graphql`
 export default function UserEdit(): ReactElement {
   const { id } = useParams<{ id: string }>();
 
-  const [commit, isInFlight] = useMutation<UserEditMutation>(userEditMutation);
+  const [commit, isInFlight] = useMutation<UserEditPermissionsMutation>(userSetPermissionsMutation);
 
   const [permissions, setPermissions] = useState<string[]>([]);
 

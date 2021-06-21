@@ -65,7 +65,7 @@ type Achievement implements Node {
 
 """Unit of measure in which the value is calculated"""
 enum AchievementUnits {
-  """Distance unit, for example, kilimetrs"""
+  """Distance unit, for example, kilometrs"""
   DISTANCE
 
   """Quantity unit, for example, number of passed quests"""
@@ -1023,6 +1023,9 @@ type Query {
   """Query for searching location instances related with some person"""
   relationsByPersonSearch(input: SearchInput!): RelationsSearchResult!
 
+  """List of all achievements"""
+  achievements: [Achievement!]!
+
   """Get specific tag"""
   tag(
     """Tag id"""
@@ -1109,6 +1112,11 @@ type Quest implements Node {
 
   """Location instances that are present in the quest"""
   locationInstances: [LocationInstance!]!
+
+  """
+  The likelihood that the user will like this quest (rating based on a recommendation system)
+  """
+  recommendationScore: Float!
 }
 
 """Model for representing list of quests"""
@@ -1687,20 +1695,31 @@ type UpdateTagPayload {
   record: Tag!
 }
 
+"""Input for updating user attributes"""
 input UpdateUserInput {
-  """Id of the user to update"""
-  id: GlobalId!
+  """New username"""
+  username: String
 
-  """New persmissions"""
-  permissions: [String!]!
+  """New user profile photo"""
+  photo: String
 }
 
+"""Payload that returns after updating user data"""
 type UpdateUserPayload {
   """Updated user id"""
   recordId: GlobalId!
 
   """Updated user"""
   record: User!
+}
+
+"""Input for updating users permissions"""
+input UpdateUserPermissionsInput {
+  """Id of the user to update"""
+  id: GlobalId!
+
+  """New persmissions"""
+  permissions: [String!]!
 }
 
 type User implements Node {
@@ -1747,14 +1766,6 @@ type User implements Node {
   friendRequests: [User!]!
 }
 
-type UserCompleteQuestPayload {
-  """User id"""
-  recordId: GlobalId!
-
-  """User completed quest"""
-  record: User!
-}
-
 """Model for representing list of persons"""
 type UserConnection {
   """List of persons edges"""
@@ -1779,13 +1790,13 @@ type UserEdge {
 """Mutations for users"""
 type UserMutations {
   """Complete quest"""
-  completeQuest(questId: GlobalId!): UserCompleteQuestPayload!
+  completeQuest(questId: GlobalId!): UpdateUserPayload!
 
-  """Updates user data"""
+  """Updates user permissions"""
+  setPermissions(input: UpdateUserPermissionsInput!): UpdateUserPayload!
+
+  """Changes User attributes"""
   update(input: UpdateUserInput!): UpdateUserPayload!
-
-  """Changes username of the user"""
-  changeUsername(username: String!): UpdateUserPayload!
 
   """Send friend request to user by user id"""
   sendFriendRequest(id: GlobalId!): UpdateUserPayload!

@@ -3,16 +3,16 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type UpdateUserInput = {
+export type UpdateUserPermissionsInput = {
     id: string;
     permissions: Array<string>;
 };
-export type UserEditMutationVariables = {
-    input: UpdateUserInput;
+export type UserEditPermissionsMutationVariables = {
+    input: UpdateUserPermissionsInput;
 };
-export type UserEditMutationResponse = {
+export type UserEditPermissionsMutationResponse = {
     readonly user: {
-        readonly update: {
+        readonly setPermissions: {
             readonly record: {
                 readonly id: string;
                 readonly permissions: ReadonlyArray<string>;
@@ -20,19 +20,19 @@ export type UserEditMutationResponse = {
         };
     };
 };
-export type UserEditMutation = {
-    readonly response: UserEditMutationResponse;
-    readonly variables: UserEditMutationVariables;
+export type UserEditPermissionsMutation = {
+    readonly response: UserEditPermissionsMutationResponse;
+    readonly variables: UserEditPermissionsMutationVariables;
 };
 
 
 
 /*
-mutation UserEditMutation(
-  $input: UpdateUserInput!
+mutation UserEditPermissionsMutation(
+  $input: UpdateUserPermissionsInput!
 ) {
   user {
-    update(input: $input) {
+    setPermissions(input: $input) {
       record {
         id
         permissions
@@ -70,7 +70,7 @@ v1 = [
         ],
         "concreteType": "UpdateUserPayload",
         "kind": "LinkedField",
-        "name": "update",
+        "name": "setPermissions",
         "plural": false,
         "selections": [
           {
@@ -110,7 +110,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "UserEditMutation",
+    "name": "UserEditPermissionsMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -119,18 +119,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "UserEditMutation",
+    "name": "UserEditPermissionsMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "310265fe61b4a713ad0afd99459f30e5",
+    "cacheID": "7024d0ce34890076604ed2a71335b2ec",
     "id": null,
     "metadata": {},
-    "name": "UserEditMutation",
+    "name": "UserEditPermissionsMutation",
     "operationKind": "mutation",
-    "text": "mutation UserEditMutation(\n  $input: UpdateUserInput!\n) {\n  user {\n    update(input: $input) {\n      record {\n        id\n        permissions\n      }\n    }\n  }\n}\n"
+    "text": "mutation UserEditPermissionsMutation(\n  $input: UpdateUserPermissionsInput!\n) {\n  user {\n    setPermissions(input: $input) {\n      record {\n        id\n        permissions\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd62b6b4f395fe978221ea765532124a7';
+(node as any).hash = 'c22cecaf2feafaee685fb2d09f379002';
 export default node;
