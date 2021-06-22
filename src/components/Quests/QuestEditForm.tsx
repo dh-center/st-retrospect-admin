@@ -26,6 +26,7 @@ import ButtonWithLoader from '../utils/ButtonWithLoader';
 import useLeaveEditPage from '../../utils/useLeaveEditPage';
 import ArrayOfCustomSelects from '../utils/ArrayOfCustomSelects';
 import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
+import AchievementsCustomSelect from '../CustomSelects/AchievementsCustomSelect';
 
 /**
  * Executes update mutation for quest
@@ -69,6 +70,8 @@ function QuestEditForm(props: Props): React.ReactElement {
     tags: undefined,
     personsCardsIds: props.originalQuest.personsCards.map(personCard => personCard.id),
     personsCards: undefined,
+    linkedAchievementsIds: props.originalQuest.linkedAchievements.map(achievement => achievement.id),
+    linkedAchievements: undefined,
   };
   const [input, setInput] = useState(() => deepCopy(originalQuest as UpdateQuestInput));
 
@@ -200,6 +203,43 @@ function QuestEditForm(props: Props): React.ReactElement {
           </div>
         </Form.Group>
         <Form.Group>
+          <Form.Label htmlFor=''>Language</Form.Label>
+          <div>
+            <Form.Check
+              checked={input.language === 'RU'}
+              id='ru'
+              inline
+              label='Russian'
+              name='language'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  language: 'RU',
+                });
+              }}
+              required
+              type='radio'
+              value='RU'
+            />
+            <Form.Check
+              checked={input.language === 'EN'}
+              id='en'
+              inline
+              label='English'
+              name='language'
+              onChange={(): void => {
+                setInput({
+                  ...input,
+                  language: 'EN',
+                });
+              }}
+              required
+              type='radio'
+              value='EN'
+            />
+          </div>
+        </Form.Group>
+        <Form.Group>
           <Form.Label htmlFor=''>Way to travel</Form.Label>
           <div>
             <Form.Check
@@ -309,6 +349,21 @@ function QuestEditForm(props: Props): React.ReactElement {
           />
         </Form.Group>
         <Form.Group>
+          <Form.Label>Linked achievements</Form.Label>
+          <ArrayOfCustomSelects
+            CustomSelect={AchievementsCustomSelect}
+            addButtonText='Add achievement...'
+            onChange={value => {
+              setInput({
+                ...input,
+                linkedAchievementsIds: value.filter((val): val is string => val !== null),
+              });
+            }}
+            removeButtonText='Remove achievement'
+            value={input?.linkedAchievementsIds || []}
+          />
+        </Form.Group>
+        <Form.Group>
           <h2>Route content</h2>
           <div className={editorjsStyles.editorjsWrapper}>
             <EditorJs
@@ -388,6 +443,7 @@ export default createFragmentContainer(
         id
         name
         description
+        language
         type
         wayToTravel
         distanceInKilometers
@@ -408,6 +464,9 @@ export default createFragmentContainer(
           id
         }
         personsCards {
+          id
+        }
+        linkedAchievements {
           id
         }
       }

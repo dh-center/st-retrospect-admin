@@ -81,6 +81,7 @@ export default function QuestView(): ReactElement {
             id
             name
             description
+            language
             wayToTravel
             type
             durationInMinutes
@@ -95,6 +96,9 @@ export default function QuestView(): ReactElement {
               lastName
               firstName
               patronymic
+            }
+            linkedAchievements {
+              name
             }
           }
         }
@@ -166,8 +170,18 @@ export default function QuestView(): ReactElement {
                 label='Tags'
               />
               <LabeledText
+                content={props.quest.linkedAchievements
+                  .map(achievement => achievement.name)
+                  .join('; ')}
+                label='Linked achievements'
+              />
+              <LabeledText
                 content={questType()}
                 label='Type'
+              />
+              <LabeledText
+                content={props.quest.language}
+                label='Language'
               />
               <LabeledText
                 content={questWayToTravel()}

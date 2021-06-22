@@ -33,6 +33,7 @@ fragment QuestEditForm_originalQuest on Quest {
   id
   name
   description
+  language
   type
   wayToTravel
   distanceInKilometers
@@ -53,6 +54,9 @@ fragment QuestEditForm_originalQuest on Quest {
     id
   }
   personsCards {
+    id
+  }
+  linkedAchievements {
     id
   }
 }
@@ -166,6 +170,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "language",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "type",
             "storageKey": null
           },
@@ -243,6 +254,16 @@ return {
             "plural": true,
             "selections": (v4/*: any*/),
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Achievement",
+            "kind": "LinkedField",
+            "name": "linkedAchievements",
+            "plural": true,
+            "selections": (v4/*: any*/),
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -250,12 +271,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "eba45e1e65da13e8dcf0ee68e97c82d4",
+    "cacheID": "7a3a4869c96d3fc50bac20648c297d24",
     "id": null,
     "metadata": {},
     "name": "QuestEditQuery",
     "operationKind": "query",
-    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    ...QuestEditForm_originalQuest\n    id\n  }\n}\n\nfragment QuestEditForm_originalQuest on Quest {\n  id\n  name\n  description\n  type\n  wayToTravel\n  distanceInKilometers\n  durationInMinutes\n  minLevel\n  earnedExp\n  data {\n    time\n    version\n    blocks\n  }\n  credits {\n    time\n    version\n    blocks\n  }\n  tags {\n    id\n  }\n  personsCards {\n    id\n  }\n}\n"
+    "text": "query QuestEditQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    ...QuestEditForm_originalQuest\n    id\n  }\n}\n\nfragment QuestEditForm_originalQuest on Quest {\n  id\n  name\n  description\n  language\n  type\n  wayToTravel\n  distanceInKilometers\n  durationInMinutes\n  minLevel\n  earnedExp\n  data {\n    time\n    version\n    blocks\n  }\n  credits {\n    time\n    version\n    blocks\n  }\n  tags {\n    id\n  }\n  personsCards {\n    id\n  }\n  linkedAchievements {\n    id\n  }\n}\n"
   }
 };
 })();
