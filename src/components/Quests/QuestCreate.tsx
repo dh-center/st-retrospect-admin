@@ -23,6 +23,7 @@ import { LabeledTagsInput } from '../utils/TagsInput';
 import ArrayOfCustomSelects from '../utils/ArrayOfCustomSelects';
 import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
 import AchievementsCustomSelect from '../CustomSelects/AchievementsCustomSelect';
+import addValueToArrayOfUniqueValues from '../../utils/addValueToArrayOfUniqueValues';
 
 /**
  * Generates input data for creating new quest
@@ -219,19 +220,18 @@ export default function QuestCreate(): React.ReactElement {
               name='whereDisplays'
               onChange={(event): void => {
                 setInput(prevState => {
-                  const whereDisplays = prevState.whereDisplays;
+                  let whereDisplays = prevState.whereDisplays;
 
                   if (event.target.checked) {
-                    return {
-                      ...prevState,
-                      whereDisplays: [...whereDisplays, 'WEB'],
-                    };
+                    whereDisplays = addValueToArrayOfUniqueValues(whereDisplays, 'WEB');
                   } else {
-                    return {
-                      ...prevState,
-                      whereDisplays: whereDisplays.filter(application => application !== 'WEB'),
-                    };
+                    whereDisplays = whereDisplays.filter(application => application !== 'WEB');
                   }
+
+                  return {
+                    ...prevState,
+                    whereDisplays,
+                  };
                 });
               }}
               type='checkbox'
@@ -245,19 +245,18 @@ export default function QuestCreate(): React.ReactElement {
               name='whereDisplays'
               onChange={(event): void => {
                 setInput(prevState => {
-                  const whereDisplays = prevState.whereDisplays;
+                  let whereDisplays = prevState.whereDisplays;
 
                   if (event.target.checked) {
-                    return {
-                      ...prevState,
-                      whereDisplays: [...whereDisplays, 'MOBILE'],
-                    };
+                    whereDisplays = addValueToArrayOfUniqueValues(whereDisplays, 'MOBILE');
                   } else {
-                    return {
-                      ...prevState,
-                      whereDisplays: whereDisplays.filter(application => application !== 'MOBILE'),
-                    };
+                    whereDisplays = whereDisplays.filter(application => application !== 'MOBILE');
                   }
+
+                  return {
+                    ...prevState,
+                    whereDisplays,
+                  };
                 });
               }}
               type='checkbox'
