@@ -51,6 +51,7 @@ export function generateQuestInput(): CreateQuestInput {
     tagIds: [],
     personsCardsIds: [],
     linkedAchievementsIds: [],
+    whereDisplays: [],
   };
 }
 

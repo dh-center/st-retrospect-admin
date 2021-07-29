@@ -100,6 +100,7 @@ export default function QuestView(): ReactElement {
             linkedAchievements {
               name
             }
+            whereDisplays
           }
         }
       `}
@@ -152,6 +153,22 @@ export default function QuestView(): ReactElement {
           }
         };
 
+        const whereDisplays = (): string => {
+          return props.quest?.whereDisplays
+            .map(application => {
+              switch (application) {
+                case 'WEB':
+                  return 'Web';
+                case 'MOBILE':
+                  return 'Mobile app';
+                case '%future added value':
+                default:
+                  return application.toString() || 'Undefined';
+              }
+            })
+            .join(', ') || '';
+        };
+
         return (
           <ContentWrapper>
             <div>
@@ -178,6 +195,10 @@ export default function QuestView(): ReactElement {
               <LabeledText
                 content={questType()}
                 label='Type'
+              />
+              <LabeledText
+                content={whereDisplays()}
+                label='Where displays'
               />
               <LabeledText
                 content={props.quest.language}

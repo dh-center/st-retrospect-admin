@@ -66,6 +66,7 @@ interface Props {
 function QuestEditForm(props: Props): React.ReactElement {
   const originalQuest = {
     ...props.originalQuest,
+    whereDisplays: [ ...props.originalQuest.whereDisplays ],
     tagIds: props.originalQuest.tags.map(tag => tag.id),
     tags: undefined,
     personsCardsIds: props.originalQuest.personsCards.map(personCard => personCard.id),
@@ -199,6 +200,77 @@ function QuestEditForm(props: Props): React.ReactElement {
               required
               type='radio'
               value='QUEST'
+            />
+          </div>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor=''>Where displays</Form.Label>
+          <div>
+            <Form.Check
+              checked={input?.whereDisplays?.includes('WEB')}
+              id='web'
+              inline
+              label='Web'
+              name='whereDisplays'
+              onChange={(event): void => {
+                setInput(prevState => {
+                  const whereDisplays = prevState.whereDisplays;
+
+                  if (!whereDisplays) {
+                    return {
+                      ...prevState,
+                      whereDisplays: [ 'WEB' ],
+                    };
+                  }
+
+                  if (event.target.checked) {
+                    return {
+                      ...prevState,
+                      whereDisplays: [...whereDisplays, 'WEB'],
+                    };
+                  } else {
+                    return {
+                      ...prevState,
+                      whereDisplays: whereDisplays.filter(application => application !== 'WEB'),
+                    };
+                  }
+                });
+              }}
+              type='checkbox'
+              value='WEB'
+            />
+            <Form.Check
+              checked={input?.whereDisplays?.includes('MOBILE')}
+              id='mobile'
+              inline
+              label='Mobile'
+              name='whereDisplays'
+              onChange={(event): void => {
+                setInput(prevState => {
+                  const whereDisplays = prevState.whereDisplays;
+
+                  if (!whereDisplays) {
+                    return {
+                      ...prevState,
+                      whereDisplays: [ 'MOBILE' ],
+                    };
+                  }
+
+                  if (event.target.checked) {
+                    return {
+                      ...prevState,
+                      whereDisplays: [...whereDisplays, 'MOBILE'],
+                    };
+                  } else {
+                    return {
+                      ...prevState,
+                      whereDisplays: whereDisplays.filter(application => application !== 'MOBILE'),
+                    };
+                  }
+                });
+              }}
+              type='checkbox'
+              value='MOBILE'
             />
           </div>
         </Form.Group>
@@ -469,6 +541,7 @@ export default createFragmentContainer(
         linkedAchievements {
           id
         }
+        whereDisplays
       }
     `,
   }
