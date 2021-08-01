@@ -4,6 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type Application = "MOBILE" | "WEB" | "%future added value";
 export type Languages = "EN" | "RU" | "%future added value";
 export type TaskTypes = "QUEST" | "QUIZ" | "ROUTE" | "STORY" | "%future added value";
 export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
@@ -37,6 +38,7 @@ export type QuestEditForm_originalQuest = {
     readonly linkedAchievements: ReadonlyArray<{
         readonly id: string;
     }>;
+    readonly whereDisplays: ReadonlyArray<Application>;
     readonly " $refType": "QuestEditForm_originalQuest";
 };
 export type QuestEditForm_originalQuest$data = QuestEditForm_originalQuest;
@@ -200,11 +202,18 @@ return {
       "plural": true,
       "selections": (v2/*: any*/),
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "whereDisplays",
+      "storageKey": null
     }
   ],
   "type": "Quest",
   "abstractKey": null
 };
 })();
-(node as any).hash = '93de2f396ad3447400cb72c4087eec89';
+(node as any).hash = 'c01067a3554767c885aec6290cf0bac6';
 export default node;

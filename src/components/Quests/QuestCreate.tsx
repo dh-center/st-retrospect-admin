@@ -23,6 +23,7 @@ import { LabeledTagsInput } from '../utils/TagsInput';
 import ArrayOfCustomSelects from '../utils/ArrayOfCustomSelects';
 import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
 import AchievementsCustomSelect from '../CustomSelects/AchievementsCustomSelect';
+import addValueToArrayOfUniqueValues from '../../utils/addValueToArrayOfUniqueValues';
 
 /**
  * Generates input data for creating new quest
@@ -51,6 +52,7 @@ export function generateQuestInput(): CreateQuestInput {
     tagIds: [],
     personsCardsIds: [],
     linkedAchievementsIds: [],
+    whereDisplays: [],
   };
 }
 
@@ -204,6 +206,61 @@ export default function QuestCreate(): React.ReactElement {
               required
               type='radio'
               value='QUEST'
+            />
+          </div>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor=''>Where displays</Form.Label>
+          <div>
+            <Form.Check
+              checked={input.whereDisplays.includes('WEB')}
+              id='web'
+              inline
+              label='Web'
+              name='whereDisplays'
+              onChange={(event): void => {
+                setInput(prevState => {
+                  let whereDisplays = prevState.whereDisplays;
+
+                  if (event.target.checked) {
+                    whereDisplays = addValueToArrayOfUniqueValues(whereDisplays, 'WEB');
+                  } else {
+                    whereDisplays = whereDisplays.filter(application => application !== 'WEB');
+                  }
+
+                  return {
+                    ...prevState,
+                    whereDisplays,
+                  };
+                });
+              }}
+              type='checkbox'
+              value='WEB'
+            />
+            <Form.Check
+              checked={input.whereDisplays.includes('MOBILE')}
+              id='mobile'
+              inline
+              label='Mobile'
+              name='whereDisplays'
+              onChange={(event): void => {
+                setInput(prevState => {
+                  let whereDisplays = prevState.whereDisplays;
+
+                  if (event.target.checked) {
+                    whereDisplays = addValueToArrayOfUniqueValues(whereDisplays, 'MOBILE');
+                  } else {
+                    whereDisplays = whereDisplays.filter(application => application !== 'MOBILE');
+                  }
+
+                  return {
+                    ...prevState,
+                    whereDisplays,
+                  };
+                });
+              }}
+              type='checkbox'
+              value='MOBILE'
             />
           </div>
         </Form.Group>
