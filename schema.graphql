@@ -112,6 +112,15 @@ type Address {
   postcode: MultilingualString
 }
 
+"""Types of applications where quest will be displayed"""
+enum Application {
+  """Que.St application"""
+  MOBILE
+
+  """St.Retrospect application"""
+  WEB
+}
+
 """Country data in address of location"""
 type Country implements Node {
   """Country identifier"""
@@ -295,6 +304,9 @@ input CreateQuestInput {
 
   """What user needs to use for route passing"""
   wayToTravel: WayToTravel! = ON_FOOT
+
+  """Where quest will be displayed"""
+  whereDisplays: [Application!]! = []
 
   """Quest duration in minutes"""
   durationInMinutes: Int!
@@ -1080,6 +1092,9 @@ type Quest implements Node {
   """What user needs to use for route passing"""
   wayToTravel: WayToTravel!
 
+  """Where quest will be displayed"""
+  whereDisplays: [Application!]!
+
   """Quest duration in minutes"""
   durationInMinutes: Int!
 
@@ -1593,6 +1608,9 @@ input UpdateQuestInput {
   """What user needs to use for route passing"""
   wayToTravel: WayToTravel
 
+  """Where quest will be displayed"""
+  whereDisplays: [Application!]
+
   """Quest duration in minutes"""
   durationInMinutes: Int
 
@@ -1755,6 +1773,9 @@ type User implements Node {
 
   """User's achievements"""
   receivedAchievements: [Achievement!]!
+
+  """Received persons cards"""
+  receivedPersonsCards: [Person!]!
 
   """User experience"""
   exp: Int!

@@ -27,6 +27,7 @@ import useLeaveEditPage from '../../utils/useLeaveEditPage';
 import ArrayOfCustomSelects from '../utils/ArrayOfCustomSelects';
 import PersonsCustomSelect from '../CustomSelects/PersonsCustomSelect';
 import AchievementsCustomSelect from '../CustomSelects/AchievementsCustomSelect';
+import addValueToArrayOfUniqueValues from '../../utils/addValueToArrayOfUniqueValues';
 
 /**
  * Executes update mutation for quest
@@ -66,6 +67,7 @@ interface Props {
 function QuestEditForm(props: Props): React.ReactElement {
   const originalQuest = {
     ...props.originalQuest,
+    whereDisplays: [ ...props.originalQuest.whereDisplays ],
     tagIds: props.originalQuest.tags.map(tag => tag.id),
     tags: undefined,
     personsCardsIds: props.originalQuest.personsCards.map(personCard => personCard.id),
@@ -199,6 +201,61 @@ function QuestEditForm(props: Props): React.ReactElement {
               required
               type='radio'
               value='QUEST'
+            />
+          </div>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor=''>Where displays</Form.Label>
+          <div>
+            <Form.Check
+              checked={input?.whereDisplays?.includes('WEB')}
+              id='web'
+              inline
+              label='Web'
+              name='whereDisplays'
+              onChange={(event): void => {
+                setInput(prevState => {
+                  let whereDisplays = prevState.whereDisplays || [];
+
+                  if (event.target.checked) {
+                    whereDisplays = addValueToArrayOfUniqueValues(whereDisplays, 'WEB');
+                  } else {
+                    whereDisplays = whereDisplays.filter(application => application !== 'WEB');
+                  }
+
+                  return {
+                    ...prevState,
+                    whereDisplays,
+                  };
+                });
+              }}
+              type='checkbox'
+              value='WEB'
+            />
+            <Form.Check
+              checked={input?.whereDisplays?.includes('MOBILE')}
+              id='mobile'
+              inline
+              label='Mobile'
+              name='whereDisplays'
+              onChange={(event): void => {
+                setInput(prevState => {
+                  let whereDisplays = prevState.whereDisplays || [];
+
+                  if (event.target.checked) {
+                    whereDisplays = addValueToArrayOfUniqueValues(whereDisplays, 'MOBILE');
+                  } else {
+                    whereDisplays = whereDisplays.filter(application => application !== 'MOBILE');
+                  }
+
+                  return {
+                    ...prevState,
+                    whereDisplays,
+                  };
+                });
+              }}
+              type='checkbox'
+              value='MOBILE'
             />
           </div>
         </Form.Group>
@@ -469,6 +526,7 @@ export default createFragmentContainer(
         linkedAchievements {
           id
         }
+        whereDisplays
       }
     `,
   }

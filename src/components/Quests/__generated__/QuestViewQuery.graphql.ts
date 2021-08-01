@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+export type Application = "MOBILE" | "WEB" | "%future added value";
 export type Languages = "EN" | "RU" | "%future added value";
 export type TaskTypes = "QUEST" | "QUIZ" | "ROUTE" | "STORY" | "%future added value";
 export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT" | "%future added value";
@@ -33,6 +34,7 @@ export type QuestViewQueryResponse = {
         readonly linkedAchievements: ReadonlyArray<{
             readonly name: string;
         }>;
+        readonly whereDisplays: ReadonlyArray<Application>;
     } | null;
 };
 export type QuestViewQuery = {
@@ -71,6 +73,7 @@ query QuestViewQuery(
       name
       id
     }
+    whereDisplays
   }
 }
 */
@@ -199,6 +202,13 @@ v13 = {
     }
   ],
   "storageKey": null
+},
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "whereDisplays",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -249,7 +259,8 @@ return {
               (v3/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v14/*: any*/)
         ],
         "storageKey": null
       }
@@ -307,21 +318,22 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v14/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8f97eaba111448326a64a7f7c1c5cff2",
+    "cacheID": "45eccf695795465e4955993df3685a6f",
     "id": null,
     "metadata": {},
     "name": "QuestViewQuery",
     "operationKind": "query",
-    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    language\n    wayToTravel\n    type\n    durationInMinutes\n    distanceInKilometers\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n    personsCards {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    linkedAchievements {\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query QuestViewQuery(\n  $id: GlobalId!\n) {\n  quest(id: $id) {\n    id\n    name\n    description\n    language\n    wayToTravel\n    type\n    durationInMinutes\n    distanceInKilometers\n    minLevel\n    earnedExp\n    tags {\n      value\n      id\n    }\n    personsCards {\n      id\n      lastName\n      firstName\n      patronymic\n    }\n    linkedAchievements {\n      name\n      id\n    }\n    whereDisplays\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0f0fd2bff41e5b8d23650c035d74f064';
+(node as any).hash = '891d77f73556597f0d96370dfdefd693';
 export default node;
